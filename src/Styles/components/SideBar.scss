@@ -1,0 +1,109 @@
+@import "../base/settings.scss";
+.app {
+    display: flex;
+    flex-direction: row;
+}
+.side_bar {
+    height: 100vh;
+    width: 0px;
+    width: 200px;
+    // visibility: hidden;
+    background-color: $pri_color;
+    color: white;
+    padding-top: 1px;
+    border-right: 2px solid $d_pri_color;
+    // animation-name: showSideMenu;
+    animation-duration: 0.4s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.side_bar_con {
+    animation-duration: 0.4s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.add_img_btn {
+    display: block;
+    height: 40px;
+    margin: 30px auto;
+    transition: 0.2s;
+}
+
+.add_img_btn:hover {
+    transform: scale(1.1);
+}
+.add_img_btn:active {
+    transform: scale(0.9);
+}
+
+li {
+    list-style: none;
+}
+
+.new_btn {
+    padding: 7px 30px;
+    border: 1px solid white;
+    width: 80%;
+    margin: 0px auto;
+    margin-bottom: 50px;
+    text-align: center;
+    border-radius: 38px;
+}
+.new_btn:hover {
+    background-color: $l_pri_color;
+    cursor: pointer;
+}
+
+.side_btn {
+    padding: 5px 30px;
+    margin: 20px 0px;
+}
+.side_btn:hover {
+    background-color: $l_pri_color;
+    cursor: pointer;
+}
+
+@keyframes showSideMenu {
+    0% {
+        width: 0px;
+    }
+
+    100% {
+        width: 200px;
+    }
+}
+@keyframes hideSideMenu {
+    100% {
+        width: 0px;
+    }
+
+    0% {
+        width: 200px;
+    }
+}
+@keyframes hideSideItems {
+    100% {
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 0.1;
+    }
+
+    0% {
+        opacity: 1;
+    }
+}
+@keyframes showSideItems {
+    100% {
+        opacity: 1;
+    }
+
+    0% {
+        opacity: 0;
+    }
+}

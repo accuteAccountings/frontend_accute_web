@@ -1,4 +1,5 @@
 import React from 'react'
+import add_img from '../img/add_img.svg'
 
 class SideBar extends React.Component {
 
@@ -8,11 +9,35 @@ class SideBar extends React.Component {
 
             <div className="side_bar">
 
-                <li>New</li>
-                <li>DashBoard</li>
-                <li>Lists</li>
-                <li>Transaction</li>
-                <li>Reports</li>
+                <div className="side_bar_con">
+
+                    <img className="add_img_btn" src={add_img} alt="" />
+
+                    <li className="new_btn">
+
+                        <span>New</span> <img src="" alt="" />
+
+                    </li>
+
+                    <li className="side_btn">
+                        <span>DashBoard</span>
+                        <img src="" alt="" />
+                    </li>
+                    <li className="side_btn">
+                        <span>Lists</span>
+                        <img src="" alt="" />
+                    </li>
+                    <li className="side_btn">
+                        <span>Lists</span>
+                        <img src="" alt="" />
+                    </li>
+                    <li className="side_btn">
+                        <span>Reports</span>
+                        <img src="" alt="" />
+                    </li>
+
+                </div>
+
 
             </div>
         )

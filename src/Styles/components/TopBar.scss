@@ -1,0 +1,25 @@
+@import "../base/settings";
+
+.top_bar {
+    height: 50px;
+    background-color: white;
+    position: relative;
+    width: 100%;
+    top: 0px;
+    // display: flex;
+    flex-direction: row;
+    justify-content: end;
+    padding: 10px;
+}
+
+.menu_btn {
+    display: table-cell;
+    height: 30px;
+    float: left;
+    vertical-align: bottom;
+}
+
+.top_btns {
+    float: right;
+    margin: 5px 30px;
+}

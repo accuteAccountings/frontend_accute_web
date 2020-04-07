@@ -1,5 +1,6 @@
 import React from 'react';
 import SideBar from '../Components/SideBar';
+import TopBar from '../Components/TopBar';
 
 class App extends React.Component {
 
@@ -7,9 +8,17 @@ class App extends React.Component {
 
         return (
 
-            <div>
+            <div className="app">
+                <div className="side">
+                    <SideBar />
+                </div>
 
-                HIii
+                <div className="pageBody">
+
+                    <TopBar />
+
+                </div>
+
 
 
 
