@@ -13,7 +13,7 @@ class SideBar extends React.Component {
 
                     <img className="add_img_btn" src={add_img} alt="" />
 
-                    <li className="new_btn">
+                    <li className="new_btn" onClick={this.props.AddProCrossBtn}>
 
                         <span>New</span> <img src="" alt="" />
 

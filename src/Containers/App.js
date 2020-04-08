@@ -1,8 +1,38 @@
 import React from 'react';
 import SideBar from '../Components/SideBar';
 import TopBar from '../Components/TopBar';
+import AddProducts from '../Components/AddProduct';
 
 class App extends React.Component {
+
+
+    AddProCrossBtn() {
+
+
+        this.setState(() => {
+
+            if (this.state.AddPro) return {
+                AddPro: false
+            }
+
+            else return {
+                AddPro: true
+            }
+        })
+    }
+
+
+    constructor(props) {
+
+        super(props)
+        this.AddProCrossBtn = this.AddProCrossBtn.bind(this)
+
+
+        this.state = {
+            AddPro: false
+        }
+
+    }
 
     render() {
 
@@ -10,7 +40,7 @@ class App extends React.Component {
 
             <div className="app">
                 <div className="side">
-                    <SideBar />
+                    <SideBar AddProCrossBtn={this.AddProCrossBtn} />
                 </div>
 
                 <div className="pageBody">
@@ -18,6 +48,8 @@ class App extends React.Component {
                     <TopBar />
 
                 </div>
+
+                {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} /> : null}
 
 
 

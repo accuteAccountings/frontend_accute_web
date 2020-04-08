@@ -10,6 +10,7 @@
     flex-direction: row;
     justify-content: end;
     padding: 10px;
+    color: $grey_text;
 }
 
 .menu_btn {
@@ -17,6 +18,8 @@
     height: 30px;
     float: left;
     vertical-align: bottom;
+    transition: 0.1s;
+    cursor: pointer;
 }
 
 .top_btns {
