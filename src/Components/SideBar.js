@@ -3,6 +3,19 @@ import add_img from '../img/add_img.svg'
 
 class SideBar extends React.Component {
 
+    navToDash() {
+        this.props.navTo("dash")
+    }
+    navToRep() {
+        this.props.navTo("rep")
+    }
+
+    constructor(props) {
+        super(props)
+        this.navToDash = this.navToDash.bind(this)
+        this.navToRep = this.navToRep.bind(this)
+    }
+
     render() {
 
         return (
@@ -19,19 +32,27 @@ class SideBar extends React.Component {
 
                     </li>
 
-                    <li className="side_btn">
+                    <li className={this.props.actPage === "dash" ? "side_btn act_s_btn" : "side_btn"}
+                        onClick={this.navToDash}
+
+                    >
+
                         <span>DashBoard</span>
                         <img src="" alt="" />
+
                     </li>
-                    <li className="side_btn act_s_btn" >
+                    <li className={this.props.actPage === "list" ? "side_btn act_s_btn" : "side_btn"} >
                         <span>Lists</span>
                         <img src="" alt="" />
                     </li>
-                    <li className="side_btn">
-                        <span>Lists</span>
+                    <li className={this.props.actPage === "trans" ? "side_btn act_s_btn" : "side_btn"}
+                    >
+                        <span>Transactions</span>
                         <img src="" alt="" />
                     </li>
-                    <li className="side_btn">
+                    <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"}
+                        onClick={this.navToRep}
+                    >
                         <span>Reports</span>
                         <img src="" alt="" />
                     </li>
@@ -39,7 +60,7 @@ class SideBar extends React.Component {
                 </div>
 
 
-            </div>
+            </div >
         )
     }
 }

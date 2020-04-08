@@ -1,0 +1,22 @@
+@import "../base/settings";
+
+.Dash {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.dash_con {
+    height: 500vh;
+    width: 60%;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(129, 129, 129);
+    margin: 30px;
+}
+
+.shortcuts {
+    height: 20vw;
+    width: 20vw;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(129, 129, 129);
+}
