@@ -3,6 +3,12 @@ body {
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #eeeeee;
+    overflow: hidden;
+}
+
+.pageBody {
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 * {

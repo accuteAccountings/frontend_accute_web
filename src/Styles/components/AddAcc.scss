@@ -1,0 +1,128 @@
+@import "../base/settings";
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 50;
+}
+
+.add_acc_con {
+    height: 90vh;
+    width: 60vw;
+    background-color: white;
+    position: fixed;
+    z-index: 55;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 30px;
+}
+
+.add_acc_head {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom: 2px solid $pri_color;
+
+    img {
+        margin-top: 18px;
+        margin-right: 30px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    h1 {
+        margin-left: 30px;
+        font-size: $h_font;
+        color: $pri_color;
+    }
+}
+
+.add_acc_body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+
+    height: 80%;
+
+    font-size: $p_font;
+    color: $grey_text;
+    padding: 30px;
+    padding-top: 10px;
+    // border: 1px solid black;
+    input {
+        border: none;
+        border-bottom: 2px solid $l_grey_text;
+        font-size: $s_p_font;
+
+        text-align: center;
+        margin-left: 30px;
+    }
+    h1 {
+        margin: 0px;
+        font-size: $s_h_font;
+        border-bottom: 1px solid $pri_color;
+        color: $l_grey_text;
+        font-weight: 100;
+        text-align: start;
+    }
+}
+
+.add_acc_btn {
+    display: block;
+    height: 40px;
+    width: 30%;
+    font-size: $h_font;
+    background-color: $pri_color;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add_acc_btn:hover {
+    background-color: $l_pri_color;
+}
+.add_acc_btn:active {
+    background-color: $d_pri_color;
+}
+
+.add_acc_body_left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 80px;
+
+    border-right: 1px solid $pri_color;
+}
+.add_acc_body_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 30px;
+}
+
+.add_acc_deb_cre {
+    span {
+        margin: 0px;
+    }
+}
+
+input:focus {
+    border-bottom: 1px solid green;
+    outline: none;
+}
+
+#creditor {
+    margin-left: 50px;
+}
+select {
+    margin-left: 20px;
+}

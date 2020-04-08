@@ -4,7 +4,6 @@ import cross from '../img/cancel.svg'
 class AddProducts extends React.Component {
 
 
-
     render() {
 
         return (

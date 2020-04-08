@@ -13,7 +13,7 @@ class SideBar extends React.Component {
 
                     <img className="add_img_btn" src={add_img} alt="" />
 
-                    <li className="new_btn" onClick={this.props.AddProCrossBtn}>
+                    <li className="new_btn" onClick={this.props.AddAccCrossBtn}>
 
                         <span>New</span> <img src="" alt="" />
 
@@ -23,7 +23,7 @@ class SideBar extends React.Component {
                         <span>DashBoard</span>
                         <img src="" alt="" />
                     </li>
-                    <li className="side_btn">
+                    <li className="side_btn act_s_btn" >
                         <span>Lists</span>
                         <img src="" alt="" />
                     </li>

@@ -67,6 +67,10 @@ li {
     cursor: pointer;
 }
 
+.act_s_btn {
+    background-color: $d_pri_color;
+}
+
 @keyframes showSideMenu {
     0% {
         width: 0px;
