@@ -36,8 +36,10 @@ class AddProducts extends React.Component {
 
                         </div>
 
-                        <button className="add_pro_btn" onClick={this.props.AddProSaveBtn}>Save</button>
-
+                        <div className="two_items" id="add_pro_btns">
+                            <button className="add_pro_can_btn" onClick={this.props.AddProCrossBtn}>Cancel</button>
+                            <button className="add_pro_btn" onClick={this.props.AddProSaveBtn}>Save</button>
+                        </div>
                     </div>
 
 

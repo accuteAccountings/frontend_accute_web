@@ -72,6 +72,19 @@
     border: none;
     color: white;
     cursor: pointer;
+    border-radius: 30px;
+}
+.add_pro_can_btn {
+    border-radius: 30px;
+
+    height: 40px;
+    width: 30%;
+    margin: 0px auto;
+    font-size: $h_font;
+    background-color: transparent;
+    border: 1px solid $grey_text;
+    color: $grey_text;
+    cursor: pointer;
 }
 
 .add_pro_btn:hover {
@@ -79,4 +92,10 @@
 }
 .add_pro_btn:active {
     background-color: $d_pri_color;
+}
+
+#add_pro_btns {
+    padding: 0px 70px;
+    // width: 70%;
+    // margin: auto;
 }

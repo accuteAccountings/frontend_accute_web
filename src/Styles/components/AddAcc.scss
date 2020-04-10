@@ -12,15 +12,16 @@
 }
 
 .add_acc_con {
-    height: 90vh;
-    width: 60vw;
+    height: 95vh;
+    width: 80vw;
     background-color: white;
     position: fixed;
     z-index: 55;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding-bottom: 30px;
+
+    box-shadow: 0px 0px 30px rgb(44, 44, 44);
 }
 
 .add_acc_head {
@@ -46,7 +47,7 @@
 .add_acc_body {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     text-align: left;
 
     height: 80%;
@@ -57,25 +58,35 @@
     padding-top: 10px;
     // border: 1px solid black;
     input {
-        border: none;
+        padding: 4px;
+        border: 1px solid $grey_text;
         border-bottom: 2px solid $l_grey_text;
         font-size: $s_p_font;
+        outline: none;
+        width: 200px;
 
         text-align: center;
-        margin-left: 30px;
+        margin-left: 00px;
     }
     h1 {
-        margin: 0px;
+        margin: 0px 0px;
         font-size: $s_h_font;
         border-bottom: 1px solid $pri_color;
         color: $l_grey_text;
         font-weight: 100;
         text-align: start;
+
+        span {
+            font-size: $s_h_font;
+        }
     }
 }
 
+#reg_det_h {
+    margin-top: 20px;
+}
 .add_acc_btn {
-    display: block;
+    // display: block;
     height: 40px;
     width: 30%;
     font-size: $h_font;
@@ -84,6 +95,21 @@
     color: white;
     cursor: pointer;
     margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+}
+.add_acc_can_btn {
+    // display: block;
+    border: 1px solid $grey_text;
+    color: $grey_text;
+    height: 40px;
+    width: 30%;
+    font-size: $h_font;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: auto;
+    border-radius: 30px;
+
     margin-right: auto;
 }
 
@@ -98,7 +124,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-right: 80px;
+    padding-right: 30px;
+    width: 50%;
 
     border-right: 1px solid $pri_color;
 }
@@ -106,17 +133,26 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-right: 30px;
+    width: 50%;
+    margin-left: 30px;
 }
 
 .add_acc_deb_cre {
+    border: 1px solid black;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+
+    height: 20px;
+
     span {
         margin: 0px;
     }
 }
 
 input:focus {
-    border-bottom: 1px solid green;
+    // border-bottom: 1px solid green;
     outline: none;
 }
 
@@ -124,5 +160,82 @@ input:focus {
     margin-left: 50px;
 }
 select {
+    padding: 3px;
+    border: 1px solid $grey_text;
+    border-bottom: 2px solid $l_grey_text;
+    font-size: $s_p_font;
+    outline: none;
+    width: 200px;
+
+    text-align: center;
+    margin-left: 00px;
+}
+
+.add_acc_body span {
+    font-size: 15px;
+
+    margin: 10px 0px;
+}
+
+.two_items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.two_itemss {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+input[type="radio"] {
+    width: 10px;
+    margin: 0px 5px;
+}
+.si {
+    margin: 2vh 0px;
+}
+
+.checkboxes {
+    padding: 3.1px;
+    border: 1px solid $grey_text;
+    border-left: none;
+    color: $l_grey_text;
+}
+
+#add_acc_inp_add1 {
+    width: 25vw;
+}
+#add_acc_inp_add2 {
+    width: 25vw;
+}
+
+#add_acc_inp_mobnum {
+    width: 50px;
+}
+#add_acc_inp_phonenum {
+    width: 50px;
+}
+
+#add_acc_inp_phone {
+    width: 180px;
+}
+#add_acc_inp_mob {
+    width: 180px;
+}
+
+#bottom_btns {
+    width: 50%;
+    margin: auto;
+}
+
+#billing_add {
+    padding-right: 10px;
+    border-right: 1px solid $l_grey_text;
+    cursor: pointer;
+}
+
+#shipping_add {
     margin-left: 20px;
+    cursor: pointer;
 }

@@ -3,6 +3,40 @@ import cross from '../img/cancel.svg'
 
 class AddAcc extends React.Component {
 
+    shipAdd() {
+
+        this.setState(() => {
+
+            return {
+                bil_add: false
+            }
+        })
+    }
+    billAdd() {
+
+        this.setState(() => {
+
+            return {
+                bil_add: true
+            }
+        })
+    }
+
+
+    constructor(props) {
+
+        super(props)
+
+        this.shipAdd = this.shipAdd.bind(this)
+        this.billAdd = this.billAdd.bind(this)
+
+
+        this.state = {
+
+            bil_add: true
+        }
+    }
+
 
     render() {
 
@@ -13,6 +47,8 @@ class AddAcc extends React.Component {
                 <div className="overlay"></div>
 
                 <div className="add_acc_con">
+
+
 
                     <div className="add_acc_head">
                         <h1>Add Account</h1>
@@ -25,194 +61,235 @@ class AddAcc extends React.Component {
 
                             <h1>Account Details</h1>
 
-                            <div className="add_acc_name">
+                            <div className="two_items">
 
-                                <span>Name</span>
-                                <input className="add_acc_inp_name" type="text" placeholder="Enter Name here" />
+                                <div className="add_acc_name si">
+
+                                    <span>Account Name</span><br />
+                                    <input className="add_acc_inp_name" type="text" placeholder="Enter Name here" />
+
+                                </div>
+
+                                <div className="add_acc_type si">
+
+                                    <span>Account Type</span><br />
+
+                                    <select name="Group" className="add_acc_inp" id="add_acc_inp_group" placeholder="Select Group">
+
+                                        <option>Option one</option>
+                                        <option>Option one</option>
+                                        <option>Option one</option>
+                                    </select>
+
+
+                                </div>
+
+
 
                             </div>
 
 
-                            <div className="add_acc_print_name">
+                            <div className="add_acc_print_name si">
 
-                                <span>Print Name</span>
+                                <span>Print Name</span><br />
 
                                 <input className="add_acc_inp_num" placeholder="Enter Name here" type="text" />
 
 
                             </div>
-                            <div className="add_acc_Group">
-
-                                <span>Group</span>
-
-                                <select name="Group" className="add_acc_inp" id="add_acc_inp_group" placeholder="Select Group">
-
-                                    <option>Option one</option>
-                                    <option>Option one</option>
-                                    <option>Option one</option>
-                                </select>
 
 
-                            </div>
-                            <div className="add_acc_obal">
+                            <div className="add_acc_obal si">
 
-                                <span>Opening Balacing</span>
+                                <span>Opening Balacing</span><br />
 
                                 <input className="add_acc_inp_num" placeholder="Enter Amount" type="text" />
 
-
-                            </div>
-                            <div className="add_acc_deb_cre">
-
-                                <span>Debtor</span>
-
-                                <input className="add_acc_inp_num" type="checkbox" />
-                                <span id="creditor">Creditor</span>
-                                <input className="add_acc_inp_cre" type="checkbox" />
+                                <span className="checkboxes"> <input name="n" type="radio" /> Dr.</span>
+                                <span className="checkboxes"> <input name="n" type="radio" /> Cr.</span>
 
 
                             </div>
 
 
-                            <h1>Registration Details</h1>
 
 
 
-                            <div className="add_acc_status">
-
-                                <span>Status </span>
-
-                                <select id="add_acc_status">
-                                    <option value="option one">option one</option>
-                                    <option value="option one">option one</option>
-                                    <option value="option one">option one</option>
-                                    <option value="option one">option one</option>
-                                </select>
 
 
+                            <h1 id="reg_det_h"> Registration Details</h1>
+
+
+                            <div className="two_items">
+                                <div className="add_acc_status si">
+
+                                    <span>Status </span><br />
+
+                                    <select id="add_acc_status">
+                                        <option value="option one">option one</option>
+                                        <option value="option one">option one</option>
+                                        <option value="option one">option one</option>
+                                        <option value="option one">option one</option>
+                                    </select>
+
+
+                                </div>
+                                <div className="add_acc_gstnum si">
+
+                                    <span>GST No.</span><br />
+
+                                    <input className="add_acc_inp_gst" placeholder="Enter GST No." type="text" />
+
+
+                                </div>
                             </div>
-                            <div className="add_acc_gstnum">
 
-                                <span>GST No.</span>
+                            <div className="two_items">
+                                <div className="add_acc_pan si">
 
-                                <input className="add_acc_inp_gst" placeholder="Enter GST No." type="text" />
+                                    <span>Pan No.</span><br />
 
-
-                            </div>
-                            <div className="add_acc_pan">
-
-                                <span>Pan No.</span>
-
-                                <input className="add_acc_inp_pan" placeholder="Enter Pan No." type="text" />
+                                    <input className="add_acc_inp_pan" placeholder="Enter Pan No." type="text" />
 
 
-                            </div>
-                            <div className="add_acc_aadhar">
+                                </div>
+                                <div className="add_acc_aadhar si">
 
-                                <span>Aadhar No.</span>
+                                    <span>Aadhar No.</span><br />
 
-                                <input className="add_acc_inp_aadhar" placeholder="Enter Aadhar No." type="text" />
+                                    <input className="add_acc_inp_aadhar" placeholder="Enter Aadhar No." type="text" />
 
 
+                                </div>
                             </div>
 
 
                         </div>
 
-                        <div className="add_acc_body_right">
+                        <div className="add_acc_body_right ">
 
-                            <h1>Address</h1>
+                            <h1>
 
-                            <div className="add_acc_add1">
+                                <span id="billing_add" onClick={this.billAdd}
+                                    style={this.state.bil_add ? { color: "black" } : null} >
+                                    Billing Address
+                                </span>
 
-                                <span>Address Line 1</span>
-                                <input className="add_acc_inp_add1" type="text" placeholder="Address Line 1" />
+                                <span onClick={this.shipAdd} id="shipping_add"
+                                    style={this.state.bil_add ? null : { color: "black" }}>
+                                    Shipping Address
+                                </span>
+
+                            </h1>
+
+                            <div className="add_acc_add1 si">
+
+                                <span>Address Line 1</span><br />
+                                <input id="add_acc_inp_add1" type="text" placeholder="Address Line 1" />
 
                             </div>
 
 
-                            <div className="add_acc_add2">
+                            <div className="add_acc_add2 si">
 
-                                <span>Address Line 2</span>
-                                <input className="add_acc_inp_add2" type="text" placeholder="Address Line 2" />
+                                <span>Address Line 2</span><br />
+                                <input id="add_acc_inp_add2" type="text" placeholder="Address Line 2" />
 
                             </div>
-                            <div className="add_acc_pincode">
 
-                                <span>Pincode</span>
+                            <div className="two_items">
+
+                                <div className="add_acc_state si">
+
+                                    <span>State</span><br />
+
+                                    <select name="Group" id="add_acc_inp_state" >
+
+                                        <option>Select State</option>
+                                        <option>Option one</option>
+                                        <option>Option one</option>
+                                    </select>
+
+
+                                </div>
+
+                                <div className="add_acc_city si">
+
+                                    <span>City</span><br />
+
+                                    <select name="Group" id="add_acc_inp_city" >
+
+                                        <option>Select City</option>
+                                        <option>Option one</option>
+                                        <option>Option one</option>
+                                    </select>
+
+
+                                </div>
+
+
+                            </div>
+                            <div className="add_acc_pincode si">
+
+                                <span>Pincode</span><br />
                                 <input className="add_acc_inp_pincode" type="text" placeholder="Enter Pincode" />
 
                             </div>
-                            <div className="add_acc_state">
 
-                                <span>State</span>
-
-                                <select name="Group" id="add_acc_inp_state" >
-
-                                    <option>Select State</option>
-                                    <option>Option one</option>
-                                    <option>Option one</option>
-                                </select>
+                            <div className="two_items">
 
 
-                            </div>
-                            <div className="add_acc_city">
+                                <div className="add_acc_mobnum si">
 
-                                <span>City</span>
+                                    <span>Mobile No.</span><br />
 
-                                <select name="Group" id="add_acc_inp_city" >
+                                    <select name="mob" id="add_acc_inp_mobnum" >
 
-                                    <option>Select City</option>
-                                    <option>Option one</option>
-                                    <option>Option one</option>
-                                </select>
+                                        <option>+91</option>
+                                        <option>+1</option>
+                                        <option>+2</option>
+                                    </select>
 
-
-                            </div>
-                            <div className="add_acc_mobnum">
-
-                                <span>Mobile No.</span>
-
-                                <select name="mob" id="add_acc_inp_mobnum" >
-
-                                    <option>+91</option>
-                                    <option>+1</option>
-                                    <option>+2</option>
-                                </select>
-
-                                <input type="Number" className="add_acc_inp_mob" placeholder="Enter Mobile No." />
+                                    <input type="Number" id="add_acc_inp_mob" placeholder="Enter Mobile No." />
 
 
 
-                            </div>
-                            <div className="add_acc_phonenum">
+                                </div>
+                                <div className="add_acc_phonenum si">
 
-                                <span>Phone No.</span>
+                                    <span>Phone No.</span><br />
 
-                                <select name="mob" id="add_acc_inp_phonenum" >
+                                    <select name="mob" id="add_acc_inp_phonenum" >
 
-                                    <option>+91</option>
-                                    <option>Option one</option>
-                                    <option>Option one</option>
-                                </select>
+                                        <option>+91</option>
+                                        <option>Option one</option>
+                                        <option>Option one</option>
+                                    </select>
 
-                                <input type="Number" className="add_acc_inp_phone" placeholder="Enter Phone No." />
+                                    <input type="Number" id="add_acc_inp_phone" placeholder="Enter Phone No." />
+
+
+                                </div>
 
 
                             </div>
 
-                            <div className="add_acc_email">
 
-                                <span>E-mail ID</span>
-                                <input className="add_acc_inp_email" type="Email" placeholder="Enter e-mail Id" />
+                            <div className="two_items">
+                                <div className="add_acc_email si">
 
-                            </div>
+                                    <span>E-mail ID</span><br />
+                                    <input className="add_acc_inp_email" type="Email" placeholder="Enter e-mail Id" />
+
+                                </div>
 
 
-                            <div className="add_acc_add2">
+                                <div className="add_acc_note si">
 
-                                <span>Note (If any)</span>
-                                <input className="add_acc_inp_add2" type="text" placeholder="Note , if any" />
+                                    <span>Note (If any)</span><br />
+                                    <input className="add_acc_inp_note" type="text" placeholder="Note , if any" />
+
+                                </div>
 
                             </div>
 
@@ -221,12 +298,15 @@ class AddAcc extends React.Component {
 
 
                     </div>
-                    <button className="add_acc_btn" onClick={this.props.AddAccSaveBtn}>Save</button>
 
+                    <div id="bottom_btns" className="two_items">
+                        <button className="add_acc_can_btn" onClick={this.props.AddAccCrossBtn}>Cancel</button>
+                        <button className="add_acc_btn" onClick={this.props.AddAccSaveBtn}>Save</button>
 
-                </div>
+                    </div>
+                </div >
 
-            </div>
+            </div >
         )
     }
 }

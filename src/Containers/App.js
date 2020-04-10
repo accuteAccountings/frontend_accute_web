@@ -62,7 +62,7 @@ class App extends React.Component {
         this.state = {
             AddPro: false,
             AddAcc: false,
-            page: "rep"
+            page: "dash"
         }
 
     }
@@ -78,7 +78,9 @@ class App extends React.Component {
 
                     <TopBar />
                     <Clogo />
-                    <NavSec AddProCrossBtn={this.AddProCrossBtn} />
+                    <NavSec AddProCrossBtn={this.AddProCrossBtn}
+                        navItems={["Challen Reg.", "Daily Book ", "Ledger"]}
+                    />
                     <ProCon />
 
                 </div>
@@ -92,10 +94,28 @@ class App extends React.Component {
 
                     <TopBar />
                     <Clogo />
-                    <Dash />
+                    <Dash addAccBtn={this.AddAccCrossBtn} />
 
                 </div>
             )
+        }
+
+        if (this.state.page === "accounting") {
+
+            currentPage = (
+                <div className="pageBody" >
+
+                    <TopBar />
+                    <Clogo />
+                    <NavSec AddProCrossBtn={this.AddProCrossBtn}
+                        navItems={["Accounts ", "Products"]}
+                    />
+                    <ProCon />
+
+                </div>
+
+            )
+
         }
 
 

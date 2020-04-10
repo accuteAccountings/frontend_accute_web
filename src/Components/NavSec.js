@@ -11,9 +11,9 @@ class NavSec extends React.Component {
             <div className="nav_sec">
 
                 <div className="nav_items">
-                    <li className="active">Challan Reg.</li>
-                    <li>Daily Book</li>
-                    <li>Ledger</li>
+                    {this.props.navItems.map((item) => {
+                        return (<li>{item}</li>)
+                    })}
                 </div>
 
                 <div className="other_det">

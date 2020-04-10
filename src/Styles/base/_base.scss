@@ -8,11 +8,13 @@ body {
 
 .pageBody {
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 100vh;
 }
 
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 
 .pageBody {

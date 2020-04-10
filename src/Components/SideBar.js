@@ -9,11 +9,15 @@ class SideBar extends React.Component {
     navToRep() {
         this.props.navTo("rep")
     }
+    navToAcc() {
+        this.props.navTo("accounting")
+    }
 
     constructor(props) {
         super(props)
         this.navToDash = this.navToDash.bind(this)
         this.navToRep = this.navToRep.bind(this)
+        this.navToAcc = this.navToAcc.bind(this)
     }
 
     render() {
@@ -41,8 +45,9 @@ class SideBar extends React.Component {
                         <img src="" alt="" />
 
                     </li>
-                    <li className={this.props.actPage === "list" ? "side_btn act_s_btn" : "side_btn"} >
-                        <span>Lists</span>
+                    <li className={this.props.actPage === "accounting" ? "side_btn act_s_btn" : "side_btn"}
+                        onClick={this.navToAcc} >
+                        <span>Accounting</span>
                         <img src="" alt="" />
                     </li>
                     <li className={this.props.actPage === "trans" ? "side_btn act_s_btn" : "side_btn"}
@@ -54,6 +59,12 @@ class SideBar extends React.Component {
                         onClick={this.navToRep}
                     >
                         <span>Reports</span>
+                        <img src="" alt="" />
+                    </li>
+                    <li className={this.props.actPage === "agency" ? "side_btn act_s_btn" : "side_btn"}
+                        onClick={this.navToAgency}
+                    >
+                        <span>Agency</span>
                         <img src="" alt="" />
                     </li>
 
