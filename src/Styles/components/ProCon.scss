@@ -8,3 +8,34 @@
 
     box-shadow: 0px 0px 10px rgb(100, 100, 100);
 }
+
+#accounting_pro_table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 2px solid $l_grey_text;
+    border-collapse: collapse;
+    padding: 10px;
+    font-size: $p_font;
+}
+
+th {
+    color: $grey_text;
+}
+
+th:nth-child(1) {
+    width: 70px;
+}
+th:nth-child(4) {
+    width: 70px;
+}
+th:nth-child(5) {
+    width: 100px;
+}
+
+tr:nth-child(even) {
+    background-color: #f0f0f0;
+}

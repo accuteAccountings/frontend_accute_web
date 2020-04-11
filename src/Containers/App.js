@@ -62,7 +62,7 @@ class App extends React.Component {
         this.state = {
             AddPro: false,
             AddAcc: false,
-            page: "dash"
+            page: "accounting"
         }
 
     }

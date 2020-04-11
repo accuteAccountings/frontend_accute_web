@@ -1,19 +1,59 @@
 import React from 'react';
 import add_acc_big from '../img/add_acc.svg'
-import add_agents from '../img/add_agents.svg'
+// import add_agents from '../img/add_agents.svg'
 import add_rep from '../img/add_rep.svg'
-import add_trans from '../img/add_trans.svg'
+// import add_trans from '../img/add_trans.svg'
 import { Bar, Line, Pie } from 'react-chartjs-2';
 
 class Dash extends React.Component {
 
+
+
+    constructor(props) {
+        super(props)
+
+
+        this.state = {
+            data: 10,
+
+        }
+
+        let dec = false;
+        setInterval(() => {
+
+
+            if (this.state.data > 50) {
+                dec = true;
+            }
+            else if (this.state.data < 5) {
+                dec = false;
+            }
+
+            if (dec === false) {
+                this.setState((prevState) => {
+
+                    return { data: prevState.data + 1 }
+
+                })
+            }
+
+            else {
+                this.setState((prevState) => {
+
+                    return { data: prevState.data - 1 }
+
+                })
+            }
+
+        }, 500)
+    }
     render() {
 
         let data = {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 15, 25, 11, 10],
+                data: [12, 19, 15, 25, this.state.data, 10],
                 backgroundColor: [
                     '#29A8AB',
                     'rgba(54, 162, 235, 0.2)',
