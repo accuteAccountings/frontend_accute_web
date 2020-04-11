@@ -12,8 +12,8 @@
 }
 
 .add_acc_con {
-    height: 95vh;
-    width: 80vw;
+    height: 600px;
+    width: 1000px;
     background-color: white;
     position: fixed;
     z-index: 55;
@@ -29,15 +29,19 @@
     justify-content: space-between;
     background-color: white;
     border-bottom: 2px solid $pri_color;
+    height: 50px;
 
     img {
-        margin-top: 18px;
+        margin-top: 12px;
         margin-right: 30px;
         height: 20px;
         cursor: pointer;
     }
 
     h1 {
+        height: 80%;
+        padding: none;
+        margin-top: 8px;
         margin-left: 30px;
         font-size: $h_font;
         color: $pri_color;
@@ -54,25 +58,15 @@
 
     font-size: $p_font;
     color: $grey_text;
-    padding: 30px;
-    padding-top: 10px;
+    padding: 30px 30px;
+    // padding-top: 10px;
     // border: 1px solid black;
-    input {
-        padding: 4px;
-        border: 1px solid $grey_text;
-        border-bottom: 2px solid $l_grey_text;
-        font-size: $s_p_font;
-        outline: none;
-        width: 200px;
 
-        text-align: center;
-        margin-left: 00px;
-    }
     h1 {
         margin: 0px 0px;
         font-size: $s_h_font;
         border-bottom: 1px solid $pri_color;
-        color: $l_grey_text;
+        color: $grey_text;
         font-weight: 100;
         text-align: start;
 
@@ -80,6 +74,18 @@
             font-size: $s_h_font;
         }
     }
+}
+
+input {
+    border-radius: 4px;
+    border: 1px solid $grey_text;
+    border-bottom: 2px solid $l_grey_text;
+    font-size: $s_p_font;
+    outline: none;
+    width: 180px;
+    height: 25px;
+    text-align: center;
+    margin-left: 00px;
 }
 
 #reg_det_h {
@@ -126,6 +132,8 @@
     justify-content: space-between;
     padding-right: 30px;
     width: 50%;
+    padding-bottom: 30px;
+    // height: 440px;
 
     border-right: 1px solid $pri_color;
 }
@@ -135,6 +143,8 @@
     justify-content: space-between;
     width: 50%;
     margin-left: 30px;
+    padding-bottom: 20px;
+    padding-right: 10px;
 }
 
 .add_acc_deb_cre {
@@ -160,12 +170,14 @@ input:focus {
     margin-left: 50px;
 }
 select {
-    padding: 3px;
+    // padding: 3px;
+    border-radius: 4px;
     border: 1px solid $grey_text;
     border-bottom: 2px solid $l_grey_text;
     font-size: $s_p_font;
     outline: none;
-    width: 200px;
+    width: 180px;
+    height: 25px;
 
     text-align: center;
     margin-left: 00px;
@@ -190,16 +202,29 @@ select {
 
 input[type="radio"] {
     width: 10px;
-    margin: 0px 5px;
+    width: 15px;
 }
 .si {
-    margin: 2vh 0px;
+    margin: 0rem 0px;
+    span {
+        margin-bottom: 2px;
+    }
+    input {
+        margin-top: 2px;
+    }
+    select {
+        margin-top: 2px;
+        color: $grey_text;
+    }
 }
 
 .checkboxes {
-    padding: 3.1px;
+    position: relative;
+    top: 2px;
+    padding: 2px;
     border: 1px solid $grey_text;
     border-left: none;
+
     color: $l_grey_text;
 }
 
@@ -218,10 +243,10 @@ input[type="radio"] {
 }
 
 #add_acc_inp_phone {
-    width: 180px;
+    width: 130px;
 }
 #add_acc_inp_mob {
-    width: 180px;
+    width: 130px;
 }
 
 #bottom_btns {

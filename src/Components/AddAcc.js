@@ -93,7 +93,7 @@ class AddAcc extends React.Component {
 
                                 <span>Print Name</span><br />
 
-                                <input className="add_acc_inp_num" placeholder="Enter Name here" type="text" />
+                                <input className="add_acc_inp_name" placeholder="Enter Name here" type="text" />
 
 
                             </div>
@@ -104,9 +104,9 @@ class AddAcc extends React.Component {
                                 <span>Opening Balacing</span><br />
 
                                 <input className="add_acc_inp_num" placeholder="Enter Amount" type="text" />
-
+                                {/* 
                                 <span className="checkboxes"> <input name="n" type="radio" /> Dr.</span>
-                                <span className="checkboxes"> <input name="n" type="radio" /> Cr.</span>
+                                <span className="checkboxes"> <input name="n" type="radio" /> Cr.</span> */}
 
 
                             </div>
