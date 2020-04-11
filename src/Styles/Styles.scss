@@ -5,5 +5,10 @@
 @import "./components/AddAcc.scss";
 @import "./components/Clogo.scss";
 @import "./components/NavSec.scss";
-@import "./components/ProCon.scss";
+
+.pro_con {
+    @import "./components/ProCon.scss";
+}
+
 @import "./containers/Dash.scss";
+@import "./components/AddVouch.scss";

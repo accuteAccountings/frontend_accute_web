@@ -11,17 +11,17 @@ class NavSec extends React.Component {
             <div className="nav_sec">
 
                 <div className="nav_items">
-                    {this.props.navItems.map((item) => {
+                    {this.props.navItems && this.props.navItems.map((item) => {
                         return (<li>{item}</li>)
                     })}
                 </div>
 
                 <div className="other_det">
-                    <div className="add_account" onClick={this.props.AddProCrossBtn}>
+                    {this.props.isAddAccount && <div className="add_account" onClick={this.props.AddProCrossBtn}>
 
                         + Add Account
 
-                    </div>
+                    </div>}
 
                     <img src={ref} alt="" />
 
@@ -30,9 +30,13 @@ class NavSec extends React.Component {
 
 
 
-            </div>
+            </div >
         )
     }
 }
 
 export default NavSec
+
+NavSec.defaultProps = {
+    isAddAccount: true
+}

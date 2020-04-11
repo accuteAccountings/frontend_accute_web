@@ -6,6 +6,7 @@ import AddAcc from '../Components/AddAcc';
 import Clogo from '../Components/Clogo';
 import NavSec from '../Components/NavSec';
 import ProCon from '../Components/ProCon';
+import AddVouch from '../Components/AddVouch';
 import Dash from './Dash';
 
 class App extends React.Component {
@@ -62,7 +63,7 @@ class App extends React.Component {
         this.state = {
             AddPro: false,
             AddAcc: false,
-            page: "accounting"
+            page: "trans"
         }
 
     }
@@ -111,6 +112,23 @@ class App extends React.Component {
                         navItems={["Accounts ", "Products"]}
                     />
                     <ProCon />
+
+                </div>
+
+            )
+
+        }
+        if (this.state.page === "trans") {
+
+            currentPage = (
+                <div className="pageBody" >
+
+                    <TopBar margin={{ marginBottom: "50px" }} />
+
+                    <NavSec AddProCrossBtn={this.AddProCrossBtn} isAddAccount={false}
+
+                    />
+                    <AddVouch />
 
                 </div>
 

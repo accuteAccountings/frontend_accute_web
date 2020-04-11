@@ -12,12 +12,16 @@ class SideBar extends React.Component {
     navToAcc() {
         this.props.navTo("accounting")
     }
+    navToTrans() {
+        this.props.navTo("trans")
+    }
 
     constructor(props) {
         super(props)
         this.navToDash = this.navToDash.bind(this)
         this.navToRep = this.navToRep.bind(this)
         this.navToAcc = this.navToAcc.bind(this)
+        this.navToTrans = this.navToTrans.bind(this)
     }
 
     render() {
@@ -51,7 +55,7 @@ class SideBar extends React.Component {
                         <img src="" alt="" />
                     </li>
                     <li className={this.props.actPage === "trans" ? "side_btn act_s_btn" : "side_btn"}
-                    >
+                        onClick={this.navToTrans} >
                         <span>Transactions</span>
                         <img src="" alt="" />
                     </li>

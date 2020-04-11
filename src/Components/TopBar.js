@@ -5,11 +5,19 @@ import settings from '../img/settings.svg'
 
 class TopBar extends React.Component {
 
+
+
+
     render() {
+
+
+        let margin = {
+            marginBottom: "50px",
+        }
 
         return (
 
-            <div className="top_bar">
+            <div className="top_bar" style={margin}>
 
                 <img className="menu_btn" src={MenuBtn} alt="" />
 
@@ -21,6 +29,10 @@ class TopBar extends React.Component {
             </div>
         )
     }
+}
+
+TopBar.defaultProps = {
+    margin: "5px"
 }
 
 export default TopBar

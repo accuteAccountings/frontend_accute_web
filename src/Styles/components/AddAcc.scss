@@ -41,7 +41,7 @@
     h1 {
         height: 80%;
         padding: none;
-        margin-top: 8px;
+        margin-top: 12px;
         margin-left: 30px;
         font-size: $h_font;
         color: $pri_color;
@@ -83,7 +83,7 @@ input {
     font-size: $s_p_font;
     outline: none;
     width: 180px;
-    height: 25px;
+    height: 30px;
     text-align: center;
     margin-left: 00px;
 }
@@ -177,7 +177,7 @@ select {
     font-size: $s_p_font;
     outline: none;
     width: 180px;
-    height: 25px;
+    height: 30px;
 
     text-align: center;
     margin-left: 00px;
@@ -215,6 +215,18 @@ input[type="radio"] {
     select {
         margin-top: 2px;
         color: $grey_text;
+    }
+
+    input {
+        border-radius: 4px;
+        border: 1px solid $grey_text;
+        border-bottom: 2px solid $l_grey_text;
+        font-size: $s_p_font;
+        outline: none;
+        width: 180px;
+        height: 30px;
+        text-align: center;
+        margin-left: 00px;
     }
 }
 
