@@ -1,5 +1,5 @@
 import React from 'react'
-import add_img from '../img/add_img.svg'
+import add_img from './../img/add_img.svg'
 
 class SideBar extends React.Component {
 

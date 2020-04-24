@@ -9,7 +9,6 @@ import './Styles/Styles.scss'
 ReactDOM.render(
 
   <App />
-
   ,
   document.getElementById('root')
 );

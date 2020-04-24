@@ -1,5 +1,5 @@
 import React from 'react'
-import cross from '../img/cancel.svg'
+import cross from './../img/cancel.svg'
 
 class AddAcc extends React.Component {
 

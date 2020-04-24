@@ -1,5 +1,5 @@
 import React from 'react'
-import ref from '../img/refresh.svg'
+import ref from './../img/refresh.svg'
 
 
 class NavSec extends React.Component {

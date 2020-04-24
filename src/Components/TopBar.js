@@ -1,7 +1,7 @@
 import React from 'react'
-import MenuBtn from '../img/menu.svg'
-import help from '../img/info.svg'
-import settings from '../img/settings.svg'
+import MenuBtn from './../img/menu.svg'
+import help from './../img/info.svg'
+import settings from './../img/settings.svg'
 
 class TopBar extends React.Component {
 
