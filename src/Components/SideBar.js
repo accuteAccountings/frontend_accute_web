@@ -1,5 +1,5 @@
 import React from 'react'
-import add_img from './../img/add_img.svg'
+import d_img from './../img/social-media.svg'
 
 class SideBar extends React.Component {
 
@@ -16,12 +16,46 @@ class SideBar extends React.Component {
         this.props.navTo("trans")
     }
 
+    getUserProImg(){
+
+        fetch('/api/profile/img', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+
+        }).then(res => res.json())
+        .then(data =>{
+
+
+           if(!data.pro_img) {this.setState(()=>{
+                return {
+                    pro_img:data.pro_img
+                }
+            })}
+        })
+
+
+            .catch((error) => {
+            console.log(error)
+                
+
+
+            })
+
+    }
+
     constructor(props) {
         super(props)
         this.navToDash = this.navToDash.bind(this)
         this.navToRep = this.navToRep.bind(this)
         this.navToAcc = this.navToAcc.bind(this)
         this.navToTrans = this.navToTrans.bind(this)
+        this.getUserProImg = this.getUserProImg.bind(this)
+
+        this.state = {
+            pro_img:d_img
+        }
+
+        this.getUserProImg()
     }
 
     render() {
@@ -32,7 +66,7 @@ class SideBar extends React.Component {
 
                 <div className="side_bar_con">
 
-                    <img className="add_img_btn" src={add_img} alt="" />
+                    <img className="add_img_btn" src={this.state.pro_img} alt="" />
 
                     <li className="new_btn" onClick={this.props.AddAccCrossBtn}>
 

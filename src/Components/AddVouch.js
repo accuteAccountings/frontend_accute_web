@@ -4,6 +4,72 @@ import cross from './../img/cancel.svg'
 
 class AddVouch extends React.Component {
 
+
+    vochAddPro(){
+
+        let vouch_pro = document.querySelector("#vouch_pro_item").value
+        let vouch_table = document.querySelector("#vouch_table")
+        let prodd = this.state.products.find(function(post, index) {
+            if(post.hsn_num == vouch_pro)
+                return true;
+        });
+
+        let newItem = document.createElement('tr')
+        newItem.innerHTML=`<td>1</td>
+                           <td>${prodd.product_name}</td>
+                           <td>${prodd.hsn_num}</td>
+                           <td><a href="">edit</a></td>
+                           <td><a href="">X</a></td>`
+        
+       
+
+
+        vouch_table.appendChild(newItem)
+
+
+    }
+
+    getProducts(){
+
+
+        fetch('/api/products',{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              }
+        }).then(res => res.json())
+        .then(data => {
+
+            
+            if(data.Products)
+            {this.setState(()=>{
+                return {
+                    products:data.Products
+                }
+            })}
+        })
+        .catch((err)=>{
+            alert(err)
+        })
+
+
+    }
+
+
+    constructor(props){
+        super(props)
+        this.vochAddPro= this.vochAddPro.bind(this)
+        this.getProducts= this.getProducts.bind(this)
+
+        this.state ={
+            products:[]
+
+        }
+        this.getProducts()
+
+    }
+
     render() {
 
         return (
@@ -116,9 +182,13 @@ class AddVouch extends React.Component {
                             <div className="vouch_si">
                                 <span>Product / Item</span><br />
                                 <select name="vouch_pro_item" id="vouch_pro_item" >
-                                    <option value="opt1">D S Textile</option>
-                                    <option value="opt1">D S Textile</option>
-                                    <option value="opt1">D S Textile</option>
+
+                                        {this.state.products && this.state.products.map((pro)=>{
+
+                                            return (<option value={pro.hsn_num}>{pro.product_name}</option>)
+
+                                        })}
+                                  
                                 </select>
                             </div>
 
@@ -138,7 +208,7 @@ class AddVouch extends React.Component {
                             </div>
                             <div className="vouch_si">
 
-                                <button id="vouch_add_btn">Add</button>
+                                <button id="vouch_add_btn" onClick={this.vochAddPro}>Add</button>
                             </div>
 
 
@@ -150,7 +220,6 @@ class AddVouch extends React.Component {
                         <div className="vouch_table_con">
 
                             <table id="vouch_table">
-
 
                                 <tr>
 
@@ -169,74 +238,7 @@ class AddVouch extends React.Component {
                                     <td>15684542545</td>
                                     <td><a href="">edit</a></td>
                                     <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>  <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
                                 </tr>
-
                             </table>
 
                         </div>

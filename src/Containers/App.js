@@ -24,14 +24,16 @@ class App extends React.Component {
     AddProCrossBtn() {
 
 
-        this.setState(() => {
+        this.setState((prevState) => {
 
             if (this.state.AddPro) return {
-                AddPro: false
+                AddPro: false,
             }
 
             else return {
-                AddPro: true
+                AddPro: true,
+                
+
             }
         })
     }
@@ -63,7 +65,8 @@ class App extends React.Component {
         this.state = {
             AddPro: false,
             AddAcc: false,
-            page: "trans"
+            page: "trans",
+        
         }
 
     }
@@ -111,7 +114,7 @@ class App extends React.Component {
                     <NavSec AddProCrossBtn={this.AddProCrossBtn}
                         navItems={["Accounts ", "Products"]}
                     />
-                    <ProCon />
+                    <ProCon reload={this.state.AddPro} />
 
                 </div>
 
