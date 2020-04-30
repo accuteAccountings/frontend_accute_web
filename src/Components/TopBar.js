@@ -5,6 +5,29 @@ import settings from './../img/settings.svg'
 
 class TopBar extends React.Component {
 
+    logout() {
+
+        fetch('/api/login', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+
+        }).then(() => {
+            window.location.href = "/home"
+        })
+
+
+            .catch((error) => {
+                alert(error)
+
+            })
+
+
+
+
+
+
+    }
+
 
 
 
@@ -22,7 +45,7 @@ class TopBar extends React.Component {
                 <img className="menu_btn" src={MenuBtn} alt="" />
 
 
-                <li className="top_btns help_btn"><span><img src={help} alt="?" /></span> Help</li>
+                <li className="top_btns help_btn" onClick={this.logout}><span><img src={help} alt="?" /></span> Help</li>
                 <li className="top_btns settings_btn"> <span><img src={settings} alt="" /></span> Settings</li>
 
 
