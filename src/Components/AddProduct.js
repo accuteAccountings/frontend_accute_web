@@ -1,9 +1,16 @@
 import React from 'react'
 import cross from './../img/cancel.svg'
+import load from './../img/loading.svg'
 
 class AddProducts extends React.Component {
 
     addProSaveBtn(){
+
+        this.setState(()=>{
+            return {
+                loading : true
+            }
+        })
 
         let pro_name = document.querySelector(".add_pro_inp_name").value
         let hsn_num = document.querySelector(".add_pro_inp_num").value
@@ -26,19 +33,34 @@ class AddProducts extends React.Component {
           .then(res=> res.json())
           .then(r =>{
               if(r.product){
-                alert("Product Saved")
+                this.setState(()=>{
+                    return {
+                        loading : false
+                    }
+                })
+                this.props.getProducts()
                 this.props.AddProCrossBtn()
 
               }
               else {
                   alert("Unable to save products, Please Try again later")
                 this.props.AddProCrossBtn()
+                this.setState(()=>{
+                    return {
+                        loading : false
+                    }
+                })
 
               }
           })
           .catch((err)=>{
               alert(err)
               this.props.AddProCrossBtn()
+              this.setState(()=>{
+                return {
+                    loading : false
+                }
+            })
 
           })
     }
@@ -48,6 +70,9 @@ class AddProducts extends React.Component {
     constructor(props){
         super(props)
         this.addProSaveBtn = this.addProSaveBtn.bind(this)
+        this.state={
+            loading:false
+        }
     }
 
 
@@ -85,7 +110,14 @@ class AddProducts extends React.Component {
 
                         <div className="two_items" id="add_pro_btns">
                             <button className="add_pro_can_btn" onClick={this.props.AddProCrossBtn}>Cancel</button>
-                            <button className="add_pro_btn" onClick={this.addProSaveBtn}>Save</button>
+
+                            <button className="add_pro_btn" 
+                            onClick={this.state.loading ? 
+                            null
+                            :this.addProSaveBtn}>
+                            
+                            {this.state.loading ? <img src={load} class="loading"/> : "Save"}
+                            </button>
                         </div>
                     </div>
 

@@ -4,7 +4,16 @@ import ref from './../img/refresh.svg'
 
 class NavSec extends React.Component {
 
+    
+
+    constructor(props){
+        super(props)
+       
+
+    }
+
     render() {
+
 
         return (
 
@@ -12,31 +21,40 @@ class NavSec extends React.Component {
 
                 <div className="nav_items">
                     {this.props.navItems && this.props.navItems.map((item) => {
-                        return (<li>{item}</li>)
+                        return (<li 
+                        className={this.props.ProOrAcc === item ? "black": "grey"}
+                        onClick={() =>{this.props.setProOrAcc(item)}}>{item}
+                        </li>)
                     })}
                 </div>
 
                 <div className="other_det">
-                    {this.props.isAddAccount && <div className="add_account" onClick={this.props.AddProCrossBtn}>
 
-                        + Add Account
+                <div className="add_account"
+                    onClick={this.props.ProOrAcc ==="Products" ? 
+                    this.props.AddProCrossBtn :
+                    this.props.AddAccCrossBtn
+                    
+                    }>
 
-                    </div>}
+                        + Add {this.props.ProOrAcc === "Products" ? "Product" :"Account"}
 
-                    <img src={ref} alt="" />
+                    </div>
 
-                    <input type="text" />
+                    <img src={ref} onClick={this.props.ProOrAcc ==="Products" ? 
+                    this.props.getProducts :
+                    this.props.getAccounts} />
+
+                    <input type="text" id="searchForProOrAcc" 
+                    onChange={()=>{this.props.fi()}} />
                 </div>
 
 
 
-            </div >
+            </div>
         )
     }
 }
 
 export default NavSec
 
-NavSec.defaultProps = {
-    isAddAccount: true
-}

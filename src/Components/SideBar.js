@@ -26,7 +26,7 @@ class SideBar extends React.Component {
         .then(data =>{
 
 
-           if(!data.pro_img) {this.setState(()=>{
+           if(data.pro_img) {this.setState(()=>{
                 return {
                     pro_img:data.pro_img
                 }

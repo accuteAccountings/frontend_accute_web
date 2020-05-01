@@ -1,9 +1,36 @@
-body {
+@import './settings';
+
+body{
     padding: 0px;
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
     background-color: #eeeeee;
     overflow: hidden;
+}
+
+.loading{
+    height: 20px;
+    animation-name: loading;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    
+}
+
+@keyframes loading {
+    from {
+        transform: rotateZ(0deg);
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+.black{
+   color:black;
+}
+.grey{
+    color:$grey_text;
 }
 
 .pageBody {
