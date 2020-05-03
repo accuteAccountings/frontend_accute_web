@@ -64,7 +64,7 @@ class App extends React.Component {
     }
 
     fi(){
-        let first 
+        
 
         let data = document.getElementById("searchForProOrAcc").value
         
@@ -138,6 +138,18 @@ class App extends React.Component {
     
 
     setProOrAcc(ans){
+
+       
+
+        if(ans ==="Accounts "){
+            console.log("acc")
+            this.getAccounts()
+        }
+       if(ans ==="Products"){
+            console.log("rpo")
+
+            this.getProducts()
+        }
        
 
         this.setState((prevState)=>{
@@ -282,7 +294,12 @@ class App extends React.Component {
                     getProducts={this.getProducts}
                      /> 
                 : null}
-                {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} /> : null}
+                {this.state.AddAcc ?
+                 <AddAcc 
+                 AddAccCrossBtn={this.AddAccCrossBtn}
+                 getAccounts={this.getAccounts}
+                
+                 /> : null}
 
 
 

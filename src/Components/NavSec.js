@@ -6,11 +6,6 @@ class NavSec extends React.Component {
 
     
 
-    constructor(props){
-        super(props)
-       
-
-    }
 
     render() {
 
@@ -41,7 +36,7 @@ class NavSec extends React.Component {
 
                     </div>
 
-                    <img src={ref} onClick={this.props.ProOrAcc ==="Products" ? 
+                    <img src={ref} alt=" " onClick={this.props.ProOrAcc ==="Products" ? 
                     this.props.getProducts :
                     this.props.getAccounts} />
 

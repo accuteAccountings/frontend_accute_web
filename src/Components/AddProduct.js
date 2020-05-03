@@ -4,6 +4,14 @@ import load from './../img/loading.svg'
 
 class AddProducts extends React.Component {
 
+
+    setValue = ()=>{
+
+        document.querySelector(".add_pro_inp_name").value = this.props.data.product_name
+        document.querySelector(".add_pro_inp_num").defaultValue = this.props.data.hsn_num
+    }
+  
+
     addProSaveBtn(){
 
         this.setState(()=>{
@@ -17,12 +25,16 @@ class AddProducts extends React.Component {
         
         let data = {
             product_name:pro_name,
-            hsn_num : hsn_num
+            hsn_num : hsn_num,
+            id:this.props.data.id
         }
+
+        let met ;
+        this.props.mode === "edit" ? met = "PUT" : met = "POST"
 
 
         fetch('/api/products', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            method: met  , // *GET, POST, PUT, DELETE, etc.
           
             headers: {
               'Content-Type': 'application/json'
@@ -73,10 +85,23 @@ class AddProducts extends React.Component {
         this.state={
             loading:false
         }
+
+        if(this.props.mode ==="edit"){
+            
+        }
+
+
+    }
+
+    componentDidMount(){
+
+        this.setValue()
     }
 
 
     render() {
+
+        
 
         return (
 
@@ -86,9 +111,10 @@ class AddProducts extends React.Component {
 
                 <div className="add_pro_con">
 
+
                     <div className="add_pro_head">
                         <h1>Add Products</h1>
-                        <img onClick={this.props.AddProCrossBtn} src={cross} alt="" />
+                        <img onClick={this.props.AddProCrossBtn} src={cross} alt=" " />
                     </div>
 
                     <div className="add_pro_body">
@@ -96,14 +122,16 @@ class AddProducts extends React.Component {
                         <div className="add_pro_name">
 
                             <span>Product Name</span>
-                            <input className="add_pro_inp_name" type="text" placeholder="Enter Product Name" />
+                            <input className="add_pro_inp_name" 
+                             type="text" placeholder="Enter Product Name" />
 
                         </div>
                         <div className="add_pro_num">
 
                             <span>HSN No.</span>
 
-                            <input className="add_pro_inp_num" placeholder="Enter HSN No." type="text" />
+                            <input className="add_pro_inp_num"
+                             placeholder="Enter HSN No." type="text" />
 
 
                         </div>
@@ -116,7 +144,7 @@ class AddProducts extends React.Component {
                             null
                             :this.addProSaveBtn}>
                             
-                            {this.state.loading ? <img src={load} class="loading"/> : "Save"}
+                            {this.state.loading ? <img src={load} className="loading" alt=" "/> : "Save"}
                             </button>
                         </div>
                     </div>
@@ -127,6 +155,10 @@ class AddProducts extends React.Component {
             </div>
         )
     }
+}
+
+AddProducts.defaultProps = {
+    mode : "add"
 }
 
 export default AddProducts

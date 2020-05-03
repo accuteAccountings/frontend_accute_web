@@ -65,3 +65,7 @@ input,
 select {
     font-family: Lucida Sans Unicode, regular;
 }
+
+button:focus {
+    outline: none;
+}

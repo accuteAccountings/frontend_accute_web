@@ -10,8 +10,11 @@ class AddVouch extends React.Component {
         let vouch_pro = document.querySelector("#vouch_pro_item").value
         let vouch_table = document.querySelector("#vouch_table")
         let prodd = this.state.products.find(function(post, index) {
-            if(post.hsn_num == vouch_pro)
-                return true;
+            if(post.hsn_num === vouch_pro)
+               { return true;}
+               else {
+                   return false;
+               }
         });
 
         let newItem = document.createElement('tr')
@@ -25,6 +28,8 @@ class AddVouch extends React.Component {
 
 
         vouch_table.appendChild(newItem)
+
+        
 
 
     }
@@ -232,13 +237,7 @@ class AddVouch extends React.Component {
 
                                 </tr>
 
-                                <tr>
-                                    <td>1</td>
-                                    <td>Milk</td>
-                                    <td>15684542545</td>
-                                    <td><a href="">edit</a></td>
-                                    <td><a href="">X</a></td>
-                                </tr>
+                                
                             </table>
 
                         </div>
