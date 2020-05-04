@@ -26,7 +26,15 @@ class AddProducts extends React.Component {
         let data = {
             product_name:pro_name,
             hsn_num : hsn_num,
-            id:this.props.data.id
+        
+        }
+
+        if(this.props.mode==="edit"){
+            data = {
+                product_name:pro_name,
+                hsn_num : hsn_num,
+                id:this.props.data.id
+            }
         }
 
         let met ;
@@ -86,16 +94,14 @@ class AddProducts extends React.Component {
             loading:false
         }
 
-        if(this.props.mode ==="edit"){
-            
-        }
+        
 
 
     }
 
     componentDidMount(){
 
-        this.setValue()
+       if(this.props.mode==="edit") {this.setValue()}
     }
 
 

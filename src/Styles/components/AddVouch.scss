@@ -7,6 +7,19 @@
     box-shadow: 0px 0px 10px rgb(163, 163, 163);
     height: 200vh;
 }
+.tbtn {
+    cursor: pointer;
+    span {
+        color: blue;
+        text-decoration: underline;
+    }
+}
+.tbtn:hover {
+    span {
+        color: darkblue;
+        text-decoration: underline;
+    }
+}
 
 .vouch_body {
     display: flex;
