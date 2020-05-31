@@ -1,6 +1,6 @@
-@import './settings';
+@import "./settings";
 
-body{
+body {
     padding: 0px;
     margin: 0px;
     font-family: Arial, Helvetica, sans-serif;
@@ -8,13 +8,29 @@ body{
     overflow: hidden;
 }
 
-.loading{
+#none {
+    display: none;
+    text-align: center;
+    h1 {
+        margin: 30px auto;
+    }
+}
+
+@media screen and (max-width: 961px) {
+    #root {
+        display: none;
+    }
+    #none {
+        display: block;
+    }
+}
+
+.loading {
     height: 20px;
     animation-name: loading;
     animation-timing-function: linear;
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
-    
 }
 
 @keyframes loading {
@@ -26,11 +42,11 @@ body{
     }
 }
 
-.black{
-   color:black;
+.black {
+    color: black;
 }
-.grey{
-    color:$grey_text;
+.grey {
+    color: $grey_text;
 }
 
 .pageBody {

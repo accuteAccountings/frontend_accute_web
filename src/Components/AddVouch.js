@@ -11,6 +11,7 @@ class AddVouch extends React.Component {
 		let vouch_rate = document.querySelector('#vouch_rate').value;
 
 		let pro_name = this.state.products.find((o) => {
+			// eslint-disable-next-line
 			return o.id == pro_id;
 		});
 		let item = {
@@ -69,10 +70,15 @@ class AddVouch extends React.Component {
 		let vouch_quantity = document.querySelector('#vouch_quantity').value;
 		let vouch_gst = document.querySelector('#vouch_gst').value;
 		let vouch_rate = document.querySelector('#vouch_rate').value;
+		let pro_name = this.state.products.find((o) => {
+			// eslint-disable-next-line
+			return o.id == pro_id;
+		});
 
 		let arr = this.state.items;
 
 		arr[this.state.editItem].pro_id = pro_id;
+		arr[this.state.editItem].product_name = pro_name;
 		arr[this.state.editItem].quantity = vouch_quantity;
 		arr[this.state.editItem].gst = vouch_gst;
 		arr[this.state.editItem].rate = vouch_rate;
@@ -343,6 +349,72 @@ class AddVouch extends React.Component {
 											</tr>
 										);
 									})}
+									{this.state.items.length === 0 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
+									{this.state.items.length < 2 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
+									{this.state.items.length < 3 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
+									{this.state.items.length < 4 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
+									{this.state.items.length < 5 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
+									{this.state.items.length < 6 && (
+										<tr>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+											<td> </td>
+										</tr>
+									)}
 								</tbody>
 							</table>
 						</div>

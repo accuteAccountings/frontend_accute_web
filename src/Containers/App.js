@@ -143,7 +143,7 @@ class App extends React.Component {
 		this.state = {
 			AddPro: false,
 			AddAcc: false,
-			page: 'trans',
+			page: 'dash',
 			ProOrAcc: 'Products',
 			products: [],
 			tempProducts: [],
@@ -208,8 +208,16 @@ class App extends React.Component {
 			currentPage = (
 				<div className="pageBody">
 					<TopBar margin={{ marginBottom: '50px' }} />
-
-					<NavSec AddProCrossBtn={this.AddProCrossBtn} isAddAccount={false} />
+					{/* <NavSec
+						AddProCrossBtn={this.AddProCrossBtn}
+						navItems={[ 'Accounts ', 'Products' ]}
+						getProducts={this.getProducts}
+						getAccounts={this.getAccounts}
+						setProOrAcc={this.setProOrAcc}
+						ProOrAcc={this.state.ProOrAcc}
+						AddAccCrossBtn={this.AddAccCrossBtn}
+						fi={this.fi}
+					/> */}
 					<AddVouch />
 				</div>
 			);

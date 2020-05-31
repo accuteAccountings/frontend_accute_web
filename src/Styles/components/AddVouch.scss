@@ -3,9 +3,12 @@
 .add_vouch_con {
     background-color: white;
     width: 90%;
-    margin-left: 30px;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0px 0px 10px rgb(163, 163, 163);
-    height: 200vh;
+    // height: 200vh;
+    // padding-bottom: 100px;
+    margin-bottom: 100px;
 }
 .tbtn {
     cursor: pointer;
@@ -34,8 +37,10 @@
     width: 30%;
 
     p {
+        height: 20px;
         cursor: pointer;
         color: $grey_text;
+        margin-top: 22px;
     }
 }
 
@@ -139,6 +144,7 @@ td {
     border-collapse: collapse;
     padding: 5px;
     font-size: $p_font;
+    height: 40px;
 }
 
 th {

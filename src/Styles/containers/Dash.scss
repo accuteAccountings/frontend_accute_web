@@ -3,21 +3,26 @@
 .Dash {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .dash_con {
     // height: 500vh;
+
     width: 66%;
     background-color: white;
     box-shadow: 0 0 10px rgb(129, 129, 129);
     margin: 30px;
 }
+canvas {
+    height: 20vw !important;
+    width: 20vw !important;
+}
 
 .chart {
     padding: 10px;
     height: 23vw;
-    width: 90%;
+    width: 23vw;
     background-color: white;
     box-shadow: 0 0 10px rgb(129, 129, 129);
     margin-right: 30px;
@@ -25,7 +30,7 @@
     margin-top: 30px;
 }
 .charts {
-    width: 30vw;
+    // width: 30vw;
     transform: translateY(-40px);
 }
 
@@ -47,12 +52,12 @@
     text-align: center;
     border: 2px solid $pri_color;
     margin: 50px;
-    width: 200px;
-    height: 150px;
+    width: 30vw;
+    height: 10vw;
     cursor: pointer;
     user-select: none;
     h1 {
-        font-size: $h_font;
+        font-size: 2vw;
         color: $grey_text;
     }
 
@@ -85,4 +90,9 @@
         user-select: none;
         margin: 0px;
     }
+}
+
+.chartjs-render-monitor {
+    display: block;
+    width: 10vw;
 }
