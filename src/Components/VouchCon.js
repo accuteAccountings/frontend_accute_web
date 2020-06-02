@@ -3,7 +3,7 @@ import Delete from '../Components/Delete';
 import AddProducts from '../Components/AddProduct';
 import AddAcc from '../Components/AddAcc';
 
-class ProCon extends React.Component {
+class VouchCon extends React.Component {
 	deleteHide = () => {
 		this.setState(() => {
 			return {
@@ -85,7 +85,7 @@ class ProCon extends React.Component {
 					<AddProducts
 						AddProCrossBtn={this.hideAddProduct}
 						getProducts={this.props.getProducts}
-						mode={'view'}
+						mode={'edit'}
 						data={this.state.proData}
 					/>
 				)}
@@ -93,7 +93,7 @@ class ProCon extends React.Component {
 					<AddAcc
 						AddAccCrossBtn={this.hideAddAcc}
 						getAccounts={this.props.getAccounts}
-						mode={'view'}
+						mode={'edit'}
 						data={this.state.accData}
 					/>
 				)}
@@ -107,7 +107,7 @@ class ProCon extends React.Component {
 								<th>S.No. </th>
 								<th>Product Name</th>
 								<th>Product HSN No.</th>
-								<th>View/Edit</th>
+								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
 						) : (
@@ -116,7 +116,7 @@ class ProCon extends React.Component {
 								<th>Account Name</th>
 								<th>Type</th>
 								<th>GST No.</th>
-								<th>View/Edit</th>
+								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
 						)}
@@ -135,7 +135,7 @@ class ProCon extends React.Component {
 												this.showAddProduct(pro.id);
 											}}
 										>
-											<span>View/Edit</span>
+											<span>edit</span>
 										</td>
 										<td
 											className="tbtn"
@@ -162,7 +162,7 @@ class ProCon extends React.Component {
 												this.showAddAcc(acc.id);
 											}}
 										>
-											<span>View/Edit</span>
+											<span>edit</span>
 										</td>
 										<td
 											className="tbtn"
@@ -360,4 +360,4 @@ class ProCon extends React.Component {
 	}
 }
 
-export default ProCon;
+export default VouchCon;

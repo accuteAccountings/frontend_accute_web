@@ -130,6 +130,20 @@ class App extends React.Component {
 			};
 		});
 	}
+	setVouchOrDebit(ans) {
+		if (ans === 'vouch') {
+			this.getVouch();
+		}
+		if (ans === 'debit') {
+			this.getDebit();
+		}
+
+		this.setState((prevState) => {
+			return {
+				VouchOrDebit: ans
+			};
+		});
+	}
 
 	constructor(props) {
 		super(props);
@@ -145,9 +159,11 @@ class App extends React.Component {
 			AddAcc: false,
 			page: 'dash',
 			ProOrAcc: 'Products',
+			VouchOrDebit: 'vouch',
 			products: [],
 			tempProducts: [],
-			accounts: []
+			accounts: [],
+			AddVouch: true
 		};
 	}
 
@@ -208,17 +224,17 @@ class App extends React.Component {
 			currentPage = (
 				<div className="pageBody">
 					<TopBar margin={{ marginBottom: '50px' }} />
-					{/* <NavSec
+					<NavSec
 						AddProCrossBtn={this.AddProCrossBtn}
-						navItems={[ 'Accounts ', 'Products' ]}
+						navItems={[ 'Vouchers ', 'Debit Notes' ]}
 						getProducts={this.getProducts}
 						getAccounts={this.getAccounts}
-						setProOrAcc={this.setProOrAcc}
+						setProOrAcc={this.setVouchOrDebit}
 						ProOrAcc={this.state.ProOrAcc}
 						AddAccCrossBtn={this.AddAccCrossBtn}
 						fi={this.fi}
-					/> */}
-					<AddVouch />
+					/>
+					{this.state.VouchOrDebit === 'vouch' && <AddVouch />}
 				</div>
 			);
 		}
