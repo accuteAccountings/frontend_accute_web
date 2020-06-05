@@ -17,6 +17,25 @@ class TopBar extends React.Component {
 				alert(error);
 			});
 	}
+	getName() {
+		fetch('/api/profile/name', {
+			method: 'get',
+			headers: { 'Content-Type': 'application/json' }
+		})
+			.then((r) => r.json())
+			.then((data) => {
+				if (data.name) {
+					this.setState(() => {
+						return {
+							name: data.name
+						};
+					});
+				}
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	}
 
 	componentDidMount() {
 		let ison = false;
@@ -38,6 +57,15 @@ class TopBar extends React.Component {
 		});
 	}
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			name: ''
+		};
+
+		this.getName();
+	}
+
 	render() {
 		let margin = {
 			marginBottom: '50px'
@@ -48,7 +76,7 @@ class TopBar extends React.Component {
 				<img className="menu_btn" src={MenuBtn} alt="" />
 
 				<li className="top_btns profile_btn">
-					Hello , Tushar{' '}
+					Hello , {this.state.name}{' '}
 					<span>
 						<img id="arrow" src={arrow} alt="?" />
 					</span>{' '}

@@ -1,7 +1,52 @@
 import React from 'react';
 import cross from './../img/cancel.svg';
 
+async function postData(url = '', data) {
+	// Default options are marked with *
+	const response = await fetch(url, {
+		method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		mode: 'cors', // no-cors, *cors, same-origin
+		cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+		credentials: 'same-origin', // include, *same-origin, omit
+		headers: {
+			// 'Content-Type': 'multipart/form-data'
+			// 'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow', // manual, *follow, error
+		referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+		body: JSON.stringify(data) // body data type must match "Content-Type" header
+	});
+	return response.json(); // parses JSON response into native JavaScript objects
+}
+
 class AddVouch extends React.Component {
+	addVouch() {
+		let bill_date = document.querySelector('#vouch_bill_date').value;
+		let type = document.querySelector('#vouch_type').value;
+		let bill_num = document.querySelector('#vouch_bill_no').value;
+		let g_r_num = document.querySelector('#vouch_gr_no').value;
+		let transport_name = document.querySelector('#vouch_transport_name').value;
+		let supplier = document.querySelector('#vouch_sup').value;
+		let supplier_agent = document.querySelector('#vouch_sup_agent').value;
+		let set_commission = document.querySelector('#vouch_comission').value;
+		let customer = document.querySelector('#vouch_customer').value;
+
+		let Vdata = {
+			bill_date,
+			type,
+			bill_num,
+			g_r_num,
+			transport_name,
+			supplier,
+			supplier_agent,
+			set_commission,
+			customer,
+			items: this.state.items
+		};
+		postData('api/vouch', Vdata);
+	}
+
 	vochAddPro() {
 		let pro_id = document.querySelector('#vouch_pro_item').value;
 
@@ -168,103 +213,111 @@ class AddVouch extends React.Component {
 				<div className="vouch_body">
 					<div className="vouch_body_left">
 						<div className="vouch_body_left_top">
-							<div className="vouch_details">
-								<div className="vouch_si">
-									<span>Bill Date</span>
-									<br />
-									<input type="date" name="vouch_bill_date" id="vouch_bill_date" />
-								</div>
-								<div className="vouch_si">
-									<span>Type</span>
-									<br />
-									<select name="vouch_type" id="vouch_type">
-										<option value="option1">Purchase</option>
-										<option value="option1">Purchase</option>
-										<option value="option1">Purchase</option>
-									</select>
+							<form action="/api/vouch" id="vouch_det" method="post">
+								<div className="vouch_details">
+									<div className="vouch_si">
+										<span>Bill Date</span>
+										<br />
+										<input type="date" name="vouch_bill_date" id="vouch_bill_date" />
+									</div>
+									<div className="vouch_si">
+										<span>Type</span>
+										<br />
+										<select name="vouch_type" id="vouch_type">
+											<option value="option1">Purchase</option>
+											<option value="option1">Purchase</option>
+											<option value="option1">Purchase</option>
+										</select>
+									</div>
+
+									<div className="vouch_si">
+										<span>Bill No.</span>
+										<br />
+										<input type="number" name="vouch_bill_no" id="vouch_bill_no" />
+									</div>
+
+									<div className="vouch_si">
+										<span>G. R. No.</span>
+										<br />
+										<input type="number" name="vouch_gr_no" id="vouch_gr_no" />
+									</div>
+
+									<div className="vouch_si">
+										<span>Transport Name</span>
+										<br />
+										<input type="text" name="vouch_transport_name" id="vouch_transport_name" />
+									</div>
+
+									<div className="vouch_si">
+										<span>Supplier</span>
+										<br />
+										<select name="vouch_sup" id="vouch_sup">
+											{this.state.accounts &&
+												this.state.accounts.map((acc, i) => {
+													return (
+														<option key={i} value={acc.acc_name}>
+															{acc.acc_name}
+														</option>
+													);
+												})}
+										</select>
+									</div>
+
+									<div className="vouch_si">
+										<span>Supplier Agent</span>
+										<br />
+										<select name="vouch_sup_agent" id="vouch_sup_agent">
+											{this.state.accounts &&
+												this.state.accounts.map((acc, i) => {
+													return (
+														<option key={i} value={acc.acc_name}>
+															{acc.acc_name}
+														</option>
+													);
+												})}
+										</select>
+									</div>
+
+									<div className="vouch_si">
+										<span>Set Commission</span>
+										<br />
+										<input
+											type="number"
+											name="vouch_comission"
+											id="vouch_comission"
+											defaultValue="1"
+										/>
+									</div>
 								</div>
 
-								<div className="vouch_si">
-									<span>Bill No.</span>
-									<br />
-									<input type="number" name="vouch_bill_no" id="vouch_bill_no" />
-								</div>
+								<div className="vouch_customer">
+									<div className="vouch_si">
+										<span>Customer</span>
+										<br />
+										<select name="customer" id="vouch_customer">
+											{this.state.accounts &&
+												this.state.accounts.map((acc, i) => {
+													return (
+														<option key={i} value={acc.acc_name}>
+															{acc.acc_name}
+														</option>
+													);
+												})}
+										</select>
 
-								<div className="vouch_si">
-									<span>G. R. No.</span>
-									<br />
-									<input type="number" name="vouch_gr_no" id="vouch_gr_no" />
+										<span
+											style={{ marginLeft: '20px', cursor: 'pointer' }}
+											onClick={() => {
+												alert('to do : add sub Agent');
+												this.addVouch();
+											}}
+										>
+											{' '}
+											+ Add Sub Agent
+										</span>
+									</div>
 								</div>
-
-								<div className="vouch_si">
-									<span>Transport Name</span>
-									<br />
-									<input type="text" name="vouch_transport_name" id="vouch_transport_name" />
-								</div>
-
-								<div className="vouch_si">
-									<span>Supplier</span>
-									<br />
-									<select name="vouch_sup" id="vouch_sup">
-										{this.state.accounts &&
-											this.state.accounts.map((acc, i) => {
-												return (
-													<option key={i} value={acc.id}>
-														{acc.acc_name}
-													</option>
-												);
-											})}
-									</select>
-								</div>
-
-								<div className="vouch_si">
-									<span>Supplier Agent</span>
-									<br />
-									<select name="vouch_sup_agent" id="vouch_sup_agent">
-										{this.state.accounts &&
-											this.state.accounts.map((acc, i) => {
-												return (
-													<option key={i} value={acc.id}>
-														{acc.acc_name}
-													</option>
-												);
-											})}
-									</select>
-								</div>
-
-								<div className="vouch_si">
-									<span>Set Commission</span>
-									<br />
-									<input type="number" name="vouch_comission" id="vouch_comission" defaultValue="1" />
-								</div>
-							</div>
-
-							<div className="vouch_customer">
-								<div className="vouch_si">
-									<span>Customer</span>
-									<br />
-									<select name="vouch_sup_agent" id="vouch_sup_agent">
-										{this.state.accounts &&
-											this.state.accounts.map((acc, i) => {
-												return (
-													<option key={i} value={acc.id}>
-														{acc.acc_name}
-													</option>
-												);
-											})}
-									</select>
-
-									<span
-										style={{ marginLeft: '20px', cursor: 'pointer' }}
-										onClick={() => {
-											alert('to do : add sub Agent');
-										}}
-									>
-										{' '}
-										+ Add Sub Agent
-									</span>
-								</div>
-							</div>
+							</form>
 						</div>
 
 						<div className="vouch_body_middle">
