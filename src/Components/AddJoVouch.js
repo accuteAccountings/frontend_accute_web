@@ -59,27 +59,20 @@ class AddVouch extends React.Component {
 			// eslint-disable-next-line
 			return o.id == pro_id;
 		});
-		let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
 		let item = {
 			pro_id,
 			product_name: pro_name.product_name,
 			quantity: vouch_quantity,
 			gst: vouch_gst,
-			rate: vouch_rate,
-			amount: v_amount
+			rate: vouch_rate
 		};
 
 		let arr = this.state.items;
 		arr.push(item);
-		let total = 0;
-		arr.map((e) => {
-			total = total + e.amount;
-		});
 
 		this.setState((prevState) => {
 			return {
-				items: arr,
-				totalAmt: total
+				items: arr
 			};
 		});
 	}
@@ -123,13 +116,14 @@ class AddVouch extends React.Component {
 		let vouch_gst = document.querySelector('#vouch_gst').value;
 		let vouch_rate = document.querySelector('#vouch_rate').value;
 		let pro_name = this.state.products.find((o) => {
+			// eslint-disable-next-line
 			return o.id == pro_id;
 		});
 
 		let arr = this.state.items;
 
 		arr[this.state.editItem].pro_id = pro_id;
-		arr[this.state.editItem].product_name = pro_name.product_name;
+		arr[this.state.editItem].product_name = pro_name;
 		arr[this.state.editItem].quantity = vouch_quantity;
 		arr[this.state.editItem].gst = vouch_gst;
 		arr[this.state.editItem].rate = vouch_rate;
@@ -137,7 +131,7 @@ class AddVouch extends React.Component {
 		this.setState(() => {
 			return {
 				items: arr,
-				editItem: -1
+				editItem: false
 			};
 		});
 	};
@@ -197,8 +191,7 @@ class AddVouch extends React.Component {
 			products: [],
 			accounts: [],
 			items: [],
-			editItem: -1,
-			totalAmt: 0
+			editItem: 0
 		};
 		this.getProducts();
 		this.getAccounts();
@@ -211,14 +204,7 @@ class AddVouch extends React.Component {
 					<h1>Add Purchase Voucher</h1>
 
 					<div className="add_vouch_right_btns">
-						<p
-							onClick={() => {
-								this.addVouch();
-								alert('Voucher Added');
-							}}
-						>
-							Save
-						</p>
+						<p>Save</p>
 						<p>Reset</p>
 						<img onClick={this.props.rm} src={cross} alt="" />
 					</div>
@@ -323,6 +309,7 @@ class AddVouch extends React.Component {
 											style={{ marginLeft: '20px', cursor: 'pointer' }}
 											onClick={() => {
 												alert('to do : add sub Agent');
+												this.addVouch();
 											}}
 										>
 											{' '}
@@ -367,9 +354,9 @@ class AddVouch extends React.Component {
 							<div className="vouch_si">
 								<button
 									id="vouch_add_btn"
-									onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}
+									onClick={this.state.editItem ? this.editPro : this.vochAddPro}
 								>
-									{this.state.editItem === -1 ? 'Add' : 'Edit'}
+									{this.state.editItem ? 'Edit' : 'Add'}
 								</button>
 							</div>
 						</div>
@@ -383,7 +370,6 @@ class AddVouch extends React.Component {
 										<th>Quantity</th>
 										<th>Rate</th>
 										<th>GST</th>
-										<th>Amount</th>
 										<th>Edit</th>
 										<th>Delete</th>
 									</tr>
@@ -397,7 +383,6 @@ class AddVouch extends React.Component {
 												<td>{i.quantity}</td>
 												<td>{i.rate}</td>
 												<td>{i.gst}</td>
-												<td>{i.amount}</td>
 												<td
 													className="tbtn"
 													onClick={() => {
@@ -426,12 +411,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 2 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -450,12 +433,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 4 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -474,12 +455,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 6 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -495,9 +474,7 @@ class AddVouch extends React.Component {
 					</div>
 
 					<div className="vouch_body_right">
-						<div className="right items">
-							<h2>Total Amount : {this.state.totalAmt}</h2>
-						</div>
+						<div className="right items" />
 					</div>
 				</div>
 			</div>

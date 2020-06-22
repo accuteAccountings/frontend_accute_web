@@ -7,6 +7,7 @@ import Clogo from '../Components/Clogo';
 import NavSec from '../Components/NavSec';
 import ProCon from '../Components/ProCon';
 import AddVouch from '../Components/AddVouch';
+import VouchCon from '../Components/VouchCon';
 import Dash from './Dash';
 
 class App extends React.Component {
@@ -130,25 +131,34 @@ class App extends React.Component {
 			};
 		});
 	}
-	setVouchOrDebit(ans) {
-		if (ans === 'vouch') {
-			this.getVouch();
-		}
-		if (ans === 'debit') {
-			this.getDebit();
-		}
+	setPVoJVoDN = (ans) => {
+		// if (ans === 'vouch') {
+		// 	this.getVouch();
+		// }
+		// if (ans === 'debit') {
+		// 	this.getDebit();
+		// }
 
 		this.setState((prevState) => {
 			return {
-				VouchOrDebit: ans
+				PVoJVoDN: ans
 			};
 		});
-	}
+	};
+
+	rmVouch = () => {
+		this.setState((prevState) => {
+			return {
+				PVoJVoDN: 'no'
+			};
+		});
+	};
 
 	constructor(props) {
 		super(props);
 		this.AddProCrossBtn = this.AddProCrossBtn.bind(this);
 		this.AddAccCrossBtn = this.AddAccCrossBtn.bind(this);
+
 		this.setProOrAcc = this.setProOrAcc.bind(this);
 		this.fi = this.fi.bind(this);
 
@@ -159,7 +169,7 @@ class App extends React.Component {
 			AddAcc: false,
 			page: 'dash',
 			ProOrAcc: 'Products',
-			VouchOrDebit: 'vouch',
+			PVoJVoDN: 'no',
 			products: [],
 			tempProducts: [],
 			accounts: [],
@@ -201,7 +211,7 @@ class App extends React.Component {
 					<Clogo />
 					<NavSec
 						AddProCrossBtn={this.AddProCrossBtn}
-						navItems={[ 'Accounts ', 'Products' ]}
+						navItems={[ 'Accounts', 'Products' ]}
 						getProducts={this.getProducts}
 						getAccounts={this.getAccounts}
 						setProOrAcc={this.setProOrAcc}
@@ -224,17 +234,11 @@ class App extends React.Component {
 			currentPage = (
 				<div className="pageBody">
 					<TopBar margin={{ marginBottom: '50px' }} />
-					<NavSec
-						AddProCrossBtn={this.AddProCrossBtn}
-						navItems={[ 'Vouchers ', 'Debit Notes' ]}
-						getProducts={this.getProducts}
-						getAccounts={this.getAccounts}
-						setProOrAcc={this.setVouchOrDebit}
-						ProOrAcc={this.state.ProOrAcc}
-						AddAccCrossBtn={this.AddAccCrossBtn}
-						fi={this.fi}
-					/>
-					{this.state.VouchOrDebit === 'vouch' && <AddVouch />}
+
+					{this.state.PVoJVoDN === 'pv' && <AddVouch rm={this.rmVouch} />}
+					{this.state.PVoJVoDN === 'jv' && <AddVouch rm={this.rmVouch} />}
+					{this.state.PVoJVoDN === 'dn' && <AddVouch rm={this.rmVouch} />}
+					{this.state.PVoJVoDN === 'no' && <VouchCon setPVoJVoDN={this.setPVoJVoDN} />}
 				</div>
 			);
 		}
@@ -242,7 +246,12 @@ class App extends React.Component {
 		return (
 			<div className="app">
 				<div className="side">
-					<SideBar AddAccCrossBtn={this.AddAccCrossBtn} navTo={this.navTo} actPage={this.state.page} />
+					<SideBar
+						AddAccCrossBtn={this.AddAccCrossBtn}
+						setProOrAcc={this.setProOrAcc}
+						navTo={this.navTo}
+						actPage={this.state.page}
+					/>
 				</div>
 
 				{currentPage}

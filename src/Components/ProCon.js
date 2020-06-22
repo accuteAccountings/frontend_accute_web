@@ -62,11 +62,10 @@ class ProCon extends React.Component {
 	constructor(props) {
 		super(props);
 		this.deleteIt = this.deleteIt.bind(this);
-		if (this.props.ProOrAcc === 'Products') {
-			this.props.getProducts();
-		} else {
-			this.props.getAccounts();
-		}
+
+		this.props.getProducts();
+
+		this.props.getAccounts();
 
 		this.state = {
 			delete: false,

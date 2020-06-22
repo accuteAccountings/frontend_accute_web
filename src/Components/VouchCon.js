@@ -1,359 +1,169 @@
 import React from 'react';
 import Delete from '../Components/Delete';
-import AddProducts from '../Components/AddProduct';
+import AddVouch from '../Components/AddVouch';
 import AddAcc from '../Components/AddAcc';
+import ref from './../img/refresh.svg';
 
 class VouchCon extends React.Component {
-	deleteHide = () => {
-		this.setState(() => {
-			return {
-				delete: false
-			};
-		});
-
-		if (this.props.ProOrAcc === 'Products') {
-			this.props.getProducts();
-		} else {
-			this.props.getAccounts();
-		}
-	};
-
-	deleteIt(url) {
-		this.setState(() => {
-			return {
-				deleteUrl: url,
-				delete: true
-			};
-		});
-	}
-
-	hideAddProduct = () => {
-		this.setState(() => {
-			return {
-				addProduct: false
-			};
-		});
-	};
-	hideAddAcc = () => {
-		this.setState(() => {
-			return {
-				addAcc: false
-			};
-		});
-	};
-
-	showAddProduct = (id) => {
-		this.setState(() => {
-			return {
-				proData: this.props.products.find((p) => p.id === id),
-				addProduct: true
-			};
-		});
-	};
-	showAddAcc = (id) => {
-		this.setState(() => {
-			return {
-				accData: this.props.accounts.find((p) => p.id === id),
-				addAcc: true
-			};
-		});
-	};
-
 	constructor(props) {
 		super(props);
-		this.deleteIt = this.deleteIt.bind(this);
-		if (this.props.ProOrAcc === 'Products') {
-			this.props.getProducts();
-		} else {
-			this.props.getAccounts();
-		}
 
 		this.state = {
-			delete: false,
-			deleteUrl: ``,
-			addProduct: false,
-			proData: {},
-			addAcc: false,
-			accData: {}
+			addVouch: false,
+			addDebit: false,
+			page: 'jv',
+			data: []
 		};
+		this.updateData();
 	}
+	updateData = () => {
+		fetch('/api/vouch').then((res) => res.json()).then((data) => {
+			console.log(data);
+			this.setState(() => {
+				return {
+					data: data
+				};
+			});
+		});
+	};
 
 	render() {
 		return (
-			<div className="pro_compo">
-				{this.state.addProduct && (
-					<AddProducts
-						AddProCrossBtn={this.hideAddProduct}
-						getProducts={this.props.getProducts}
-						mode={'edit'}
-						data={this.state.proData}
-					/>
-				)}
-				{this.state.addAcc && (
-					<AddAcc
-						AddAccCrossBtn={this.hideAddAcc}
-						getAccounts={this.props.getAccounts}
-						mode={'edit'}
-						data={this.state.accData}
-					/>
-				)}
+			<div>
+				<div className="nav_sec">
+					<div className="nav_items">
+						<li
+							className={this.state.page === 'pv' ? 'black' : 'grey'}
+							onClick={() => {
+								this.updateData();
+								this.setState(() => {
+									return {
+										page: 'pv'
+									};
+								});
+							}}
+						>
+							Purchase Vouchers
+						</li>
+						<li
+							className={this.state.page === 'jv' ? 'black' : 'grey'}
+							onClick={() => {
+								this.updateData();
 
-				{this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
+								this.setState(() => {
+									return {
+										page: 'jv'
+									};
+								});
+							}}
+						>
+							Journal Vouchers
+						</li>
+						<li
+							className={this.state.page === 'dn' ? 'black' : 'grey'}
+							onClick={() => {
+								this.updateData();
 
-				<div className="pro_con">
-					<table id="accounting_pro_table">
-						{this.props.ProOrAcc === 'Products' ? (
-							<tr>
-								<th>S.No. </th>
-								<th>Product Name</th>
-								<th>Product HSN No.</th>
-								<th>Edit</th>
-								<th>Delete</th>
-							</tr>
-						) : (
-							<tr>
-								<th>S.No. </th>
-								<th>Account Name</th>
-								<th>Type</th>
-								<th>GST No.</th>
-								<th>Edit</th>
-								<th>Delete</th>
-							</tr>
-						)}
+								this.setState(() => {
+									return {
+										page: 'dn'
+									};
+								});
+							}}
+						>
+							Debit Note
+						</li>
+					</div>
 
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.map((pro, index) => {
+					<div className="other_det">
+						<div
+							className="add_account"
+							onClick={
+								this.state.page === 'pv' ? (
+									() => {
+										this.props.setPVoJVoDN('pv');
+									}
+								) : (
+									this.props.AddAccCrossBtn
+								)
+							}
+						>
+							+ Add {this.state.page === 'jv' && 'Journal Vouchers'}
+							{this.state.page === 'pv' && 'Purchase Vouchers'}
+							{this.state.page === 'dn' && 'Debit Note'}
+						</div>
+
+						<img
+							src={ref}
+							alt=" "
+							onClick={
+								this.props.ProOrAcc === 'Products' ? this.props.getProducts : this.props.getAccounts
+							}
+						/>
+
+						{/* <input
+							type="text"
+							id="searchForProOrAcc"
+							onChange={() => {
+								this.props.fi();
+							}}
+						/> */}
+					</div>
+				</div>
+
+				<div className="pro_compo">
+					<div className="pro_con">
+						<table id="accounting_pro_table">
+							{this.state.page === 'jv' && (
+								<tr>
+									<th>S.No. </th>
+									<th>Supplier Name</th>
+									<th>Customer Name</th>
+									<th>Bill No.</th>
+									<th>G.R. No.</th>
+									<th>Edit/View</th>
+									<th>Delete</th>
+								</tr>
+							)}
+							{this.state.page === 'pv' && (
+								<tr>
+									<th>S.No. pv</th>
+									<th>Supplier Name</th>
+									<th>Customer Name</th>
+									<th>Bill No.</th>
+									<th>G.R. No.</th>
+									<th>Edit/View</th>
+									<th>Delete</th>
+								</tr>
+							)}
+							{this.state.page === 'dn' && (
+								<tr>
+									<th>S.No.dn </th>
+									<th>Supplier Name</th>
+									<th>Customer Name</th>
+									<th>Bill No.</th>
+									<th>G.R. No.</th>
+									<th>Edit/View</th>
+									<th>Delete</th>
+								</tr>
+							)}
+							{this.state.data.map((e, i) => {
 								return (
-									<tr>
-										<td>{index + 1}</td>
-										<td>{pro && pro.product_name}</td>
-										<td>{pro && pro.hsn_num}</td>
-
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.showAddProduct(pro.id);
-											}}
-										>
-											<span>edit</span>
-										</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.deleteIt(`/api/products/${pro.id}`);
-											}}
-										>
-											<span>X</span>
-										</td>
+									<tr key={i}>
+										<th>{i + 1}</th>
+										<th>{e.det.supplier}</th>
+										<th>{e.det.customer}</th>
+										<th>{e.det.bill_num}</th>
+										<th>{e.det.g_r_num}</th>
+										<th>
+											<a href="">Edit/View</a>
+										</th>
+										<th>Delete</th>
 									</tr>
 								);
-							})
-						) : (
-							this.props.accounts.map((acc, index) => {
-								return (
-									<tr>
-										<td>{index + 1}</td>
-										<td>{acc && acc.acc_name}</td>
-										<td>{acc && acc.acc_type}</td>
-										<td>{acc && acc.gst_num}</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.showAddAcc(acc.id);
-											}}
-										>
-											<span>edit</span>
-										</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.deleteIt(`/api/accounts/${acc.id}`);
-											}}
-										>
-											<span>X</span>
-										</td>
-									</tr>
-								);
-							})
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length === 0 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length === 0 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 2 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 2 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 3 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 3 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 4 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 4 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 5 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 5 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 6 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 6 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-					</table>
+							})}
+						</table>
+					</div>
 				</div>
 			</div>
 		);
