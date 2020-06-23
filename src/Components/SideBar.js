@@ -98,9 +98,27 @@ class SideBar extends React.Component {
 						<span>Transactions</span>
 						<img src="" alt="" />
 						<div className="side_pop">
-							<li>Purchase Voucher</li>
-							<li>Journal Voucher</li>
-							<li>Debit Note</li>
+							<li
+								onClick={() => {
+									this.props.setVouchPage('pv');
+								}}
+							>
+								Purchase Voucher
+							</li>
+							<li
+								onClick={() => {
+									this.props.setVouchPage('jv');
+								}}
+							>
+								Journal Voucher
+							</li>
+							<li
+								onClick={() => {
+									this.props.setVouchPage('dn');
+								}}
+							>
+								Debit Note
+							</li>
 						</div>
 					</li>
 					<li

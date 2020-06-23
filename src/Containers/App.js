@@ -124,7 +124,7 @@ class App extends React.Component {
 
 			this.getProducts();
 		}
-
+		alert(ans);
 		this.setState((prevState) => {
 			return {
 				ProOrAcc: ans
@@ -154,6 +154,14 @@ class App extends React.Component {
 		});
 	};
 
+	setVouchPage = (page) => {
+		this.setState(() => {
+			return {
+				vouchPage: page
+			};
+		});
+	};
+
 	constructor(props) {
 		super(props);
 		this.AddProCrossBtn = this.AddProCrossBtn.bind(this);
@@ -173,7 +181,8 @@ class App extends React.Component {
 			products: [],
 			tempProducts: [],
 			accounts: [],
-			AddVouch: true
+			AddVouch: true,
+			vouchPage: 'pv'
 		};
 	}
 
@@ -189,7 +198,7 @@ class App extends React.Component {
 						AddProCrossBtn={this.AddProCrossBtn}
 						navItems={[ 'Challen Reg.', 'Daily Book ', 'Ledger' ]}
 					/>
-					<ProCon />
+					{/* <ProCon /> */}
 				</div>
 			);
 		}
@@ -223,7 +232,6 @@ class App extends React.Component {
 					<ProCon
 						products={this.state.products}
 						accounts={this.state.accounts}
-						ProOrAcc={this.state.ProOrAcc}
 						getProducts={this.getProducts}
 						getAccounts={this.getAccounts}
 					/>
@@ -238,7 +246,13 @@ class App extends React.Component {
 					{this.state.PVoJVoDN === 'pv' && <AddVouch rm={this.rmVouch} />}
 					{this.state.PVoJVoDN === 'jv' && <AddVouch rm={this.rmVouch} />}
 					{this.state.PVoJVoDN === 'dn' && <AddVouch rm={this.rmVouch} />}
-					{this.state.PVoJVoDN === 'no' && <VouchCon setPVoJVoDN={this.setPVoJVoDN} />}
+					{this.state.PVoJVoDN === 'no' && (
+						<VouchCon
+							setPVoJVoDN={this.setPVoJVoDN}
+							vouchPage={this.state.vouchPage}
+							setVouchPage={this.setVouchPage}
+						/>
+					)}
 				</div>
 			);
 		}
@@ -251,6 +265,7 @@ class App extends React.Component {
 						setProOrAcc={this.setProOrAcc}
 						navTo={this.navTo}
 						actPage={this.state.page}
+						setVouchPage={this.setVouchPage}
 					/>
 				</div>
 
