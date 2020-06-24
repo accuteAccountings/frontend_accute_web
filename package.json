@@ -1,6 +1,5 @@
 {
   "proxy": "http://localhost:5000",
-
   "name": "ledger_main_react",
   "version": "0.1.0",
   "private": true,
@@ -20,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild":"mv build main && rm -r ../ledger_backend/public/main && mv main ../ledger_backend/public",
+    "postbuild": "mv build main && rm -r ../ledger_backend/public/main && mv main ../ledger_backend/public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

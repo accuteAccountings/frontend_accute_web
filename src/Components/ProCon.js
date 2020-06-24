@@ -2,6 +2,8 @@ import React from 'react';
 import Delete from '../Components/Delete';
 import AddProducts from '../Components/AddProduct';
 import AddAcc from '../Components/AddAcc';
+import trash from '../img/trash.svg'
+import pencil from '../img/pencil.svg'
 
 class ProCon extends React.Component {
 	deleteHide = () => {
@@ -100,263 +102,90 @@ class ProCon extends React.Component {
 				{this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
 
 				<div className="pro_con">
-					<table id="accounting_pro_table">
-						{this.props.ProOrAcc === 'Products' ? (
-							<tr>
-								<th>S.No. </th>
-								<th>Product Name</th>
-								<th>Product HSN No.</th>
-								<th>View/Edit</th>
-								<th>Delete</th>
-							</tr>
-						) : (
-							<tr>
-								<th>S.No. </th>
-								<th>Account Name</th>
-								<th>Type</th>
-								<th>GST No.</th>
-								<th>View/Edit</th>
-								<th>Delete</th>
-							</tr>
-						)}
-
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.map((pro, index) => {
+					
+						{this.props.ProOrAcc === 'Products' ? (<div>
+							{this.props.products.map((pro) => {
 								return (
-									<tr>
-										<td>{index + 1}</td>
-										<td>{pro && pro.product_name}</td>
-										<td>{pro && pro.hsn_num}</td>
-
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.showAddProduct(pro.id);
-											}}
-										>
-											<span>View/Edit</span>
-										</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.deleteIt(`/api/products/${pro.id}`);
-											}}
-										>
-											<span>X</span>
-										</td>
-									</tr>
-								);
-							})
-						) : (
-							this.props.accounts.map((acc, index) => {
-								return (
-									<tr>
-										<td>{index + 1}</td>
-										<td>{acc && acc.acc_name}</td>
-										<td>{acc && acc.acc_type}</td>
-										<td>{acc && acc.gst_num}</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.showAddAcc(acc.id);
-											}}
-										>
-											<span>View/Edit</span>
-										</td>
-										<td
-											className="tbtn"
-											onClick={() => {
-												this.deleteIt(`/api/accounts/${acc.id}`);
-											}}
-										>
-											<span>X</span>
-										</td>
-									</tr>
-								);
-							})
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length === 0 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length === 0 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 2 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 2 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 3 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 3 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 4 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 4 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 5 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 5 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 6 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 6 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-						{this.props.ProOrAcc === 'Products' ? (
-							this.props.products.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						) : (
-							this.props.accounts.length < 7 && (
-								<tr>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-									<td> </td>
-								</tr>
-							)
-						)}
-					</table>
+							<div className = "det_cont_pro">
+									<div className = "det_sub_cont">
+										<div className = "pro_name">
+										<span className = "acc_id">{pro.id}. </span>
+										{pro.product_name}
+										</div>
+										<div className  ="pro_num"><span className = "acc_adress_head">HSN No.:</span> {pro.hsn_num}</div>
+									</div>
+									<div className = "det_cont_icons">
+										<div onClick={() => {
+											this.showAddProduct(pro.id);
+										}}>
+											<img src = {pencil} alt = " " />
+										</div>
+										<div onClick={() => {
+											this.deleteIt(`/api/products/${pro.id}`);
+										}}>
+											<img src = {trash} alt = " " />
+										</div>
+									</div>
+								</div>
+								)
+							})}
+							</div>) : (<div>
+								{this.props.accounts.map((account) => {
+									return (
+									<Det_cont
+										acc_name = {account.acc_name}
+										type = {account.acc_type}
+										print_name = {account.print_name}
+										adress = {account.address_line1}
+										gst = {account.gst_num}
+										ph_number = {account.phone_num}
+										id = {account.id}
+										showAddAcc = {this.showAddAcc}
+										deleteIt = {this.deleteIt}
+										/>
+									)
+								})}
+								</div>) }
+							
 				</div>
 			</div>
 		);
 	}
 }
 
+class Det_cont extends React.Component{
+	render(){
+		return(
+			<div className = "det_cont">
+				<div className = "det_cont_left">
+					<div className = "acc_name">
+					<span className = "acc_id">{this.props.id}.  </span>
+					{this.props.acc_name}<span className = "acc_type">
+					({this.props.type})</span></div>
+					<div className = "acc_print">{this.props.print_name}</div>
+					<div className  ="acc_adress"><span className = "acc_adress_head">Add :</span> {this.props.adress}</div>
+				</div>
+				<div className = "det_cont_right">
+					<div className = " acc_gst"><span className = "acc_right">GST.:</span>  {this.props.gst}</div>
+					<div className = "acc_ph"><span className = "acc_right"> Ph No.:</span> {this.props.ph_number}</div>
+				</div>
+
+				<div className = "det_cont_icons">
+					<div onClick={() => {
+						this.props.showAddAcc(this.props.id);
+					}}>
+						<img src = {pencil} alt = " " />
+					</div>
+					<div onClick={() => {
+						this.props.deleteIt(`/api/accounts/${this.props.id}`);
+					}}>
+						<img src = {trash} alt = " " />
+					</div>
+				</div>
+			</div>
+		)
+	}
+}
+
 export default ProCon;
+
