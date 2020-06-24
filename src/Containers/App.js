@@ -9,6 +9,7 @@ import ProCon from '../Components/ProCon';
 import AddVouch from '../Components/AddVouch';
 import VouchCon from '../Components/VouchCon';
 import Dash from './Dash';
+import AddJovouch from '../Components/AddJoVouch'
 
 class App extends React.Component {
 	getProducts = () => {
@@ -182,7 +183,7 @@ class App extends React.Component {
 			tempProducts: [],
 			accounts: [],
 			AddVouch: true,
-			vouchPage: 'pv'
+			vouchPage: 'jv'
 		};
 	}
 
@@ -244,7 +245,7 @@ class App extends React.Component {
 					<TopBar margin={{ marginBottom: '50px' }} />
 
 					{this.state.PVoJVoDN === 'pv' && <AddVouch rm={this.rmVouch} />}
-					{this.state.PVoJVoDN === 'jv' && <AddVouch rm={this.rmVouch} />}
+					{this.state.PVoJVoDN === 'jv' && <AddJovouch rm={this.rmVouch} />}
 					{this.state.PVoJVoDN === 'dn' && <AddVouch rm={this.rmVouch} />}
 					{this.state.PVoJVoDN === 'no' && (
 						<VouchCon
@@ -275,7 +276,7 @@ class App extends React.Component {
 					<AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} />
 				) : null}
 				{this.state.AddAcc ? (
-					<AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} />
+					<AddAcc AddAccCroAddAccCrossBtnssBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} />
 				) : null}
 			</div>
 		);

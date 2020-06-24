@@ -20,17 +20,17 @@ async function postData(url = '', data) {
 	return response.json(); // parses JSON response into native JavaScript objects
 }
 
-class AddVouch extends React.Component {
-	addVouch() {
-		let bill_date = document.querySelector('#vouch_bill_date').value;
-		let type = document.querySelector('#vouch_type').value;
-		let bill_num = document.querySelector('#vouch_bill_no').value;
-		let g_r_num = document.querySelector('#vouch_gr_no').value;
-		let transport_name = document.querySelector('#vouch_transport_name').value;
-		let supplier = document.querySelector('#vouch_sup').value;
-		let supplier_agent = document.querySelector('#vouch_sup_agent').value;
-		let set_commission = document.querySelector('#vouch_comission').value;
-		let customer = document.querySelector('#vouch_customer').value;
+class AddJovouch extends React.Component {
+	addjovouch() {
+		let bill_date = document.querySelector('#jovouch_bill_date').value;
+		let type = document.querySelector('#jovouch_type').value;
+		let bill_num = document.querySelector('#jovouch_bill_no').value;
+		let g_r_num = document.querySelector('#jovouch_gr_no').value;
+		let transport_name = document.querySelector('#jovouch_transport_name').value;
+		let supplier = document.querySelector('#jovouch_sup').value;
+		let supplier_agent = document.querySelector('#jovouch_sup_agent').value;
+		let set_commission = document.querySelector('#jovouch_comission').value;
+		let customer = document.querySelector('#jovouch_customer').value;
 
 		let Vdata = {
 			bill_date,
@@ -44,16 +44,16 @@ class AddVouch extends React.Component {
 			customer,
 			items: this.state.items
 		};
-		postData('api/vouch', Vdata);
+		postData('api/jovouch', Vdata);
 	}
 
-	vochAddPro() {
-		let pro_id = document.querySelector('#vouch_pro_item').value;
+	jovouchAddPro() {
+		let pro_id = document.querySelector('#jovouch_pro_item').value;
 
 		if (!pro_id) return;
-		let vouch_quantity = document.querySelector('#vouch_quantity').value;
-		let vouch_gst = document.querySelector('#vouch_gst').value;
-		let vouch_rate = document.querySelector('#vouch_rate').value;
+		let jovouch_quantity = document.querySelector('#jovouch_quantity').value;
+		let jovouch_gst = document.querySelector('#jovouch_gst').value;
+		let jovouch_rate = document.querySelector('#jovouch_rate').value;
 
 		let pro_name = this.state.products.find((o) => {
 			// eslint-disable-next-line
@@ -62,9 +62,9 @@ class AddVouch extends React.Component {
 		let item = {
 			pro_id,
 			product_name: pro_name.product_name,
-			quantity: vouch_quantity,
-			gst: vouch_gst,
-			rate: vouch_rate
+			quantity: jovouch_quantity,
+			gst: jovouch_gst,
+			rate: jovouch_rate
 		};
 
 		let arr = this.state.items;
@@ -90,16 +90,16 @@ class AddVouch extends React.Component {
 	};
 
 	editItem = (index) => {
-		let pro_id = document.querySelector('#vouch_pro_item');
+		let pro_id = document.querySelector('#jovouch_pro_item');
 
-		let vouch_quantity = document.querySelector('#vouch_quantity');
-		let vouch_gst = document.querySelector('#vouch_gst');
-		let vouch_rate = document.querySelector('#vouch_rate');
+		let jovouch_quantity = document.querySelector('#jovouch_quantity');
+		let jovouch_gst = document.querySelector('#jovouch_gst');
+		let jovouch_rate = document.querySelector('#jovouch_rate');
 
 		pro_id.value = this.state.items[index].pro_id;
-		vouch_quantity.value = this.state.items[index].quantity;
-		vouch_gst.value = this.state.items[index].gst;
-		vouch_rate.value = this.state.items[index].rate;
+		jovouch_quantity.value = this.state.items[index].quantity;
+		jovouch_gst.value = this.state.items[index].gst;
+		jovouch_rate.value = this.state.items[index].rate;
 
 		this.setState(() => {
 			return {
@@ -109,12 +109,12 @@ class AddVouch extends React.Component {
 	};
 
 	editPro = () => {
-		let pro_id = document.querySelector('#vouch_pro_item').value;
+		let pro_id = document.querySelector('#jovouch_pro_item').value;
 
 		if (!pro_id) return;
-		let vouch_quantity = document.querySelector('#vouch_quantity').value;
-		let vouch_gst = document.querySelector('#vouch_gst').value;
-		let vouch_rate = document.querySelector('#vouch_rate').value;
+		let jovouch_quantity = document.querySelector('#jovouch_quantity').value;
+		let jovouch_gst = document.querySelector('#jovouch_gst').value;
+		let jovouch_rate = document.querySelector('#jovouch_rate').value;
 		let pro_name = this.state.products.find((o) => {
 			// eslint-disable-next-line
 			return o.id == pro_id;
@@ -124,9 +124,9 @@ class AddVouch extends React.Component {
 
 		arr[this.state.editItem].pro_id = pro_id;
 		arr[this.state.editItem].product_name = pro_name;
-		arr[this.state.editItem].quantity = vouch_quantity;
-		arr[this.state.editItem].gst = vouch_gst;
-		arr[this.state.editItem].rate = vouch_rate;
+		arr[this.state.editItem].quantity = jovouch_quantity;
+		arr[this.state.editItem].gst = jovouch_gst;
+		arr[this.state.editItem].rate = jovouch_rate;
 
 		this.setState(() => {
 			return {
@@ -183,7 +183,7 @@ class AddVouch extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.vochAddPro = this.vochAddPro.bind(this);
+		this.jovouchAddPro = this.jovouchAddPro.bind(this);
 		this.getProducts = this.getProducts.bind(this);
 		this.getAccounts = this.getAccounts.bind(this);
 
@@ -199,287 +199,122 @@ class AddVouch extends React.Component {
 
 	render() {
 		return (
-			<div className="add_vouch_con">
+			<div className="add_jovouch_con">
 				<div className="add_pro_head">
-					<h1>Add Purchase Voucher</h1>
+					<h1>Add Journal jovoucher</h1>
 
-					<div className="add_vouch_right_btns">
+					<div className="add_jovouch_right_btns">
 						<p>Save</p>
 						<p>Reset</p>
 						<img onClick={this.props.rm} src={cross} alt="" />
 					</div>
 				</div>
 
-				<div className="vouch_body">
-					<div className="vouch_body_left">
-						<div className="vouch_body_left_top">
-							<form action="/api/vouch" id="vouch_det" method="post">
-								<div className="vouch_details">
-									<div className="vouch_si">
-										<span>Bill Date</span>
+				<div className="jovouch_body">
+					
+						
+							<form action="/api/jovouch" id="jovouch_det" method="post">
+								<div className="jovouch_details">
+									<div className="jovouch_si">
+										<span> Date</span>
 										<br />
-										<input type="date" name="vouch_bill_date" id="vouch_bill_date" />
+										<input type="date" name="jovouch_bill_date" id="jovouch_bill_date" />
 									</div>
-									<div className="vouch_si">
+									<div className="jovouch_si">
 										<span>Type</span>
 										<br />
-										<select name="vouch_type" id="vouch_type">
-											<option value="option1">Purchase</option>
-											<option value="option1">Purchase</option>
-											<option value="option1">Purchase</option>
+										<select name="jovouch_type" id="jovouch_type">
+											<option value="option1">Journal</option>
+											<option value="option1">Journal</option>
+											<option value="option1">Journal</option>
 										</select>
 									</div>
 
-									<div className="vouch_si">
-										<span>Bill No.</span>
-										<br />
-										<input type="number" name="vouch_bill_no" id="vouch_bill_no" />
-									</div>
 
-									<div className="vouch_si">
-										<span>G. R. No.</span>
-										<br />
-										<input type="number" name="vouch_gr_no" id="vouch_gr_no" />
-									</div>
+								</div>
 
-									<div className="vouch_si">
-										<span>Transport Name</span>
-										<br />
-										<input type="text" name="vouch_transport_name" id="vouch_transport_name" />
-									</div>
-
-									<div className="vouch_si">
-										<span>Supplier</span>
-										<br />
-										<select name="vouch_sup" id="vouch_sup">
-											{this.state.accounts &&
-												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
-												})}
-										</select>
-									</div>
-
-									<div className="vouch_si">
-										<span>Supplier Agent</span>
-										<br />
-										<select name="vouch_sup_agent" id="vouch_sup_agent">
-											{this.state.accounts &&
-												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
-												})}
-										</select>
-									</div>
-
-									<div className="vouch_si">
-										<span>Set Commission</span>
-										<br />
-										<input
-											type="number"
-											name="vouch_comission"
-											id="vouch_comission"
-											defaultValue="1"
-										/>
+								<div className="jovouch_customer">
+									<div className="jovouch_si ">
+										<span>Add Bill </span>
+										
+								<div className = "second_row">
+										<span>
+											<input type = "text" placeholder = "Bill No." id = "jovouch_bill_no" />
+										</span>
+										<span >
+											{' '}
+											<span className = "jovouch_plus">+</span>
+										</span>
+										</div>
 									</div>
 								</div>
 
-								<div className="vouch_customer">
-									<div className="vouch_si">
-										<span>Customer</span>
-										<br />
-										<select name="customer" id="vouch_customer">
-											{this.state.accounts &&
-												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
-												})}
-										</select>
+								<div className = "vouch_body">
+										<div className="jovouch_debit">
+											<span>Debit Account</span>
+											<br />
+												<select name="jovouch_debit_acc" id="jovouch_debit_acc">
+													<option value="option1">Costumer</option>
+													<option value="option1">Costumer</option>
+													<option value="option1">Costumer</option>
+												</select>
+									   </div>
 
-										<span
-											style={{ marginLeft: '20px', cursor: 'pointer' }}
-											onClick={() => {
-												alert('to do : add sub Agent');
-												this.addVouch();
-											}}
-										>
-											{' '}
-											+ Add Sub Agent
-										</span>
-									</div>
+									   <div className="jovouch_debit">
+											<span>Credit Account</span>
+											<br />
+												<select name="jovouch_debit_acc" id="jovouch_debit_acc">
+													<option value="option1">Supplier</option>
+													<option value="option1">Supplier</option>
+													<option value="option1">Supplier</option>
+												</select>
+								 		 </div>
 								</div>
 							</form>
 						</div>
+			<div className = "pay_head">Payment Details</div>
+						<div className = "jovouch_payment_det " >
+						<div className="jovouch_customer ">
+									<div className="jovouch_si ">
+									<div className = "mode_head">
+										<span>Mode </span>
+										<span 	>+</span>
+										</div>
+								
+										<span>
+										<select name = "jovouch_mode" id = "jovouch_mode" >
+											<option value = "option1">Cheque</option>
+										</select>
+										</span>
+									</div>
 
-						<div className="vouch_body_middle">
-							<div className="vouch_si">
-								<span>Product / Item</span>
-								<br />
-								<select name="vouch_pro_item" id="vouch_pro_item">
-									{this.state.products &&
-										this.state.products.map((pro, index) => {
-											return (
-												<option key={index} id={index} value={pro.id}>
-													{pro.product_name}
-												</option>
-											);
-										})}
-								</select>
-							</div>
+									<div className="jovouch_si  ">
+									<span>Cheque No. </span>
+									<br />
+							
+									<div className = "second_row">
+										<input type = "text" placeholder = "Cheque No." />
+										<span className = "jovouch_plus">+</span>
+									</div>
+									</div>
 
-							<div className="vouch_si">
-								<span>Quantity</span>
-								<br />
-								<input type="number" name="vouch_quantity" id="vouch_quantity" defaultValue="1" />
-							</div>
-							<div className="vouch_si">
-								<span>Rate</span>
-								<br />
-								<input type="number" name="vouch_rate" id="vouch_rate" defaultValue="1" />
-							</div>
-							<div className="vouch_si">
-								<span>GST</span>
-								<br />
-								<input type="number" name="vouch_gst" id="vouch_gst" defaultValue="18" />
-							</div>
-							<div className="vouch_si">
-								<button
-									id="vouch_add_btn"
-									onClick={this.state.editItem ? this.editPro : this.vochAddPro}
-								>
-									{this.state.editItem ? 'Edit' : 'Add'}
-								</button>
-							</div>
-						</div>
-
-						<div className="vouch_table_con">
-							<table id="vouch_table">
-								<thead>
-									<tr>
-										<th>S.No.</th>
-										<th>Product/Item</th>
-										<th>Quantity</th>
-										<th>Rate</th>
-										<th>GST</th>
-										<th>Edit</th>
-										<th>Delete</th>
-									</tr>
-								</thead>
-								<tbody>
-									{this.state.items.map((i, index) => {
-										return (
-											<tr key={index}>
-												<td>{index + 1}</td>
-												<td>{i.product_name}</td>
-												<td>{i.quantity}</td>
-												<td>{i.rate}</td>
-												<td>{i.gst}</td>
-												<td
-													className="tbtn"
-													onClick={() => {
-														this.editItem(index);
-													}}
-												>
-													<span>Edit</span>
-												</td>
-												<td
-													className="tbtn"
-													onClick={() => {
-														this.removeItem(index);
-													}}
-												>
-													<span>X</span>
-												</td>
-											</tr>
-										);
-									})}
-									{this.state.items.length === 0 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-									{this.state.items.length < 2 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-									{this.state.items.length < 3 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-									{this.state.items.length < 4 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-									{this.state.items.length < 5 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-									{this.state.items.length < 6 && (
-										<tr>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-											<td> </td>
-										</tr>
-									)}
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<div className="vouch_body_right">
-						<div className="right items" />
-					</div>
-				</div>
+							
+									</div>
+									<br />
+									<br />
+									<div className = "jovouch_amount">
+										<span>Amount:</span>
+										<span><input type = "text" placeholder = "Amount" /></span>
+										<span className = "jovouch_balance">Balance:</span>
+										<span><input type = "text" placeholder = "Balance" /></span>
+									</div>
+								</div>
+								<div className = "jovouch_add_btn_div">
+									<button className = "jovouch_add_btn">Add</button>
+								</div>
 			</div>
 		);
 	}
 }
 
-export default AddVouch;
+export default AddJovouch;
