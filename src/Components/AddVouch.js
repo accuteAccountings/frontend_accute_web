@@ -1,5 +1,6 @@
 import React from 'react';
 import cross from './../img/cancel.svg';
+import AddProducts from './AddProduct';
 
 async function postData(url = '', data) {
 	// Default options are marked with *
@@ -21,7 +22,7 @@ async function postData(url = '', data) {
 }
 
 class AddVouch extends React.Component {
-	addVouch() {
+	async addVouch() {
 		let bill_date = document.querySelector('#vouch_bill_date').value;
 		let type = document.querySelector('#vouch_type').value;
 		let bill_num = document.querySelector('#vouch_bill_no').value;
@@ -44,25 +45,34 @@ class AddVouch extends React.Component {
 			customer,
 			items: this.state.items
 		};
-		postData('api/vouch', Vdata);
+		const isTrue = await postData('/api/vouch', Vdata);
+		if (isTrue) {
+			this.props.rm();
+		} else {
+			alert('Unable to save. Please Try again');
+		}
 	}
 
 	vochAddPro() {
-		let pro_id = document.querySelector('#vouch_pro_item').value;
+		let pro_name = document.querySelector('#vouch_pro_item').value;
 
-		if (!pro_id) return;
+		if (!pro_name) return;
 		let vouch_quantity = document.querySelector('#vouch_quantity').value;
 		let vouch_gst = document.querySelector('#vouch_gst').value;
 		let vouch_rate = document.querySelector('#vouch_rate').value;
 
-		let pro_name = this.state.products.find((o) => {
+		let pro_id = this.state.products.find((o) => {
 			// eslint-disable-next-line
-			return o.id == pro_id;
+			return o.product_name === pro_name;
 		});
+		if (!!!pro_id) {
+			this.setState({ addPro: true, NewProName: pro_name });
+			return;
+		}
 		let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
 		let item = {
-			pro_id,
-			product_name: pro_name.product_name,
+			pro_id: pro_id.id,
+			product_name: pro_name,
 			quantity: vouch_quantity,
 			gst: vouch_gst,
 			rate: vouch_rate,
@@ -142,6 +152,27 @@ class AddVouch extends React.Component {
 		});
 	};
 
+	filterPro = () => {
+		document.getElementById('pro_list').style.display = 'block';
+		let temp = document.getElementById('vouch_pro_item').value.toLowerCase();
+
+		let arr = this.state.products.filter((e) => {
+			if (temp === '*') {
+				return true;
+			}
+			if (e.product_name.toLowerCase().indexOf(temp) != -1) {
+				return true;
+			} else return false;
+		});
+
+		console.log(arr);
+		if (temp == '') {
+			this.setState({ pro: [] });
+		} else {
+			this.setState({ pro: arr });
+		}
+	};
+
 	getProducts() {
 		fetch('/api/products', {
 			method: 'GET',
@@ -186,6 +217,13 @@ class AddVouch extends React.Component {
 				// alert(err)
 			});
 	}
+	crossPro = () => {
+		this.setState({ addPro: false });
+	};
+
+	selectAllText = () => {
+		document.getElementById('vouch_pro_item').select();
+	};
 
 	constructor(props) {
 		super(props);
@@ -198,15 +236,32 @@ class AddVouch extends React.Component {
 			accounts: [],
 			items: [],
 			editItem: -1,
-			totalAmt: 0
+			totalAmt: 0,
+			pro: [],
+			addPro: false,
+			NewProName: null
 		};
 		this.getProducts();
 		this.getAccounts();
 	}
 
+	componentDidMount() {
+		let today = new Date();
+
+		document.getElementById('vouch_bill_date').valueAsDate = today;
+		document.getElementById('pro_list').style.display = 'none';
+	}
 	render() {
 		return (
 			<div className="add_vouch_con">
+				{this.state.addPro && (
+					<AddProducts
+						AddProCrossBtn={this.crossPro}
+						getProducts={this.getProducts}
+						mode={'add_new'}
+						name={this.state.NewProName}
+					/>
+				)}
 				<div className="add_pro_head">
 					<h1>Add Purchase Voucher</h1>
 
@@ -214,7 +269,6 @@ class AddVouch extends React.Component {
 						<p
 							onClick={() => {
 								this.addVouch();
-								alert('Voucher Added');
 							}}
 						>
 							Save
@@ -259,7 +313,21 @@ class AddVouch extends React.Component {
 									<div className="vouch_si">
 										<span>Transport Name</span>
 										<br />
-										<input type="text" name="vouch_transport_name" id="vouch_transport_name" />
+
+										<select name="vouch_transport_name" id="vouch_transport_name">
+											{this.state.accounts &&
+												this.state.accounts.map((acc, i) => {
+													if (acc.acc_type === 'transport') {
+														return (
+															<option key={i} value={acc.acc_name}>
+																{acc.acc_name}
+															</option>
+														);
+													} else {
+														return null;
+													}
+												})}
+										</select>
 									</div>
 
 									<div className="vouch_si">
@@ -268,11 +336,15 @@ class AddVouch extends React.Component {
 										<select name="vouch_sup" id="vouch_sup">
 											{this.state.accounts &&
 												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
+													if (acc.acc_type === 'creditors' || acc.acc_type === 'debtors') {
+														return (
+															<option key={i} value={acc.acc_name}>
+																{acc.acc_name}
+															</option>
+														);
+													} else {
+														return null;
+													}
 												})}
 										</select>
 									</div>
@@ -283,11 +355,15 @@ class AddVouch extends React.Component {
 										<select name="vouch_sup_agent" id="vouch_sup_agent">
 											{this.state.accounts &&
 												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
+													if (acc.acc_type === 'agent') {
+														return (
+															<option key={i} value={acc.acc_name}>
+																{acc.acc_name}
+															</option>
+														);
+													} else {
+														return null;
+													}
 												})}
 										</select>
 									</div>
@@ -311,11 +387,15 @@ class AddVouch extends React.Component {
 										<select name="customer" id="vouch_customer">
 											{this.state.accounts &&
 												this.state.accounts.map((acc, i) => {
-													return (
-														<option key={i} value={acc.acc_name}>
-															{acc.acc_name}
-														</option>
-													);
+													if (acc.acc_type === 'creditors' || acc.acc_type === 'debtors') {
+														return (
+															<option key={i} value={acc.acc_name}>
+																{acc.acc_name}
+															</option>
+														);
+													} else {
+														return null;
+													}
 												})}
 										</select>
 
@@ -334,19 +414,31 @@ class AddVouch extends React.Component {
 						</div>
 
 						<div className="vouch_body_middle">
-							<div className="vouch_si">
+							<div className="vouch_si" id="vouch_pro_con">
 								<span>Product / Item</span>
 								<br />
-								<select name="vouch_pro_item" id="vouch_pro_item">
-									{this.state.products &&
-										this.state.products.map((pro, index) => {
-											return (
-												<option key={index} id={index} value={pro.id}>
-													{pro.product_name}
-												</option>
-											);
-										})}
-								</select>
+								<input
+									name="vouch_pro_item"
+									id="vouch_pro_item"
+									onChange={this.filterPro}
+									onFocus={this.selectAllText}
+									autoComplete="off"
+								/>
+								<ul id="pro_list">
+									{this.state.pro.map((pro, index) => {
+										return (
+											<li
+												key={index}
+												onClick={() => {
+													document.getElementById('vouch_pro_item').value = pro.product_name;
+													document.getElementById('pro_list').style.display = 'none';
+												}}
+											>
+												{pro.product_name}
+											</li>
+										);
+									})}
+								</ul>
 							</div>
 
 							<div className="vouch_si">
@@ -382,7 +474,7 @@ class AddVouch extends React.Component {
 										<th>Product/Item</th>
 										<th>Quantity</th>
 										<th>Rate</th>
-										<th>GST</th>
+
 										<th>Amount</th>
 										<th>Edit</th>
 										<th>Delete</th>
@@ -396,7 +488,7 @@ class AddVouch extends React.Component {
 												<td>{i.product_name}</td>
 												<td>{i.quantity}</td>
 												<td>{i.rate}</td>
-												<td>{i.gst}</td>
+
 												<td>{i.amount}</td>
 												<td
 													className="tbtn"
@@ -426,12 +518,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 2 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -450,12 +540,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 4 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -474,12 +562,10 @@ class AddVouch extends React.Component {
 											<td> </td>
 											<td> </td>
 											<td> </td>
-											<td> </td>
 										</tr>
 									)}
 									{this.state.items.length < 6 && (
 										<tr>
-											<td> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>

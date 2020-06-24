@@ -235,9 +235,12 @@ class AddAcc extends React.Component {
 										id="add_acc_inp_group"
 										placeholder="Select Group"
 									>
-										<option>Option one</option>
-										<option>Option one</option>
-										<option>Option one</option>
+										<option value="debtors">Debtors</option>
+										<option value="creditors">Creditors</option>
+										<option value="agent">Agent</option>
+										<option value="transport">Transport</option>
+										<option value="bank">Bank</option>
+										<option value="salary">Salary</option>
 									</select>
 								</div>
 							</div>
@@ -295,10 +298,8 @@ class AddAcc extends React.Component {
 									<br />
 
 									<select readOnly={this.state.mode === 'view' && true} id="add_acc_status">
-										<option value="option one">option one</option>
-										<option value="option one">option one</option>
-										<option value="option one">option one</option>
-										<option value="option one">option one</option>
+										<option value="regular registered">Regular Registered</option>
+										<option value="unregistered">Unregistered</option>
 									</select>
 								</div>
 								<div className="add_acc_gstnum si">

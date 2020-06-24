@@ -11,7 +11,6 @@ class VouchCon extends React.Component {
 		this.state = {
 			addVouch: false,
 			addDebit: false,
-			page: 'jv',
 			data: []
 		};
 		this.updateData();
@@ -33,42 +32,30 @@ class VouchCon extends React.Component {
 				<div className="nav_sec">
 					<div className="nav_items">
 						<li
-							className={this.state.page === 'pv' ? 'black' : 'grey'}
+							className={this.props.vouchPage === 'pv' ? 'black' : 'grey'}
 							onClick={() => {
 								this.updateData();
-								this.setState(() => {
-									return {
-										page: 'pv'
-									};
-								});
+								this.props.setVouchPage('pv');
 							}}
 						>
 							Purchase Vouchers
 						</li>
 						<li
-							className={this.state.page === 'jv' ? 'black' : 'grey'}
+							className={this.props.vouchPage === 'jv' ? 'black' : 'grey'}
 							onClick={() => {
 								this.updateData();
 
-								this.setState(() => {
-									return {
-										page: 'jv'
-									};
-								});
+								this.props.setVouchPage('jv');
 							}}
 						>
 							Journal Vouchers
 						</li>
 						<li
-							className={this.state.page === 'dn' ? 'black' : 'grey'}
+							className={this.props.vouchPage === 'dn' ? 'black' : 'grey'}
 							onClick={() => {
 								this.updateData();
 
-								this.setState(() => {
-									return {
-										page: 'dn'
-									};
-								});
+								this.props.setVouchPage('dn');
 							}}
 						>
 							Debit Note
@@ -79,7 +66,7 @@ class VouchCon extends React.Component {
 						<div
 							className="add_account"
 							onClick={
-								this.state.page === 'pv' ? (
+								this.props.vouchPage === 'pv' ? (
 									() => {
 										this.props.setPVoJVoDN('pv');
 									}
@@ -88,9 +75,9 @@ class VouchCon extends React.Component {
 								)
 							}
 						>
-							+ Add {this.state.page === 'jv' && 'Journal Vouchers'}
-							{this.state.page === 'pv' && 'Purchase Vouchers'}
-							{this.state.page === 'dn' && 'Debit Note'}
+							+ Add {this.props.vouchPage === 'jv' && 'Journal Vouchers'}
+							{this.props.vouchPage === 'pv' && 'Purchase Vouchers'}
+							{this.props.vouchPage === 'dn' && 'Debit Note'}
 						</div>
 
 						<img
@@ -114,7 +101,7 @@ class VouchCon extends React.Component {
 				<div className="pro_compo">
 					<div className="pro_con">
 						<table id="accounting_pro_table">
-							{this.state.page === 'jv' && (
+							{this.props.vouchPage === 'jv' && (
 								<tr>
 									<th>S.No. </th>
 									<th>Supplier Name</th>
@@ -125,7 +112,7 @@ class VouchCon extends React.Component {
 									<th>Delete</th>
 								</tr>
 							)}
-							{this.state.page === 'pv' && (
+							{this.props.vouchPage === 'pv' && (
 								<tr>
 									<th>S.No. pv</th>
 									<th>Supplier Name</th>
@@ -136,7 +123,7 @@ class VouchCon extends React.Component {
 									<th>Delete</th>
 								</tr>
 							)}
-							{this.state.page === 'dn' && (
+							{this.props.vouchPage === 'dn' && (
 								<tr>
 									<th>S.No.dn </th>
 									<th>Supplier Name</th>
@@ -147,21 +134,22 @@ class VouchCon extends React.Component {
 									<th>Delete</th>
 								</tr>
 							)}
-							{this.state.data.map((e, i) => {
-								return (
-									<tr key={i}>
-										<th>{i + 1}</th>
-										<th>{e.det.supplier}</th>
-										<th>{e.det.customer}</th>
-										<th>{e.det.bill_num}</th>
-										<th>{e.det.g_r_num}</th>
-										<th>
-											<a href="">Edit/View</a>
-										</th>
-										<th>Delete</th>
-									</tr>
-								);
-							})}
+							{this.props.vouchPage === 'pv' &&
+								this.state.data.map((e, i) => {
+									return (
+										<tr key={i}>
+											<th>{i + 1}</th>
+											<th>{e.det.supplier}</th>
+											<th>{e.det.customer}</th>
+											<th>{e.det.bill_num}</th>
+											<th>{e.det.g_r_num}</th>
+											<th>
+												<a href="">Edit/View</a>
+											</th>
+											<th>Delete</th>
+										</tr>
+									);
+								})}
 						</table>
 					</div>
 				</div>

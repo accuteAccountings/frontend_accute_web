@@ -58,8 +58,8 @@ class AddProducts extends React.Component {
 							loading: false
 						};
 					});
-					this.props.getProducts();
 					this.props.AddProCrossBtn();
+					this.props.getProducts();
 				} else {
 					alert('Unable to save products, Please Try again later');
 					this.props.AddProCrossBtn();
@@ -93,6 +93,10 @@ class AddProducts extends React.Component {
 	componentDidMount() {
 		if (this.state.mode === 'edit' || this.state.mode === 'view') {
 			this.setValue();
+		}
+
+		if (this.state.mode === 'add_new') {
+			document.querySelector('.add_pro_inp_name').value = this.props.name;
 		}
 	}
 

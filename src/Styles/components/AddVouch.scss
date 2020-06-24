@@ -97,7 +97,19 @@
 	width: 200px;
 }
 #vouch_comission {
-	width: 120px;
+	width: 60px;
+	text-align: center;
+}
+#vouch_customer {
+	width: 200px;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 .vouch_customer {
@@ -114,7 +126,40 @@
 	flex-wrap: wrap;
 
 	input {
-		width: 90px;
+		width: 60px;
+	}
+}
+#vouch_pro_item {
+	width: 140px;
+	color: rgb(155, 155, 155);
+}
+#vouch_pro_con {
+	position: relative;
+
+	ul {
+		position: absolute;
+		background-color: white;
+		border: 1px solid #a0a0a0;
+		box-sizing: border-box;
+		padding: 0px 0px;
+		width: 140px;
+		top: 33px;
+		left: 0px;
+		border-top: none;
+		box-shadow: 0 0 10px rgb(238, 238, 238);
+	}
+
+	li {
+		// position: absolute;
+		width: 100%;
+		text-align: center;
+		color: $grey_text;
+		padding: 7px;
+		cursor: pointer;
+	}
+
+	li:hover {
+		background-color: rgb(231, 231, 231);
 	}
 }
 
