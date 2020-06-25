@@ -314,20 +314,7 @@ class AddVouch extends React.Component {
 										<span>Transport Name</span>
 										<br />
 
-										<select name="vouch_transport_name" id="vouch_transport_name">
-											{this.state.accounts &&
-												this.state.accounts.map((acc, i) => {
-													if (acc.acc_type === 'transport') {
-														return (
-															<option key={i} value={acc.acc_name}>
-																{acc.acc_name}
-															</option>
-														);
-													} else {
-														return null;
-													}
-												})}
-										</select>
+										<input type = "text" placeholder = "Enter Name" id = "vouch_transport_name" />
 									</div>
 
 									<div className="vouch_si">
@@ -581,8 +568,17 @@ class AddVouch extends React.Component {
 					</div>
 
 					<div className="vouch_body_right">
-						<div className="right items">
-							<h2>Total Amount : {this.state.totalAmt}</h2>
+						<div className="right items vouch_body">
+							<div className = "vouch_num_items">
+								<span>No. of items</span>
+								<br />
+								<span><input type = "text" id = "vouch_items_num" /></span>
+							</div>
+							<div className = "vouch_types_item">
+								<span>Type of items</span>
+								<br />
+								<span><input type = "text" id = "vouch_items_type" /></span>
+						     </div>
 						</div>
 					</div>
 				</div>
