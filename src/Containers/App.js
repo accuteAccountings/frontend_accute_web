@@ -183,7 +183,7 @@ class App extends React.Component {
 			tempProducts: [],
 			accounts: [],
 			AddVouch: true,
-			vouchPage: 'pv'
+			vouchPage: 'jv'
 		};
 	}
 
