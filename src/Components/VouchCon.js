@@ -127,7 +127,7 @@ class Det_cont extends React.Component{
 	render(){
 		return(
 			<div className = "det_cont_vouch">
-				<div className = "det_cont_left">
+				<div className = "det_cont_left vouc_det_left">
 					<div className = "acc_name_vouch">
 							<span className = "acc_id_vouch">1.  </span>
 							Seller Name	
@@ -144,7 +144,7 @@ class Det_cont extends React.Component{
 								Biil No :</span> 123456</div>
 					</div>
 				</div>
-				<div className = "det_cont_right_vouch">
+				<div className = "det_cont_right_vouch vouch_right">
 					<div className = " vouch_status"><span className = "acc_right_vouch">Status:</span> UNPAID</div>
 					<div className = "vouch_date"><span className = "acc_right_vouch"> Date:</span> {Date.now()}</div>
 				</div>
