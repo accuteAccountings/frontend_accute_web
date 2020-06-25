@@ -104,12 +104,12 @@ class ProCon extends React.Component {
 				<div className="pro_con">
 					
 						{this.props.ProOrAcc === 'Products' ? (<div>
-							{this.props.products.map((pro) => {
+							{this.props.products.map((pro,i) => {
 								return (
 							<div className = "det_cont_pro">
 									<div className = "det_sub_cont">
 										<div className = "pro_name">
-										<span className = "acc_id">{pro.id}. </span>
+										<span className = "acc_id">{i+1}. </span>
 										{pro.product_name}
 										</div>
 										<div className  ="pro_num"><span className = "acc_adress_head">HSN No.:</span> {pro.hsn_num}</div>
@@ -130,7 +130,7 @@ class ProCon extends React.Component {
 								)
 							})}
 							</div>) : (<div>
-								{this.props.accounts.map((account) => {
+								{this.props.accounts.map((account,i) => {
 									return (
 									<Det_cont
 										acc_name = {account.acc_name}
@@ -139,7 +139,7 @@ class ProCon extends React.Component {
 										adress = {account.address_line1}
 										gst = {account.gst_num}
 										ph_number = {account.phone_num}
-										id = {account.id}
+										i = {i+1}
 										showAddAcc = {this.showAddAcc}
 										deleteIt = {this.deleteIt}
 										/>
@@ -159,7 +159,7 @@ class Det_cont extends React.Component{
 			<div className = "det_cont">
 				<div className = "det_cont_left">
 					<div className = "acc_name">
-					<span className = "acc_id">{this.props.id}.  </span>
+					<span className = "acc_id">{this.props.i}.  </span>
 					{this.props.acc_name}<span className = "acc_type">
 					({this.props.type})</span></div>
 					<div className = "acc_print">{this.props.print_name}</div>

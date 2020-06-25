@@ -125,7 +125,6 @@ class App extends React.Component {
 
 			this.getProducts();
 		}
-		alert(ans);
 		this.setState((prevState) => {
 			return {
 				ProOrAcc: ans
@@ -139,7 +138,6 @@ class App extends React.Component {
 		// if (ans === 'debit') {
 		// 	this.getDebit();
 		// }
-
 		this.setState((prevState) => {
 			return {
 				PVoJVoDN: ans
@@ -229,12 +227,13 @@ class App extends React.Component {
 						AddAccCrossBtn={this.AddAccCrossBtn}
 						fi={this.fi}
 					/>
-
+       
 					<ProCon
 						products={this.state.products}
 						accounts={this.state.accounts}
 						getProducts={this.getProducts}
 						getAccounts={this.getAccounts}
+						ProOrAcc={this.state.ProOrAcc}
 					/>
 				</div>
 			);
@@ -276,7 +275,7 @@ class App extends React.Component {
 					<AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} />
 				) : null}
 				{this.state.AddAcc ? (
-					<AddAcc AddAccCroAddAccCrossBtnssBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} />
+					<AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} />
 				) : null}
 			</div>
 		);

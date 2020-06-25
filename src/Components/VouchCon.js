@@ -1,7 +1,4 @@
 import React from 'react';
-import Delete from '../Components/Delete';
-import AddVouch from '../Components/AddVouch';
-import AddAcc from '../Components/AddAcc';
 import ref from './../img/refresh.svg';
 
 class VouchCon extends React.Component {
@@ -66,9 +63,9 @@ class VouchCon extends React.Component {
 						<div
 							className="add_account"
 							onClick={
-								this.props.vouchPage === 'jv' ? (
+								this.props.vouchPage === 'pv' ? (
 									() => {
-										this.props.setPVoJVoDN('jv');
+										this.props.setPVoJVoDN('pv');
 									}
 								) : (
 									this.props.AddAccCrossBtn

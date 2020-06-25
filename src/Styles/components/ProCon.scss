@@ -44,10 +44,12 @@
     height: auto;
     min-height: 300px;
     width: 80%;
-    background-color: white;
     margin: 10px 20px;
-
-    box-shadow: 0px 0px 10px rgb(100, 100, 100);
+    border-radius:10px;
+	background-color:white;
+	padding:20px 5px;
+    box-shadow:0px 5px 10px gray;
+	background-color:white;
 }
 
 #accounting_pro_table {
@@ -56,6 +58,7 @@
 
 .det_cont{
     width: 100%;
+	background-color:white;
     height: 8rem;
     display: flex;
     flex-direction: row;
@@ -140,6 +143,7 @@
 }
 .det_cont_pro{
     width: 100%;
+	background-color:white;
     height: 5rem;
     display: flex;
     flex-direction: row;
@@ -150,6 +154,7 @@
 }
 .det_sub_cont{
     // border: solid black;
+
     width: 100%;
     display: flex;
     flex-direction: row;
