@@ -1,0 +1,90 @@
+
+
+.vouch_to{
+    color: $dark;
+    margin-left: 20px;
+    margin-right: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.det_cont_vouch{
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid rgb(172, 172, 172);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+.acc_name_vouch{
+    color: $pri_color;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.vouch_costumer_name{
+    font-size: 1.5rem;
+    color: $dark;
+}
+.acc_id_vouch{
+    margin-right: 5px;
+    color: $dark;
+}
+.vouch_bill_detail{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.det_cont_right_vouch{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 30rem;
+}
+.acc_right_vouch{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $dark;
+}
+.vouch_status{
+    font-size: 1.4rem;
+    color: red;
+    font-weight: 600;
+}
+.pro_con_vouch{
+    height: auto;
+    min-height: 300px;
+    width: 80%;
+    background-color: white;
+    margin: 10px 20px;
+    min-width: 55rem;
+    box-shadow: 0px 0px 10px rgb(100, 100, 100);
+}
+.vouch_bills{
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+}
+.jovouch_det{
+    margin-left: 15px;
+}
+.det_cont_right_jovouch{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 3.5rem ;
+    width: 28rem;
+}
+.det_cont_last_jovouch{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    // margin-right: 12rem;
+    width: 15rem;
+}
+.vouc_det_left{
+    width: 45rem;
+}
+.vouch_right{
+    width: 25rem;
+}

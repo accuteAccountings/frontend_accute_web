@@ -8,6 +8,7 @@
 
 .pro_compo {
     @import "./components/ProCon.scss";
+    @import "./components//VouchCon.scss";
 }
 
 @import "./containers/Dash.scss";

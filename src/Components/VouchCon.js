@@ -1,5 +1,7 @@
 import React from 'react';
 import ref from './../img/refresh.svg';
+import trash from '../img/trash.svg';
+import pencil from '../img/pencil.svg';
 
 class VouchCon extends React.Component {
 	constructor(props) {
@@ -58,7 +60,6 @@ class VouchCon extends React.Component {
 							Debit Note
 						</li>
 					</div>
-
 					<div className="other_det">
 						<div
 							className="add_account"
@@ -86,71 +87,133 @@ class VouchCon extends React.Component {
 						/>
 
 						{/* <input
-							type="text"
-							id="searchForProOrAcc"
-							onChange={() => {
-								this.props.fi();
-							}}
-						/> */}
+						type="text"
+						id="searchForProOrAcc"
+						onChange={() => {
+							this.props.fi();
+						}}
+					/> */}
 					</div>
 				</div>
 
 				<div className="pro_compo">
-					<div className="pro_con">
-						<table id="accounting_pro_table">
-							{this.props.vouchPage === 'jv' && (
-								<tr>
-									<th>S.No. </th>
-									<th>Supplier Name</th>
-									<th>Customer Name</th>
-									<th>Bill No.</th>
-									<th>G.R. No.</th>
-									<th>Edit/View</th>
-									<th>Delete</th>
-								</tr>
-							)}
-							{this.props.vouchPage === 'pv' && (
-								<tr>
-									<th>S.No.</th>
-									<th>Supplier Name</th>
-									<th>Customer Name</th>
-									<th>Bill No.</th>
-									<th>G.R. No.</th>
-									<th>Edit/View</th>
-									<th>Delete</th>
-								</tr>
-							)}
-							{this.props.vouchPage === 'dn' && (
-								<tr>
-									<th>S.No.</th>
-									<th>Supplier Name</th>
-									<th>Customer Name</th>
-									<th>Bill No.</th>
-									<th>G.R. No.</th>
-									<th>Edit/View</th>
-									<th>Delete</th>
-								</tr>
-							)}
-							{this.props.vouchPage === 'pv' &&
-								this.state.data.map((e, i) => {
+					<div className="pro_con_vouch">
+						{this.props.vouchPage === 'pv' && (
+							<div>
+								{this.state.data.map((e) => {
 									return (
-										<tr key={i}>
-											<th>{i + 1}</th>
-											<th>{e.det.supplier}</th>
-											<th>{e.det.customer}</th>
-											<th>{e.det.bill_num}</th>
-											<th>{e.det.g_r_num}</th>
-											<th>
-												<a href="">Edit/View</a>
-											</th>
-											<th>Delete</th>
-										</tr>
+										<Det_cont supplier={e.supplier} costumer={e.costumer} bill_num={e.bill_num} />
 									);
 								})}
-						</table>
-							{this.state.data===[] &&
-								<h1 id="empty" >EMPTY LIST </h1>
-							}
+							</div>
+						)}
+						{this.props.vouchPage === 'jv' && (
+							<div>
+								<Jo_vouch_det />
+							</div>
+						)}
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+
+class Det_cont extends React.Component {
+	render() {
+		return (
+			<div className="det_cont_vouch">
+				<div className="det_cont_left vouc_det_left">
+					<div className="acc_name_vouch">
+						<span className="acc_id_vouch">1. </span>
+						Seller Name
+						<span className="vouch_to">TO</span>
+						<span className="vouch_costumer_name">Costumer Name</span>
+					</div>
+					<div className="vouch_bill_detail">
+						<div className="acc_adress">
+							<span className="acc_adress_head">Amount :</span> 8979799
+						</div>
+						<div className="acc_adress">
+							<span className="acc_adress_head">Biil No :</span> 123456
+						</div>
+					</div>
+				</div>
+				<div className="det_cont_right_vouch vouch_right">
+					<div className=" vouch_status">
+						<span className="acc_right_vouch">Status:</span> UNPAID
+					</div>
+					<div className="vouch_date">
+						<span className="acc_right_vouch"> Date:</span> {Date.now()}
+					</div>
+				</div>
+
+				<div className="det_cont_icons">
+					<div
+						onClick={() => {
+							this.props.showAddAcc(this.props.id);
+						}}
+					>
+						<img src={pencil} alt=" " />
+					</div>
+					<div
+						onClick={() => {
+							this.props.deleteIt(`/api/accounts/${this.props.id}`);
+						}}
+					>
+						<img src={trash} alt=" " />
+					</div>
+				</div>
+			</div>
+		);
+	}
+}
+
+class Jo_vouch_det extends React.Component {
+	render() {
+		return (
+			<div className="det_cont_vouch">
+				<div className="det_cont_right_vouch">
+					<div className=" vouch_bills">
+						<span className="acc_id_vouch">1. </span>
+						<span className="acc_right_vouch">Bills:</span> 1234 , 4563 , 45435
+					</div>
+					<div className="acc_name_vouch jovouch_det">
+						<span>Seller Name </span>
+						<span className="vouch_to">TO</span>
+						<span className="vouch_costumer_name">Costumer Name</span>
+					</div>
+				</div>
+				<div className="det_cont_right_jovouch">
+					<div className=" vouch_bills">
+						<span className="acc_right_vouch">Pending Amount:</span> 4543543
+					</div>
+					<div className="vouch_bills">
+						<span className="acc_right_vouch"> Amount:</span> 4246445
+					</div>
+				</div>
+				<div className="det_cont_last_jovouch">
+					<div className=" vouch_status">
+						<span className="acc_right_vouch">Status:</span> UNPAID
+					</div>
+					<div className="vouch_date">
+						<span className="acc_right_vouch"> Date:</span> {Date.now()}
+					</div>
+				</div>
+				<div className="det_cont_icons">
+					<div
+						onClick={() => {
+							this.props.showAddAcc(this.props.id);
+						}}
+					>
+						<img src={pencil} alt=" " />
+					</div>
+					<div
+						onClick={() => {
+							this.props.deleteIt(`/api/accounts/${this.props.id}`);
+						}}
+					>
+						<img src={trash} alt=" " />
 					</div>
 				</div>
 			</div>
