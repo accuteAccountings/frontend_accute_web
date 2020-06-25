@@ -2,7 +2,7 @@
 
 .add_vouch_con {
 	background-color: white;
-	width: 75%;
+	width: 95%;
 	margin-left: auto;
 	margin-right: auto;
 	box-shadow: 0px 0px 10px rgb(163, 163, 163);
@@ -54,6 +54,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: flex-start;
+	padding:10px 5px;
 }
 
 .vouch_si {
@@ -68,14 +69,14 @@
 		border: 1px solid $grey_text;
 		padding: 1px 6px;
 		font-size: 1rem;
-		width: auto;
+		width: 160px;
 		text-align: center;
 	}
 	select {
 		color: $l_grey_text;
 		font-size: 1rem;
 		border: 1px solid $grey_text;
-		width: auto;
+		width: 90px;
 		padding: 1px 6px;
 		text-align: center;
 	}
@@ -88,20 +89,23 @@
 	width: 110px;
 }
 #vouch_transport_name {
-	width: 200px;
+	width: 160px;
 }
 #vouch_sup {
-	width: 200px;
+	width: 160px;
 }
 #vouch_sup_agent {
-	width: 200px;
+	width: 160px;
 }
 #vouch_comission {
 	width: 60px;
 	text-align: center;
 }
 #vouch_customer {
-	width: 200px;
+	width: 160px;
+}
+#vouch_hsn_num{
+		width:120px;
 }
 input[type="number"] {
 	-moz-appearance: textfield;
@@ -118,7 +122,7 @@ input::-webkit-inner-spin-button {
 }
 
 .vouch_body_middle {
-	margin-top: 10px;
+	margin-top: 20px;
 	padding-top: 10px;
 	border-top: 2px solid $l_grey_text;
 	display: flex;
@@ -164,7 +168,7 @@ input::-webkit-inner-spin-button {
 }
 
 #vouch_add_btn {
-	margin: 10px 20px;
+	margin: 17px 20px 8px 20px;
 	padding: 5px 30px;
 	font-size: $p_font;
 	color: $grey_text;

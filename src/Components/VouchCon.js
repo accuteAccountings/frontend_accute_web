@@ -111,7 +111,7 @@ class VouchCon extends React.Component {
 							)}
 							{this.props.vouchPage === 'pv' && (
 								<tr>
-									<th>S.No. pv</th>
+									<th>S.No.</th>
 									<th>Supplier Name</th>
 									<th>Customer Name</th>
 									<th>Bill No.</th>
@@ -122,7 +122,7 @@ class VouchCon extends React.Component {
 							)}
 							{this.props.vouchPage === 'dn' && (
 								<tr>
-									<th>S.No.dn </th>
+									<th>S.No.</th>
 									<th>Supplier Name</th>
 									<th>Customer Name</th>
 									<th>Bill No.</th>
@@ -148,6 +148,9 @@ class VouchCon extends React.Component {
 									);
 								})}
 						</table>
+							{this.state.data===[] &&
+								<h1 id="empty" >EMPTY LIST </h1>
+							}
 					</div>
 				</div>
 			</div>
