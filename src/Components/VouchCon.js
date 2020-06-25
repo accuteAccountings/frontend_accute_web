@@ -137,7 +137,7 @@ class Det_cont extends React.Component{
 						</div>
 					<div className = "vouch_bill_detail">
 						<div className  ="acc_adress">
-							<span className = "acc_adress_head">
+							<span className = "acc_adress_head vouch_amount">
 								Amount :</span> 8979799</div>
 							<div className  ="acc_adress">
 							<span className = "acc_adress_head">
