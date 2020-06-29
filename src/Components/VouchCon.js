@@ -99,17 +99,19 @@ class VouchCon extends React.Component {
 				<div className="pro_compo">
 					<div className="pro_con_vouch">
 						{this.props.vouchPage === 'pv' && (
-							<div>
-								{this.state.data.map((e) => {
+							<div className = "vouchCon">
+								{this.state.data.map((e,i) => {
 									return (
-										<Det_cont supplier={e.supplier} costumer={e.costumer} bill_num={e.bill_num} />
+											
+											
+										<DetCont i={i+1} supplier={e.det.supplier} costumer={e.det.customer} bill_num={e.det.bill_num} />
 									);
 								})}
 							</div>
 						)}
 						{this.props.vouchPage === 'jv' && (
-							<div>
-								<Jo_vouch_det />
+							<div className = "vouchCon">
+								<JoVouchDet />
 							</div>
 						)}
 					</div>
@@ -119,23 +121,23 @@ class VouchCon extends React.Component {
 	}
 }
 
-class Det_cont extends React.Component {
+class DetCont extends React.Component {
 	render() {
 		return (
 			<div className="det_cont_vouch">
 				<div className="det_cont_left vouc_det_left">
 					<div className="acc_name_vouch">
-						<span className="acc_id_vouch">1. </span>
-						Seller Name
+							<span className="acc_id_vouch">{this.props.i} </span>
+							{this.props.supplier}
 						<span className="vouch_to">TO</span>
-						<span className="vouch_costumer_name">Costumer Name</span>
+						<span className="vouch_costumer_name">{this.props.costumer} </span>
 					</div>
 					<div className="vouch_bill_detail">
 						<div className="acc_adress">
-							<span className="acc_adress_head">Amount :</span> 8979799
+							<span className="acc_adress_head">Amount :</span> Rs. 2382.00
 						</div>
 						<div className="acc_adress">
-							<span className="acc_adress_head">Biil No :</span> 123456
+							<span className="acc_adress_head">Biil No :</span> {this.props.bill_num}
 						</div>
 					</div>
 				</div>
@@ -144,7 +146,7 @@ class Det_cont extends React.Component {
 						<span className="acc_right_vouch">Status:</span> UNPAID
 					</div>
 					<div className="vouch_date">
-						<span className="acc_right_vouch"> Date:</span> {Date.now()}
+						<span className="acc_right_vouch"> Date:</span> {"12-06-2020"}
 					</div>
 				</div>
 
@@ -169,7 +171,7 @@ class Det_cont extends React.Component {
 	}
 }
 
-class Jo_vouch_det extends React.Component {
+class JoVouchDet extends React.Component {
 	render() {
 		return (
 			<div className="det_cont_vouch">

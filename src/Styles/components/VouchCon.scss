@@ -1,5 +1,4 @@
 
-
 .vouch_to{
     color: $dark;
     margin-left: 20px;
@@ -16,6 +15,9 @@
     border: 1px solid rgb(172, 172, 172);
     border-radius: 10px;
     margin-bottom: 1rem;
+	background-color:white;
+	box-shadow:0px 3px 10px #d0d0d0;
+
 }
 .acc_name_vouch{
     color: $pri_color;
@@ -56,10 +58,10 @@
     height: auto;
     min-height: 300px;
     width: 80%;
-    background-color: white;
+ //   background-color: white;
     margin: 10px 20px;
     min-width: 55rem;
-    box-shadow: 0px 0px 10px rgb(100, 100, 100);
+  //  box-shadow: 0px 0px 10px rgb(100, 100, 100);
 }
 .vouch_bills{
     font-size: 1.3rem;
@@ -67,6 +69,9 @@
 }
 .jovouch_det{
     margin-left: 15px;
+}
+.vouch_date{
+		margin-left:15px;
 }
 .det_cont_right_jovouch{
     display: flex;
