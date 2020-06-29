@@ -139,6 +139,16 @@ class DetCont extends React.Component {
 						<div className="acc_adress">
 							<span className="acc_adress_head">Biil No :</span> {this.props.bill_num}
 						</div>
+<<<<<<< HEAD
+=======
+					<div className = "vouch_bill_detail">
+						<div className  ="acc_adress">
+							<span className = "acc_adress_head vouch_amount">
+								Amount :</span> 8979799</div>
+							<div className  ="acc_adress">
+							<span className = "acc_adress_head">
+								Biil No :</span> 123456</div>
+>>>>>>> f57d3a0f48da6adcb5b998c4b3f105728a1b9b6c
 					</div>
 				</div>
 				<div className="det_cont_right_vouch vouch_right">
