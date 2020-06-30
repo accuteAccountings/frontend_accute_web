@@ -8,6 +8,7 @@ import NavSec from "../Components/NavSec";
 import ProCon from "../Components/ProCon";
 import AddVouch from "../Components/AddVouch";
 import AddDebit from "../Components/AddDebit.js";
+import AddCredit from "../Components/AddCredit.js";
 import VouchCon from "../Components/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
@@ -154,7 +155,21 @@ class App extends React.Component {
       };
     });
   };
+rmDebit = () => {
+  this.setState(prevState => {
+	return {
+	  PVoJVoDN: "no"
+	};
+  });
+};
 
+  rmCredit = () => {
+    this.setState(prevState => {
+      return {
+        PVoJVoDN: "no"
+      };
+    });
+  };
   setVouchPage = page => {
     this.setState(() => {
       return {
@@ -251,7 +266,8 @@ class App extends React.Component {
 
           {this.state.PVoJVoDN === "pv" && <AddVouch rm={this.rmVouch} />}
           {this.state.PVoJVoDN === "jv" && <AddJovouch rm={this.rmVouch} />}
-          {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmVouch} />}
+          {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmDebit} />}
+          {this.state.PVoJVoDN === "cn" && <AddCredit rm={this.rmCredit} />}
           {this.state.PVoJVoDN === "no" && (
             <VouchCon
               setPVoJVoDN={this.setPVoJVoDN}

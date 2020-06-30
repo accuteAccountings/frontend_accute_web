@@ -10,11 +10,21 @@ class VouchCon extends React.Component {
     this.state = {
       addVouch: false,
       addDebit: false,
-      data: []
+      data: [],
+      Debitdata: [],
+      Creditdata: []
     };
-    this.updateData();
+    {
+      this.props.vouchPage === "pv" && this.updateVouchData();
+    }
+    {
+      this.props.vouchPage === "cn" && this.updateCreditData();
+    }
+    {
+      this.props.vouchPage === "dn" && this.updateDebitData();
+    }
   }
-  updateData = () => {
+  updateVouchData = () => {
     fetch("/api/vouch")
       .then(res => res.json())
       .then(data => {
@@ -26,7 +36,28 @@ class VouchCon extends React.Component {
         });
       });
   };
-
+  updateDebitData = () => {
+    fetch("/api/debit")
+      .then(res => res.json())
+      .then(data => {
+        this.setState(() => {
+          return {
+            Debitdata: data
+          };
+        });
+      });
+  };
+  updateCreditData = () => {
+    fetch("/api/credit")
+      .then(res => res.json())
+      .then(data => {
+        this.setState(() => {
+          return {
+            Creditdata: data
+          };
+        });
+      });
+  };
   render() {
     return (
       <div>
@@ -35,7 +66,7 @@ class VouchCon extends React.Component {
             <li
               className={this.props.vouchPage === "pv" ? "black" : "grey"}
               onClick={() => {
-                this.updateData();
+                this.updateVouchData();
                 this.props.setVouchPage("pv");
               }}
             >
@@ -44,8 +75,6 @@ class VouchCon extends React.Component {
             <li
               className={this.props.vouchPage === "jv" ? "black" : "grey"}
               onClick={() => {
-                this.updateData();
-
                 this.props.setVouchPage("jv");
               }}
             >
@@ -54,11 +83,20 @@ class VouchCon extends React.Component {
             <li
               className={this.props.vouchPage === "dn" ? "black" : "grey"}
               onClick={() => {
-                this.updateData();
+                this.updateDebitData();
                 this.props.setVouchPage("dn");
               }}
             >
               Debit Note
+            </li>
+            <li
+              className={this.props.vouchPage === "cn" ? "black" : "grey"}
+              onClick={() => {
+                this.updateCreditData();
+                this.props.setVouchPage("cn");
+              }}
+            >
+              Credit Note
             </li>
           </div>
           <div className="other_det">
@@ -71,6 +109,7 @@ class VouchCon extends React.Component {
               + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
               {this.props.vouchPage === "pv" && "Purchase Vouchers"}
               {this.props.vouchPage === "dn" && "Debit Note"}
+              {this.props.vouchPage === "cn" && "Credit Note"}
             </div>
 
             <img
@@ -95,7 +134,45 @@ class VouchCon extends React.Component {
               <div className="vouchCon">
                 {this.state.data.map((e, i) => {
                   return (
-                    <DetCont i={i + 1} supplier={e.det.supplier} costumer={e.det.customer} bill_num={e.det.bill_num} />
+                    <DetCont
+                      i={i + 1}
+                      supplier={e.det.supplier}
+                      costumer={e.det.customer}
+                      date={e.det.bill_date}
+                      bill_num={e.det.bill_num}
+                    />
+                  );
+                })}
+              </div>
+            )}
+
+            {this.props.vouchPage === "dn" && (
+              <div className="vouchCon">
+                {this.state.Debitdata.map((e, i) => {
+                  return (
+                    <DetCont
+                      i={i + 1}
+                      supplier={e.det.supplier}
+                      costumer={e.det.customer}
+                      date={e.det.bill_date}
+                      bill_num={e.det.bill_num}
+                    />
+                  );
+                })}
+              </div>
+            )}
+
+            {this.props.vouchPage === "cn" && (
+              <div className="vouchCon">
+                {this.state.Creditdata.map((e, i) => {
+                  return (
+                    <DetCont
+                      i={i + 1}
+                      supplier={e.det.supplier}
+                      costumer={e.det.customer}
+                      date={e.det.bill_date}
+                      bill_num={e.det.bill_num}
+                    />
                   );
                 })}
               </div>
@@ -115,50 +192,52 @@ class VouchCon extends React.Component {
 class DetCont extends React.Component {
   render() {
     return (
-      <div className = "det_cont_vouch">
-      <div className = "det_cont_left vouc_det_left">
-        <div className = "acc_name_vouch">
-            <span className = "acc_id_vouch">1.  </span>
-            Seller Name	
-            <span className = "vouch_to">TO</span>
-            <span className = "vouch_costumer_name">
-            Costumer Name</span>
+      <div className="det_cont_vouch">
+        <div className="det_cont_left vouc_det_left">
+          <div className="acc_name_vouch">
+            <span className="acc_id_vouch">{this.props.i}. </span>
+            {this.props.supplier}
+            <span className="vouch_to">TO</span>
+            <span className="vouch_costumer_name">{this.props.customer}</span>
           </div>
-        <div className = "vouch_bill_detail">
-          <div className  ="acc_adress">
-            <span className = "acc_adress_head vouch_amount">
-              Amount :</span> 8979799</div>
-            <div className  ="acc_adress">
-            <span className = "acc_adress_head">
-              Biil No :</span> 123456</div>
+          <div className="vouch_bill_detail">
+            <div className="acc_adress">
+              <span className="acc_adress_head vouch_amount">Amount :</span> 8979799
+            </div>
+            <div className="acc_adress">
+              <span className="acc_adress_head">Biil No :</span> {this.props.bill_num}
+            </div>
+          </div>
+        </div>
+        <div className="det_cont_right_vouch vouch_right">
+          <div className=" vouch_status">
+            <span className="acc_right_vouch">Status:</span> UNPAID
+          </div>
+          <div className="vouch_date">
+            <span className="acc_right_vouch"> Date:</span> {this.props.date}
+          </div>
+        </div>
+
+        <div className="det_cont_icons">
+          <div
+            onClick={() => {
+              this.props.showAddAcc(this.props.id);
+            }}
+          >
+            <img src={pencil} alt=" " />
+          </div>
+          <div
+            onClick={() => {
+              this.props.deleteIt(`/api/accounts/${this.props.id}`);
+            }}
+          >
+            <img src={trash} alt=" " />
+          </div>
         </div>
       </div>
-      <div className = "det_cont_right_vouch vouch_right">
-        <div className = " vouch_status"><span className = "acc_right_vouch">Status:</span> UNPAID</div>
-        <div className = "vouch_date"><span className = "acc_right_vouch"> Date:</span> {Date.now()}</div>
-      </div>
-      
-      <div className = "det_cont_icons">
-        <div onClick={() => {
-          this.props.showAddAcc(this.props.id);
-        }}>
-          <img src = {pencil} alt = " " />
-        </div>
-        <div onClick={() => {
-          this.props.deleteIt(`/api/accounts/${this.props.id}`);
-        }}>
-          <img src = {trash} alt = " " />
-        </div>
-      </div>
-      </div>
-             
     );
   }
 }
-
-
-
-
 
 class JoVouchDet extends React.Component {
   render() {

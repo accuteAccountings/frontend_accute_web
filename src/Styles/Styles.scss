@@ -7,11 +7,12 @@
 @import "./components/NavSec.scss";
 
 .pro_compo {
-  @import "./components/ProCon.scss";
-  @import "./components//VouchCon.scss";
+	@import "./components/ProCon.scss";
+	@import "./components//VouchCon.scss";
 }
 
 @import "./containers/Dash.scss";
 @import "./components/AddVouch.scss";
-@import "./components/AddDebit.scss";
 @import "./components/AddJoVouch.scss";
+@import "./components/AddDebit.scss";
+@import "./components/AddCredit.scss";
