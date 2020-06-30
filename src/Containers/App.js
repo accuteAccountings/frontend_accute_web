@@ -7,6 +7,7 @@ import Clogo from "../Components/Clogo";
 import NavSec from "../Components/NavSec";
 import ProCon from "../Components/ProCon";
 import AddVouch from "../Components/AddVouch";
+import AddDebit from "../Components/AddDebit.js";
 import VouchCon from "../Components/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
@@ -250,7 +251,7 @@ class App extends React.Component {
 
           {this.state.PVoJVoDN === "pv" && <AddVouch rm={this.rmVouch} />}
           {this.state.PVoJVoDN === "jv" && <AddJovouch rm={this.rmVouch} />}
-          {this.state.PVoJVoDN === "dn" && <AddVouch rm={this.rmVouch} />}
+          {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmVouch} />}
           {this.state.PVoJVoDN === "no" && (
             <VouchCon
               setPVoJVoDN={this.setPVoJVoDN}

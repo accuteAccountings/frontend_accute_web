@@ -55,7 +55,6 @@ class VouchCon extends React.Component {
               className={this.props.vouchPage === "dn" ? "black" : "grey"}
               onClick={() => {
                 this.updateData();
-
                 this.props.setVouchPage("dn");
               }}
             >
@@ -65,13 +64,9 @@ class VouchCon extends React.Component {
           <div className="other_det">
             <div
               className="add_account"
-              onClick={
-                this.props.vouchPage === "pv"
-                  ? () => {
-                      this.props.setPVoJVoDN("pv");
-                    }
-                  : this.props.AddAccCrossBtn
-              }
+              onClick={() => {
+                this.props.setPVoJVoDN(this.props.vouchPage);
+              }}
             >
               + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
               {this.props.vouchPage === "pv" && "Purchase Vouchers"}
