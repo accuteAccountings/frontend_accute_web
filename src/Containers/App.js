@@ -45,7 +45,6 @@ class App extends React.Component {
         specific_acc : this.state.accounts[i]
       }
     })
-  
   }
 
   getAccounts = () => {
@@ -133,6 +132,21 @@ class App extends React.Component {
         isacc_pro : ans
       }
     })
+    if(ans === 'acc_det'){
+    document.getElementById('acc_det').style.color = '#29a8ab'
+    document.getElementById('reports').style.color = '#707070'
+    document.getElementById('ledger').style.color = '#707070'
+    }
+    else if(ans === 'reports'){
+      document.getElementById('reports').style.color = '#29a8ab'
+      document.getElementById('acc_det').style.color = '#707070'
+      document.getElementById('ledger').style.color = '#707070'
+    }
+    else{
+        document.getElementById('ledger').style.color = '#29a8ab'
+        document.getElementById('reports').style.color = '#707070'
+        document.getElementById('acc_det').style.color = '#707070'
+    }
   }
 
   setProOrAcc(ans) {
