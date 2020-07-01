@@ -45,6 +45,9 @@ class App extends React.Component {
         specific_acc : this.state.accounts[i]
       }
     })
+    if(document.getElementById(this.state.isacc_pro)){
+      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
+      }
   }
 
   backToAcc(){
@@ -153,7 +156,6 @@ class App extends React.Component {
     }
     else{
         document.getElementById('ledger').style.color = '#29a8ab'
-        document.getElementById('ledger').style.fontSize = '1.3rem'
         document.getElementById('reports').style.color = '#707070'
         document.getElementById('acc_det').style.color = '#707070'
     }
@@ -305,7 +307,6 @@ rmDebit = () => {
     }
 
     if(this.state.specific_acc){
-     
       currentPage = (
         <div className="pageBody">
         <TopBar />
