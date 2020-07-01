@@ -78,6 +78,7 @@ class SideBar extends React.Component {
 							<li
 								onClick={() => {
 									this.props.setProOrAcc('Accounts');
+									this.props.setAccProfile(null);
 								}}
 							>
 								Accounts

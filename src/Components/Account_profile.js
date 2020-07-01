@@ -7,7 +7,7 @@ export default class Account_pro extends React.Component{
         return(
             <div>
                 <div className = "acc_pro_location">
-                    <span className = "page_route" >accounts</span> / account profile
+                    <span className = "page_route" onClick = {() => this.props.backToAcc()} >accounts</span> / account profile
                 </div>
                 <div className = "acc_pro_body">
                     <div className = "acc_pro_sbar">

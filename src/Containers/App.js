@@ -47,6 +47,14 @@ class App extends React.Component {
     })
   }
 
+  backToAcc(){
+    this.setState(() => {
+      return {
+        specific_acc : null
+      }
+    })
+  }
+
   getAccounts = () => {
     fetch("/api/accounts", {
       method: "GET",
@@ -217,6 +225,7 @@ rmDebit = () => {
     this.AddAccCrossBtn = this.AddAccCrossBtn.bind(this);
     this.setAccProfile = this.setAccProfile.bind(this)
     this.setProOrAcc = this.setProOrAcc.bind(this);
+    this.backToAcc = this.backToAcc.bind(this);
     this.fi = this.fi.bind(this);
 
     this.navTo = this.navTo.bind(this);
@@ -301,6 +310,7 @@ rmDebit = () => {
           account = {this.state.specific_acc}
           acc_pro_val = {this.state.isacc_pro}
           setAccProfile = {this.setAccProfile}
+          backToAcc = {this.backToAcc}
         />
         </div>
       )
@@ -339,6 +349,9 @@ rmDebit = () => {
             navTo={this.navTo}
             actPage={this.state.page}
             setVouchPage={this.setVouchPage}
+            setAccProfile = {this.setAccProfile}
+            backToAcc = {this.backToAcc}
+
           />
         </div>
 
