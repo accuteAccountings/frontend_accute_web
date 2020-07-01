@@ -138,7 +138,9 @@ class ProCon extends React.Component {
               {this.props.accounts.map((account, i) => {
                 
                 return (
-                  <div onClick = {() => this.props.getspecific_acc(i)} className = "det_acc_div">
+                  <div onClick = {() => {this.props.getspecific_acc(i)
+                  
+                  }} className = "det_acc_div">
                   <DetCont
                     acc_name={account.acc_name}
                     type={account.acc_type}

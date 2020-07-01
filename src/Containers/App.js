@@ -127,7 +127,7 @@ class App extends React.Component {
   }
 
   setAccProfile(ans){
-    this.setState((prevState) => {
+    this.setState(() => {
       return {
         isacc_pro : ans
       }
@@ -144,6 +144,7 @@ class App extends React.Component {
     }
     else{
         document.getElementById('ledger').style.color = '#29a8ab'
+        document.getElementById('ledger').style.fontSize = '1.3rem'
         document.getElementById('reports').style.color = '#707070'
         document.getElementById('acc_det').style.color = '#707070'
     }
