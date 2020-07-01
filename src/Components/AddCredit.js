@@ -20,17 +20,17 @@ async function postData(url = "", data) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-class AddDebit extends React.Component {
-  async addDebit() {
-    let bill_date = document.querySelector("#debit_bill_date").value;
-    let type = document.querySelector("#debit_type").value;
-    let bill_num = document.querySelector("#debit_bill_no").value;
-    let g_r_num = document.querySelector("#debit_gr_no").value;
-    let transport_name = document.querySelector("#debit_transport_name").value;
-    let supplier = document.querySelector("#debit_sup").value;
-    let supplier_agent = document.querySelector("#debit_sup_agent").value;
-    let set_commission = document.querySelector("#debit_comission").value;
-    let customer = document.querySelector("#debit_customer").value;
+class AddCredit extends React.Component {
+  async addCredit() {
+    let bill_date = document.querySelector("#credit_bill_date").value;
+    let type = document.querySelector("#credit_type").value;
+    let bill_num = document.querySelector("#credit_bill_no").value;
+    let g_r_num = document.querySelector("#credit_gr_no").value;
+    let transport_name = document.querySelector("#credit_transport_name").value;
+    let supplier = document.querySelector("#credit_sup").value;
+    let supplier_agent = document.querySelector("#credit_sup_agent").value;
+    let set_commission = document.querySelector("#credit_comission").value;
+    let customer = document.querySelector("#credit_customer").value;
 
     let Vdata = {
       bill_date,
@@ -45,7 +45,7 @@ class AddDebit extends React.Component {
       items: this.state.items,
       totalAmt: this.state.totalAmt
     };
-    const isTrue = await postData("/api/debit", Vdata);
+    const isTrue = await postData("/api/credit", Vdata);
     if (isTrue) {
       this.props.rm();
     } else {
@@ -54,30 +54,30 @@ class AddDebit extends React.Component {
   }
 
   vochAddPro() {
-    let pro_name = document.querySelector("#debit_pro_item").value;
-    document.querySelector("#debit_pro_item").value = "";
+    let pro_name = document.querySelector("#credit_pro_item").value;
+    document.querySelector("#credit_pro_item").value = "";
     if (!pro_name) return;
-    let debit_quantity = document.querySelector("#debit_quantity").value;
-    document.querySelector("#debit_quantity").value = 1;
+    let credit_quantity = document.querySelector("#credit_quantity").value;
+    document.querySelector("#credit_quantity").value = 1;
 
-    let debit_gst = document.querySelector("#debit_gst").value;
-    document.querySelector("#debit_gst").value = 18;
-    let debit_rate = document.querySelector("#debit_rate").value;
-    document.querySelector("#debit_rate").value = 1;
+    let credit_gst = document.querySelector("#credit_gst").value;
+    document.querySelector("#credit_gst").value = 18;
+    let credit_rate = document.querySelector("#credit_rate").value;
+    document.querySelector("#credit_rate").value = 1;
 
-    let hsn_num = document.getElementById("debit_hsn_num").value;
-    document.getElementById("debit_hsn_num").value = "";
+    let hsn_num = document.getElementById("credit_hsn_num").value;
+    document.getElementById("credit_hsn_num").value = "";
 
-    let gst = parseFloat(debit_gst) / 100;
-    let v_amount = parseFloat(debit_rate) * parseFloat(debit_quantity);
+    let gst = parseFloat(credit_gst) / 100;
+    let v_amount = parseFloat(credit_rate) * parseFloat(credit_quantity);
 
     v_amount = v_amount * gst + v_amount;
     v_amount = v_amount.toFixed(2);
     let item = {
       product_name: pro_name,
-      quantity: debit_quantity,
-      gst: debit_gst,
-      rate: debit_rate,
+      quantity: credit_quantity,
+      gst: credit_gst,
+      rate: credit_rate,
       amount: v_amount,
       hsn_num: hsn_num
     };
@@ -109,17 +109,17 @@ class AddDebit extends React.Component {
   };
 
   editItem = index => {
-    let pro_name = document.querySelector("#debit_pro_item");
+    let pro_name = document.querySelector("#credit_pro_item");
 
-    let debit_quantity = document.querySelector("#debit_quantity");
-    let debit_gst = document.querySelector("#debit_gst");
-    let debit_rate = document.querySelector("#debit_rate");
-    let hsn_num = document.getElementById("debit_hsn_num");
+    let credit_quantity = document.querySelector("#credit_quantity");
+    let credit_gst = document.querySelector("#credit_gst");
+    let credit_rate = document.querySelector("#credit_rate");
+    let hsn_num = document.getElementById("credit_hsn_num");
 
     pro_name.value = this.state.items[index].product_name;
-    debit_quantity.value = this.state.items[index].quantity;
-    debit_gst.value = this.state.items[index].gst;
-    debit_rate.value = this.state.items[index].rate;
+    credit_quantity.value = this.state.items[index].quantity;
+    credit_gst.value = this.state.items[index].gst;
+    credit_rate.value = this.state.items[index].rate;
     hsn_num.value = this.state.items[index].hsn_num;
 
     this.setState(() => {
@@ -130,31 +130,31 @@ class AddDebit extends React.Component {
   };
 
   editPro = () => {
-    let debit_quantity = document.querySelector("#debit_quantity").value;
-    let debit_gst = document.querySelector("#debit_gst").value;
-    let debit_rate = document.querySelector("#debit_rate").value;
-    let pro_name = document.getElementById("debit_pro_item").value;
-    let hsn_num = document.getElementById("debit_hsn_num").value;
+    let credit_quantity = document.querySelector("#credit_quantity").value;
+    let credit_gst = document.querySelector("#credit_gst").value;
+    let credit_rate = document.querySelector("#credit_rate").value;
+    let pro_name = document.getElementById("credit_pro_item").value;
+    let hsn_num = document.getElementById("credit_hsn_num").value;
 
-    document.querySelector("#debit_pro_item").value = "";
+    document.querySelector("#credit_pro_item").value = "";
 
-    document.querySelector("#debit_quantity").value = 1;
+    document.querySelector("#credit_quantity").value = 1;
 
-    document.querySelector("#debit_gst").value = 18;
-    document.querySelector("#debit_rate").value = 1;
+    document.querySelector("#credit_gst").value = 18;
+    document.querySelector("#credit_rate").value = 1;
 
-    document.getElementById("debit_hsn_num").value = "";
-    let gst = parseFloat(debit_gst) / 100;
-    let v_amount = parseFloat(debit_rate) * parseFloat(debit_quantity);
+    document.getElementById("credit_hsn_num").value = "";
+    let gst = parseFloat(credit_gst) / 100;
+    let v_amount = parseFloat(credit_rate) * parseFloat(credit_quantity);
 
     v_amount = v_amount * gst + v_amount;
     v_amount = v_amount.toFixed(2);
     let arr = this.state.items;
 
     arr[this.state.editItem].product_name = pro_name;
-    arr[this.state.editItem].quantity = debit_quantity;
-    arr[this.state.editItem].gst = debit_gst;
-    arr[this.state.editItem].rate = debit_rate;
+    arr[this.state.editItem].quantity = credit_quantity;
+    arr[this.state.editItem].gst = credit_gst;
+    arr[this.state.editItem].rate = credit_rate;
     arr[this.state.editItem].hsn_num = hsn_num;
     arr[this.state.editItem].amount = v_amount;
 
@@ -168,7 +168,7 @@ class AddDebit extends React.Component {
 
   filterPro = () => {
     document.getElementById("pro_list").style.display = "block";
-    let temp = document.getElementById("debit_pro_item").value.toLowerCase();
+    let temp = document.getElementById("credit_pro_item").value.toLowerCase();
 
     let arr = this.state.products.filter(e => {
       if (temp === "*") {
@@ -236,7 +236,7 @@ class AddDebit extends React.Component {
   };
 
   selectAllText = () => {
-    document.getElementById("debit_pro_item").select();
+    document.getElementById("credit_pro_item").select();
   };
 
   constructor(props) {
@@ -260,19 +260,19 @@ class AddDebit extends React.Component {
   componentDidMount() {
     let today = new Date();
 
-    document.getElementById("debit_bill_date").valueAsDate = today;
+    document.getElementById("credit_bill_date").valueAsDate = today;
     document.getElementById("pro_list").style.display = "none";
   }
   render() {
     return (
-      <div className="add_debit_con">
+      <div className="add_credit_con">
         <div className="add_pro_head">
-          <h1>Add Debit Note </h1>
+          <h1>Add Credit Note</h1>
 
-          <div className="add_debit_right_btns">
+          <div className="add_credit_right_btns">
             <p
               onClick={() => {
-                this.addDebit();
+                this.addCredit();
               }}
             >
               Save
@@ -282,43 +282,43 @@ class AddDebit extends React.Component {
           </div>
         </div>
 
-        <div className="debit_body">
-          <div className="debit_body_left">
-            <div className="debit_body_left_top">
-              <form action="/api/debit" id="debit_det" method="post">
-                <div className="debit_details">
-                  <div className="debit_si">
+        <div className="credit_body">
+          <div className="credit_body_left">
+            <div className="credit_body_left_top">
+              <form action="/api/credit" id="credit_det" method="post">
+                <div className="credit_details">
+                  <div className="credit_si">
                     <span>Bill Date</span>
                     <br />
-                    <input type="date" name="debit_bill_date" id="debit_bill_date" />
+                    <input type="date" name="credit_bill_date" id="credit_bill_date" />
                   </div>
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Type</span>
                     <br />
-                    <select name="debit_type" id="debit_type">
+                    <select name="credit_type" id="credit_type">
                       <option value="option1">Purchase</option>
                       <option value="option1">Credit</option>
                       <option value="option1">Debit</option>
                     </select>
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Bill No.</span>
                     <br />
-                    <input type="number" name="debit_bill_no" id="debit_bill_no" />
+                    <input type="number" name="credit_bill_no" id="credit_bill_no" />
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>G. R. No.</span>
                     <br />
-                    <input type="number" name="debit_gr_no" id="debit_gr_no" />
+                    <input type="number" name="credit_gr_no" id="credit_gr_no" />
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Transport Name</span>
                     <br />
 
-                    <select name="debit_sup" id="debit_transport_name">
+                    <select name="credit_sup" id="credit_transport_name">
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "transport") {
@@ -334,10 +334,10 @@ class AddDebit extends React.Component {
                     </select>
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Supplier</span>
                     <br />
-                    <select name="debit_sup" id="debit_sup">
+                    <select name="credit_sup" id="credit_sup">
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -353,10 +353,10 @@ class AddDebit extends React.Component {
                     </select>
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Supplier Agent</span>
                     <br />
-                    <select name="debit_sup_agent" id="debit_sup_agent">
+                    <select name="credit_sup_agent" id="credit_sup_agent">
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "agent") {
@@ -372,22 +372,18 @@ class AddDebit extends React.Component {
                     </select>
                   </div>
 
-                  <div className="debit_si">
+                  <div className="credit_si">
                     <span>Set Commission</span>
                     <br />
-                    <input type="number" name="debit_comission" id="debit_comission" defaultValue="1" />
-                  </div>
-                  <div className="debit_si">
-                    <span>Reference No.</span>
-                    <br />
-                    <input type="number" name="debit_ref_num" id="debit_ref_num" />
+                    <input type="number" name="credit_comission" id="credit_comission" defaultValue="1" />
                   </div>
                 </div>
-                <div className="debit_customer">
-                  <div className="debit_si">
+
+                <div className="credit_customer">
+                  <div className="credit_si">
                     <span>Customer</span>
                     <br />
-                    <select name="customer" id="debit_customer">
+                    <select name="customer" id="credit_customer">
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -419,13 +415,13 @@ class AddDebit extends React.Component {
               </form>
             </div>
 
-            <div className="debit_body_middle">
-              <div className="debit_si" id="debit_pro_con">
+            <div className="credit_body_middle">
+              <div className="credit_si" id="credit_pro_con">
                 <span>Product / Item</span>
                 <br />
                 <input
-                  name="debit_pro_item"
-                  id="debit_pro_item"
+                  name="credit_pro_item"
+                  id="credit_pro_item"
                   onChange={this.filterPro}
                   onFocus={this.selectAllText}
                   autoComplete="off"
@@ -437,8 +433,8 @@ class AddDebit extends React.Component {
                       <li
                         key={index}
                         onClick={() => {
-                          document.getElementById("debit_pro_item").value = pro.product_name;
-                          document.getElementById("debit_hsn_num").value = pro.hsn_num;
+                          document.getElementById("credit_pro_item").value = pro.product_name;
+                          document.getElementById("credit_hsn_num").value = pro.hsn_num;
                           document.getElementById("pro_list").style.display = "none";
                         }}
                       >
@@ -449,35 +445,35 @@ class AddDebit extends React.Component {
                 </ul>
               </div>
 
-              <div className="debit_si">
+              <div className="credit_si">
                 <span>HSN No.</span>
                 <br />
-                <input type="text" name="debit_hsn_num" id="debit_hsn_num" />
+                <input type="text" name="credit_hsn_num" id="credit_hsn_num" />
               </div>
-              <div className="debit_si">
+              <div className="credit_si">
                 <span>Quantity</span>
                 <br />
-                <input type="number" name="debit_quantity" id="debit_quantity" defaultValue="1" />
+                <input type="number" name="credit_quantity" id="credit_quantity" defaultValue="1" />
               </div>
-              <div className="debit_si">
+              <div className="credit_si">
                 <span>Rate</span>
                 <br />
-                <input type="number" name="debit_rate" id="debit_rate" defaultValue="1" />
+                <input type="number" name="credit_rate" id="credit_rate" defaultValue="1" />
               </div>
-              <div className="debit_si">
+              <div className="credit_si">
                 <span>GST</span>
                 <br />
-                <input type="number" name="debit_gst" id="debit_gst" defaultValue="18" />
+                <input type="number" name="credit_gst" id="credit_gst" defaultValue="18" />
               </div>
-              <div className="debit_si">
-                <button id="debit_add_btn" onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}>
+              <div className="credit_si">
+                <button id="credit_add_btn" onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}>
                   {this.state.editItem === -1 ? "Add" : "Edit"}
                 </button>
               </div>
             </div>
 
-            <div className="debit_table_con">
-              <table id="debit_table">
+            <div className="credit_table_con">
+              <table id="credit_table">
                 <thead>
                   <tr>
                     <th>S.No.</th>
@@ -598,20 +594,20 @@ class AddDebit extends React.Component {
             </div>
           </div>
 
-          <div className="debit_body_right">
-            <div className="right items debit_body">
-              <div className="debit_num_items">
+          <div className="credit_body_right">
+            <div className="right items credit_body">
+              <div className="credit_num_items">
                 <span>No. of items</span>
                 <br />
                 <span>
-                  <input type="text" id="debit_items_num" />
+                  <input type="text" id="credit_items_num" />
                 </span>
               </div>
-              <div className="debit_types_item">
+              <div className="credit_types_item">
                 <span>Type of items</span>
                 <br />
                 <span>
-                  <input type="text" id="debit_items_type" />
+                  <input type="text" id="credit_items_type" />
                 </span>
               </div>
             </div>
@@ -622,4 +618,4 @@ class AddDebit extends React.Component {
   }
 }
 
-export default AddDebit;
+export default AddCredit;
