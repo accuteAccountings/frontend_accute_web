@@ -55,6 +55,7 @@ class App extends React.Component {
     })
   }
 
+
   getAccounts = () => {
     fetch("/api/accounts", {
       method: "GET",
@@ -297,12 +298,14 @@ rmDebit = () => {
             ProOrAcc={this.state.ProOrAcc}
             setAccProfile = {this.setAccProfile}
             getspecific_acc = {this.getspecific_acc}
+            isacc_pro = {this.state.isacc_pro}
           />
         </div>
       );
     }
 
     if(this.state.specific_acc){
+     
       currentPage = (
         <div className="pageBody">
         <TopBar />

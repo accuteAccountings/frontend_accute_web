@@ -18,7 +18,7 @@ export default class Account_pro extends React.Component{
                             account name   
                         </div>
                         <div className = "sbar_list" id = "sbar_list">
-                            <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('acc_det')} id = "acc_det">
+                            <div className = "sbar_list_value" onClick = {() => {this.props.setAccProfile('acc_det')}} id = "acc_det">
                                 Account Details
                             </div>
                             <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
@@ -29,8 +29,11 @@ export default class Account_pro extends React.Component{
                             </div>
                         </div>
                     </div>
+                    
                     {this.props.acc_pro_val === 'acc_det' && (
+                        
                         <div className = "acc_pro_right">
+                      
                         <div className = "acc_pro_right_upper">
                             <div className = "acc_pro_right_name">
                                 {this.props.account.acc_name}
