@@ -53,8 +53,47 @@ class AddCredit extends React.Component {
     }
   }
 
-  vochAddPro() {
+ async vochAddPro() {
     let pro_name = document.querySelector("#credit_pro_item").value;
+
+    let isIn = this.state.products.find(element => element.product_name === pro_name);
+    console.log(isIn);
+
+    if (!!!isIn) {
+      let pro_name = document.querySelector("#credit_pro_item").value;
+      let hsn_num = document.querySelector("#credit_hsn_num").value;
+      if (!!!hsn_num) {
+        alert("Please Enter HSN number");
+        return false;
+      }
+      let data = {
+        product_name: pro_name,
+        hsn_num: hsn_num
+      };
+
+      await fetch("/api/products", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+        headers: {
+          "Content-Type": "application/json"
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      })
+        .then(res => res.json())
+        .then(r => {
+          if (r.product) {
+          } else {
+            alert("Cannot Add Product Please Try Later");
+            return;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          alert("Cannot Add Product Please Try Later");
+          return;
+        });
+    }
     document.querySelector("#credit_pro_item").value = "";
     if (!pro_name) return;
     let credit_quantity = document.querySelector("#credit_quantity").value;
@@ -84,11 +123,9 @@ class AddCredit extends React.Component {
 
     let arr = this.state.items;
     arr.push(item);
-    let total = 0;
-    arr.map(e => {
-      return (total = total + e.amount);
-    });
+    let total = parseFloat(this.state.totalAmt);
 
+    total = total + parseFloat(v_amount);
     this.setState({
       items: arr,
       totalAmt: total
@@ -98,12 +135,12 @@ class AddCredit extends React.Component {
 
   removeItem = index => {
     let arr = this.state.items;
-
+    let amt = parseFloat(arr[index].amount);
     arr.splice(index, 1);
-
-    this.setState(() => {
+    this.setState(prevState => {
       return {
-        items: arr
+        items: arr,
+        totalAmt: parseFloat(prevState.totalAmt) - amt
       };
     });
   };
@@ -319,6 +356,7 @@ class AddCredit extends React.Component {
                     <br />
 
                     <select name="credit_sup" id="credit_transport_name">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "transport") {
@@ -338,6 +376,7 @@ class AddCredit extends React.Component {
                     <span>Supplier</span>
                     <br />
                     <select name="credit_sup" id="credit_sup">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -357,6 +396,7 @@ class AddCredit extends React.Component {
                     <span>Supplier Agent</span>
                     <br />
                     <select name="credit_sup_agent" id="credit_sup_agent">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "agent") {
@@ -384,6 +424,7 @@ class AddCredit extends React.Component {
                     <span>Customer</span>
                     <br />
                     <select name="customer" id="credit_customer">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -599,16 +640,12 @@ class AddCredit extends React.Component {
               <div className="credit_num_items">
                 <span>No. of items</span>
                 <br />
-                <span>
-                  <input type="text" id="credit_items_num" />
-                </span>
+                <span>{this.state.items.length}</span>
               </div>
               <div className="credit_types_item">
-                <span>Type of items</span>
+                <span> Total Amount</span>
                 <br />
-                <span>
-                  <input type="text" id="credit_items_type" />
-                </span>
+                <span>{this.state.totalAmt}</span>
               </div>
             </div>
           </div>
