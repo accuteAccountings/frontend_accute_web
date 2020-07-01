@@ -10,6 +10,7 @@ import AddVouch from "../Components/AddVouch";
 import VouchCon from "../Components/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
+import Account_pro from "../Components/Account_profile"
 
 class App extends React.Component {
   getProducts = () => {
@@ -35,6 +36,15 @@ class App extends React.Component {
         // alert(err)
       });
   };
+
+  getspecific_acc = (i) => {
+    this.setState(() => {
+      return {
+        specific_acc : this.state.accounts[i]
+      }
+    })
+  
+  }
 
   getAccounts = () => {
     fetch("/api/accounts", {
@@ -115,6 +125,14 @@ class App extends React.Component {
     });
   }
 
+  setAccProfile(ans){
+    this.setState((prevState) => {
+      return {
+        isacc_pro : ans
+      }
+    })
+  }
+
   setProOrAcc(ans) {
     if (ans === "Accounts ") {
       console.log("acc");
@@ -166,7 +184,7 @@ class App extends React.Component {
     super(props);
     this.AddProCrossBtn = this.AddProCrossBtn.bind(this);
     this.AddAccCrossBtn = this.AddAccCrossBtn.bind(this);
-
+    this.setAccProfile = this.setAccProfile.bind(this)
     this.setProOrAcc = this.setProOrAcc.bind(this);
     this.fi = this.fi.bind(this);
 
@@ -182,7 +200,9 @@ class App extends React.Component {
       tempProducts: [],
       accounts: [],
       AddVouch: true,
-      vouchPage: "jv"
+      vouchPage: "jv",
+      isacc_pro : "acc_det",
+      specific_acc : null
     };
   }
 
@@ -235,10 +255,26 @@ class App extends React.Component {
             getProducts={this.getProducts}
             getAccounts={this.getAccounts}
             ProOrAcc={this.state.ProOrAcc}
+            setAccProfile = {this.setAccProfile}
+            getspecific_acc = {this.getspecific_acc}
           />
         </div>
       );
     }
+
+    if(this.state.specific_acc){
+      currentPage = (
+        <div className="pageBody">
+        <TopBar />
+        <Account_pro 
+          account = {this.state.specific_acc}
+          acc_pro_val = {this.state.isacc_pro}
+          setAccProfile = {this.setAccProfile}
+        />
+        </div>
+      )
+    }
+
     if (this.state.page === "trans") {
       currentPage = (
         <div className="pageBody">
@@ -288,6 +324,7 @@ class App extends React.Component {
             getAccounts={this.getAccounts}
           />
         ) : null}
+
       </div>
     );
   }

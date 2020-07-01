@@ -12,15 +12,15 @@ serviceWorker.unregister();
 // 	return 'Sure you want to leave?';
 // };
 let sideMenu = true;
-document.getElementsByClassName('menu_btn')[0].onclick = () => {
-	if (sideMenu) {
-		document.getElementsByClassName('side_bar')[0].style.animationName = 'hideSideMenu';
-		document.getElementsByClassName('side_bar_con')[0].style.animationName = 'hideSideItems';
+// document.getElementsByClassName('menu_btn')[0].onclick = () => {
+// 	if (sideMenu) {
+// 		document.getElementsByClassName('side_bar')[0].style.animationName = 'hideSideMenu';
+// 		document.getElementsByClassName('side_bar_con')[0].style.animationName = 'hideSideItems';
 
-		sideMenu = false;
-	} else {
-		document.getElementsByClassName('side_bar')[0].style.animationName = 'showSideMenu';
-		document.getElementsByClassName('side_bar_con')[0].style.animationName = 'showSideItems';
-		sideMenu = true;
-	}
-};
+// 		sideMenu = false;
+// 	} else {
+// 		document.getElementsByClassName('side_bar')[0].style.animationName = 'showSideMenu';
+// 		document.getElementsByClassName('side_bar_con')[0].style.animationName = 'showSideItems';
+// 		sideMenu = true;
+// 	}
+// };

@@ -95,11 +95,10 @@ class AddAcc extends React.Component {
     let pincode = document.querySelector(".add_acc_inp_pincode").value;
 
     let mob_num =
-      document.querySelector("#add_acc_inp_mobnum").value +
       document.querySelector("#add_acc_inp_mob").value;
 
     let phone_num =
-      document.querySelector("#add_acc_inp_phonenum").value +
+     
       document.querySelector("#add_acc_inp_phone").value;
 
     let emailId = document.querySelector(".add_acc_inp_email").value;

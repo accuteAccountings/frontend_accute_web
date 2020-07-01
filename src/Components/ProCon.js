@@ -136,7 +136,9 @@ class ProCon extends React.Component {
           ) : (
             <div>
               {this.props.accounts.map((account, i) => {
+                
                 return (
+                  <div onClick = {() => this.props.getspecific_acc(i)} className = "det_acc_div">
                   <DetCont
                     acc_name={account.acc_name}
                     type={account.acc_type}
@@ -149,6 +151,7 @@ class ProCon extends React.Component {
                     showAddAcc={this.showAddAcc}
                     deleteIt={this.deleteIt}
                   />
+                  </div>
                 );
               })}
             </div>
@@ -162,7 +165,7 @@ class ProCon extends React.Component {
 class DetCont extends React.Component {
   render() {
     return (
-      <div className="det_cont">
+      <div className="det_cont" onClick = {this.props.setAccProfile}>
         <div className="det_cont_left">
           <div className="acc_name">
             <span className="acc_id">{this.props.i}. </span>

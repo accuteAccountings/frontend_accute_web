@@ -73,7 +73,8 @@
     border: 1px solid rgb(172, 172, 172);
     border-radius: 10px;
     margin-bottom: 1rem;
-	box-shadow:0px 3px 10px #d0d0d0;
+    box-shadow:0px 3px 10px #d0d0d0;
+    cursor: pointer;
 }
 .det_cont_left{
     display: flex;
@@ -183,4 +184,7 @@
     width: 22rem;
     // border: solid black;
     margin-right: 4rem;
+}
+.det_acc_div{
+    cursor: pointer;
 }
