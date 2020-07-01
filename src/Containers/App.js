@@ -45,7 +45,19 @@ class App extends React.Component {
         specific_acc : this.state.accounts[i]
       }
     })
+    if(document.getElementById(this.state.isacc_pro)){
+      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
+      }
   }
+
+  backToAcc(){
+    this.setState(() => {
+      return {
+        specific_acc : null
+      }
+    })
+  }
+
 
   getAccounts = () => {
     fetch("/api/accounts", {
@@ -127,7 +139,7 @@ class App extends React.Component {
   }
 
   setAccProfile(ans){
-    this.setState((prevState) => {
+    this.setState(() => {
       return {
         isacc_pro : ans
       }
@@ -216,6 +228,7 @@ rmDebit = () => {
     this.AddAccCrossBtn = this.AddAccCrossBtn.bind(this);
     this.setAccProfile = this.setAccProfile.bind(this)
     this.setProOrAcc = this.setProOrAcc.bind(this);
+    this.backToAcc = this.backToAcc.bind(this);
     this.fi = this.fi.bind(this);
 
     this.navTo = this.navTo.bind(this);
@@ -287,6 +300,7 @@ rmDebit = () => {
             ProOrAcc={this.state.ProOrAcc}
             setAccProfile = {this.setAccProfile}
             getspecific_acc = {this.getspecific_acc}
+            isacc_pro = {this.state.isacc_pro}
           />
         </div>
       );
@@ -300,6 +314,7 @@ rmDebit = () => {
           account = {this.state.specific_acc}
           acc_pro_val = {this.state.isacc_pro}
           setAccProfile = {this.setAccProfile}
+          backToAcc = {this.backToAcc}
         />
         </div>
       )
@@ -338,6 +353,9 @@ rmDebit = () => {
             navTo={this.navTo}
             actPage={this.state.page}
             setVouchPage={this.setVouchPage}
+            setAccProfile = {this.setAccProfile}
+            backToAcc = {this.backToAcc}
+
           />
         </div>
 

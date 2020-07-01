@@ -3,8 +3,21 @@
     flex-direction: row;
 }
 .acc_pro_location{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 2rem;
     color: $grey_text;
+    img{
+        height: 30px;
+        cursor: pointer;
+        margin-right: 10px;
+        
+    }
+}
+.page_route{
+    color: black;
+    cursor: pointer;
 }
 .acc_pro_sbar{
     // border: solid black;

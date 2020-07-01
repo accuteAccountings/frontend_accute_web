@@ -1,13 +1,14 @@
 import React from 'react'
 import pencil from "../img/pencil.svg";
-
+import back from "../img/camera-back.svg"
 
 export default class Account_pro extends React.Component{
     render(){
         return(
             <div>
                 <div className = "acc_pro_location">
-                    accountings / accounts / account profile
+                <span><img src = {back} onClick = {() => this.props.backToAcc()}  /></span>
+                    <span className = "page_route" >accounts</span> / account profile
                 </div>
                 <div className = "acc_pro_body">
                     <div className = "acc_pro_sbar">
@@ -15,10 +16,10 @@ export default class Account_pro extends React.Component{
 
                         </div>
                         <div className = "acc_pro_name">
-                            account name   
+                        {this.props.account.acc_name}   
                         </div>
                         <div className = "sbar_list" id = "sbar_list">
-                            <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('acc_det')} id = "acc_det">
+                            <div className = "sbar_list_value" onClick = {() => {this.props.setAccProfile('acc_det')}} id = "acc_det">
                                 Account Details
                             </div>
                             <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
@@ -29,8 +30,11 @@ export default class Account_pro extends React.Component{
                             </div>
                         </div>
                     </div>
+                    
                     {this.props.acc_pro_val === 'acc_det' && (
+                        
                         <div className = "acc_pro_right">
+                      
                         <div className = "acc_pro_right_upper">
                             <div className = "acc_pro_right_name">
                                 {this.props.account.acc_name}

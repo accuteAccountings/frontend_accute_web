@@ -70,7 +70,11 @@ class SideBar extends React.Component {
 					</li>
 					<li
 						className={this.props.actPage === 'accounting' ? 'side_btn act_s_btn' : 'side_btn'}
-						onClick={this.navToAcc}
+						onClick={() => {
+							this.navToAcc()
+							this.props.backToAcc()
+							
+						}}
 					>
 						<span>Accounting</span>
 						<img src="" alt="" />
@@ -78,6 +82,7 @@ class SideBar extends React.Component {
 							<li
 								onClick={() => {
 									this.props.setProOrAcc('Accounts');
+									this.props.backToAcc()
 								}}
 							>
 								Accounts
@@ -85,6 +90,7 @@ class SideBar extends React.Component {
 							<li
 								onClick={() => {
 									this.props.setProOrAcc('Products');
+									this.props.backToAcc()
 								}}
 							>
 								Products
