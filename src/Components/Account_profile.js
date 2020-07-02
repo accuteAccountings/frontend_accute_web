@@ -170,7 +170,7 @@ export default class Account_pro extends React.Component{
                                 </thead>
                                     <tbody>
                                     
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -181,7 +181,7 @@ export default class Account_pro extends React.Component{
                                         </tr>
                                         
                                         
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -192,7 +192,7 @@ export default class Account_pro extends React.Component{
                                         </tr>
                                         
                                     
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -203,7 +203,7 @@ export default class Account_pro extends React.Component{
                                         </tr>
                                         
                                 
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -214,7 +214,7 @@ export default class Account_pro extends React.Component{
                                         </tr>
                                         
                                         
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -224,7 +224,7 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -234,7 +234,7 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -244,7 +244,7 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr className = "tr_acc">
                                         <td> </td>
                                         <td> </td>
                                         <td> </td>
@@ -255,7 +255,7 @@ export default class Account_pro extends React.Component{
                                     </tr>  
                                      
                                     
-                                    <tr>
+                                    <tr className = "tr_acc">
                                         <td> </td>
                                         <td> </td>
                                         <td> </td>
@@ -266,7 +266,7 @@ export default class Account_pro extends React.Component{
                                    </tr>
 
 
-                                   <tr>
+                                   <tr className = "tr_acc">
                                    <td> </td>
                                    <td> </td>
                                    <td> </td>
@@ -277,7 +277,7 @@ export default class Account_pro extends React.Component{
                               </tr>
 
 
-                              <tr>
+                              <tr >
                               <td> </td>
                               <td> </td>
                               <td> </td>
