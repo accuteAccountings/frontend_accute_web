@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    min-width: 90rem;
     height: 100%;
     // border: solid black;
 }
@@ -53,7 +54,7 @@
   .det_cont_vouch_db{
     width: 100%;
     min-width: 40rem;
-    height: 4rem;
+    height: 5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -68,6 +69,7 @@
     color: $pri_color;
     font-size: 1.3rem;
     font-weight: 500;
+    margin-top: 5px;
   }
   .vouch_costumer_name{
     font-size: 1.3rem;
@@ -83,7 +85,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-left: 5px;
   }
   .det_cont_right_vouch{
     display: flex;
@@ -114,9 +117,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    // margin-left: 1rem;
     width: 15rem;
-    // border : solid black
+    margin-top: 10px;
+    margin-bottom: 5px;
   }
   .det_cont_last_jovouch{
     display: flex;
@@ -128,6 +131,7 @@
   .vouc_det_left{
     width: 45rem;
   }
+
   .vouch_right_db{
     width: 20rem;
     // border: solid black;
@@ -197,4 +201,7 @@
         border: 1px solid $pri_color;
         cursor: pointer;
     }
+}
+.acc_adress_head_db{
+    font-size: 1.2rem;
 }

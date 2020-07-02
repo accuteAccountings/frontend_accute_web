@@ -65,10 +65,10 @@ class DetCont extends React.Component {
             </div>
             <div className="vouch_bill_detail_db">
               <div className="acc_adress">
-                <span className="acc_adress_head vouch_amount">Amount :</span> 8979799
+                <span className="acc_adress_head_db vouch_amount">Amount :</span> 8979799
               </div>
               <div className="acc_adress">
-                <span className="acc_adress_head">Biil No :</span> 
+                <span className="acc_adress_head_db">Biil No : </span> 
                 45464
               </div>
             </div>
@@ -95,7 +95,7 @@ class DetCont extends React.Component {
             <div className="acc_name_vouch jovouch_det">
               <span>Seller Name </span>
               <span className="vouch_to">TO</span>
-              <span className="vouch_costumer_name">Costumer Name</span>
+              <span className="vouch_costumer_name ">Costumer Name</span>
             </div>
           </div>
           <div className="det_cont_right_jovouch_db">
