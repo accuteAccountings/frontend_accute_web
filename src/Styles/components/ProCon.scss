@@ -195,8 +195,12 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: flex-start;
 	padding: 1rem;
+	span {
+		margin-left: 20px;
+		margin-top: -5px;
+	}
 }
 .pro_name {
 	color: $pri_color;

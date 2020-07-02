@@ -1,5 +1,4 @@
 import React from 'react';
-
 import AddAcc from '../Components/AddAcc';
 import AddProducts from '../Components/AddProduct';
 import Delete from '../Components/Delete';
@@ -101,7 +100,7 @@ class ProCon extends React.Component {
 										<div className="det_sub_cont">
 											<div className="pro_name">
 												<span className="acc_id">{i + 1}. </span>
-												{pro.product_name}
+												<span> {pro.product_name}</span>
 											</div>
 											<div className="pro_num">
 												<span className="acc_adress_head">HSN No.:</span>
@@ -160,7 +159,7 @@ class ProCon extends React.Component {
 class DetCont extends React.Component {
 	render() {
 		return (
-			<div className="det_cont" onClick={this.props.setAccProfile}>
+			<div className="det_cont">
 				<div
 					className="det_cont_left"
 					onClick={() => {
@@ -201,11 +200,7 @@ class DetCont extends React.Component {
 					</div>
 					<div
 						onClick={() => {
-							this.props.deleteIt(` /
-          api / accounts / $ {
-        this.props.id
-      }
-    `);
+							this.props.deleteIt(`/api/accounts/${this.props.id}`);
 						}}
 					>
 						<img src={trash} alt=" " />
