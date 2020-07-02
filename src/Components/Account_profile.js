@@ -8,7 +8,7 @@ export default class Account_pro extends React.Component{
             <div>
                 <div className = "acc_pro_location">
                 <span><img src = {back} onClick = {() => this.props.backToAcc()}  /></span>
-                    <span className = "page_route" >accounts</span> / account profile
+                    accounting / accounts / account profile
                 </div>
                 <div className = "acc_pro_body">
                     <div className = "acc_pro_sbar">
@@ -19,13 +19,13 @@ export default class Account_pro extends React.Component{
                         {this.props.account.acc_name}   
                         </div>
                         <div className = "sbar_list" id = "sbar_list">
-                            <div className = "sbar_list_value" onClick = {() => {this.props.setAccProfile('acc_det')}} id = "acc_det">
+                            <div className = {this.props.acc_pro_val === 'acc_det'? 'acc_det': 'sbar_list_value'}  onClick = {() => {this.props.setAccProfile('acc_det')}} >
                                 Account Details
                             </div>
-                            <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
+                            <div className = {this.props.acc_pro_val === 'ledger'? 'acc_det': 'sbar_list_value'}  onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
                                 Ledger
                             </div>
-                            <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('reports')} id = "reports">
+                            <div className = {this.props.acc_pro_val === 'reports'? 'acc_det': 'sbar_list_value'}  onClick = {() => this.props.setAccProfile('reports')} id = "reports">
                                 Reports
                             </div>
                         </div>
@@ -131,6 +131,171 @@ export default class Account_pro extends React.Component{
 
                     </div>
                     ) }
+
+                    {this.props.acc_pro_val === 'ledger' && (
+                        <div>
+                            <div className = "acc_pro_ledger_upper">
+                                <div className = "upp_date">
+                                    <input type = "month" />
+                                </div>
+                                <div className = "ledger_upp_right_div"> 
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Debit : </span>
+                                        45465465
+                                    </div>
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Credit : </span>
+                                        45465465
+                                    </div>
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Balance : </span>
+                                        45465465
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="acc_pro_ledger">
+                                <table  className = "acc_pro_table">
+                                <thead>
+                                    <tr>
+                                    <th>S.No.</th>
+                                    <th>Date</th>
+                                    <th>Particulars</th>
+                                    <th>Bill No.</th>
+                                    <th>Debit</th>
+                
+                                    <th>Credit</th>
+                                    <th>Balance</th>
+                                    
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                    
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                        
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                    
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                        
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>  
+                                     
+                                    
+                                    <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                   </tr>
+
+
+                                   <tr className = "tr_acc">
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                              </tr>
+
+
+                              <tr >
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                         </tr>
+                                        
+                                    
+                                    </tbody>
+                                </table>
+                        </div>
+                      </div>
+                    
+
+                     )}
+
                    
                 </div>
             </div>

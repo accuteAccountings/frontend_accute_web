@@ -3,185 +3,214 @@
 // delete component styles
 
 .delete_con {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -70%);
-  background-color: white;
-  height: 200px;
-  width: 400px;
-  border: solid 1px gray;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 10px 30px 10px;
-  box-sizing: border-box;
-  z-index: 55;
-  box-shadow: 1px 1px 10px rgb(68, 68, 68);
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -70%);
+	background-color: white;
+	height: 200px;
+	width: 400px;
+	border: solid 1px gray;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 20px 10px 30px 10px;
+	box-sizing: border-box;
+	z-index: 55;
+	box-shadow: 1px 1px 10px rgb(68, 68, 68);
 }
 .delete_btn_con {
-  display: flex;
-  justify-content: space-evenly;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .tbtn {
-  cursor: pointer;
-  span {
-    color: blue;
-    text-decoration: underline;
-  }
+	cursor: pointer;
+	span {
+		color: blue;
+		text-decoration: underline;
+	}
 }
 
 .tbtn:hover {
-  span {
-    color: darkblue;
-    text-decoration: underline;
-  }
+	span {
+		color: darkblue;
+		text-decoration: underline;
+	}
 }
 
 #empty {
-  color: #707070;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
+	color: #707070;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
 
-  margin-top: 70px;
+	margin-top: 70px;
 }
 .pro_con {
-  height: auto;
-  min-height: 300px;
-  width: 80%;
-  margin: 10px 20px;
-  border-radius: 10px;
-  //	background-color:white;
-  //padding:20px 5px;
-  //  box-shadow:0px 5px 10px gray;
+	height: auto;
+	min-height: 300px;
+	width: 80%;
+	margin: 10px 20px;
+	border-radius: 10px;
+	//	background-color:white;
+	//padding:20px 5px;
+	//  box-shadow:0px 5px 10px gray;
 }
 
 #accounting_pro_table {
-  width: 100%;
+	width: 100%;
 }
 
 .det_cont {
-  width: 100%;
-  background-color: white;
-  height: 8rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid rgb(172, 172, 172);
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  box-shadow: 0px 3px 10px #d0d0d0;
+	width: 100%;
+	background-color: white;
+	height: 6rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border: 1px solid rgb(172, 172, 172);
+	border-radius: 10px;
+	margin-bottom: 1rem;
+	box-shadow: 0px 3px 10px #d0d0d0;
+	cursor: pointer;
+}
+
+.det_cont {
+	width: 100%;
+	background-color: white;
+	height: 8rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border: 1px solid rgb(172, 172, 172);
+	border-radius: 10px;
+	margin-bottom: 1rem;
+	box-shadow: 0px 3px 10px #d0d0d0;
 }
 .det_cont_left {
-  display: flex;
-  flex-direction: column;
-  margin-left: 1rem;
-  justify-content: space-evenly;
-  width: 45rem;
-  // border: solid black;
-  cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	margin-left: 1rem;
+	justify-content: space-evenly;
+	width: 45rem;
+	// border: solid black;
+	cursor: pointer;
 }
 .det_cont_right {
-  display: flex;
-  // margin-right: 1rem;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 20rem;
-  cursor: pointer;
-  // border: solid black;
+	display: flex;
+	// margin-right: 1rem;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 20rem;
+	cursor: pointer;
+	// border: solid black;
 }
 .acc_name {
-  color: $pri_color;
-  font-size: 1.3rem;
-  font-weight: 600;
+	color: $pri_color;
+	font-size: 1.3rem;
+	font-weight: 600;
 }
 .acc_type {
-  color: $dark;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-left: 10px;
+	color: $dark;
+	font-size: 1.1rem;
+	font-weight: 500;
+	margin-left: 10px;
 }
 .acc_id {
-  color: $dark;
-  font-size: 1.2rem;
-  font-weight: 400;
+	color: $dark;
+	font-size: 1.2rem;
+	font-weight: 400;
 }
 .acc_print {
-  color: $dark;
-  font-size: 1.1rem;
-  font-weight: 500;
+	color: $dark;
+	font-size: 1.1rem;
+	font-weight: 500;
+	margin-left: 1rem;
 }
 .acc_adress_head {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: $dark;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: $dark;
 }
 .acc_adress {
-  font-size: 1.2rem;
-  color: $dark;
+	font-size: 1.2rem;
+	color: $dark;
+	margin-left: 1rem;
 }
 .acc_gst {
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
-  color: $dark;
+	margin-bottom: 2rem;
+	font-size: 1.1rem;
+	color: $dark;
 }
 .acc_ph {
-  font-size: 1.1rem;
-  color: $dark;
+	font-size: 1.1rem;
+	color: $dark;
 }
 .acc_right {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: $dark;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: $dark;
 }
 .det_cont_icons {
-  display: flex;
-  flex-direction: column;
-  // margin-left : 1rem;
-  justify-content: space-evenly;
-  width: 3.5rem;
-  // border: solid black;
-  img {
-    height: 28px;
-    cursor: pointer;
-  }
+	display: flex;
+	flex-direction: column;
+	// margin-left : 1rem;
+	justify-content: space-evenly;
+	width: 3.5rem;
+	// border: solid black;
+	img {
+		height: 28px;
+		cursor: pointer;
+	}
 }
 .det_cont_pro {
-  width: 100%;
-  background-color: white;
-  height: 5rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 1px solid rgb(172, 172, 172);
-  border-radius: 10px;
-  margin-bottom: 1rem;
+	width: 100%;
+	background-color: white;
+	height: 5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border: 1px solid rgb(172, 172, 172);
+	border-radius: 10px;
+	margin-bottom: 1rem;
 }
 .det_sub_cont {
-  // border: solid black;
+	// border: solid black;
 
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1rem;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 1rem;
 }
 .pro_name {
-  color: $pri_color;
-  font-size: 1.3rem;
-  font-weight: 600;
-  width: 30rem;
-  // border: solid black;
+	color: $pri_color;
+	font-size: 1.3rem;
+	font-weight: 600;
+	width: 30rem;
+	// border: solid black;
+
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 1rem;
+}
+.pro_name {
+	color: $pri_color;
+	font-size: 1.3rem;
+	font-weight: 600;
+	width: 30rem;
+	// border: solid black;
 }
 .pro_num {
-  font-size: 1.2rem;
-  color: $dark;
-  width: 22rem;
-  // border: solid black;
-  margin-right: 4rem;
+	font-size: 1.2rem;
+	color: $dark;
+	width: 22rem;
+	// border: solid black;
+	margin-right: 4rem;
 }
 .det_acc_div {
 }

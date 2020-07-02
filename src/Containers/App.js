@@ -13,6 +13,7 @@ import VouchCon from "../Components/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
 import Account_pro from "../Components/Account_profile"
+import DailyBook from "../Components/DailyBook"
 
 class App extends React.Component {
   getProducts = () => {
@@ -40,14 +41,15 @@ class App extends React.Component {
   };
 
   getspecific_acc = (i) => {
+    if(document.getElementById(this.state.isacc_pro)){
+      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
+      }
     this.setState(() => {
       return {
         specific_acc : this.state.accounts[i]
       }
     })
-    if(document.getElementById(this.state.isacc_pro)){
-      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
-      }
+    
   }
 
   backToAcc(){
@@ -56,6 +58,8 @@ class App extends React.Component {
         specific_acc : null
       }
     })
+   
+
   }
 
 
@@ -144,21 +148,7 @@ class App extends React.Component {
         isacc_pro : ans
       }
     })
-    if(ans === 'acc_det'){
-    document.getElementById('acc_det').style.color = '#29a8ab'
-    document.getElementById('reports').style.color = '#707070'
-    document.getElementById('ledger').style.color = '#707070'
-    }
-    else if(ans === 'reports'){
-      document.getElementById('reports').style.color = '#29a8ab'
-      document.getElementById('acc_det').style.color = '#707070'
-      document.getElementById('ledger').style.color = '#707070'
-    }
-    else{
-        document.getElementById('ledger').style.color = '#29a8ab'
-        document.getElementById('reports').style.color = '#707070'
-        document.getElementById('acc_det').style.color = '#707070'
-    }
+    
   }
 
   setProOrAcc(ans) {
@@ -318,6 +308,16 @@ rmDebit = () => {
         />
         </div>
       )
+    }
+
+    if(this.state.page === "rep"){
+     currentPage = (
+        <div className="pageBody">
+        <TopBar />
+        <DailyBook />
+
+        </div>
+     )
     }
 
     if (this.state.page === "trans") {

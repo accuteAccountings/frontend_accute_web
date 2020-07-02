@@ -55,8 +55,13 @@
     font-size: 1.2rem;
     cursor: pointer;
 }
-.sbar_list_value:hover{
+.acc_det{
     color: $pri_color;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.sbar_list_value:hover{
+    
     font-size: 1.3rem;
 }
 .acc_pro_right{
@@ -167,4 +172,60 @@
     padding: 10px;
     // border: solid black;
     // height: 10rem;
+}
+
+.acc_pro_ledger{
+    background-color: white;
+    height: 30rem;
+    margin-left: 2rem;
+    width: 70rem;
+    border-radius: 20px;
+    border: 1px solid #CCCCCC;
+
+}
+.acc_pro_table{
+     border-spacing: 0;
+     border-collapse: collapse;
+     border-style: hidden;
+     width: 100%;
+
+  th{
+      margin-bottom: 10px;
+  }
+
+  .tr_acc{
+    background-color: white;
+}
+  
+}
+
+.acc_pro_ledger_upper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+}
+.ledger_upp_right_div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; 
+    width: 38rem;
+    font-size: 1.1rem;
+
+}
+.upp_date{
+    font-size: 1.5rem;
+    color: $grey_text;
+    margin-left: 4rem;
+    input{
+        font-size: 1.2rem;
+        border: transparent;
+        background: transparent;
+        cursor: pointer;
+    }
+
+}
+.upp_head{
+    font-size: 1.2rem;
+    font-weight: 600;
 }
