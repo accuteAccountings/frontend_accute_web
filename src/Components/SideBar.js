@@ -80,7 +80,6 @@ class SideBar extends React.Component {
 							<li
 								onClick={() => {
 									this.props.setProOrAcc('Accounts');
-									this.props.backToAcc()
 								}}
 							>
 								Accounts
@@ -88,7 +87,6 @@ class SideBar extends React.Component {
 							<li
 								onClick={() => {
 									this.props.setProOrAcc('Products');
-									this.props.backToAcc()
 								}}
 							>
 								Products
