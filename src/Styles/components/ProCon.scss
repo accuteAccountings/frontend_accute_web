@@ -66,7 +66,7 @@
 .det_cont{
     width: 100%;
 	background-color:white;
-    height: 8rem;
+    height: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -114,6 +114,7 @@
     color: $dark;
     font-size: 1.1rem;
     font-weight: 500;
+    margin-left: 1rem;
 }
 .acc_adress_head{
     font-size: 1.2rem;
@@ -123,6 +124,8 @@
 .acc_adress{
     font-size: 1.2rem;
     color: $dark;
+    margin-left: 1rem;
+
 }
 .acc_gst{
     margin-bottom: 2rem;

@@ -19,7 +19,7 @@ export default class Account_pro extends React.Component{
                         {this.props.account.acc_name}   
                         </div>
                         <div className = "sbar_list" id = "sbar_list">
-                            <div className = "sbar_list_value" onClick = {() => {this.props.setAccProfile('acc_det')}} id = "acc_det">
+                            <div className = "sbar_list_value"  onClick = {() => {this.props.setAccProfile('acc_det')}} id = "acc_det">
                                 Account Details
                             </div>
                             <div className = "sbar_list_value" onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
