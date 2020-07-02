@@ -14,15 +14,9 @@ class VouchCon extends React.Component {
       Debitdata: [],
       Creditdata: []
     };
-    {
-      this.props.vouchPage === "pv" && this.updateVouchData();
-    }
-    {
-      this.props.vouchPage === "cn" && this.updateCreditData();
-    }
-    {
-      this.props.vouchPage === "dn" && this.updateDebitData();
-    }
+    this.updateVouchData();
+    this.updateDebitData();
+    this.updateCreditData();
   }
   updateVouchData = () => {
     fetch("/api/vouch")
@@ -139,6 +133,7 @@ class VouchCon extends React.Component {
                       supplier={e.det.supplier}
                       costumer={e.det.customer}
                       date={e.det.bill_date}
+                      amt={e.det.totalAmt}
                       bill_num={e.det.bill_num}
                     />
                   );
@@ -155,6 +150,7 @@ class VouchCon extends React.Component {
                       supplier={e.det.supplier}
                       costumer={e.det.customer}
                       date={e.det.bill_date}
+                      amt={e.det.totalAmt}
                       bill_num={e.det.bill_num}
                     />
                   );
@@ -171,6 +167,7 @@ class VouchCon extends React.Component {
                       supplier={e.det.supplier}
                       costumer={e.det.customer}
                       date={e.det.bill_date}
+                      amt={e.det.totalAmt}
                       bill_num={e.det.bill_num}
                     />
                   );
@@ -198,11 +195,11 @@ class DetCont extends React.Component {
             <span className="acc_id_vouch">{this.props.i}. </span>
             {this.props.supplier}
             <span className="vouch_to">TO</span>
-            <span className="vouch_costumer_name">{this.props.customer}</span>
+            <span className="vouch_costumer_name">{this.props.costumer}</span>
           </div>
           <div className="vouch_bill_detail">
             <div className="acc_adress">
-              <span className="acc_adress_head vouch_amount">Amount :</span> 8979799
+              <span className="acc_adress_head vouch_amount">Amount :</span> {this.props.amt}
             </div>
             <div className="acc_adress">
               <span className="acc_adress_head">Biil No :</span> {this.props.bill_num}
@@ -259,7 +256,7 @@ class JoVouchDet extends React.Component {
             <span className="acc_right_vouch">Pending Amount:</span> 4543543
           </div>
           <div className="vouch_bills">
-            <span className="acc_right_vouch"> Amount:</span> 4246445
+            <span className="acc_right_vouch"> Amount:</span> 432432
           </div>
         </div>
         <div className="det_cont_last_jovouch">

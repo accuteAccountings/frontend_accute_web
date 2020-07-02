@@ -53,8 +53,48 @@ class AddVouch extends React.Component {
     }
   }
 
-  vochAddPro() {
+  addPro = async () => {};
+
+  async vochAddPro() {
     let pro_name = document.querySelector("#vouch_pro_item").value;
+    let isIn = this.state.products.find(element => element.product_name === pro_name);
+    console.log(isIn);
+
+    if (!!!isIn) {
+      let pro_name = document.querySelector("#vouch_pro_item").value;
+      let hsn_num = document.querySelector("#vouch_hsn_num").value;
+      if (!!!hsn_num) {
+        alert("Please Enter HSN number");
+        return false;
+      }
+      let data = {
+        product_name: pro_name,
+        hsn_num: hsn_num
+      };
+
+      await fetch("/api/products", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+
+        headers: {
+          "Content-Type": "application/json"
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      })
+        .then(res => res.json())
+        .then(r => {
+          if (r.product) {
+          } else {
+            alert("Cannot Add Product Please Try Later");
+            return;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          alert("Cannot Add Product Please Try Later");
+          return;
+        });
+    }
     document.querySelector("#vouch_pro_item").value = "";
     if (!pro_name) return;
     let vouch_quantity = document.querySelector("#vouch_quantity").value;
@@ -84,10 +124,12 @@ class AddVouch extends React.Component {
 
     let arr = this.state.items;
     arr.push(item);
-    let total = 0;
-    arr.map(e => {
-      return (total = total + e.amount);
-    });
+    let total = parseFloat(this.state.totalAmt);
+    console.log(total);
+
+    total = total + parseFloat(v_amount);
+
+    console.log(total);
 
     this.setState({
       items: arr,
@@ -98,12 +140,14 @@ class AddVouch extends React.Component {
 
   removeItem = index => {
     let arr = this.state.items;
-
+    let amt = this.state.items[index].amount;
+    amt = parseFloat(amt);
     arr.splice(index, 1);
 
-    this.setState(() => {
+    this.setState(prevState => {
       return {
-        items: arr
+        items: arr,
+        totalAmt: parseFloat(prevState.totalAmt) - amt
       };
     });
   };
@@ -319,6 +363,7 @@ class AddVouch extends React.Component {
                     <br />
 
                     <select name="vouch_sup" id="vouch_transport_name">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "transport") {
@@ -338,6 +383,7 @@ class AddVouch extends React.Component {
                     <span>Supplier</span>
                     <br />
                     <select name="vouch_sup" id="vouch_sup">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -357,6 +403,7 @@ class AddVouch extends React.Component {
                     <span>Supplier Agent</span>
                     <br />
                     <select name="vouch_sup_agent" id="vouch_sup_agent">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "agent") {
@@ -384,6 +431,7 @@ class AddVouch extends React.Component {
                     <span>Customer</span>
                     <br />
                     <select name="customer" id="vouch_customer">
+                      <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
@@ -599,16 +647,12 @@ class AddVouch extends React.Component {
               <div className="vouch_num_items">
                 <span>No. of items</span>
                 <br />
-                <span>
-                  <input type="text" id="vouch_items_num" />
-                </span>
+                <span>{this.state.items.length}</span>
               </div>
               <div className="vouch_types_item">
-                <span>Type of items</span>
+                <span> Total Amount</span>
                 <br />
-                <span>
-                  <input type="text" id="vouch_items_type" />
-                </span>
+                <span>{this.state.totalAmt}</span>
               </div>
             </div>
           </div>
