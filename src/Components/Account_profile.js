@@ -131,6 +131,171 @@ export default class Account_pro extends React.Component{
 
                     </div>
                     ) }
+
+                    {this.props.acc_pro_val === 'ledger' && (
+                        <div>
+                            <div className = "acc_pro_ledger_upper">
+                                <div className = "upp_date">
+                                    <input type = "month" />
+                                </div>
+                                <div className = "ledger_upp_right_div"> 
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Debit : </span>
+                                        45465465
+                                    </div>
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Credit : </span>
+                                        45465465
+                                    </div>
+                                    <div className = "leger_upp_right">
+                                        <span className  ="upp_head">Balance : </span>
+                                        45465465
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="acc_pro_ledger">
+                                <table  className = "acc_pro_table">
+                                <thead>
+                                    <tr>
+                                    <th>S.No.</th>
+                                    <th>Date</th>
+                                    <th>Particulars</th>
+                                    <th>Bill No.</th>
+                                    <th>Debit</th>
+                
+                                    <th>Credit</th>
+                                    <th>Balance</th>
+                                    
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                    
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                        
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                    
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                        
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+
+                                        <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>  
+                                     
+                                    
+                                    <tr>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                   </tr>
+
+
+                                   <tr>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                                   <td> </td>
+                              </tr>
+
+
+                              <tr>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                              <td> </td>
+                         </tr>
+                                        
+                                    
+                                    </tbody>
+                                </table>
+                        </div>
+                      </div>
+                    
+
+                     )}
+
                    
                 </div>
             </div>
