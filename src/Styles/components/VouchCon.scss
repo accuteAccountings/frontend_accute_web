@@ -1,9 +1,9 @@
 .vouch_to {
-	color: $dark;
-	margin-left: 20px;
-	margin-right: 10px;
-	font-size: 1.2rem;
-	font-weight: 600;
+  color: $dark;
+  margin-left: 20px;
+  margin-right: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 .det_cont_vouch {
   width: 85%;
@@ -20,7 +20,7 @@
 .det_cont_jovouch {
   width: 100%;
   min-width: 50rem;
-  height: 5rem;
+  height: 6.4rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,20 +29,21 @@
   margin-bottom: 1rem;
   background-color: white;
   box-shadow: 0px 0px 10px #f0f0f0;
+  padding: 10px;
 }
 .acc_name_vouch {
-	color: $pri_color;
-	font-size: 1.3rem;
-	font-weight: 500;
+  color: $pri_color;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 .vouch_costumer_name {
-	font-size: 1.3rem;
-	color: $dark;
+  font-size: 1.3rem;
+  color: $dark;
 }
 .acc_id_vouch {
-	margin-right: 5px;
-	color: $dark;
-	font-size: 1.1rem;
+  margin-right: 5px;
+  color: $dark;
+  font-size: 1.1rem;
 }
 .vouch_bill_detail {
   display: flex;
@@ -53,10 +54,10 @@
   // border: solid black;
 }
 .det_cont_right_vouch {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	width: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 30rem;
 }
 .det_cont_right_jovouch_m {
   display: flex;
@@ -75,30 +76,29 @@
   font-weight: 500;
 }
 
-
 .acc_right_vouch {
-	font-size: 1.2rem;
-	font-weight: 600;
-	color: $dark;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: $dark;
 }
 .vouch_status {
-	font-size: 1.2rem;
-	color: red;
-	font-weight: 600;
+  font-size: 1.2rem;
+  color: red;
+  font-weight: 600;
 }
 .pro_con_vouch {
-	height: auto;
-	min-height: 300px;
-	width: 80%;
-	margin: 10px 20px;
-	min-width: 55rem;
+  height: auto;
+  min-height: 300px;
+  width: 80%;
+  margin: 10px 20px;
+  min-width: 53rem;
 }
 .vouch_bills {
-	font-size: 1.2rem;
-	margin-bottom: 1.2rem;
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 .jovouch_det {
-	margin-left: 15px;
+  margin-left: 15px;
 }
 .det_cont_right_jovouch {
   display: flex;
@@ -124,9 +124,9 @@
   margin-left: 2rem;
 }
 .vouch_amount {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
 .pad {
-	padding: 10px;
-	height: 100px;
+  padding: 10px;
+  height: 100px;
 }
