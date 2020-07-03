@@ -113,7 +113,7 @@ class ProCon extends React.Component {
                         {pro.hsn_num}
                       </div>
                     </div>
-                    <div className="det_cont_icons">
+                    <div className="det_cont_icons_pro">
                       <div
                         onClick={() => {
                           this.showAddProduct(pro.id);

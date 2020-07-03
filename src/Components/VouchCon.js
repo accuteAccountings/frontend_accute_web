@@ -55,7 +55,7 @@ class VouchCon extends React.Component {
   render() {
     return (
       <div>
-        <div className="nav_sec">
+        <div className="nav_sec_trans">
           <div className="nav_items">
             <li
               className={this.props.vouchPage === "pv" ? "black" : "grey"}
@@ -239,13 +239,13 @@ class DetCont extends React.Component {
 class JoVouchDet extends React.Component {
   render() {
     return (
-      <div className="det_cont_vouch">
-        <div className="det_cont_right_vouch">
-          <div className=" vouch_bills">
+      <div className="det_cont_jovouch">
+        <div className="det_cont_right_jovouch_m">
+          <div className="vouch_bills">
             <span className="acc_id_vouch">1. </span>
             <span className="acc_right_vouch">Bills:</span> 1234 , 4563 , 45435
           </div>
-          <div className="acc_name_vouch jovouch_det">
+          <div className="acc_name_jovouch jovouch_det">
             <span>Seller Name </span>
             <span className="vouch_to">TO</span>
             <span className="vouch_costumer_name">Costumer Name</span>

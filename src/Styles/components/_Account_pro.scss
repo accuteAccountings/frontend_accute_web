@@ -170,18 +170,22 @@
     justify-content: space-between;
     width: 100%;
     padding: 10px;
-    // border: solid black;
-    // height: 10rem;
+   
 }
 
 .acc_pro_ledger{
     background-color: white;
     height: 30rem;
     margin-left: 2rem;
-    width: 70rem;
+    width: 75%;
     border-radius: 20px;
     border: 1px solid #CCCCCC;
 
+}
+.ledger_tab{
+    width: 100%;
+    min-width: 50rem;
+    // border: solid black;
 }
 .acc_pro_table{
      border-spacing: 0;
@@ -209,14 +213,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly; 
-    width: 38rem;
+    width: 50%;
     font-size: 1.1rem;
-
+    margin-right: 22%;
 }
 .upp_date{
     font-size: 1.5rem;
     color: $grey_text;
-    margin-left: 4rem;
+    margin-left: 2rem;
     input{
         font-size: 1.2rem;
         border: transparent;

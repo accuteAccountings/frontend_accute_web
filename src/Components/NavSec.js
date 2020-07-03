@@ -4,7 +4,7 @@ import ref from './../img/refresh.svg';
 class NavSec extends React.Component {
 	render() {
 		return (
-			<div className="nav_sec">
+			<div className={this.props.ProOrAcc === 'Products' ? 'nav_sec_pro' : 'nav_sec'}>
 				<div className="nav_items">
 					{this.props.navItems &&
 						this.props.navItems.map((item) => {
@@ -21,7 +21,7 @@ class NavSec extends React.Component {
 						})}
 				</div>
 
-				<div className="other_det">
+				<div className={this.props.ProOrAcc === 'Products' ? 'other_det_pro' : 'other_det'}>
 					<div
 						className="add_account"
 						onClick={

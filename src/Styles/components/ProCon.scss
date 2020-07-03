@@ -64,7 +64,8 @@
 }
 
 .det_cont{
-    width: 100%;
+    width: 90%;
+    min-width: 40rem;
 	background-color:white;
     height: 6rem;
     display: flex;
@@ -154,9 +155,10 @@
     }
 }
 .det_cont_pro{
-    width: 100%;
+    width: 65%;
+    min-width: 40rem;
 	background-color:white;
-    height: 5rem;
+    height: 4rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -167,27 +169,38 @@
 .det_sub_cont{
     // border: solid black;
 
-    width: 100%;
+    width: 100%;    
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding: 1rem;
 }
 .pro_name{
     color: $pri_color;
     font-size: 1.3rem;
     font-weight: 600;
-    width: 30rem;
+    width: 20rem;
     // border: solid black;
 
 }
 .pro_num{
     font-size: 1.2rem;
     color: $dark;
-    width: 22rem;
+    width: 13rem;
     // border: solid black;
-    margin-right: 4rem;
 }
 .det_acc_div{
     cursor: pointer;
+}
+.det_cont_icons_pro{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 6rem;
+    img{
+        height: 24px;
+        cursor: pointer;
+        margin-left: 1rem;
+    }
 }
