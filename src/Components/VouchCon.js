@@ -284,7 +284,10 @@ class JoVouchDet extends React.Component {
         </div>
         <div className="det_cont_last_jovouch">
           <div className=" vouch_status">
-            <span className="acc_right_vouch">Status:</span> UNPAID
+            <span className="acc_right_vouch">Status:</span>{" "}
+            <span style={{ color: this.props.balance <= 0 ? "green" : "red" }}>
+              {this.props.balance <= 0 ? "Paid" : "UnPaid"}
+            </span>
           </div>
           <div className="vouch_date">
             <span className="acc_right_vouch"> Date:</span> {this.props.date}
