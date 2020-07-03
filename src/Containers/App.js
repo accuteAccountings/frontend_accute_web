@@ -204,10 +204,12 @@ rmDebit = () => {
       };
     });
   };
-  setVouchPage = page => {
+
+setVouchPage = (page , data) => {
     this.setState(() => {
       return {
-        vouchPage: page
+        vouchPage: page,
+        vouchData:data
       };
     });
   };
@@ -235,7 +237,8 @@ rmDebit = () => {
       AddVouch: true,
       vouchPage: "jv",
       isacc_pro : "acc_det",
-      specific_acc : null
+      specific_acc : null,
+      vouchData:[]
     };
   }
 
@@ -330,7 +333,7 @@ rmDebit = () => {
           />
 
           {this.state.PVoJVoDN === "pv" && <AddVouch rm={this.rmVouch} />}
-          {this.state.PVoJVoDN === "jv" && <AddJovouch rm={this.rmVouch} />}
+          {this.state.PVoJVoDN === "jv" && <AddJovouch data={this.state.vouchData} rm={this.rmVouch} />}
           {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmDebit} />}
           {this.state.PVoJVoDN === "cn" && <AddCredit rm={this.rmCredit} />}
           {this.state.PVoJVoDN === "no" && (

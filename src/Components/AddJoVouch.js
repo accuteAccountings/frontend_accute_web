@@ -21,6 +21,24 @@ async function postData(url = "", data) {
 }
 
 class AddJovouch extends React.Component {
+  bill_list_change = () => {
+    let arr = [];
+
+    document.getElementById("pro_list").style.display = "block";
+    const bill = document.getElementById("jovouch_bill_no").value;
+    const is = this.state.data.map(e => {
+      if (e.det.bill_num.indexOf(bill) === -1) {
+        return false;
+      } else {
+        arr.push(e);
+        return true;
+      }
+    });
+
+    this.setState({
+      vouchData: arr
+    });
+  };
   addjovouch() {
     let bill_date = document.querySelector("#jovouch_bill_date").value;
     let type = document.querySelector("#jovouch_type").value;
@@ -181,17 +199,39 @@ class AddJovouch extends React.Component {
       });
   }
 
+  updateVouchData = () => {
+    fetch("/api/vouch")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState(() => {
+          return {
+            data: data
+          };
+        });
+      });
+  };
+
   constructor(props) {
     super(props);
     this.jovouchAddPro = this.jovouchAddPro.bind(this);
     this.getProducts = this.getProducts.bind(this);
     this.getAccounts = this.getAccounts.bind(this);
-
+    this.updateVouchData();
     this.state = {
       products: [],
       accounts: [],
       items: [],
-      editItem: 0
+      vouchData: [],
+      data: [],
+      editItem: 0,
+      payArr: [
+        {
+          mode: "cheque",
+          det: "",
+          amt: ""
+        }
+      ]
     };
     this.getProducts();
     this.getAccounts();
@@ -234,8 +274,37 @@ class AddJovouch extends React.Component {
                 <span>Add Bill </span>
 
                 <div className="second_row">
-                  <span>
-                    <input type="text" placeholder="Bill No." id="jovouch_bill_no" />
+                  <span className="jovouch_bill_list">
+                    <input
+                      type="text"
+                      placeholder="Bill No."
+                      onBlur={() => {
+                        setTimeout(() => {
+                          document.getElementById("pro_list").style.display = "none";
+                        }, 1000);
+                      }}
+                      onChange={this.bill_list_change}
+                      id="jovouch_bill_no"
+                      autoComplete="off"
+                    />
+                    <ul id="pro_list">
+                      {this.state.vouchData.map((pro, index) => {
+                        console.log(pro);
+                        return (
+                          <li
+                            key={index}
+                            onClick={() => {
+                              document.getElementById("jovouch_bill_no").value = pro.det.bill_num;
+                              document.getElementById("pro_list").style.display = "none";
+                              document.getElementById("jovouch_debit_acc").value = pro.det.customer;
+                              document.getElementById("jovouch_credit_acc").value = pro.det.supplier;
+                            }}
+                          >
+                            {pro.det.bill_num}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </span>
                   <span>
                     {" "}
@@ -249,51 +318,73 @@ class AddJovouch extends React.Component {
               <div className="jovouch_debit">
                 <span>Debit Account</span>
                 <br />
-                <select name="jovouch_debit_acc" id="jovouch_debit_acc">
-                  <option value="option1">Costumer</option>
-                  <option value="option1">Costumer</option>
-                  <option value="option1">Costumer</option>
-                </select>
+                <input name="jovouch_debit_acc" id="jovouch_debit_acc" />
               </div>
 
               <div className="jovouch_debit">
                 <span>Credit Account</span>
                 <br />
-                <select name="jovouch_debit_acc" id="jovouch_debit_acc">
-                  <option value="option1">Supplier</option>
-                  <option value="option1">Supplier</option>
-                  <option value="option1">Supplier</option>
-                </select>
+                <input name="jovouch_credit_acc" id="jovouch_credit_acc" />
               </div>
             </div>
           </form>
         </div>
         <div className="pay_head">Payment Details</div>
         <div className="jovouch_payment_det ">
-          <div className="jovouch_customer ">
-            <div className="jovouch_si ">
-              <div className="mode_head">
-                <span>Mode </span>
-                <span>+</span>
+          {this.state.payArr.map((e, index) => {
+            return (
+              <div className="jovouch_customer ">
+                <div className="jovouch_si ">
+                  <div className="mode_head">
+                    <span>Mode </span>
+                    <span>+</span>
+                  </div>
+
+                  <span>
+                    <select name="jovouch_mode" id={"jovouch_mode" + index}>
+                      <option value="option1">Cheque</option>
+                    </select>
+                  </span>
+                </div>
+
+                <div className="jovouch_si  ">
+                  <span>Cheque No. </span>
+                  <br />
+
+                  <div className="second_row">
+                    <input type="text" placeholder="Cheque No." id={"payDet" + index} />
+                  </div>
+                </div>
+                <div className="jovouch_si  ">
+                  <span>Amount </span>
+                  <br />
+
+                  <div className="second_row">
+                    <input type="text" placeholder="Amount" id={"payAmt" + index} className="amount" />
+                    {index === this.state.payArr.length - 1 && (
+                      <span
+                        className="jovouch_plus"
+                        onClick={() => {
+                          let nn = {
+                            mode: document.getElementById(`jovouch_mode${index}`).value,
+                            det: document.getElementById(`payDet${index}`).value,
+                            amt: document.getElementById(`payAmt${index}`).value
+                          };
+                          let arr = this.state.payArr;
+                          arr.push(nn);
+                          this.setState({
+                            payArr: arr
+                          });
+                        }}
+                      >
+                        +
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
-
-              <span>
-                <select name="jovouch_mode" id="jovouch_mode">
-                  <option value="option1">Cheque</option>
-                </select>
-              </span>
-            </div>
-
-            <div className="jovouch_si  ">
-              <span>Cheque No. </span>
-              <br />
-
-              <div className="second_row">
-                <input type="text" placeholder="Cheque No." />
-                <span className="jovouch_plus">+</span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
           <br />
           <br />
           <div className="jovouch_amount">
