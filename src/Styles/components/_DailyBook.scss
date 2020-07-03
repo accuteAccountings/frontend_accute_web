@@ -1,207 +1,208 @@
-.db_header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    min-width: 40rem;
-    height : 4rem;
-    background-color: white;
-    box-shadow:0px 3px 10px #d0d0d0;
-    border: 1px solid rgb(172, 172, 172);
-    border-bottom: 2px solid $l_pri_color;
-    margin-bottom: 0.3rem;
+.db_header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	min-width: 40rem;
+	height: 4rem;
+	background-color: white;
+	box-shadow: 0px 3px 10px #d0d0d0;
+	border: 1px solid rgb(172, 172, 172);
+	border-bottom: 2px solid $l_pri_color;
+	margin-bottom: 0.3rem;
 }
-.db_search_div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.db_search_div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
-.daily_book{
-    margin-left: 2rem;
-    margin-top: 5rem;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-width: 90rem;
-    height: 100%;
-    // border: solid black;
+.daily_book {
+	margin-left: 2rem;
+	margin-top: 5rem;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	min-width: 90rem;
+	height: 100%;
+	// border: solid black;
 }
-.db_left{
-    // border: solid black;
-    width: 50%;
+.db_left {
+	// border: solid black;
+	width: 50%;
 }
-.db_head{
-    font-size: 1.5rem;
-    color: $pri_color;
-    font-weight: 600;
-    margin-left: 0.5rem;
+.db_head {
+	font-size: 1.5rem;
+	color: $pri_color;
+	font-weight: 600;
+	margin-left: 0.5rem;
 }
-.acc_search_db{
-    font-size: 1.3rem;
-    color: $grey_text;
-    margin-left: 0.6rem;
-    margin-right: 1rem;
+.acc_search_db {
+	font-size: 1.3rem;
+	color: $grey_text;
+	margin-left: 0.6rem;
+	margin-right: 1rem;
 }
 
-.vouch_to{
-    color: $dark;
-    margin-left: 20px;
-    margin-right: 10px;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-  .det_cont_vouch_db{
-    width: 100%;
-    min-width: 40rem;
-    height: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid rgb(172, 172, 172);
-    border-radius: 10px;
-    background-color: white;
-    margin-bottom: 0.3rem;
-    box-shadow:0px 3px 10px #d0d0d0;
+.vouch_to {
+	color: $dark;
+	margin-left: 20px;
+	margin-right: 10px;
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+.det_cont_vouch_db {
+	width: 100%;
+	min-width: 40rem;
+	height: 6rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border: 1px solid rgb(172, 172, 172);
+	border-radius: 10px;
+	background-color: white;
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+	box-shadow: 0px 3px 10px #d0d0d0;
+	padding: 10px;
+}
+.acc_name_vouch {
+	color: $pri_color;
+	font-size: 1.3rem;
+	font-weight: 500;
+	margin-top: 5px;
+}
+.vouch_costumer_name {
+	font-size: 1.3rem;
+	color: $dark;
+}
+.acc_id_vouch {
+	margin-right: 5px;
+	color: $dark;
+	font-size: 1.1rem;
+}
+.vouch_bill_detail_db {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+	margin-left: 5px;
+}
+.det_cont_right_vouch {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 30rem;
+}
+.acc_right_vouch {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: $dark;
+}
+.vouch_status {
+	font-size: 1.2rem;
+	color: red;
+	font-weight: 600;
+}
 
-  }
-  .acc_name_vouch{
-    color: $pri_color;
-    font-size: 1.3rem;
-    font-weight: 500;
-    margin-top: 5px;
-  }
-  .vouch_costumer_name{
-    font-size: 1.3rem;
-    color: $dark;
-  }
-  .acc_id_vouch{
-    margin-right: 5px;
-    color: $dark;
-    font-size: 1.1rem;
-  }
-  .vouch_bill_detail_db{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    margin-left: 5px;
-  }
-  .det_cont_right_vouch{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 30rem;
-  }
-  .acc_right_vouch{
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: $dark;
-  }
-  .vouch_status{
-    font-size: 1.2rem;
-    color: red;
-    font-weight: 600;
-  }
+.vouch_bills_db {
+	font-size: 1.2rem;
+	margin-bottom: 0.3rem;
+	margin-top: 5px;
+}
+.jovouch_det {
+	margin-left: 15px;
+}
+.det_cont_right_jovouch_db {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 15rem;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+.det_cont_last_jovouch {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	// margin-right: 12rem;
+	width: 15rem;
+}
+.vouc_det_left {
+	width: 45rem;
+}
 
-  .vouch_bills_db{
-    font-size: 1.2rem;
-    margin-bottom: 0.3rem;
-    margin-top: 5px;
-  }
-  .jovouch_det{
-    margin-left: 15px;
-  }
-  .det_cont_right_jovouch_db{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 15rem;
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  .det_cont_last_jovouch{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    // margin-right: 12rem;
-    width: 15rem;
-  }
-  .vouc_det_left{
-    width: 45rem;
-  }
-
-  .vouch_right_db{
-    width: 20rem;
-    // border: solid black;
-    margin-left:3.7rem;
-  }
-  .vouch_amount{
-    margin-left: 1rem;
-  }
-.db_right{
-    width: 30rem;
-    height: 18rem;
-    background-color: white;
-    box-shadow:0px 3px 10px #d0d0d0;
-    // border: solid black;
-    margin-left: 2rem;
+.vouch_right_db {
+	width: 20rem;
+	// border: solid black;
+	margin-left: 3.7rem;
 }
-.db_right_head{
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: $pri_color;
-    text-align: center;
-    border-bottom: 2px solid $l_pri_color;
-    padding: 1rem;
+.vouch_amount {
+	margin-left: 1rem;
 }
-.db_right_form{
-    display: flex;
-    flex-direction: column;
-    padding: 25px 25px;
-    font-size: 1.3rem;
+.db_right {
+	width: 27.5rem;
+	height: 18rem;
+	background-color: white;
+	box-shadow: 0px 3px 10px #d0d0d0;
+	// border: solid black;
+	margin-left: 2rem;
 }
-.db_form_acc_h{
-    color: $grey_text;
-    // margin-left: 25px;
-    margin-right: 15px;
+.db_right_head {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: $pri_color;
+	text-align: center;
+	border-bottom: 2px solid $l_pri_color;
+	padding: 1rem;
 }
-.db_form_acc{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.db_right_form {
+	display: flex;
+	flex-direction: column;
+	padding: 25px 25px;
+	font-size: 1.3rem;
 }
-.db_form_time{
-    display: flex;
-    flex-direction: row;
-    font-size: 1.2rem;
-    margin-top: 2rem;
-    align-items: center;
-    input{
-        width: 7rem;
-    }
+.db_form_acc_h {
+	color: $grey_text;
+	// margin-left: 25px;
+	margin-right: 15px;
 }
-.db_form_from{
-    margin-right: 3rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.db_form_acc {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
-.db_btn{
-    margin-top: 2.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    button{
-        padding: 0.6rem 1rem;
-        border-radius: 20px;
-        font-size: 1rem;
-        background-color: $pri_color;
-        color: white;
-        border: 1px solid $pri_color;
-        cursor: pointer;
-    }
+.db_form_time {
+	display: flex;
+	flex-direction: row;
+	font-size: 1.2rem;
+	margin-top: 2rem;
+	align-items: center;
+	input {
+		width: 7rem;
+	}
 }
-.acc_adress_head_db{
-    font-size: 1.2rem;
+.db_form_from {
+	margin-right: 3rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.db_btn {
+	margin-top: 2.5rem;
+	margin-left: auto;
+	margin-right: auto;
+	button {
+		padding: 0.6rem 1rem;
+		border-radius: 20px;
+		font-size: 1rem;
+		background-color: $pri_color;
+		color: white;
+		border: 1px solid $pri_color;
+		cursor: pointer;
+	}
+}
+.acc_adress_head_db {
+	font-size: 1.2rem;
 }
