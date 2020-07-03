@@ -91,69 +91,70 @@ class ProCon extends React.Component {
 
 				{this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
 
-				<div className="pro_con">
-					{this.props.ProOrAcc === 'Products' ? (
-						<div>
-							{this.props.products.map((pro, i) => {
-								return (
-									<div className="det_cont_pro">
-										<div className="det_sub_cont">
-											<div className="pro_name">
-												<span className="acc_id">{i + 1}. </span>
-												<span> {pro.product_name}</span>
-											</div>
-											<div className="pro_num">
-												<span className="acc_adress_head">HSN No.:</span>
-												{pro.hsn_num}
-											</div>
-										</div>
-										<div className="det_cont_icons">
-											<div
-												onClick={() => {
-													this.showAddProduct(pro.id);
-												}}
-											>
-												<img src={pencil} alt=" " />
-											</div>
-											<div
-												onClick={() => {
-													this.deleteIt(`/api/products/${pro.id}`);
-												}}
-											>
-												<img src={trash} alt=" " />
-											</div>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					) : (
-						<div>
-							{this.props.accounts.map((account, i) => {
-								return (
-									<div className="det_acc_div">
-										<DetCont
-											acc_name={account.acc_name}
-											type={account.acc_type}
-											print_name={account.print_name}
-											adress={account.address_line1}
-											gst={account.gst_num}
-											ph_number={account.phone_num}
-											i={i + 1}
-											id={account.id}
-											showAddAcc={this.showAddAcc}
-											deleteIt={this.deleteIt}
-											getspecific_acc={this.props.getspecific_acc}
-										/>
-									</div>
-								);
-							})}
-						</div>
-					)}
-				</div>
-			</div>
-		);
-	}
+        <div className="pro_con">
+          {this.props.ProOrAcc === "Products" ? (
+            <div>
+              {this.props.products.map((pro, i) => {
+                return (
+                  <div className="det_cont_pro">
+                    <div className="det_sub_cont">
+                      <div className="pro_name">
+                        <span className="acc_id">{i + 1}. </span>
+                        {pro.product_name}
+                      </div>
+                      <div className="pro_num">
+                        <span className="acc_adress_head">HSN No.:</span>
+                        {pro.hsn_num}
+                      </div>
+                    </div>
+                    <div className="det_cont_icons_pro">
+                      <div
+                        onClick={() => {
+                          this.showAddProduct(pro.id);
+                        }}
+                      >
+                        <img src={pencil} alt=" " />
+                      </div>
+                      <div
+                        onClick={() => {
+                          this.deleteIt(`/api/products/${pro.id}`);
+                        }}
+                      >
+                        <img src={trash} alt=" " />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div>
+              {this.props.accounts.map((account, i) => {
+                
+                return (
+                  <div className = "det_acc_div">
+                  <DetCont
+                    acc_name={account.acc_name}
+                    type={account.acc_type}
+                    print_name={account.print_name}
+                    adress={account.address_line1}
+                    gst={account.gst_num}
+                    ph_number={account.phone_num}
+                    i={i + 1}
+                    id={account.id}
+                    showAddAcc={this.showAddAcc}
+                    deleteIt={this.deleteIt}
+                    getspecific_acc = {this.props.getspecific_acc}
+                  />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 class DetCont extends React.Component {

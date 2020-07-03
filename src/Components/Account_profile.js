@@ -133,7 +133,7 @@ export default class Account_pro extends React.Component{
                     ) }
 
                     {this.props.acc_pro_val === 'ledger' && (
-                        <div>
+                        <div className  = "ledger_tab">
                             <div className = "acc_pro_ledger_upper">
                                 <div className = "upp_date">
                                     <input type = "month" />
