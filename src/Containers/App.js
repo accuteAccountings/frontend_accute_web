@@ -41,9 +41,7 @@ class App extends React.Component {
   };
 
   getspecific_acc = (i) => {
-    if(document.getElementById(this.state.isacc_pro)){
-      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
-      }
+   
     this.setState(() => {
       return {
         specific_acc : this.state.accounts[i]
@@ -222,6 +220,8 @@ rmDebit = () => {
     this.fi = this.fi.bind(this);
 
     this.navTo = this.navTo.bind(this);
+
+    
 
     this.state = {
       AddPro: false,
