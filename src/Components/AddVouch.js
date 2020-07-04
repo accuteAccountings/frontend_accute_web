@@ -137,13 +137,14 @@ class AddVouch extends React.Component {
     gAmt = parseFloat(g_amount) + gAmt;
     total = total + parseFloat(v_amount);
     gAmt = gAmt.toFixed(2);
-    console.log(total);
     let dis = parseFloat(document.getElementById("vouch_discount").value);
     dis = (dis * gAmt) / 100;
     dis = dis.toFixed(2);
+    total = total - dis;
+    total = total.toFixed(2);
     this.setState({
       items: arr,
-      totalAmt: total - dis,
+      totalAmt: total,
       grossAmt: gAmt,
       disAmt: dis
     });
