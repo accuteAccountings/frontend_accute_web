@@ -3,6 +3,30 @@ import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg"
 
 export default class Account_pro extends React.Component{
+
+
+
+    constructor(props){
+        super(props)
+
+
+        fetch(`/api/vouch/specific/${this.props.account.acc_name}`)
+        .then((res) => res.json())
+        .then((data) => {
+            if(data){
+                this.setState(() => {
+                    return {
+                        details : data
+                    }
+                })
+            }
+        })
+
+
+        this.state = {
+            details : []
+        }
+    }
     render(){
         return(
             <div>
@@ -170,123 +194,52 @@ export default class Account_pro extends React.Component{
                                 </thead>
                                     <tbody>
                                     
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        
-                                        
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        
-                                    
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        
-                                
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        
-                                        
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-
-                                        <tr className = "tr_acc">
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-
-                                        <tr className = "tr_acc">
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                    </tr>  
+                                    {this.state.details.map((e,i) => {
+                                        return (
+                                            <tr className = "tr_acc">
+                                                <td>{i + 1}</td>
+                                                <td>12/03/2020</td>
+                                                <td>{e.customer}</td>
+                                                <td>{e.bill_num}</td>
+                                                <td>{e.type == 'Debit' && e.totalAmt}</td>
+                                                <td>{e.type == 'Credit' && e.totalAmt} </td>
+                                                <td>{this.props.account.bal} </td>
+                                            </tr>
+                                        )
+                                    })}
                                      
-                                    
-                                    <tr className = "tr_acc">
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td> </td>
-                                   </tr>
-
-
-                                   <tr className = "tr_acc">
-                                   <td> </td>
-                                   <td> </td>
-                                   <td> </td>
-                                   <td> </td>
-                                   <td> </td>
-                                   <td> </td>
-                                   <td> </td>
-                              </tr>
-
-
-                              <tr >
-                              <td> </td>
-                              <td> </td>
-                              <td> </td>
-                              <td> </td>
-                              <td> </td>
-                              <td> </td>
-                              <td> </td>
-                         </tr>
                                         
+                                            <tr className = "tr_acc">
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                    
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                       
+                                            <tr  >
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                        
+                                    
                                     
                                     </tbody>
                                 </table>
@@ -302,3 +255,20 @@ export default class Account_pro extends React.Component{
         )
     }
 }
+async function postData(url = "", data) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        // 'Content-Type': 'multipart/form-data'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/json"
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer",
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }

@@ -368,9 +368,8 @@ class AddVouch extends React.Component {
                     <span>Type</span>
                     <br />
                     <select name="vouch_type" id="vouch_type">
-                      <option value="option1">Purchase</option>
-                      <option value="option1">Credit</option>
-                      <option value="option1">Debit</option>
+                      <option value="Credit">Credit</option>
+                      <option value="Debit">Debit</option>
                     </select>
                   </div>
 

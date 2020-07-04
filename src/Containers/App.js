@@ -41,9 +41,7 @@ class App extends React.Component {
   };
 
   getspecific_acc = (i) => {
-    if(document.getElementById(this.state.isacc_pro)){
-      document.getElementById(this.state.isacc_pro).style.color = '#29a8ab'
-      }
+   
     this.setState(() => {
       return {
         specific_acc : this.state.accounts[i]
@@ -225,17 +223,19 @@ setVouchPage = (page , data) => {
 
     this.navTo = this.navTo.bind(this);
 
+    
+
     this.state = {
       AddPro: false,
       AddAcc: false,
       page: "dash",
-      ProOrAcc: "Products",
+      ProOrAcc: "Accounts",
       PVoJVoDN: "no",
       products: [],
       tempProducts: [],
       accounts: [],
       AddVouch: true,
-      vouchPage: "jv",
+      vouchPage: "pv",
       isacc_pro : "acc_det",
       specific_acc : null,
       vouchData:[]

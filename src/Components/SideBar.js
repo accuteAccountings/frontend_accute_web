@@ -95,7 +95,11 @@ class SideBar extends React.Component {
 					</li>
 					<li
 						className={this.props.actPage === 'trans' ? 'side_btn act_s_btn' : 'side_btn'}
-						onClick={this.navToTrans}
+						onClick={ () => {
+							
+							this.navToTrans()
+							this.props.backToAcc()
+						}}
 					>
 						<span>Transactions</span>
 						<img src="" alt="" />
