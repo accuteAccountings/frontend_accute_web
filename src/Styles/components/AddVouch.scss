@@ -211,11 +211,11 @@ th:nth-child(5) {
 }
 
 tr:nth-child(even) {
-  background-color: #f0f0f0;
+  background-color: #f6f6f6;
 }
 .vouch_num_items {
   margin-right: 3rem;
-  text-align: center;
+  text-align: left;
 }
 
 .vouch_types_item {
@@ -234,4 +234,19 @@ tr:nth-child(even) {
     text-align: center;
     margin-top: 2px;
   }
+}
+#add_sub_agent {
+  margin-top: 30px;
+}
+#gst_con {
+  position: relative;
+}
+#percentage {
+  position: absolute;
+  top: 25px;
+  right: 6px;
+  color: $l_grey_text;
+}
+#vouch_discount {
+  width: 60px;
 }

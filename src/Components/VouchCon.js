@@ -192,6 +192,7 @@ class VouchCon extends React.Component {
                       return (
                         <JoVouchDet
                           bills={e.billArr}
+                          i={i + 1}
                           amount={e.amount}
                           balance={e.balance}
                           date={e.bill_date}
@@ -265,7 +266,7 @@ class JoVouchDet extends React.Component {
       <div className="det_cont_jovouch">
         <div className="det_cont_right_jovouch_m">
           <div className="vouch_bills">
-            <span className="acc_id_vouch">1. </span>
+            <span className="acc_id_vouch">{this.props.i} </span>
             <span className="acc_right_vouch">Bills:</span> {this.props.bills.join(" , ")}
           </div>
           <div className="acc_name_jovouch jovouch_det">
