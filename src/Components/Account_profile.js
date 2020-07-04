@@ -22,20 +22,9 @@ export default class Account_pro extends React.Component{
             }
         })
 
-        fetch("/api/vouch")
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          this.setState(() => {
-            return {
-              data: data
-            };
-          });
-        });
 
         this.state = {
-            data : [],
-            deatils : null
+            details : []
         }
     }
     render(){
@@ -220,7 +209,6 @@ export default class Account_pro extends React.Component{
                                     })}
                                      
                                         
-                                        {this.state.details.length != 0 && (
                                             <tr className = "tr_acc">
                                             <td> </td>
                                             <td> </td>
@@ -230,21 +218,18 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                             <td> </td>
                                         </tr>
-                                        )}
-                                       {this.state.details.length != 0 && (
-                                            <tr >
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        )}
                                     
-                                        {this.state.details.length == 0 && (
-                                            <tr className = "tr_acc">
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                       
+                                            <tr  >
                                             <td> </td>
                                             <td> </td>
                                             <td> </td>
@@ -253,21 +238,8 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                             <td> </td>
                                         </tr>
-                                      
-                                        )} {this.state.details.length == 0 && (
-                                            <tr>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        )}
-                                    
-                                      
                                         
+                                    
                                     
                                     </tbody>
                                 </table>
