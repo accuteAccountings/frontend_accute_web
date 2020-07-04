@@ -1,299 +1,343 @@
 @import "../base/settings";
 
 .add_jovouch_con {
-	background-color: white;
-	width: 70%;
-	margin-left: auto;
-    margin-right: auto;
-    height: 40rem;
-	box-shadow: 0px 0px 10px rgb(163, 163, 163);
-	// height: 200vh;
-	// padding-bottom: 100px;
-	margin-bottom: 100px;
+  background-color: white;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  box-shadow: 0px 0px 10px rgb(163, 163, 163);
+  // height: 200vh;
+  // padding-bottom: 100px;
+  margin-bottom: 100px;
 }
 .tbtn {
-	cursor: pointer;
-	span {
-		color: blue;
-		text-decoration: underline;
-	}
+  cursor: pointer;
+  span {
+    color: blue;
+    text-decoration: underline;
+  }
 }
 .tbtn:hover {
-	span {
-		color: darkblue;
-		text-decoration: underline;
-	}
+  span {
+    color: darkblue;
+    text-decoration: underline;
+  }
 }
 
 .jovouch_body {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .add_jovouch_right_btns {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 
-	width: 30%;
+  width: 30%;
 
-	p {
-		height: 20px;
-		cursor: pointer;
-		color: $grey_text;
-		margin-top: 22px;
-	}
+  p {
+    height: 20px;
+    cursor: pointer;
+    color: $grey_text;
+    margin-top: 22px;
+  }
 }
 
 .jovouch_body_right {
-	border-left: 2px solid $l_grey_text;
-	width: 40%;
+  border-left: 2px solid $l_grey_text;
+  width: 40%;
 }
 
 .jovouch_details {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .jovouch_si {
-    margin: 5px 15px;
-   
+  margin: 5px 15px;
 
-	span {
-		color: $grey_text;
-	}
+  span {
+    color: $grey_text;
+  }
 
-	input {
-		color: $l_grey_text;
-		border: 1px solid $grey_text;
-		padding: 1px 6px;
-		font-size: 1rem;
-		width: auto;
-		text-align: center;
-	}
-	select {
-		color: $l_grey_text;
-		font-size: 1rem;
-		border: 1px solid $grey_text;
-		width: auto;
-		padding: 1px 6px;
-		text-align: center;
-	}
+  input {
+    color: $l_grey_text;
+    border: 1px solid $grey_text;
+    padding: 1px 6px;
+    font-size: 1rem;
+    width: auto;
+    text-align: center;
+  }
+  select {
+    color: $l_grey_text;
+    font-size: 1rem;
+    border: 1px solid $grey_text;
+    width: auto;
+    padding: 1px 6px;
+    text-align: center;
+  }
 }
 
 #jovouch_bill_no {
-	width: 110px;
+  width: 110px;
+  margin-right: 10px;
 }
 #jovouch_gr_no {
-	width: 110px;
+  width: 110px;
 }
 #jovouch_transport_name {
-	width: 200px;
+  width: 200px;
 }
 #jovouch_sup {
-	width: 200px;
+  width: 200px;
 }
 #jovouch_sup_agent {
-	width: 200px;
+  width: 200px;
 }
 #jovouch_comission {
-	width: 60px;
-	text-align: center;
+  width: 60px;
+  text-align: center;
 }
 #jovouch_customer {
-	width: 200px;
+  width: 200px;
 }
 input[type="number"] {
-	-moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .jovouch_customer {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .jovouch_body_middle {
-	margin-top: 10px;
-	padding-top: 10px;
-	// border-top: 2px solid $l_grey_text;
-    display: flex;
-    // width: 20rem;
-	flex-direction: row;
-	flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  // border-top: 2px solid $l_grey_text;
+  display: flex;
+  // width: 20rem;
+  flex-direction: row;
+  flex-wrap: wrap;
 
-	input {
-		width: 60px;
-	}
+  input {
+    width: 60px;
+  }
 }
 #jovouch_pro_item {
-	width: 140px;
-	color: rgb(155, 155, 155);
+  width: 140px;
+  color: rgb(155, 155, 155);
 }
 #jovouch_pro_con {
-	position: relative;
+  position: relative;
 
-	ul {
-		position: absolute;
-		background-color: white;
-		border: 1px solid #a0a0a0;
-		box-sizing: border-box;
-		padding: 0px 0px;
-		width: 140px;
-		top: 33px;
-		left: 0px;
-		border-top: none;
-		box-shadow: 0 0 10px rgb(238, 238, 238);
-	}
+  ul {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #a0a0a0;
+    box-sizing: border-box;
+    padding: 0px 0px;
+    width: 140px;
+    top: 33px;
+    left: 0px;
+    border-top: none;
+    box-shadow: 0 0 10px rgb(238, 238, 238);
+  }
 
-	li {
-		// position: absolute;
-		width: 100%;
-		text-align: center;
-		color: $grey_text;
-		padding: 7px;
-		cursor: pointer;
-	}
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
+    cursor: pointer;
+  }
 
-	li:hover {
-		background-color: rgb(231, 231, 231);
-	}
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
 }
 
 #jovouch_add_btn {
-	margin: 10px 20px;
-	padding: 5px 30px;
-	font-size: $p_font;
-	color: $grey_text;
-	border: 1px solid $grey_text;
-	border-radius: 30px;
-	background-color: white;
-	cursor: pointer;
+  margin: 10px 20px;
+  padding: 5px 30px;
+  font-size: $p_font;
+  color: $grey_text;
+  border: 1px solid $grey_text;
+  border-radius: 30px;
+  background-color: white;
+  cursor: pointer;
 }
 
 .jovouch_table_con {
-	margin-top: 15px;
+  margin-top: 15px;
 }
 
 #jovouch_table {
-	width: 100%;
+  width: 100%;
 }
 
 table,
 th,
 td {
-	border: 1px solid $l_grey_text;
-	border-collapse: collapse;
-	padding: 5px;
-	font-size: $p_font;
-	height: 40px;
+  border: 1px solid $l_grey_text;
+  border-collapse: collapse;
+  padding: 5px;
+  font-size: $p_font;
+  height: 40px;
 }
 
 th {
-	color: $grey_text;
+  color: $grey_text;
 }
 
 th:nth-child(1) {
-	width: 70px;
+  width: 70px;
 }
 th:nth-child(4) {
-	width: 70px;
+  width: 70px;
 }
 th:nth-child(5) {
-	width: 100px;
+  width: 100px;
 }
 
 tr:nth-child(even) {
-	background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
-.jovouch_plus{
-    font-size: 2.3rem;
-   margin-left: 10px;
+.jovouch_plus {
+  font-size: 2.3rem;
+  margin-left: 10px;
 }
-.second_row{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.second_row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.jovouch_debit{
-    margin: 5px 15px;
-   
-    span {
-		color: $grey_text;
-	}
+.jovouch_debit {
+  margin: 5px 15px;
 
-    select {
-		color: $l_grey_text;
-		font-size: 1rem;
-		border: 1px solid $grey_text;
-		width: auto;
-		padding: 2px 5rem;
-        text-align: center;
-        // width: 1;
-	}
-}
-.pay_head{
-    margin-top: 1rem;
-    border-bottom:  2px solid $l_grey_text;
-    width: 25rem;
-    font-size: 1.3rem;
-    margin-left: 15px;
-}
-.jovouch_plus_mode{
-    font-size: 1.5rem;
-}
-.jovouch_payment_det{
-    select {
-		color: $l_grey_text;
-		font-size: 1rem;
-		border: 1px solid $grey_text;
-		width: auto;
-		padding: 2px 2rem;
-        text-align: center;
-        // width: 1;
-    }
-    input {
-		color: $l_grey_text;
-		border: 1px solid $grey_text;
-		padding: 1px 6px;
-		font-size: 1rem;
-		width: auto;
-		text-align: center;
-	}
-}
-.mode_head{
-    margin-bottom: 8px;
-}
-.jovouch_amount{
-    margin-left: 1rem;
-    input[type = text] {
-		color: $l_grey_text;
-		border: 1px solid $grey_text;
-		// padding: 1px;
-		font-size: 1rem;
-		width: 10rem;
-        // text-align: center;
-        margin-left: 10px;
-	}
-}
-.jovouch_balance{
-    margin-left: 3rem;
-}
-.jovouch_add_btn_div{
-    // margin-left: 4rem;
-    padding: 4rem 15rem;
-}
-.jovouch_add_btn{
-    font-size: 1.3rem;
-    border-radius: 20px;
+  span {
     color: $grey_text;
-    width: 8rem;
+  }
+
+  select {
+    color: $l_grey_text;
+    font-size: 1rem;
     border: 1px solid $grey_text;
+    width: auto;
+    padding: 2px 5rem;
+    text-align: center;
+    // width: 1;
+  }
+}
+.pay_head {
+  margin-top: 1rem;
+  border-bottom: 2px solid $l_grey_text;
+  width: 25rem;
+  font-size: 1.3rem;
+  margin-left: 15px;
+}
+.jovouch_plus_mode {
+  font-size: 1.5rem;
+}
+.jovouch_payment_det {
+  select {
+    color: $l_grey_text;
+    font-size: 1rem;
+    border: 1px solid $grey_text;
+    width: auto;
+    padding: 2px 2rem;
+    text-align: center;
+    // width: 1;
+  }
+  input {
+    color: $l_grey_text;
+    border: 1px solid $grey_text;
+    padding: 1px 6px;
+    font-size: 1rem;
+    width: auto;
+    text-align: center;
+  }
+}
+.mode_head {
+  margin-bottom: 8px;
+}
+.jovouch_amount {
+  margin-left: 1rem;
+  input[type="text"] {
+    color: $l_grey_text;
+    border: 1px solid $grey_text;
+    // padding: 1px;
+    font-size: 1rem;
+    width: 10rem;
+    // text-align: center;
+    margin-left: 10px;
+  }
+}
+.jovouch_balance {
+  margin-left: 3rem;
+}
+.jovouch_add_btn_div {
+  // margin-left: 4rem;
+  padding: 4rem 15rem;
+}
+.jovouch_add_btn {
+  font-size: 1.3rem;
+  border-radius: 20px;
+  color: $grey_text;
+  width: 8rem;
+  border: 1px solid $grey_text;
+  cursor: pointer;
+}
+
+.jovouch_bill_list {
+  position: relative;
+
+  ul {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #a0a0a0;
+    box-sizing: border-box;
+    padding: 0px 0px;
+    width: 110px;
+    top: 16px;
+    left: 0px;
+    border-top: none;
+    box-shadow: 0 0 10px rgb(238, 238, 238);
+  }
+
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
     cursor: pointer;
+  }
+
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+#jovouch_balance {
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+}
+#jovouch_amount {
+  border: none;
+  font-size: 1.1rem;
+  text-align: left;
+}
+.paydet,
+.amount {
+  margin-top: 8px;
 }

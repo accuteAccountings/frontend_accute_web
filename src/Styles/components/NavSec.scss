@@ -8,7 +8,7 @@
   width: 80%;
   min-width: 50rem;
 }
-.nav_sec_pro{
+.nav_sec_pro {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,7 +22,7 @@
   justify-content: space-between;
   // border: 1px solid black;
   width: 80%;
-  min-width: 60rem;
+  min-width: 64rem;
 }
 
 .nav_items {
@@ -81,8 +81,8 @@
 }
 
 .add_account {
-  padding: 8px 10px;
-  // margin: 6px 20px;
+  padding: 3px 10px;
+  margin: 6px 20px;
   border-radius: 20px;
   border: 1px solid $pri_color;
   font-size: $p_font;
