@@ -4,7 +4,20 @@ import back from "../img/camera-back.svg"
 
 export default class Account_pro extends React.Component{
 
-
+getDet = async() => {
+    let date = await document.getElementById('ledger_date').value
+  await  fetch(`/api/vouch/specific/${this.props.account.acc_name}/${date}`)
+    .then((res) => res.json())
+    .then((data) => {
+        if(data){
+            this.setState(() => {
+                return {
+                    details : data
+                }
+            })
+        }
+    })
+}
 
     constructor(props){
         super(props)
@@ -25,7 +38,10 @@ export default class Account_pro extends React.Component{
             details : []
         }
     }
+    
+
     render(){
+       
         return(
             <div>
                 <div className = "acc_pro_location">
@@ -44,7 +60,11 @@ export default class Account_pro extends React.Component{
                             <div className = {this.props.acc_pro_val === 'acc_det'? 'acc_det': 'sbar_list_value'}  onClick = {() => {this.props.setAccProfile('acc_det')}} >
                                 Account Details
                             </div>
-                            <div className = {this.props.acc_pro_val === 'ledger'? 'acc_det': 'sbar_list_value'}  onClick = {() => this.props.setAccProfile('ledger')} id = "ledger">
+                            <div className = {this.props.acc_pro_val === 'ledger'? 'acc_det': 'sbar_list_value'}  onClick = {() => {
+                                
+                                this.props.setAccProfile('ledger')
+                                
+                            }} id = "ledger">
                                 Ledger
                             </div>
                             <div className = {this.props.acc_pro_val === 'reports'? 'acc_det': 'sbar_list_value'}  onClick = {() => this.props.setAccProfile('reports')} id = "reports">
@@ -155,10 +175,12 @@ export default class Account_pro extends React.Component{
                     ) }
 
                     {this.props.acc_pro_val === 'ledger' && (
+                        
                         <div className  = "ledger_tab">
                             <div className = "acc_pro_ledger_upper">
                                 <div className = "upp_date">
-                                    <input type = "month" id="ledger_date" />
+                                    <input type = "month" id="ledger_date" name = "ledger_date" />
+                                    <button onClick = {this.getDet}>search</button>
                                 </div>
                                 <div className = "ledger_upp_right_div"> 
                                     <div className = "leger_upp_right">
@@ -193,11 +215,10 @@ export default class Account_pro extends React.Component{
                                     <tbody>
                                     
                                     {this.state.details.map((e,i) => {
-                                        var d = new Date()
                                         return (
                                             <tr className = "tr_acc">
                                                 <td>{i + 1}</td>
-                                                <td>{d.getDate()+ '/' + d.getMonth() + '/' + d.getFullYear()}</td>
+                                                <td>{e.bill_date}</td>
                                                 <td>{e.customer}</td>
                                                 <td>{e.bill_num}</td>
                                                 <td>{e.type == 'Debit' && e.totalAmt}</td>
@@ -217,7 +238,6 @@ export default class Account_pro extends React.Component{
                                             <td> </td>
                                             <td> </td>
                                         </tr>
-                                    
                                         <tr className = "tr_acc">
                                         <td> </td>
                                         <td> </td>
@@ -227,8 +247,7 @@ export default class Account_pro extends React.Component{
                                         <td> </td>
                                         <td> </td>
                                     </tr>
-
-
+                                    
                                       
                                     {this.state.details.length > 4 && (
                                         <tr className = "tr_acc">
@@ -266,7 +285,7 @@ export default class Account_pro extends React.Component{
                                     </tr>
                                     )}
 
-                                        <tr  >
+                                        <tr className = "tr_acc" >
                                         <td> </td>
                                         <td> </td>
                                         <td> </td>
