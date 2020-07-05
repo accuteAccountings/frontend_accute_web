@@ -21,6 +21,19 @@ async function postData(url = "", data) {
 }
 
 class AddVouch extends React.Component {
+  updateTotal = () => {
+    let total = 0;
+    let g_amount = 0;
+    let discount = parseInt(document.getElementById("vouch_discount").value);
+    let disAmt = 0;
+
+    this.state.items.map(e => {
+      g_amount = parseInt(g_amount) + parseInt(e.g_amount);
+      disAmt = parseInt(disAmt) + parseInt((parseInt(e.g_amount) * discount) / 100);
+      total = parseInt(total) + parseInt(e.amount) - parseInt(disAmt);
+    });
+    this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt });
+  };
   async addVouch() {
     let bill_date = document.querySelector("#vouch_bill_date").value;
     let type = document.querySelector("#vouch_type").value;
@@ -114,12 +127,10 @@ class AddVouch extends React.Component {
     let hsn_num = document.getElementById("vouch_hsn_num").value;
     document.getElementById("vouch_hsn_num").value = "";
 
-    let gst = parseFloat(vouch_gst) / 100;
-    let v_amount = parseFloat(vouch_rate) * parseFloat(vouch_quantity);
+    let gst = parseInt(vouch_gst) / 100;
+    let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
     let g_amount = v_amount;
-    g_amount = g_amount.toFixed(2);
     v_amount = v_amount * gst + v_amount;
-    v_amount = v_amount.toFixed(2);
     let item = {
       product_name: pro_name,
       quantity: vouch_quantity,
@@ -132,45 +143,23 @@ class AddVouch extends React.Component {
 
     let arr = this.state.items;
     arr.push(item);
-    let total = parseFloat(this.state.totalAmt);
-    let gAmt = parseFloat(this.state.grossAmt);
-    gAmt = parseFloat(g_amount) + gAmt;
-    total = total + parseFloat(v_amount);
-    gAmt = gAmt.toFixed(2);
-    let dis = parseFloat(document.getElementById("vouch_discount").value);
-    dis = (dis * gAmt) / 100;
-    dis = dis.toFixed(2);
-    total = total - dis;
-    total = total.toFixed(2);
     this.setState({
-      items: arr,
-      totalAmt: total,
-      grossAmt: gAmt,
-      disAmt: dis
+      items: arr
     });
+    this.updateTotal();
     return;
   }
 
   removeItem = index => {
     let arr = this.state.items;
-    let amt = this.state.items[index].amount;
-    let gamt = this.state.items[index].g_amount;
-    amt = parseFloat(amt);
     arr.splice(index, 1);
 
-    let gAmt = parseFloat(this.state.grossAmt);
-    let dis = parseFloat(document.getElementById("vouch_discount").value);
-    gAmt = gAmt - gamt;
-    dis = gAmt - (dis * gAmt) / 100;
-    dis = dis.toFixed(2);
     this.setState(prevState => {
       return {
-        items: arr,
-        totalAmt: parseFloat(prevState.totalAmt) - amt,
-        grossAmt: parseFloat(prevState.grossAmt) - gamt,
-        disAmt: dis
+        items: arr
       };
     });
+    this.updateTotal();
   };
 
   editItem = index => {
@@ -209,20 +198,12 @@ class AddVouch extends React.Component {
     document.querySelector("#vouch_rate").value = 1;
 
     document.getElementById("vouch_hsn_num").value = "";
-    let gst = parseFloat(vouch_gst) / 100;
-    let v_amount = parseFloat(vouch_rate) * parseFloat(vouch_quantity);
-    let g_amt = parseFloat(v_amount);
+    let gst = parseInt(vouch_gst) / 100;
+    let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
+    let g_amt = parseInt(v_amount);
     v_amount = v_amount * gst + v_amount;
     v_amount = v_amount.toFixed(2);
     let arr = this.state.items;
-
-    let totalAmt = parseFloat(this.state.totalAmt);
-    let grossAmt = parseFloat(this.state.grossAmt);
-
-    totalAmt = totalAmt - parseFloat(arr[this.state.editItem].amount) + v_amount;
-    grossAmt = grossAmt - parseFloat(arr[this.state.editItem].g_amount) + g_amt;
-    let dis = (grossAmt * parseFloat(document.getElementById("vouch_discount").value)) / 100;
-    this.setState({ totalAmt: totalAmt - dis, grossAmt: grossAmt, disAmt: dis });
 
     arr[this.state.editItem].product_name = pro_name;
     arr[this.state.editItem].quantity = vouch_quantity;
@@ -238,6 +219,7 @@ class AddVouch extends React.Component {
         editItem: -1
       };
     });
+    this.updateTotal();
   };
 
   filterPro = () => {
@@ -368,9 +350,10 @@ class AddVouch extends React.Component {
                   <div className="vouch_si">
                     <span>Type</span>
                     <br />
-                    <select name="vouch_type" id="vouch_type">
-                      <option value="Credit">Credit</option>
-                      <option value="Debit">Debit</option>
+                    <select name="vouch_type" disabled id="vouch_type">
+                      <option value="purchase">Purchase</option>
+                      <option value="credit">Credit</option>
+                      <option value="debit">Debit</option>
                     </select>
                   </div>
 

@@ -21,6 +21,30 @@ async function postData(url = "", data) {
 }
 
 class AddJovouch extends React.Component {
+  updateBillAmt = () => {
+    let billAmt = 0;
+    for (let aa of this.state.BillArr) {
+      for (let a of this.state.data) {
+        if (aa === a.det.bill_num) {
+          billAmt = parseInt(billAmt) + parseInt(a.det.totalAmt);
+        }
+      }
+    }
+    this.setState({
+      billAmt: billAmt
+    });
+  };
+
+  updateAmt = () => {
+    let amt = 0;
+    for (let aa of this.state.payArr) {
+      amt = parseInt(amt) + parseInt(aa.amt);
+    }
+    this.setState({
+      amt: amt
+    });
+  };
+
   bill_list_change = i => {
     let arr = [];
 
@@ -152,8 +176,20 @@ class AddJovouch extends React.Component {
           <h1>Add Journal jovoucher</h1>
 
           <div className="add_jovouch_right_btns">
-            <p>Save</p>
-            <p>Reset</p>
+            <p onClick={this.addjovouch}>Save</p>
+            <p
+              onClick={() => {
+                this.setState({
+                  BillArr: [""],
+                  payArr: [],
+                  Cbill: [],
+                  amt: 0,
+                  billAmt: 0
+                });
+              }}
+            >
+              Reset
+            </p>
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
@@ -185,39 +221,47 @@ class AddJovouch extends React.Component {
                   {this.state.BillArr.map((e, i) => {
                     return (
                       <span className="jovouch_bill_list">
-                        <input
-                          type="text"
-                          placeholder="Bill No."
-                          onBlur={() => {
-                            setTimeout(() => {
-                              document.querySelector(".pro_list" + i).style.display = "none";
-                              let arr = this.state.BillArr;
-                              arr[i] = document.querySelector(".jo_bill_no" + i).value;
-                              if (arr[i].length === 0) {
-                                return;
-                              }
-                              let billAmt = this.state.billAmt;
-                              for (let a of this.state.vouchData) {
-                                if (arr[i] === a.det.bill_num) {
-                                  billAmt = parseFloat(billAmt) + parseFloat(a.det.totalAmt);
+                        <span
+                          id="bill_cross_btn"
+                          onClick={() => {
+                            let arr = this.state.BillArr;
+                            arr.splice(i, 1);
+                            this.setState({ BillArr: arr });
+                            this.updateBillAmt();
+                            this.state.BillArr.map((a, ii) => {
+                              document.querySelector(".jo_bill_no" + ii).value = a;
+                            });
+                          }}
+                        >
+                          +
+                        </span>
+                        {this.state.data.length !== 0 && (
+                          <input
+                            type="text"
+                            placeholder="Bill No."
+                            onBlur={() => {
+                              setTimeout(() => {
+                                document.querySelector(".pro_list" + i).style.display = "none";
+                                let arr = this.state.BillArr;
+                                arr[i] = document.querySelector(".jo_bill_no" + i).value;
+                                if (arr[i].length === 0) {
+                                  return;
                                 }
-                              }
-                              this.setState({
-                                BillArr: arr,
-                                billAmt: billAmt
-                              });
-                            }, 500);
-                          }}
-                          onChange={() => {
-                            this.bill_list_change(i);
-                          }}
-                          onFocus={() => {
-                            this.bill_list_change(i);
-                          }}
-                          id="jovouch_bill_no"
-                          className={"jo_bill_no" + i}
-                          autoComplete="off"
-                        />
+                                this.setState({ BillArr: arr });
+                                this.updateBillAmt();
+                              }, 500);
+                            }}
+                            onChange={() => {
+                              this.bill_list_change(i);
+                            }}
+                            onFocus={() => {
+                              this.bill_list_change(i);
+                            }}
+                            id="jovouch_bill_no"
+                            className={"jo_bill_no" + i}
+                            autoComplete="off"
+                          />
+                        )}
                         <ul id="pro_list" className={"pro_list" + i} style={{ display: "none" }}>
                           {this.state.vouchData.map((pro, index) => {
                             console.log(pro);
@@ -311,10 +355,22 @@ class AddJovouch extends React.Component {
                     </div>
                   </div>
                 ) : null}
-                <div className="jovouch_si  ">
+                <div className="jovouch_si jovoamt ">
                   <span>Amount </span>
                   <br />
-
+                  {this.state.payArr.length - 1 === index ? null : (
+                    <span
+                      id="amt_cross_btn"
+                      onClick={() => {
+                        let arr = this.state.payArr;
+                        arr.splice(index, 1);
+                        this.setState({ payArr: arr });
+                        this.updateAmt();
+                      }}
+                    >
+                      +
+                    </span>
+                  )}
                   <div className="second_row">
                     <input
                       onBlur={() => {
@@ -339,15 +395,10 @@ class AddJovouch extends React.Component {
                         {
                           nn.amt ? (arr[index].amt = nn.amt) : (arr[index].amt = 0);
                         }
-                        let am = 0;
-                        for (let e of arr) {
-                          console.log(e);
-                          am = parseFloat(am) + parseFloat(e.amt);
-                        }
                         this.setState({
-                          payArr: arr,
-                          amt: am
+                          payArr: arr
                         });
+                        this.updateAmt();
                       }}
                       type="text"
                       placeholder="Amount"
@@ -391,11 +442,6 @@ class AddJovouch extends React.Component {
               />
             </span>
           </div>
-        </div>
-        <div className="jovouch_add_btn_div">
-          <button onClick={this.addjovouch} className="jovouch_add_btn">
-            Add
-          </button>
         </div>
       </div>
     );
