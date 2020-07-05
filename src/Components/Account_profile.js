@@ -9,8 +9,7 @@ export default class Account_pro extends React.Component{
     constructor(props){
         super(props)
 
-
-        fetch(`/api/vouch/specific/${this.props.account.acc_name}`)
+         fetch(`/api/vouch/specific/${this.props.account.acc_name}`)
         .then((res) => res.json())
         .then((data) => {
             if(data){
@@ -21,7 +20,6 @@ export default class Account_pro extends React.Component{
                 })
             }
         })
-
 
         this.state = {
             details : []
@@ -160,7 +158,7 @@ export default class Account_pro extends React.Component{
                         <div className  = "ledger_tab">
                             <div className = "acc_pro_ledger_upper">
                                 <div className = "upp_date">
-                                    <input type = "month" />
+                                    <input type = "month" id="ledger_date" />
                                 </div>
                                 <div className = "ledger_upp_right_div"> 
                                     <div className = "leger_upp_right">
@@ -173,7 +171,7 @@ export default class Account_pro extends React.Component{
                                     </div>
                                     <div className = "leger_upp_right">
                                         <span className  ="upp_head">Balance : </span>
-                                        45465465
+                                        {this.props.account.bal}
                                     </div>
                                 </div>
                             </div>
@@ -195,15 +193,16 @@ export default class Account_pro extends React.Component{
                                     <tbody>
                                     
                                     {this.state.details.map((e,i) => {
+                                        var d = new Date()
                                         return (
                                             <tr className = "tr_acc">
                                                 <td>{i + 1}</td>
-                                                <td>12/03/2020</td>
+                                                <td>{d.getDate()+ '/' + d.getMonth() + '/' + d.getFullYear()}</td>
                                                 <td>{e.customer}</td>
                                                 <td>{e.bill_num}</td>
                                                 <td>{e.type == 'Debit' && e.totalAmt}</td>
                                                 <td>{e.type == 'Credit' && e.totalAmt} </td>
-                                                <td>{this.props.account.bal} </td>
+                                                <td>{e.Bal_left} </td>
                                             </tr>
                                         )
                                     })}
@@ -228,16 +227,54 @@ export default class Account_pro extends React.Component{
                                         <td> </td>
                                         <td> </td>
                                     </tr>
+
+
+                                      
+                                    {this.state.details.length > 4 && (
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    )}
                                        
-                                            <tr  >
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
+                                    {this.state.details.length > 7 && (
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    )}
+                           
+                                    {this.state.details.length > 8 && (
+                                        <tr className = "tr_acc">
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
+                                    )}
+
+                                        <tr  >
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td> </td>
+                                    </tr>
                                         
                                     
                                     
