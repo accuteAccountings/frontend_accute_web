@@ -22,18 +22,6 @@ getDet = async() => {
     constructor(props){
         super(props)
 
-         fetch(`/api/vouch/specific/${this.props.account.acc_name}`)
-        .then((res) => res.json())
-        .then((data) => {
-            if(data){
-                this.setState(() => {
-                    return {
-                        details : data
-                    }
-                })
-            }
-        })
-
         this.state = {
             details : []
         }
