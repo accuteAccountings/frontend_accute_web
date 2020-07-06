@@ -16,12 +16,42 @@ export default class Account_pro extends React.Component {
 					});
 				}
 			});
+
+			await fetch(`/api/jovouch/specific/${this.props.account.acc_name}/${date}`)
+			.then((res) => res.json())
+			.then((data) => {
+				if (data) {
+					this.setState(() => {
+						return {
+							det2: data
+						};
+					});
+				}
+			});
 	};
+
+	debitTotal(){
+		let value = parseInt(this.state.debited[0])
+		for(let i=1 ; i < this.state.debited.length ; i++){
+			value = parseInt(value) + parseInt(this.state.debited[i])
+		}
+		return value;
+	}
+
+	debitpush(value){
+		this.state.debited.push(value)
+	}
+	creditpush(value){
+		this.state.credited.push(value)
+	}
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			details: []
+            details: [],
+			det2 : [],
+			debited : [],
+			credited : []
 		};
 	}
 
@@ -163,15 +193,15 @@ export default class Account_pro extends React.Component {
 								<div className="ledger_upp_right_div">
 									<div className="leger_upp_right">
 										<span className="upp_head">Debit : </span>
-										45465465
+										{this.debitTotal()}
 									</div>
 									<div className="leger_upp_right">
 										<span className="upp_head">Credit : </span>
-										45465465
+										{parseInt(this.state.debited[0])}
 									</div>
 									<div className="leger_upp_right">
 										<span className="upp_head">Balance : </span>
-										{this.props.account.bal}
+										{this.props.account.Balance}
 									</div>
 								</div>
 							</div>
@@ -194,30 +224,55 @@ export default class Account_pro extends React.Component {
 											return (
 												<tr className="tr_acc">
 													<td>{i + 1}</td>
-													<td>{e.bill_date}</td>
-													<td>{e.customer}</td>
-													<td>{e.bill_num}</td>
-													<td>{e.type == 'debit' ? e.totalAmt : '-'}</td>
-													<td>{e.type == 'credit' ? e.totalAmt : '-'} </td>
-													<td>{e.Bal_left} </td>
+													<td className = "td_date">{e.bill_date}</td>
+													<td>{e.customer === this.props.account.acc_name ? e.supplier :
+													   e.customer}</td>
+													<td className = "td_bill">{e.bill_num}</td>
+													<td>{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}
+													    {e.supplier === this.props.account.acc_name && this.debitpush(e.totalAmt)}
+													 </td>
+													<td>{e.customer === this.props.account.acc_name ? e.totalAmt : '-'} </td>
+													<td>{e.supplier === this.props.account.acc_name ? e.Bal_left_supplier :
+													  e.Bal_left_costumer} </td>
+												</tr>
+											);
+										})}
+
+										{this.state.det2.map((e, i) => {
+											
+											return (
+												<tr className="tr_acc">
+													<td>{this.state.details.length +  i + 1}</td>
+													<td className = "td_date">{e.bill_date}</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc
+														 : e.credit_acc}</td>
+													<td className = "td_bill">{e.billArr.join(" , ")}</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? '-'
+														 :e.amount - e.balance }
+														
+														 </td>
+													<td>{e.credit_acc === this.props.account.acc_name ? 
+													    e.amount - e.balance : '-' }</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit :
+													 e.Bal_left_debit}</td>
 												</tr>
 											);
 										})}
 
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
 										</tr>
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -226,9 +281,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 4 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -238,9 +293,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 7 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -250,9 +305,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 8 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -261,9 +316,9 @@ export default class Account_pro extends React.Component {
 
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
