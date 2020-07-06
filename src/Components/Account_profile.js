@@ -30,11 +30,28 @@ export default class Account_pro extends React.Component {
 			});
 	};
 
+	debitTotal(){
+		let value = parseInt(this.state.debited[0])
+		for(let i=1 ; i < this.state.debited.length ; i++){
+			value = parseInt(value) + parseInt(this.state.debited[i])
+		}
+		return value;
+	}
+
+	debitpush(value){
+		this.state.debited.push(value)
+	}
+	creditpush(value){
+		this.state.credited.push(value)
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
             details: [],
-            det2 : []
+			det2 : [],
+			debited : [],
+			credited : []
 		};
 	}
 
@@ -176,11 +193,11 @@ export default class Account_pro extends React.Component {
 								<div className="ledger_upp_right_div">
 									<div className="leger_upp_right">
 										<span className="upp_head">Debit : </span>
-										45465465
+										{this.debitTotal()}
 									</div>
 									<div className="leger_upp_right">
 										<span className="upp_head">Credit : </span>
-										45465465
+										{parseInt(this.state.debited[0])}
 									</div>
 									<div className="leger_upp_right">
 										<span className="upp_head">Balance : </span>
@@ -211,7 +228,9 @@ export default class Account_pro extends React.Component {
 													<td>{e.customer === this.props.account.acc_name ? e.supplier :
 													   e.customer}</td>
 													<td className = "td_bill">{e.bill_num}</td>
-													<td>{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}</td>
+													<td>{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}
+													    {e.supplier === this.props.account.acc_name && this.debitpush(e.totalAmt)}
+													 </td>
 													<td>{e.customer === this.props.account.acc_name ? e.totalAmt : '-'} </td>
 													<td>{e.supplier === this.props.account.acc_name ? e.Bal_left_supplier :
 													  e.Bal_left_costumer} </td>
@@ -229,7 +248,9 @@ export default class Account_pro extends React.Component {
 														 : e.credit_acc}</td>
 													<td className = "td_bill">{e.billArr.join(" , ")}</td>
 													<td>{e.credit_acc === this.props.account.acc_name ? '-'
-														 :e.amount - e.balance }</td>
+														 :e.amount - e.balance }
+														
+														 </td>
 													<td>{e.credit_acc === this.props.account.acc_name ? 
 													    e.amount - e.balance : '-' }</td>
 													<td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit :
