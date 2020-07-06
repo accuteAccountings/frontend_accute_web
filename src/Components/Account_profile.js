@@ -207,10 +207,10 @@ export default class Account_pro extends React.Component {
 											return (
 												<tr className="tr_acc">
 													<td>{i + 1}</td>
-													<td>{e.bill_date}</td>
+													<td className = "td_date">{e.bill_date}</td>
 													<td>{e.customer === this.props.account.acc_name ? e.supplier :
 													   e.customer}</td>
-													<td>{e.bill_num}</td>
+													<td className = "td_bill">{e.bill_num}</td>
 													<td>{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}</td>
 													<td>{e.customer === this.props.account.acc_name ? e.totalAmt : '-'} </td>
 													<td>{e.supplier === this.props.account.acc_name ? e.Bal_left_supplier :
@@ -220,13 +220,14 @@ export default class Account_pro extends React.Component {
 										})}
 
 										{this.state.det2.map((e, i) => {
+											
 											return (
 												<tr className="tr_acc">
-													<td>{i + 1}</td>
-													<td>{e.bill_date}</td>
+													<td>{this.state.details.length +  i + 1}</td>
+													<td className = "td_date">{e.bill_date}</td>
 													<td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc
 														 : e.credit_acc}</td>
-													<td>{e.billArr.join(" , ")}</td>
+													<td className = "td_bill">{e.billArr.join(" , ")}</td>
 													<td>{e.credit_acc === this.props.account.acc_name ? '-'
 														 :e.amount - e.balance }</td>
 													<td>{e.credit_acc === this.props.account.acc_name ? 
@@ -239,18 +240,18 @@ export default class Account_pro extends React.Component {
 
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
 										</tr>
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
@@ -259,9 +260,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 4 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -271,9 +272,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 7 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -283,9 +284,9 @@ export default class Account_pro extends React.Component {
 										{this.state.details.length > 8 && (
 											<tr className="tr_acc">
 												<td> </td>
+												<td className = "td_date"> </td>
 												<td> </td>
-												<td> </td>
-												<td> </td>
+												<td className = "td_bill"> </td>
 												<td> </td>
 												<td> </td>
 												<td> </td>
@@ -294,9 +295,9 @@ export default class Account_pro extends React.Component {
 
 										<tr className="tr_acc">
 											<td> </td>
+											<td className = "td_date"> </td>
 											<td> </td>
-											<td> </td>
-											<td> </td>
+											<td className = "td_bill"> </td>
 											<td> </td>
 											<td> </td>
 											<td> </td>
