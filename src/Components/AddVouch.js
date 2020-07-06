@@ -1,10 +1,10 @@
 import React from "react";
 import cross from "./../img/cancel.svg";
 
-async function postData(url = "", data) {
+async function postData(url = "", data, m) {
   // Default options are marked with *
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    method: m, // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
@@ -21,17 +21,55 @@ async function postData(url = "", data) {
 }
 
 class AddVouch extends React.Component {
+  setData = () => {
+    let d = this.props.EData.det;
+    document.querySelector("#vouch_bill_date").defaultValue = d.bill_date;
+    document.querySelector("#vouch_type").defaultValue = d.type;
+    document.querySelector("#vouch_bill_no").defaultValue = d.bill_num;
+    document.querySelector("#vouch_gr_no").defaultValue = d.g_r_num;
+    document.querySelector("#vouch_transport_name").defaultValue = d.transport_name;
+    document.querySelector("#vouch_sup").defaultValue = d.supplier;
+    document.querySelector("#vouch_sup_agent").defaultValue = d.supplier_agent;
+    document.querySelector("#vouch_comission").defaultValue = d.set_commission;
+    document.querySelector("#vouch_customer").defaultValue = d.customer;
+    if (d.supplier_agent2) {
+      this.setState({ subAgent: true });
+    }
+    document.querySelector("#vouch_discount").defaultValue = parseInt(d.discount);
+    let arr = [];
+    let i = this.props.EData.product;
+
+    i.map((e, index) => {
+      let amt = parseInt(e.quantity) * parseInt(e.rate);
+      let gamt = parseInt(amt);
+      amt = parseInt(amt) + (parseInt(amt) * parseInt(e.gst)) / 100;
+
+      let a = {
+        gst: e.gst,
+        hsn_num: e.hsn_num,
+        product_name: e.product_name,
+        rate: e.rate,
+        quantity: e.quantity,
+        g_amount: gamt,
+        amount: amt
+      };
+      arr.push(a);
+    });
+
+    this.setState({ items: arr });
+  };
+
   updateTotal = () => {
     let total = 0;
     let g_amount = 0;
     let discount = parseInt(document.getElementById("vouch_discount").value);
     let disAmt = 0;
-
     this.state.items.map(e => {
       g_amount = parseInt(g_amount) + parseInt(e.g_amount);
       disAmt = parseInt(disAmt) + parseInt((parseInt(e.g_amount) * discount) / 100);
-      total = parseInt(total) + parseInt(e.amount) - parseInt(disAmt);
+      total = parseInt(total) + parseInt(e.amount);
     });
+    total = parseInt(total) - parseInt(disAmt);
     this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt });
   };
   async addVouch() {
@@ -64,7 +102,9 @@ class AddVouch extends React.Component {
       items: this.state.items,
       totalAmt: this.state.totalAmt
     };
-    const isTrue = await postData("/api/vouch", Vdata);
+    let m = this.props.mode === "edit" ? "PUT" : "POST";
+    let url = this.props.mode === "edit" ? "/api/vouch/" + this.props.EData.det.id : "/api/vouch";
+    const isTrue = await postData(url, Vdata, m);
     if (isTrue) {
       this.props.rm();
     } else {
@@ -279,7 +319,7 @@ class AddVouch extends React.Component {
         }
       })
       .catch(err => {
-        // alert(err)
+        // aldert(err)
       });
   }
   crossPro = () => {
@@ -295,7 +335,6 @@ class AddVouch extends React.Component {
     this.vochAddPro = this.vochAddPro.bind(this);
     this.getProducts = this.getProducts.bind(this);
     this.getAccounts = this.getAccounts.bind(this);
-
     this.state = {
       products: [],
       accounts: [],
@@ -310,6 +349,9 @@ class AddVouch extends React.Component {
     };
     this.getProducts();
     this.getAccounts();
+    if (this.props.mode === "edit") {
+      this.setState({ subAgent: true });
+    }
   }
 
   componentDidMount() {
@@ -317,6 +359,12 @@ class AddVouch extends React.Component {
 
     document.getElementById("vouch_bill_date").valueAsDate = today;
     document.getElementById("pro_list").style.display = "none";
+    if (this.props.mode === "edit") {
+      this.setData();
+      setTimeout(() => {
+        this.updateTotal();
+      }, 500);
+    }
   }
   render() {
     return (
@@ -379,7 +427,15 @@ class AddVouch extends React.Component {
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "transport") {
                             return (
-                              <option key={i} value={acc.acc_name}>
+                              <option
+                                selected={
+                                  this.props.mode === "edit" && this.props.EData.transport_name === acc.acc_name
+                                    ? true
+                                    : false
+                                }
+                                key={i}
+                                value={acc.acc_name}
+                              >
                                 {acc.acc_name}
                               </option>
                             );
@@ -399,7 +455,15 @@ class AddVouch extends React.Component {
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
                             return (
-                              <option key={i} value={acc.acc_name}>
+                              <option
+                                selected={
+                                  this.props.mode === "edit" && this.props.EData.det.supplier === acc.acc_name
+                                    ? true
+                                    : false
+                                }
+                                key={i}
+                                value={acc.acc_name}
+                              >
                                 {acc.acc_name}
                               </option>
                             );
@@ -419,7 +483,15 @@ class AddVouch extends React.Component {
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "agent") {
                             return (
-                              <option key={i} value={acc.acc_name}>
+                              <option
+                                selected={
+                                  this.props.mode === "edit" && this.props.EData.det.supplier_agent === acc.acc_name
+                                    ? true
+                                    : false
+                                }
+                                key={i}
+                                value={acc.acc_name}
+                              >
                                 {acc.acc_name}
                               </option>
                             );
@@ -433,13 +505,23 @@ class AddVouch extends React.Component {
                   <div className="vouch_si">
                     <span>Set Commission</span>
                     <br />
-                    <input type="number" name="vouch_comission" id="vouch_comission" defaultValue="1" />
+                    <input
+                      type="number"
+                      name="vouch_comission"
+                      id="vouch_comission"
+                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.set_commission : "1"}
+                    />
                   </div>
                   <div id="gst_con" className="vouch_si">
                     <span>Discount</span>
                     <br />
                     <span id="percentage">%</span>
-                    <input type="number" name="vouch_discount" id="vouch_discount" defaultValue="0" />
+                    <input
+                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.discount : "0"}
+                      type="number"
+                      name="vouch_discount"
+                      id="vouch_discount"
+                    />
                   </div>
                 </div>
 
@@ -453,7 +535,15 @@ class AddVouch extends React.Component {
                         this.state.accounts.map((acc, i) => {
                           if (acc.acc_type === "creditors" || acc.acc_type === "debtors") {
                             return (
-                              <option key={i} value={acc.acc_name}>
+                              <option
+                                key={i}
+                                value={acc.acc_name}
+                                selected={
+                                  this.props.mode === "edit" && this.props.EData.det.customer === acc.acc_name
+                                    ? true
+                                    : false
+                                }
+                              >
                                 {acc.acc_name}
                               </option>
                             );
@@ -473,7 +563,15 @@ class AddVouch extends React.Component {
                           this.state.accounts.map((acc, i) => {
                             if (acc.acc_type === "agent") {
                               return (
-                                <option key={i} value={acc.acc_name}>
+                                <option
+                                  key={i}
+                                  selected={
+                                    this.props.mode === "edit" && this.props.EData.det.supplier_agent2 === acc.acc_name
+                                      ? true
+                                      : false
+                                  }
+                                  value={acc.acc_name}
+                                >
                                   {acc.acc_name}
                                 </option>
                               );

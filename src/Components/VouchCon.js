@@ -1,9 +1,18 @@
 import React from "react";
+import Delete from "./Delete";
 import ref from "./../img/refresh.svg";
 import trash from "../img/trash.svg";
 import pencil from "../img/pencil.svg";
 
 class VouchCon extends React.Component {
+  deleteIt = url => {
+    this.setState({ delete: true, deleteUrl: url });
+  };
+  deleteHide = () => {
+    this.updateVouchData();
+    this.updateJoVouchData();
+    this.setState({ delete: false });
+  };
   constructor(props) {
     super(props);
 
@@ -13,7 +22,9 @@ class VouchCon extends React.Component {
       data: [],
       Debitdata: [],
       JoVouchdata: [],
-      Creditdata: []
+      Creditdata: [],
+      deleteUrl: null,
+      delete: false
     };
     this.updateVouchData();
     this.updateDebitData();
@@ -54,6 +65,7 @@ class VouchCon extends React.Component {
         });
       });
   };
+
   updateJoVouchData = () => {
     fetch("/api/jovouch")
       .then(res => res.json())
@@ -65,10 +77,12 @@ class VouchCon extends React.Component {
         });
       });
   };
+
   render() {
     return (
-      <div>
+      <div className="pro_compo">
         <div className="nav_sec_trans">
+          {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
           <div className="nav_items">
             <li
               className={this.props.vouchPage === "pv" ? "black" : "grey"}
@@ -107,7 +121,7 @@ class VouchCon extends React.Component {
             <div
               className="add_account"
               onClick={() => {
-                this.props.setPVoJVoDN(this.props.vouchPage);
+                this.props.setPVoJVoDN(this.props.vouchPage, "add");
               }}
             >
               + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
@@ -140,11 +154,15 @@ class VouchCon extends React.Component {
                   return (
                     <DetCont
                       i={i + 1}
+                      editF={this.props.setPVoJVoDN}
+                      EData={e}
                       supplier={e.det.supplier}
                       costumer={e.det.customer}
                       date={e.det.bill_date}
                       amt={e.det.totalAmt}
                       bill_num={e.det.bill_num}
+                      id={e.det.id}
+                      deleteIt={this.deleteIt}
                     />
                   );
                 })}
@@ -162,6 +180,7 @@ class VouchCon extends React.Component {
                       date={e.det.bill_date}
                       amt={e.det.totalAmt}
                       bill_num={e.det.bill_num}
+                      id={e.det.id}
                     />
                   );
                 })}
@@ -198,6 +217,10 @@ class VouchCon extends React.Component {
                           date={e.bill_date}
                           seller={e.debit_acc}
                           cust={e.credit_acc}
+                          setPVoJVoDN={this.props.setPVoJVoDN}
+                          data={e}
+                          id={e.id}
+                          deleteIt={this.deleteIt}
                         />
                       );
                     })}
@@ -242,14 +265,14 @@ class DetCont extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.showAddAcc(this.props.id);
+              this.props.editF("pv", "edit", this.props.EData);
             }}
           >
             <img src={pencil} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt(`/api/accounts/${this.props.id}`);
+              this.props.deleteIt("/api/vouch/" + this.props.id);
             }}
           >
             <img src={trash} alt=" " />
@@ -297,14 +320,14 @@ class JoVouchDet extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.showAddAcc(this.props.id);
+              this.props.setPVoJVoDN("jv", "edit", this.props.data);
             }}
           >
             <img src={pencil} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt(`/api/accounts/${this.props.id}`);
+              this.props.deleteIt(`/api/jovouch/${this.props.id}`);
             }}
           >
             <img src={trash} alt=" " />

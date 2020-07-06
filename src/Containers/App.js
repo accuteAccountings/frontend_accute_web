@@ -12,8 +12,8 @@ import AddCredit from "../Components/AddCredit.js";
 import VouchCon from "../Components/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
-import Account_pro from "../Components/Account_profile"
-import DailyBook from "../Components/DailyBook"
+import Account_pro from "../Components/Account_profile";
+import DailyBook from "../Components/DailyBook";
 
 class App extends React.Component {
   getProducts = () => {
@@ -40,26 +40,21 @@ class App extends React.Component {
       });
   };
 
-  getspecific_acc = (i) => {
-   
+  getspecific_acc = i => {
     this.setState(() => {
       return {
-        specific_acc : this.state.accounts[i]
-      }
-    })
-    
-  }
+        specific_acc: this.state.accounts[i]
+      };
+    });
+  };
 
-  backToAcc(){
+  backToAcc() {
     this.setState(() => {
       return {
-        specific_acc : null
-      }
-    })
-   
-
+        specific_acc: null
+      };
+    });
   }
-
 
   getAccounts = () => {
     fetch("/api/accounts", {
@@ -140,13 +135,12 @@ class App extends React.Component {
     });
   }
 
-  setAccProfile(ans){
+  setAccProfile(ans) {
     this.setState(() => {
       return {
-        isacc_pro : ans
-      }
-    })
-    
+        isacc_pro: ans
+      };
+    });
   }
 
   setProOrAcc(ans) {
@@ -165,17 +159,12 @@ class App extends React.Component {
       };
     });
   }
-  setPVoJVoDN = ans => {
-    // if (ans === 'vouch') {
-    // 	this.getVouch();
-    // }
-    // if (ans === 'debit') {
-    // 	this.getDebit();
-    // }
-
+  setPVoJVoDN = (ans, mode, data) => {
     this.setState(prevState => {
       return {
-        PVoJVoDN: ans
+        PVoJVoDN: ans,
+        vouchMode: mode,
+        vouchEData: data
       };
     });
   };
@@ -187,13 +176,13 @@ class App extends React.Component {
       };
     });
   };
-rmDebit = () => {
-  this.setState(prevState => {
-	return {
-	  PVoJVoDN: "no"
-	};
-  });
-};
+  rmDebit = () => {
+    this.setState(prevState => {
+      return {
+        PVoJVoDN: "no"
+      };
+    });
+  };
 
   rmCredit = () => {
     this.setState(prevState => {
@@ -203,27 +192,19 @@ rmDebit = () => {
     });
   };
 
-setVouchPage = (page , data) => {
-    this.setState(() => {
-      return {
-        vouchPage: page,
-        vouchData:data
-      };
-    });
+  setVouchPage = p => {
+    this.setState({ vouchPage: p });
   };
-
   constructor(props) {
     super(props);
     this.AddProCrossBtn = this.AddProCrossBtn.bind(this);
     this.AddAccCrossBtn = this.AddAccCrossBtn.bind(this);
-    this.setAccProfile = this.setAccProfile.bind(this)
+    this.setAccProfile = this.setAccProfile.bind(this);
     this.setProOrAcc = this.setProOrAcc.bind(this);
     this.backToAcc = this.backToAcc.bind(this);
     this.fi = this.fi.bind(this);
 
     this.navTo = this.navTo.bind(this);
-
-    
 
     this.state = {
       AddPro: false,
@@ -236,9 +217,12 @@ setVouchPage = (page , data) => {
       accounts: [],
       AddVouch: true,
       vouchPage: "pv",
-      isacc_pro : "acc_det",
-      specific_acc : null,
-      vouchData:[]
+      isacc_pro: "acc_det",
+      specific_acc: null,
+      vouchEData: null,
+
+      vouchMode: "add",
+      vouchData: []
     };
   }
 
@@ -250,10 +234,7 @@ setVouchPage = (page , data) => {
         <div className="pageBody">
           <TopBar />
           <Clogo />
-          <NavSec
-            AddProCrossBtn={this.AddProCrossBtn}
-            navItems={["Challen Reg.", "Daily Book ", "Ledger"]}
-          />
+          <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />
           {/* <ProCon /> */}
         </div>
       );
@@ -291,36 +272,35 @@ setVouchPage = (page , data) => {
             getProducts={this.getProducts}
             getAccounts={this.getAccounts}
             ProOrAcc={this.state.ProOrAcc}
-            setAccProfile = {this.setAccProfile}
-            getspecific_acc = {this.getspecific_acc}
-            isacc_pro = {this.state.isacc_pro}
+            setAccProfile={this.setAccProfile}
+            getspecific_acc={this.getspecific_acc}
+            isacc_pro={this.state.isacc_pro}
           />
         </div>
       );
     }
 
-    if(this.state.specific_acc){
+    if (this.state.specific_acc) {
       currentPage = (
         <div className="pageBody">
-        <TopBar />
-        <Account_pro 
-          account = {this.state.specific_acc}
-          acc_pro_val = {this.state.isacc_pro}
-          setAccProfile = {this.setAccProfile}
-          backToAcc = {this.backToAcc}
-        />
+          <TopBar />
+          <Account_pro
+            account={this.state.specific_acc}
+            acc_pro_val={this.state.isacc_pro}
+            setAccProfile={this.setAccProfile}
+            backToAcc={this.backToAcc}
+          />
         </div>
-      )
+      );
     }
 
-    if(this.state.page === "rep"){
-     currentPage = (
+    if (this.state.page === "rep") {
+      currentPage = (
         <div className="pageBody">
-        <TopBar />
-        <DailyBook />
-
+          <TopBar />
+          <DailyBook />
         </div>
-     )
+      );
     }
 
     if (this.state.page === "trans") {
@@ -332,8 +312,12 @@ setVouchPage = (page , data) => {
             }}
           />
 
-          {this.state.PVoJVoDN === "pv" && <AddVouch rm={this.rmVouch} />}
-          {this.state.PVoJVoDN === "jv" && <AddJovouch data={this.state.vouchData} rm={this.rmVouch} />}
+          {this.state.PVoJVoDN === "pv" && (
+            <AddVouch rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
+          )}
+          {this.state.PVoJVoDN === "jv" && (
+            <AddJovouch mode={this.state.vouchMode} EData={this.state.vouchEData} rm={this.rmVouch} />
+          )}
           {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmDebit} />}
           {this.state.PVoJVoDN === "cn" && <AddCredit rm={this.rmCredit} />}
           {this.state.PVoJVoDN === "no" && (
@@ -356,27 +340,15 @@ setVouchPage = (page , data) => {
             navTo={this.navTo}
             actPage={this.state.page}
             setVouchPage={this.setVouchPage}
-            setAccProfile = {this.setAccProfile}
-            backToAcc = {this.backToAcc}
-
+            setAccProfile={this.setAccProfile}
+            backToAcc={this.backToAcc}
           />
         </div>
 
         {currentPage}
 
-        {this.state.AddPro ? (
-          <AddProducts
-            AddProCrossBtn={this.AddProCrossBtn}
-            getProducts={this.getProducts}
-          />
-        ) : null}
-        {this.state.AddAcc ? (
-          <AddAcc
-            AddAccCrossBtn={this.AddAccCrossBtn}
-            getAccounts={this.getAccounts}
-          />
-        ) : null}
-
+        {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
+        {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
       </div>
     );
   }

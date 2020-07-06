@@ -1,10 +1,10 @@
 import React from "react";
 import cross from "./../img/cancel.svg";
 
-async function postData(url = "", data) {
+async function postData(url = "", data, m) {
   // Default options are marked with *
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    method: m, // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
@@ -21,6 +21,30 @@ async function postData(url = "", data) {
 }
 
 class AddJovouch extends React.Component {
+  setData = () => {
+    let d = this.props.EData;
+
+    document.querySelector("#jovouch_bill_date").value = d.bill_date;
+    document.querySelector("#jovouch_debit_acc").defaultValue = d.debit_acc;
+    document.querySelector("#jovouch_credit_acc").defaultValue = d.credit_acc;
+    let arr = [];
+    d.payArr.map(e => {
+      let a = JSON.parse(e);
+      if (a.mode === " cheque") {
+        a.mode = "cheque";
+      }
+      if (a.mode === " cash") {
+        a.mode = "cash";
+      }
+      arr.push(a);
+    });
+    this.setState({ BillArr: d.billArr, payArr: arr });
+    setTimeout(() => {
+      this.updateBillAmt();
+      this.updateAmt();
+    }, 1000);
+  };
+
   updateBillAmt = () => {
     let billAmt = 0;
     for (let aa of this.state.BillArr) {
@@ -113,7 +137,10 @@ class AddJovouch extends React.Component {
       billArr: this.state.BillArr,
       payArr: this.state.payArr
     };
-    let t = await postData("/api/jovouch", Vdata);
+    let m = this.props.mode === "edit" ? "PUT" : "POST";
+    let url = this.props.mode === "edit" ? "/api/jovouch/" + this.props.EData.id : "/api/jovouch";
+    let t = await postData(url, Vdata, m);
+
     if (t) {
       this.props.rm();
     } else {
@@ -126,11 +153,13 @@ class AddJovouch extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+
         this.setState(() => {
           return {
             data: data
           };
         });
+        this.updateBillAmt();
       });
   };
 
@@ -145,6 +174,7 @@ class AddJovouch extends React.Component {
       vouchData: [],
       data: [],
       editItem: 0,
+
       CBill: [],
       BillArr: [""],
       billAmt: 0,
@@ -167,6 +197,9 @@ class AddJovouch extends React.Component {
       (date.getMonth() + 1).toString().padStart(2, 0) +
       "-" +
       date.getDate().toString().padStart(2, 0);
+    if (this.props.mode === "edit") {
+      this.setData();
+    }
   }
 
   render() {
@@ -241,14 +274,16 @@ class AddJovouch extends React.Component {
                             placeholder="Bill No."
                             onBlur={() => {
                               setTimeout(() => {
-                                document.querySelector(".pro_list" + i).style.display = "none";
-                                let arr = this.state.BillArr;
-                                arr[i] = document.querySelector(".jo_bill_no" + i).value;
-                                if (arr[i].length === 0) {
-                                  return;
+                                if (document.querySelector(".pro_list" + i)) {
+                                  document.querySelector(".pro_list" + i).style.display = "none";
+                                  let arr = this.state.BillArr;
+                                  arr[i] = document.querySelector(".jo_bill_no" + i).value;
+                                  if (arr[i].length === 0) {
+                                    return;
+                                  }
+                                  this.setState({ BillArr: arr });
+                                  this.updateBillAmt();
                                 }
-                                this.setState({ BillArr: arr });
-                                this.updateBillAmt();
                               }, 500);
                             }}
                             onChange={() => {
@@ -260,6 +295,7 @@ class AddJovouch extends React.Component {
                             id="jovouch_bill_no"
                             className={"jo_bill_no" + i}
                             autoComplete="off"
+                            defaultValue={e}
                           />
                         )}
                         <ul id="pro_list" className={"pro_list" + i} style={{ display: "none" }}>
@@ -327,7 +363,6 @@ class AddJovouch extends React.Component {
                 <div className="jovouch_si ">
                   <div className="mode_head">
                     <span>Mode </span>
-                    <span>+</span>
                   </div>
 
                   <span>
@@ -340,8 +375,12 @@ class AddJovouch extends React.Component {
                       name="jovouch_mode"
                       id={"jovouch_mode" + index}
                     >
-                      <option value="cheque">Cheque</option>
-                      <option value="cash">Cash</option>
+                      <option selected={e.mode === "cheque" ? true : false} value="cheque">
+                        Cheque
+                      </option>
+                      <option selected={e.mode === "cash" ? true : false} value="cash">
+                        Cash
+                      </option>
                     </select>
                   </span>
                 </div>
@@ -351,7 +390,13 @@ class AddJovouch extends React.Component {
                     <span>Cheque No. </span>
                     <br />
                     <div className="second_row">
-                      <input type="text" placeholder="Cheque No." className="paydet" id={"payDet" + index} />
+                      <input
+                        type="text"
+                        placeholder="Cheque No."
+                        defaultValue={e.det}
+                        className="paydet"
+                        id={"payDet" + index}
+                      />
                     </div>
                   </div>
                 ) : null}
@@ -404,6 +449,7 @@ class AddJovouch extends React.Component {
                       placeholder="Amount"
                       id={"payAmt" + index}
                       className="amount"
+                      defaultValue={e.amt}
                     />
                     {index === this.state.payArr.length - 1 && (
                       <span

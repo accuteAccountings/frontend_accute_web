@@ -1,0 +1,22 @@
+.delete_con {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  background-color: white;
+  height: 200px;
+  width: 400px;
+  border: solid 1px gray;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 10px 30px 10px;
+  box-sizing: border-box;
+  z-index: 550;
+  box-shadow: 1px 1px 10px #444444;
+}
+.delete_btn_con {
+  display: flex;
+  justify-content: space-evenly;
+}
