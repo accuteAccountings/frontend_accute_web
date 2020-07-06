@@ -16,12 +16,25 @@ export default class Account_pro extends React.Component {
 					});
 				}
 			});
+
+			await fetch(`/api/jovouch/specific/${this.props.account.acc_name}/${date}`)
+			.then((res) => res.json())
+			.then((data) => {
+				if (data) {
+					this.setState(() => {
+						return {
+							det2: data
+						};
+					});
+				}
+			});
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			details: []
+            details: [],
+            det2 : []
 		};
 	}
 
@@ -171,7 +184,7 @@ export default class Account_pro extends React.Component {
 									</div>
 									<div className="leger_upp_right">
 										<span className="upp_head">Balance : </span>
-										{this.props.account.bal}
+										{this.props.account.Balance}
 									</div>
 								</div>
 							</div>
@@ -195,11 +208,31 @@ export default class Account_pro extends React.Component {
 												<tr className="tr_acc">
 													<td>{i + 1}</td>
 													<td>{e.bill_date}</td>
-													<td>{e.customer}</td>
+													<td>{e.customer === this.props.account.acc_name ? e.supplier :
+													   e.customer}</td>
 													<td>{e.bill_num}</td>
-													<td>{e.type == 'debit' ? e.totalAmt : '-'}</td>
-													<td>{e.type == 'credit' ? e.totalAmt : '-'} </td>
-													<td>{e.Bal_left} </td>
+													<td>{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}</td>
+													<td>{e.customer === this.props.account.acc_name ? e.totalAmt : '-'} </td>
+													<td>{e.supplier === this.props.account.acc_name ? e.Bal_left_supplier :
+													  e.Bal_left_costumer} </td>
+												</tr>
+											);
+										})}
+
+										{this.state.det2.map((e, i) => {
+											return (
+												<tr className="tr_acc">
+													<td>{i + 1}</td>
+													<td>{e.bill_date}</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc
+														 : e.credit_acc}</td>
+													<td>{e.billArr.join(" , ")}</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? '-'
+														 :e.amount - e.balance }</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? 
+													    e.amount - e.balance : '-' }</td>
+													<td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit :
+													 e.Bal_left_debit}</td>
 												</tr>
 											);
 										})}

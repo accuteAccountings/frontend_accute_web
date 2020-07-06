@@ -352,8 +352,7 @@ class AddVouch extends React.Component {
                     <br />
                     <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase">Purchase</option>
-                      <option value="credit">Credit</option>
-                      <option value="debit">Debit</option>
+                  
                     </select>
                   </div>
 
