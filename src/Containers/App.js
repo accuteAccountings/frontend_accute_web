@@ -51,7 +51,8 @@ class App extends React.Component {
   backToAcc() {
     this.setState(() => {
       return {
-        specific_acc: null
+        specific_acc: null,
+        isacc_pro : 'acc_det'
       };
     });
   }

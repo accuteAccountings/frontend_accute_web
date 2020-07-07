@@ -4,30 +4,38 @@ import back from "../img/camera-back.svg";
 
 export default class Account_pro extends React.Component {
   getDet = async () => {
-    let date = await document.getElementById("ledger_date").value;
+    let date = null
+  
+     date =  document.getElementById("ledger_date").value;
+ 
+    
     await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${date}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              details: data
+              details: data,
+              det2 : []
             };
           });
         }
       });
 
-    await fetch(`/api/jovouch/specific/${this.props.account.acc_name}/${date}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              det2: data
-            };
-          });
-        }
-      });
+    // await fetch(`/api/jovouch/specific/${this.props.account.acc_name}/${date}`)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     if (data) {
+    //       this.setState(() => {
+    //         return {
+    //           det2: data
+    //         };
+    //       });
+    //     }
+    //   });
+
+
+      
   };
 
   totalDebit = () => {
@@ -37,9 +45,7 @@ export default class Account_pro extends React.Component {
       if (e.supplier === this.props.account.acc_name) {
         t = parseInt(t) + parseInt(e.totalAmt);
       }
-    });
-    this.state.det2.map(e => {
-      if (e.debit_acc === this.props.account.acc_name) {
+      else if (e.debit_acc === this.props.account.acc_name) {
         t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
       }
     });
@@ -54,9 +60,23 @@ export default class Account_pro extends React.Component {
       if (e.customer === this.props.account.acc_name) {
         t = parseInt(t) + parseInt(e.totalAmt);
       }
+      else  if (e.credit_acc === this.props.account.acc_name) {
+        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+      }
     });
+
+
+    return t;
+  };
+
+  totalDebitpre = () => {
+    let t = 0;
+
     this.state.det2.map(e => {
-      if (e.credit_acc === this.props.account.acc_name) {
+      if (e.supplier === this.props.account.acc_name) {
+        t = parseInt(t) + parseInt(e.totalAmt);
+      }
+      else if (e.debit_acc === this.props.account.acc_name) {
         t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
       }
     });
@@ -64,17 +84,66 @@ export default class Account_pro extends React.Component {
     return t;
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      details: [],
-      det2: [],
-      debited: [],
-      credited: []
-    };
+  totalCreditpre = () => {
+    let t = 0;
+
+    this.state.det2.map(e => {
+      if (e.customer === this.props.account.acc_name) {
+        t = parseInt(t) + parseInt(e.totalAmt);
+      }
+      else  if (e.credit_acc === this.props.account.acc_name) {
+        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+      }
+    });
+
+
+    return t;
+  };
+
+  recentdata = async() => {
+
+   let d = new Date()
+
+    let date = d.getFullYear() + "-" + "0" + (d.getMonth() + 1)
+
+  await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${date}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          this.setState(() => {
+            return {
+              det2: data.reverse()
+            };
+          });
+        }else{
+          alert('nothing')
+        }
+      });
+
+
   }
 
+
+  constructor(props) {
+    super(props);
+
+
+  let date = new Date()
+    this.state = {
+      details: [],
+      det2 : [],
+      debited: [],
+      credited: [],
+      today_date : date
+    };
+
+    
+  }
+
+
+
   render() {
+ 
     return (
       <div>
         <div className="acc_pro_location">
@@ -100,6 +169,7 @@ export default class Account_pro extends React.Component {
                 className={this.props.acc_pro_val === "ledger" ? "acc_det" : "sbar_list_value"}
                 onClick={() => {
                   this.props.setAccProfile("ledger");
+                  this.recentdata()
                 }}
                 id="ledger"
               >
@@ -202,17 +272,17 @@ export default class Account_pro extends React.Component {
             <div className="ledger_tab">
               <div className="acc_pro_ledger_upper">
                 <div className="upp_date">
-                  <input type="month" id="ledger_date" name="ledger_date" />
+                  <input type="month" id="ledger_date" name="ledger_date" defaultValue = '05/04/1999'  />
                   <button onClick={this.getDet}>search</button>
                 </div>
                 <div className="ledger_upp_right_div">
                   <div className="leger_upp_right">
                     <span className="upp_head">Debit : </span>
-                    {this.totalDebit()}
+                    {this.state.det2.length ?this.totalDebitpre() : this.totalDebit()}
                   </div>
                   <div className="leger_upp_right">
                     <span className="upp_head">Credit : </span>
-                    {this.totalCredit()}
+                    {this.state.det2.length ? this.totalCreditpre() : this.totalCredit()}
                   </div>
                   <div className="leger_upp_right">
                     <span className="upp_head">Balance : </span>
@@ -237,7 +307,17 @@ export default class Account_pro extends React.Component {
                   <tbody>
                     {this.state.details.map((e, i) => {
                       return (
-                        <tr className="tr_acc">
+                        
+                          e.credit_acc ?(<tr className = "tr_acc">
+                          <td>{i + 1}</td>
+                          <td className="td_date">{e.bill_date}</td>
+                          <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
+                          <td className="td_bill">{e.billArr.join(" , ")}</td>
+                          <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
+                          <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
+                          <td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit : e.Bal_left_debit}</td>
+                          </tr>
+                          ) : (<tr className = "tr_acc">
                           <td>{i + 1}</td>
                           <td className="td_date">{e.bill_date}</td>
                           <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
@@ -247,26 +327,46 @@ export default class Account_pro extends React.Component {
                           <td>
                             {e.supplier === this.props.account.acc_name ? e.Bal_left_supplier : e.Bal_left_costumer}{" "}
                           </td>
-                        </tr>
+                          </tr>
+                          )
+                            
                       );
                     })}
 
+
                     {this.state.det2.map((e, i) => {
                       return (
-                        <tr className="tr_acc">
-                          <td>{this.state.details.length + i + 1}</td>
+                        
+                        e.credit_acc && i < 7 ? (<tr className = "tr_acc">
+                          <td>{i + 1}</td>
                           <td className="td_date">{e.bill_date}</td>
                           <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
                           <td className="td_bill">{e.billArr.join(" , ")}</td>
                           <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
                           <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
                           <td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit : e.Bal_left_debit}</td>
-                        </tr>
+                          </tr>
+                          ) : (
+                              i < 7 &&
+                            <tr className = "tr_acc">
+                          <td>{i + 1}</td>
+                          <td className="td_date">{e.bill_date}</td>
+                          <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
+                          <td className="td_bill">{e.bill_num}</td>
+                          <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
+                          <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
+                          <td>
+                            {e.supplier === this.props.account.acc_name ? e.Bal_left_supplier : e.Bal_left_costumer}{" "}
+                          </td>
+                          </tr>
+                          )
+                            
                       );
                     })}
 
+
                     <tr className="tr_acc">
-                      <td> </td>
+                      <td></td>
                       <td className="td_date"> </td>
                       <td> </td>
                       <td className="td_bill"> </td>
