@@ -96,7 +96,8 @@ export default class Account_pro extends React.Component {
         if (data) {
           this.setState(() => {
             return {
-              det2: data.reverse()
+              det2: data.reverse(),
+              details : []
             };
           });
         }else{
