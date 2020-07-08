@@ -400,7 +400,6 @@ class AddVouch extends React.Component {
                     <br />
                     <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase">Purchase</option>
-                  
                     </select>
                   </div>
 
@@ -516,7 +515,7 @@ class AddVouch extends React.Component {
                     <br />
                     <span id="percentage">%</span>
                     <input
-                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.discount : "0"}
+                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.discount : 0}
                       type="number"
                       name="vouch_discount"
                       id="vouch_discount"
