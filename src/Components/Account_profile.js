@@ -4,12 +4,13 @@ import back from "../img/camera-back.svg";
 
 export default class Account_pro extends React.Component {
   getDet = async () => {
-    let date = null
+
   
-     date =  document.getElementById("ledger_date").value;
+    let start_date = await  document.getElementById("ledger_date_start").value;
+    let  end_date = await document.getElementById("ledger_date_end").value
  
     
-    await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${date}`)
+    await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${start_date}/${end_date}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -21,19 +22,6 @@ export default class Account_pro extends React.Component {
           });
         }
       });
-
-    // await fetch(`/api/jovouch/specific/${this.props.account.acc_name}/${date}`)
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     if (data) {
-    //       this.setState(() => {
-    //         return {
-    //           det2: data
-    //         };
-    //       });
-    //     }
-    //   });
-
 
       
   };
@@ -102,11 +90,7 @@ export default class Account_pro extends React.Component {
 
   recentdata = async() => {
 
-   let d = new Date()
-
-    let date = d.getFullYear() + "-" + "0" + (d.getMonth() + 1)
-
-  await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${date}`)
+  await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -272,15 +256,18 @@ export default class Account_pro extends React.Component {
             <div className="ledger_tab">
               <div className="acc_pro_ledger_upper">
                 <div className="upp_date">
-                  <input type="month" id="ledger_date" name="ledger_date" defaultValue = '05/04/1999'  />
+                <label for = "ledger_date_start">From : </label>
+                  <input type="date" id="ledger_date_start" name = "ledger_date_start" placeholder = "From"  />
+                <label for = "ledger_date_end">To : </label>
+                  <input type="date" id="ledger_date_end"   />
                   <button onClick={this.getDet}>search</button>
                 </div>
                 <div className="ledger_upp_right_div">
-                  <div className="leger_upp_right">
+                  <div className="ledger_upp_right">
                     <span className="upp_head">Debit : </span>
                     {this.state.det2.length ?this.totalDebitpre() : this.totalDebit()}
                   </div>
-                  <div className="leger_upp_right">
+                  <div className="ledger_upp_right">
                     <span className="upp_head">Credit : </span>
                     {this.state.det2.length ? this.totalCreditpre() : this.totalCredit()}
                   </div>
