@@ -35,17 +35,17 @@ class AddVouch extends React.Component {
     if (d.supplier_agent2) {
       this.setState({ subAgent: true });
     }
-    document.querySelector("#vouch_discount").defaultValue = parseInt(d.discount);
+    document.querySelector("#vouch_gst").defaultValue = parseInt(d.gst);
     let arr = [];
     let i = this.props.EData.product;
 
     i.map((e, index) => {
       let amt = parseInt(e.quantity) * parseInt(e.rate);
       let gamt = parseInt(amt);
-      amt = parseInt(amt) + (parseInt(amt) * parseInt(e.gst)) / 100;
+      amt = parseInt(amt) - (parseInt(amt) * parseInt(e.dicon)) / 100;
 
       let a = {
-        gst: e.gst,
+        dicon: e.dicon,
         hsn_num: e.hsn_num,
         product_name: e.product_name,
         rate: e.rate,
@@ -62,14 +62,14 @@ class AddVouch extends React.Component {
   updateTotal = () => {
     let total = 0;
     let g_amount = 0;
-    let discount = parseInt(document.getElementById("vouch_discount").value);
+    let gst = parseInt(document.getElementById("vouch_gst").value);
     let disAmt = 0;
     this.state.items.map(e => {
       g_amount = parseInt(g_amount) + parseInt(e.g_amount);
-      disAmt = parseInt(disAmt) + parseInt((parseInt(e.g_amount) * discount) / 100);
+      disAmt = parseInt(disAmt) + parseInt(e.g_amount) - parseInt(e.amount);
       total = parseInt(total) + parseInt(e.amount);
     });
-    total = parseInt(total) - parseInt(disAmt);
+    total = parseInt(total) + (parseInt(total) * parseInt(gst)) / 100;
     this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt });
   };
   async addVouch() {
@@ -86,7 +86,7 @@ class AddVouch extends React.Component {
     if (document.getElementById("vouch_sup_agent2")) {
       supplier_agent2 = document.querySelector("#vouch_sup_agent2").value;
     }
-    let discount = document.querySelector("#vouch_discount").value;
+    let gst = document.querySelector("#vouch_gst").value;
     let Vdata = {
       bill_date,
       type,
@@ -96,7 +96,7 @@ class AddVouch extends React.Component {
       supplier,
       supplier_agent,
       supplier_agent2,
-      discount,
+      gst,
       set_commission,
       customer,
       items: this.state.items,
@@ -110,6 +110,26 @@ class AddVouch extends React.Component {
     } else {
       alert("Unable to save. Please Try again");
     }
+  }
+
+  getName() {
+    fetch("/api/profile/name", {
+      method: "get",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.name) {
+          this.setState(() => {
+            return {
+              name: data.name
+            };
+          });
+        }
+      })
+      .catch(error => {
+        alert(error);
+      });
   }
 
   addPro = async () => {};
@@ -159,22 +179,22 @@ class AddVouch extends React.Component {
     let vouch_quantity = document.querySelector("#vouch_quantity").value;
     document.querySelector("#vouch_quantity").value = 1;
 
-    let vouch_gst = document.querySelector("#vouch_gst").value;
-    document.querySelector("#vouch_gst").value = 5;
+    let vouch_dicon = document.querySelector("#vouch_dicon").value;
+    document.querySelector("#vouch_dicon").value = this.state.defaultDiscon;
     let vouch_rate = document.querySelector("#vouch_rate").value;
     document.querySelector("#vouch_rate").value = 1;
 
     let hsn_num = document.getElementById("vouch_hsn_num").value;
     document.getElementById("vouch_hsn_num").value = "";
 
-    let gst = parseInt(vouch_gst) / 100;
+    let dicon = parseInt(vouch_dicon) / 100;
     let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
     let g_amount = v_amount;
-    v_amount = v_amount * gst + v_amount;
+    v_amount = v_amount - v_amount * dicon;
     let item = {
       product_name: pro_name,
       quantity: vouch_quantity,
-      gst: vouch_gst,
+      dicon: vouch_dicon,
       rate: vouch_rate,
       amount: v_amount,
       hsn_num: hsn_num,
@@ -206,13 +226,13 @@ class AddVouch extends React.Component {
     let pro_name = document.querySelector("#vouch_pro_item");
 
     let vouch_quantity = document.querySelector("#vouch_quantity");
-    let vouch_gst = document.querySelector("#vouch_gst");
+    let vouch_dicon = document.querySelector("#vouch_dicon");
     let vouch_rate = document.querySelector("#vouch_rate");
     let hsn_num = document.getElementById("vouch_hsn_num");
 
     pro_name.value = this.state.items[index].product_name;
     vouch_quantity.value = this.state.items[index].quantity;
-    vouch_gst.value = this.state.items[index].gst;
+    vouch_dicon.value = this.state.items[index].dicon;
     vouch_rate.value = this.state.items[index].rate;
     hsn_num.value = this.state.items[index].hsn_num;
 
@@ -225,7 +245,7 @@ class AddVouch extends React.Component {
 
   editPro = () => {
     let vouch_quantity = document.querySelector("#vouch_quantity").value;
-    let vouch_gst = document.querySelector("#vouch_gst").value;
+    let vouch_dicon = document.querySelector("#vouch_dicon").value;
     let vouch_rate = document.querySelector("#vouch_rate").value;
     let pro_name = document.getElementById("vouch_pro_item").value;
     let hsn_num = document.getElementById("vouch_hsn_num").value;
@@ -234,20 +254,20 @@ class AddVouch extends React.Component {
 
     document.querySelector("#vouch_quantity").value = 1;
 
-    document.querySelector("#vouch_gst").value = 5;
+    document.querySelector("#vouch_dicon").value = 5;
     document.querySelector("#vouch_rate").value = 1;
 
     document.getElementById("vouch_hsn_num").value = "";
-    let gst = parseInt(vouch_gst) / 100;
+    let dicon = parseInt(vouch_dicon) / 100;
     let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
     let g_amt = parseInt(v_amount);
-    v_amount = v_amount * gst + v_amount;
+    v_amount = v_amount * dicon + v_amount;
     v_amount = v_amount.toFixed(2);
     let arr = this.state.items;
 
     arr[this.state.editItem].product_name = pro_name;
     arr[this.state.editItem].quantity = vouch_quantity;
-    arr[this.state.editItem].gst = vouch_gst;
+    arr[this.state.editItem].dicon = vouch_dicon;
     arr[this.state.editItem].rate = vouch_rate;
     arr[this.state.editItem].hsn_num = hsn_num;
     arr[this.state.editItem].amount = v_amount;
@@ -340,6 +360,7 @@ class AddVouch extends React.Component {
       accounts: [],
       subAgent: false,
       items: [],
+      name: null,
       editItem: -1,
       totalAmt: 0,
       grossAmt: 0,
@@ -352,6 +373,7 @@ class AddVouch extends React.Component {
     if (this.props.mode === "edit") {
       this.setState({ subAgent: true });
     }
+    this.getName();
   }
 
   componentDidMount() {
@@ -445,7 +467,7 @@ class AddVouch extends React.Component {
                   </div>
 
                   <div className="vouch_si">
-                    <span>Supplier</span>
+                    <span>Supplier/Seller</span>
                     <br />
                     <select name="vouch_sup" id="vouch_sup">
                       <option>None</option>
@@ -476,27 +498,10 @@ class AddVouch extends React.Component {
                     <span>Supplier Agent</span>
                     <br />
                     <select name="vouch_sup_agent" id="vouch_sup_agent">
-                      <option>None</option>
-                      {this.state.accounts &&
-                        this.state.accounts.map((acc, i) => {
-                          if (acc.acc_type === "agent") {
-                            return (
-                              <option
-                                selected={
-                                  this.props.mode === "edit" && this.props.EData.det.supplier_agent === acc.acc_name
-                                    ? true
-                                    : false
-                                }
-                                key={i}
-                                value={acc.acc_name}
-                              >
-                                {acc.acc_name}
-                              </option>
-                            );
-                          } else {
-                            return null;
-                          }
-                        })}
+                      <option defaultChecked value={this.state.name}>
+                        {this.state.name}
+                      </option>
+                      <option value={null}>None</option>
                     </select>
                   </div>
 
@@ -511,21 +516,25 @@ class AddVouch extends React.Component {
                     />
                   </div>
                   <div id="gst_con" className="vouch_si">
-                    <span>Discount</span>
+                    <span>GST</span>
                     <br />
                     <span id="percentage">%</span>
                     <input
-                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.discount : 0}
+                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.gst : 0}
                       type="number"
-                      name="vouch_discount"
-                      id="vouch_discount"
+                      name="vouch_gst"
+                      id="vouch_gst"
+                      onBlur={() => {
+                        this.setState({ gst: document.getElementById("vouch_gst").value });
+                        this.updateTotal();
+                      }}
                     />
                   </div>
                 </div>
 
                 <div className="vouch_customer">
                   <div className="vouch_si">
-                    <span>Customer</span>
+                    <span>Customer/Buyer</span>
                     <br />
                     <select name="customer" id="vouch_customer">
                       <option>None</option>
@@ -553,7 +562,7 @@ class AddVouch extends React.Component {
                   </div>
                   {this.state.subAgent ? (
                     <div className="vouch_si">
-                      <span>Supplier Agent</span>
+                      <span>Sub Agent</span>
                       <br />
                       <select name="vouch_sup_agent" id="vouch_sup_agent2">
                         <option>None</option>
@@ -647,10 +656,18 @@ class AddVouch extends React.Component {
                 <input type="number" name="vouch_rate" id="vouch_rate" defaultValue="1" />
               </div>
               <div className="vouch_si" id="gst_con">
-                <span>GST</span>
+                <span>Discount</span>
                 <br />
                 <span id="percentage">%</span>
-                <input type="number" name="vouch_gst" id="vouch_gst" defaultValue="5" />
+                <input
+                  onBlur={() => {
+                    this.setState({ defaultDiscon: document.getElementById("vouch_dicon").value });
+                  }}
+                  type="number"
+                  name="vouch_dicon"
+                  id="vouch_dicon"
+                  defaultValue={this.state.defaultDiscon}
+                />
               </div>
               <div className="vouch_si">
                 <button id="vouch_add_btn" onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}>
