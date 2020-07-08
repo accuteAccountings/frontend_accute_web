@@ -184,7 +184,7 @@
 }
 .ledger_tab{
     width: 100%;
-    min-width: 50rem;
+    min-width: 90rem;
     // border: solid black;
 }
 .acc_pro_table{
@@ -217,30 +217,41 @@
 .acc_pro_ledger_upper{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-evenly;
+    align-items: center;
     margin-bottom: 0.3rem;
 }
 .ledger_upp_right_div{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly; 
+    // justify-content: space-evenly; 
     width: 50%;
     font-size: 1.1rem;
-    margin-right: 22%;
+    margin-left: 3rem;
 }
 .upp_date{
     font-size: 1.5rem;
     color: $grey_text;
-    margin-left: 2rem;
+    margin-left: 3rem;
     input{
         font-size: 1.2rem;
         border: transparent;
         background: transparent;
         cursor: pointer;
+        margin-right: 1.5rem;
+    }
+    label{
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: black;
     }
 
 }
 .upp_head{
     font-size: 1.2rem;
     font-weight: 600;
+    // margin-right: 1rem;
+}
+.ledger_upp_right{
+    margin-right: 2rem;
 }
