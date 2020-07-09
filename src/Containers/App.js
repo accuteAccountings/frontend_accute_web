@@ -52,7 +52,7 @@ class App extends React.Component {
     this.setState(() => {
       return {
         specific_acc: null,
-        isacc_pro : 'acc_det'
+        isacc_pro: "acc_det"
       };
     });
   }
