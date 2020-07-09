@@ -98,7 +98,6 @@ class SideBar extends React.Component {
 						onClick={ () => {
 							
 							this.navToTrans()
-							this.props.backToAcc()
 						}}
 					>
 						<span>Transactions</span>

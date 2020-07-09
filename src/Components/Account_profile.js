@@ -88,25 +88,7 @@ export default class Account_pro extends React.Component {
     return t;
   };
 
-  recentdata = async() => {
 
-  await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              det2: data.reverse(),
-              details : []
-            };
-          });
-        }else{
-          alert('nothing')
-        }
-      });
-
-
-  }
 
 
   constructor(props) {
@@ -128,6 +110,27 @@ export default class Account_pro extends React.Component {
 
 
   render() {
+
+    if(this.props.acc_pro_val === "ledger"){
+    
+         fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+            .then(res => res.json())
+            .then(data => {
+              if (data) {
+                this.setState(() => {
+                  return {
+                    det2: data.reverse(),
+                    details : []
+                  };
+                });
+              }else{
+                alert('nothing')
+              }
+            });
+      
+      
+        
+    }
  
     return (
       <div>
@@ -154,7 +157,7 @@ export default class Account_pro extends React.Component {
                 className={this.props.acc_pro_val === "ledger" ? "acc_det" : "sbar_list_value"}
                 onClick={() => {
                   this.props.setAccProfile("ledger");
-                  this.recentdata()
+                  
                 }}
                 id="ledger"
               >
@@ -362,6 +365,7 @@ export default class Account_pro extends React.Component {
                       <td> </td>
                       <td> </td>
                     </tr>
+                    
                     <tr className="tr_acc">
                       <td> </td>
                       <td className="td_date"> </td>
@@ -372,7 +376,6 @@ export default class Account_pro extends React.Component {
                       <td> </td>
                     </tr>
 
-                    {this.state.details.length > 4 && (
                       <tr className="tr_acc">
                         <td> </td>
                         <td className="td_date"> </td>
@@ -382,41 +385,7 @@ export default class Account_pro extends React.Component {
                         <td> </td>
                         <td> </td>
                       </tr>
-                    )}
 
-                    {this.state.details.length > 7 && (
-                      <tr className="tr_acc">
-                        <td> </td>
-                        <td className="td_date"> </td>
-                        <td> </td>
-                        <td className="td_bill"> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                      </tr>
-                    )}
-
-                    {this.state.details.length > 8 && (
-                      <tr className="tr_acc">
-                        <td> </td>
-                        <td className="td_date"> </td>
-                        <td> </td>
-                        <td className="td_bill"> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                      </tr>
-                    )}
-
-                    <tr className="tr_acc">
-                      <td> </td>
-                      <td className="td_date"> </td>
-                      <td> </td>
-                      <td className="td_bill"> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
