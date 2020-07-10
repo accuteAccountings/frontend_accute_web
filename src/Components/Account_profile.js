@@ -166,12 +166,32 @@ export default class Account_pro extends React.Component {
  
     return (
       <div>
-        <div className="acc_pro_location">
-          <span>
-            <img src={back} onClick={() => this.props.backToAcc()} />
-          </span>
-          accounting / accounts / account profile
-        </div>
+            <div className = "acc_highest">
+                <div className="acc_pro_location">
+                  <span>
+                    <img src={back} onClick={() => this.props.backToAcc()} />
+                  </span>
+                  accounting / accounts / account profile
+              </div>
+              <div>
+                {this.props.acc_pro_val === 'ledger' && (
+                  <div className="ledger_upp_right_div">
+                  <div className="ledger_upp_right">
+                    <span className="upp_head">Debit : </span>
+                    {this.state.det2.length ?this.totalDebitpre() : this.totalDebit()}
+                  </div>
+                  <div className="ledger_upp_right">
+                    <span className="upp_head">Credit : </span>
+                    {this.state.det2.length ? this.totalCreditpre() : this.totalCredit()}
+                  </div>
+                  <div className="leger_upp_right">
+                    <span className="upp_head">Balance : </span>
+                    {this.props.account.Balance}
+                  </div>
+                </div>
+                )}
+              </div>
+            </div>
         <div className="acc_pro_body">
           <div className="acc_pro_sbar">
             <div className="acc_pro_img" />
@@ -301,20 +321,7 @@ export default class Account_pro extends React.Component {
                    this.handleModal()
                   }}>print</button>
                 </div>
-                <div className="ledger_upp_right_div">
-                  <div className="ledger_upp_right">
-                    <span className="upp_head">Debit : </span>
-                    {this.state.det2.length ?this.totalDebitpre() : this.totalDebit()}
-                  </div>
-                  <div className="ledger_upp_right">
-                    <span className="upp_head">Credit : </span>
-                    {this.state.det2.length ? this.totalCreditpre() : this.totalCredit()}
-                  </div>
-                  <div className="leger_upp_right">
-                    <span className="upp_head">Balance : </span>
-                    {this.props.account.Balance}
-                  </div>
-                </div>
+               
               </div>
              
               <div>
@@ -332,7 +339,7 @@ export default class Account_pro extends React.Component {
                         </div>
                      <div className = "acc_modal_below">
                       <span>Account Name : </span>
-                      <span><input type = "text" defaultValue = {this.props.account.acc_name} /></span>
+                      <span><input type = "text" value = {this.props.account.acc_name} /></span>
                      </div>
                      <div className = "date_print_modal">
                      <label for = "ledger_date_start">From : </label>

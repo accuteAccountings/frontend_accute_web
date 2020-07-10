@@ -379,3 +379,41 @@ tr:nth-child(even) {
 		  cursor:pointer;
 		  display:none;
   }
+
+  .for_print_jovouch{
+    display: none;
+    visibility: hidden;
+  }
+  .jovouch_right_q{
+    width: 50rem;
+    margin-left: 1rem;
+    border-bottom: 1px solid black;
+    width: 60rem;
+    font-size: 1.3rem;
+    border-bottom-style: dotted;
+  }
+  .jovouch_left_q{
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .print_table_jo{
+    margin-top: 1rem;
+    table{
+      width: 35rem;
+    }
+    td{
+      text-align: center;
+    }
+  }
+  .upper_entry_print{
+    margin-bottom: 1rem;
+  }
+  @media print{
+    .for_print_jovouch{
+      visibility: visible;
+      display: unset;
+      position: fixed;
+      left: 5rem;
+      top: 6rem;
+    }
+  }

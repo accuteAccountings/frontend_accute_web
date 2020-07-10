@@ -209,6 +209,10 @@ class AddJovouch extends React.Component {
           <h1>Add Journal jovoucher</h1>
 
           <div className="add_jovouch_right_btns">
+          {this.props.mode === 'print' && (<p 
+            onClick = {() => {
+              window.print()
+            }}>Print</p>)}
             <p onClick={this.addjovouch}>Save</p>
             <p
               onClick={() => {
@@ -225,6 +229,69 @@ class AddJovouch extends React.Component {
             </p>
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
+        </div>
+
+        <div className = "for_print_jovouch">
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">Received with thanks from M/s.</span>
+              <span className = "jovouch_right_q">{this.props.josupp}</span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">The sum of Rs.</span>
+              <span className = "jovouch_right_q">{this.props.jobill_amount}</span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">By Check</span>
+              <span className = "jovouch_right_q">Check Number</span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">part/full on A/c of M/s</span>
+              <span className = "jovouch_right_q">{this.props.jocust}</span>
+              </div>
+              <div className = "print_table_jo" >
+                <table >
+                  <thead>
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Date</th>
+                     
+                      <th>Bill No.</th>
+                      <th>Draft</th>
+                      <th>Balance</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <td> </td>
+                  <td >{this.props.jobill_date} </td>
+                  <td>{this.props.jobill_num.join(' , ')} </td>
+                  <td > </td>
+                  <td> {this.props.jobill_amount} </td>
+                  
+                </tr>
+
+                <tr>
+                <td> </td>
+                <td > </td>
+                <td> </td>
+                <td > </td>
+                <td> </td>
+                
+              </tr>
+
+              <tr>
+              <td> </td>
+              <td > </td>
+              <td> </td>
+              <td > </td>
+              <td> </td>
+             
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
         </div>
 
         <div className="jovouch_body">

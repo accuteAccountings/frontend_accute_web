@@ -15,6 +15,14 @@
         
     }
 }
+.acc_highest{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    // border: solid black;
+}
 .page_route{
     color: black;
     cursor: pointer;
@@ -225,7 +233,7 @@
     display: flex;
     flex-direction: row;
     // justify-content: space-evenly; 
-    width: 50%;
+    width: 40rem;
     font-size: 1.1rem;
     margin-left: 3rem;
 }
@@ -349,12 +357,6 @@ body{
     left: 0px;
     top: 30px;
 }
-.print_details{
-    visibility: visible;
-    position: fixed;
-    display: unset;
-    left: 11rem;
-    top: 8rem;
-}
+
 
 }
