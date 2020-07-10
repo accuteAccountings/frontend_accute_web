@@ -1,30 +1,62 @@
 import React from "react";
 import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg";
+import Modal from 'react-modal'
+import cross from './../img/cancel.svg';
+
 
 export default class Account_pro extends React.Component {
   getDet = async () => {
 
-  
+    let  end_date_p = await document.getElementById("ledger_date_end_p")
+    let start_date_p = await  document.getElementById("ledger_date_start_p")
     let start_date = await  document.getElementById("ledger_date_start").value;
     let  end_date = await document.getElementById("ledger_date_end").value
- 
-    
-    await fetch(`/api/vouch/specific/${this.props.account.acc_name}/${start_date}/${end_date}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              details: data,
-              det2 : []
-            };
-          });
-        }
-      });
+    let parti = await document.getElementById("print_particulars")
+    let subagent = await document.getElementById("print_sub_agent")
+   
 
-      
-  };
+    if(end_date_p != null && start_date_p != null){
+    var  s_date = start_date_p.value
+     var e_date = end_date_p.value
+    }else{
+     var s_date = start_date
+     var e_date = end_date
+    }
+    
+ if(parti && start_date_p && end_date_p && subagent){
+    await fetch(`/api/vouch/specific/${this.props.account.acc_name}?particulars=${parti.value}&sdate=${start_date_p.value}&edate=${end_date_p.value}&agent=${subagent.value}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data) {
+        this.setState(() => {
+          return {
+            details: data,
+            det2 : [],
+            recent : false
+          };
+        });
+      }
+    });
+  }
+ else if(start_date && end_date){
+  await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data) {
+      this.setState(() => {
+        return {
+          details: data,
+          det2 : [],
+          recent : false
+        };
+      });
+    }
+  });
+ }
+
+  } 
+ 
 
   totalDebit = () => {
     let t = 0;
@@ -89,19 +121,40 @@ export default class Account_pro extends React.Component {
   };
 
 
+  handleModal = () => {
+      this.setState((prevState) => {
+        return{
+          open : !prevState.open
+        }
+      })
+  }
+
 
 
   constructor(props) {
     super(props);
 
+    fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data) {
+        this.setState(() => {
+          return {
+            det2: data.reverse(),
+            details : []
+          };
+        });
+      }else{
+        alert('nothing')
+      }
+    });
 
-  let date = new Date()
     this.state = {
       details: [],
       det2 : [],
       debited: [],
       credited: [],
-      today_date : date
+      open : false,
     };
 
     
@@ -110,27 +163,6 @@ export default class Account_pro extends React.Component {
 
 
   render() {
-
-    if(this.props.acc_pro_val === "ledger"){
-    
-         fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
-            .then(res => res.json())
-            .then(data => {
-              if (data) {
-                this.setState(() => {
-                  return {
-                    det2: data.reverse(),
-                    details : []
-                  };
-                });
-              }else{
-                alert('nothing')
-              }
-            });
-      
-      
-        
-    }
  
     return (
       <div>
@@ -157,7 +189,7 @@ export default class Account_pro extends React.Component {
                 className={this.props.acc_pro_val === "ledger" ? "acc_det" : "sbar_list_value"}
                 onClick={() => {
                   this.props.setAccProfile("ledger");
-                  
+                
                 }}
                 id="ledger"
               >
@@ -265,6 +297,9 @@ export default class Account_pro extends React.Component {
                 <label for = "ledger_date_end">To : </label>
                   <input type="date" id="ledger_date_end"   />
                   <button onClick={this.getDet}>search</button>
+                  <button onClick = {() => {
+                   this.handleModal()
+                  }}>print</button>
                 </div>
                 <div className="ledger_upp_right_div">
                   <div className="ledger_upp_right">
@@ -281,7 +316,38 @@ export default class Account_pro extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="acc_pro_ledger">
+             
+              <div>
+                  <Modal
+                    isOpen = {this.state.open}
+                    onRequestClose = {this.handleModal}
+                    className = "modal"
+                  >
+                    <div className = 'acc_modal' >
+                      <div className = "acc_modal_head">
+                        <div className = "acc_modal_text">GET LEDGER</div>
+                          <div>
+                            <img onClick = {this.handleModal} src = {cross} alt = "" />
+                          </div>
+                        </div>
+                     <div className = "acc_modal_below">
+                      <span>Account Name : </span>
+                      <span><input type = "text" defaultValue = {this.props.account.acc_name} /></span>
+                     </div>
+                     <label for = "ledger_date_start">From : </label>
+                       <input type="date" id="ledger_date_start_p" name = "ledger_date_start" placeholder = "From"  />
+                     <label for = "ledger_date_end">To : </label>
+                      <input type="date" id="ledger_date_end_p"   />
+                    </div>
+                    <input type = "text" id = "print_particulars" placeholder = "particulars" />
+                    <input type = "text" id = "print_sub_agent" placeholder = "Supplier Agent" />
+                    <button onClick = {async() => {
+                      await this.getDet()
+                     await window.print()
+                    }} >Submit</button>
+                  </Modal>
+              </div>
+              <div className="acc_pro_ledger print_table">
                 <table className="acc_pro_table">
                   <thead>
                     <tr>
