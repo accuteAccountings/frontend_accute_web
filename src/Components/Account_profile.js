@@ -334,17 +334,23 @@ export default class Account_pro extends React.Component {
                       <span>Account Name : </span>
                       <span><input type = "text" defaultValue = {this.props.account.acc_name} /></span>
                      </div>
+                     <div className = "date_print_modal">
                      <label for = "ledger_date_start">From : </label>
                        <input type="date" id="ledger_date_start_p" name = "ledger_date_start" placeholder = "From"  />
                      <label for = "ledger_date_end">To : </label>
                       <input type="date" id="ledger_date_end_p"   />
-                    </div>
+                      </div>
+                    <div className = "parti_agent">
                     <input type = "text" id = "print_particulars" placeholder = "particulars" />
                     <input type = "text" id = "print_sub_agent" placeholder = "Supplier Agent" />
+                    </div>
+                    <div className = "submit_modal">
                     <button onClick = {async() => {
                       await this.getDet()
                      await window.print()
-                    }} >Submit</button>
+                    }} className = "print_btn_modal" >Print</button>
+                    </div>
+                    </div>
                   </Modal>
               </div>
               <div className="acc_pro_ledger print_table">
@@ -431,16 +437,7 @@ export default class Account_pro extends React.Component {
                       <td> </td>
                       <td> </td>
                     </tr>
-                    
-                    <tr className="tr_acc">
-                      <td> </td>
-                      <td className="td_date"> </td>
-                      <td> </td>
-                      <td className="td_bill"> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                    </tr>
+                 
 
                       <tr className="tr_acc">
                         <td> </td>
