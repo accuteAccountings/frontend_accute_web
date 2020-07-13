@@ -1,11 +1,70 @@
 import React from "react";
 import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg";
-import Modal from 'react-modal'
-import cross from './../img/cancel.svg';
+import Ledger from './Ledger_Account'
 
 
 export default class Account_pro extends React.Component {
+
+  totalDebit = () => {
+    let t = 0;
+
+    if(this.state.details.length != 0){ 
+        this.state.details.map(e => {
+            if (e.supplier === this.props.account.acc_name) {
+              t = parseInt(t) + parseInt(e.totalAmt);
+            }
+            else if (e.debit_acc === this.props.account.acc_name) {
+              t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+            }
+          })
+
+          return t;
+        }
+      else{
+        this.state.det2.map(e => {
+          if (e.supplier === this.props.account.acc_name) {
+            t = parseInt(t) + parseInt(e.totalAmt);
+          }
+          else if (e.debit_acc === this.props.account.acc_name) {
+            t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+          }
+        });
+    
+        return t;
+      }
+    }
+
+  totalCredit = () => {
+    let t = 0;
+
+    if(this.state.details.length){
+      this.state.details.map(e => {
+        if (e.customer === this.props.account.acc_name) {
+          t = parseInt(t) + parseInt(e.totalAmt);
+        }
+        else  if (e.credit_acc === this.props.account.acc_name) {
+          t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+        }
+      });
+
+
+      return t;
+    }else{
+      this.state.det2.map(e => {
+        if (e.customer === this.props.account.acc_name) {
+          t = parseInt(t) + parseInt(e.totalAmt);
+        }
+        else  if (e.credit_acc === this.props.account.acc_name) {
+          t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+        }
+      });
+  
+  
+      return t;
+    }
+  };
+
   getDet = async () => {
 
     let  end_date_p = await document.getElementById("ledger_date_end_p")
@@ -14,15 +73,8 @@ export default class Account_pro extends React.Component {
     let  end_date = await document.getElementById("ledger_date_end").value
     let parti = await document.getElementById("print_particulars")
     let subagent = await document.getElementById("print_sub_agent")
-   
+    let part_search = await document.getElementById("specific_search_ledger")
 
-    if(end_date_p != null && start_date_p != null){
-    var  s_date = start_date_p.value
-     var e_date = end_date_p.value
-    }else{
-     var s_date = start_date
-     var e_date = end_date
-    }
     
  if(parti && start_date_p && end_date_p && subagent){
     await fetch(`/api/vouch/specific/${this.props.account.acc_name}?particulars=${parti.value}&sdate=${start_date_p.value}&edate=${end_date_p.value}&agent=${subagent.value}`)
@@ -39,6 +91,21 @@ export default class Account_pro extends React.Component {
       }
     });
   }
+  else if(part_search && this.state.filter === "parti"){
+    await fetch(`/api/vouch/specific/${this.props.account.acc_name}?particulars=${part_search.value}&sdate=${start_date}&edate=${end_date}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data) {
+        this.setState(() => {
+          return {
+            details: data,
+            det2 : [],
+            recent : false
+          };
+        });
+      }
+    });
+   }
  else if(start_date && end_date){
   await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}`)
   .then(res => res.json())
@@ -55,80 +122,82 @@ export default class Account_pro extends React.Component {
   });
  }
 
+ else if(part_search && this.state.filter === "agent"){
+  await fetch(`/api/vouch/specific/${this.props.account.acc_name}?agent=${part_search.value}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data) {
+      this.setState(() => {
+        return {
+          details: data,
+          det2 : [],
+          recent : false
+        };
+      });
+    }
+  });
+ }
+ else if(part_search && this.state.filter === "bill_num"){
+  await fetch(`/api/vouch/specific/${this.props.account.acc_name}?bill_num=${part_search.value}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data) {
+      this.setState(() => {
+        return {
+          details: data,
+          det2 : [],
+          recent : false
+        };
+      });
+    }
+  });
+ }
+
   } 
  
+  clearall = () => {
+     document.getElementById("ledger_date_start").value = null
+      document.getElementById("ledger_date_end").value = null
+      document.getElementById("specific_search_ledger").value = null
+      document.getElementById('check_parti').checked = false;
+      document.getElementById('check_agent').checked = false;
+      document.getElementById('check_bill_num').checked = false;
 
-  totalDebit = () => {
-    let t = 0;
-
-    this.state.details.map(e => {
-      if (e.supplier === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      }
-      else if (e.debit_acc === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-    return t;
-  };
-
-  totalCredit = () => {
-    let t = 0;
-
-    this.state.details.map(e => {
-      if (e.customer === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      }
-      else  if (e.credit_acc === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-
-    return t;
-  };
-
-  totalDebitpre = () => {
-    let t = 0;
-
-    this.state.det2.map(e => {
-      if (e.supplier === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      }
-      else if (e.debit_acc === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-    return t;
-  };
-
-  totalCreditpre = () => {
-    let t = 0;
-
-    this.state.det2.map(e => {
-      if (e.customer === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      }
-      else  if (e.credit_acc === this.props.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-
-    return t;
-  };
-
-
-  handleModal = () => {
-      this.setState((prevState) => {
-        return{
-          open : !prevState.open
+      fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          this.setState(() => {
+            return {
+              det2: data.reverse(),
+              details : []
+            };
+          });
+        }else{
+          alert('nothing')
         }
-      })
+      });
   }
 
+  handleradio = (val) => {
+    this.setState(() => {
+      return{
+        filter : val
+      }
+    })
+  }
+
+//   handleSearch = () => {
+//     if(document.getElementById('specific_search_ledger').value != null){
+//         let input = document.getElementById('specific_search_ledger')
+//         input.addEventListener('keyup',  function(event) {
+//     if (event.keyCode == 13) {
+//       event.preventDefault();
+      
+//     }
+//   });
+//     }
+// }
 
 
   constructor(props) {
@@ -152,21 +221,19 @@ export default class Account_pro extends React.Component {
     this.state = {
       details: [],
       det2 : [],
-      debited: [],
-      credited: [],
-      open : false,
+      filter : null
     };
 
     
-  }
+  }    
 
 
-
+ 
   render() {
  
     return (
-      <div>
-            <div className = "acc_highest">
+             <div>
+                <div className = "acc_highest">
                 <div className="acc_pro_location">
                   <span>
                     <img src={back} onClick={() => this.props.backToAcc()} />
@@ -178,11 +245,11 @@ export default class Account_pro extends React.Component {
                   <div className="ledger_upp_right_div">
                   <div className="ledger_upp_right">
                     <span className="upp_head">Debit : </span>
-                    {this.state.det2.length ?this.totalDebitpre() : this.totalDebit()}
+                    { this.totalDebit()}
                   </div>
                   <div className="ledger_upp_right">
                     <span className="upp_head">Credit : </span>
-                    {this.state.det2.length ? this.totalCreditpre() : this.totalCredit()}
+                    {this.totalCredit()}
                   </div>
                   <div className="leger_upp_right">
                     <span className="upp_head">Balance : </span>
@@ -192,6 +259,7 @@ export default class Account_pro extends React.Component {
                 )}
               </div>
             </div>
+            
         <div className="acc_pro_body">
           <div className="acc_pro_sbar">
             <div className="acc_pro_img" />
@@ -309,177 +377,18 @@ export default class Account_pro extends React.Component {
           )}
 
           {this.props.acc_pro_val === "ledger" && (
-            <div className="ledger_tab">
-              <div className="acc_pro_ledger_upper">
-                <div className="upp_date">
-                <label for = "ledger_date_start">From : </label>
-                  <input type="date" id="ledger_date_start" name = "ledger_date_start" placeholder = "From"  />
-                <label for = "ledger_date_end">To : </label>
-                  <input type="date" id="ledger_date_end"   />
-                  <button onClick={this.getDet}>search</button>
-                  <button onClick = {() => {
-                   this.handleModal()
-                  }}>print</button>
-                </div>
-               
-              </div>
-             
-              <div>
-                  <Modal
-                    isOpen = {this.state.open}
-                    onRequestClose = {this.handleModal}
-                    className = "modal"
-                  >
-                    <div className = 'acc_modal' >
-                      <div className = "acc_modal_head">
-                        <div className = "acc_modal_text">GET LEDGER</div>
-                          <div>
-                            <img onClick = {this.handleModal} src = {cross} alt = "" />
-                          </div>
-                        </div>
-                     <div className = "acc_modal_below">
-                      <span>Account Name : </span>
-                      <span><input type = "text" value = {this.props.account.acc_name} /></span>
-                     </div>
-                     <div className = "date_print_modal">
-                     <label for = "ledger_date_start">From : </label>
-                       <input type="date" id="ledger_date_start_p" name = "ledger_date_start" placeholder = "From"  />
-                     <label for = "ledger_date_end">To : </label>
-                      <input type="date" id="ledger_date_end_p"   />
-                      </div>
-                    <div className = "parti_agent">
-                    <input type = "text" id = "print_particulars" placeholder = "particulars" />
-                    <input type = "text" id = "print_sub_agent" placeholder = "Supplier Agent" />
-                    </div>
-                    <div className = "submit_modal">
-                    <button onClick = {async() => {
-                      await this.getDet()
-                     await window.print()
-                    }} className = "print_btn_modal" >Print</button>
-                    </div>
-                    </div>
-                  </Modal>
-              </div>
-              <div className="acc_pro_ledger print_table">
-                <table className="acc_pro_table">
-                  <thead>
-                    <tr>
-                      <th>S.No.</th>
-                      <th>Date</th>
-                      <th>Particulars</th>
-                      <th>Bill No.</th>
-                      <th>Debit</th>
-
-                      <th>Credit</th>
-                      <th>Balance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.details.map((e, i) => {
-                      return (
-                        
-                          e.credit_acc ?(<tr className = "tr_acc">
-                          <td>{i + 1}</td>
-                          <td className="td_date">{e.bill_date}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                          <td className="td_bill">{e.billArr.join(" , ")}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit : e.Bal_left_debit}</td>
-                          </tr>
-                          ) : (<tr className = "tr_acc">
-                          <td>{i + 1}</td>
-                          <td className="td_date">{e.bill_date}</td>
-                          <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                          <td className="td_bill">{e.bill_num}</td>
-                          <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
-                          <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
-                          <td>
-                            {e.supplier === this.props.account.acc_name ? e.Bal_left_supplier : e.Bal_left_costumer}{" "}
-                          </td>
-                          </tr>
-                          )
-                            
-                      );
-                    })}
-
-
-                    {this.state.det2.map((e, i) => {
-                      return (
-                        
-                        e.credit_acc && i < 7 ? (<tr className = "tr_acc">
-                          <td>{i + 1}</td>
-                          <td className="td_date">{e.bill_date}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                          <td className="td_bill">{e.billArr.join(" , ")}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
-                          <td>{e.credit_acc === this.props.account.acc_name ? e.Bal_left_credit : e.Bal_left_debit}</td>
-                          </tr>
-                          ) : (
-                              i < 7 &&
-                            <tr className = "tr_acc">
-                          <td>{i + 1}</td>
-                          <td className="td_date">{e.bill_date}</td>
-                          <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                          <td className="td_bill">{e.bill_num}</td>
-                          <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
-                          <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
-                          <td>
-                            {e.supplier === this.props.account.acc_name ? e.Bal_left_supplier : e.Bal_left_costumer}{" "}
-                          </td>
-                          </tr>
-                          )
-                            
-                      );
-                    })}
-
-
-                    <tr className="tr_acc">
-                      <td></td>
-                      <td className="td_date"> </td>
-                      <td> </td>
-                      <td className="td_bill"> </td>
-                      <td> </td>
-                      <td> </td>
-                      <td> </td>
-                    </tr>
-                 
-
-                      <tr className="tr_acc">
-                        <td> </td>
-                        <td className="td_date"> </td>
-                        <td> </td>
-                        <td className="td_bill"> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                      </tr>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <Ledger 
+             account = {this.props.account}
+             getDet = {this.getDet}
+             clearall = {this.clearall}
+             details = {this.state.details}
+             det2 = {this.state.det2}
+             handleradio = {this.handleradio}
+             handleSearch = {this.handleSearch}
+             />
           )}
         </div>
       </div>
     );
   }
-}
-async function postData(url = "", data) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      // 'Content-Type': 'multipart/form-data'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-      "Content-Type": "application/json"
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer"
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
 }

@@ -230,23 +230,51 @@ class AddJovouch extends React.Component {
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
-
+          
+        <div className = "print">
         <div className = "for_print_jovouch">
+          <div className = "print_upper_jo">
+                <div className = "upper_lefter">
+                  <div className = "upper_num">
+                    <span className = "jovouch_left_q">Original</span>
+                  </div>
+                  <div>
+                    <span className = "jovouch_left_q">Rs.</span>
+                    <span className = "jovouch_upper_right">31500</span>
+                  </div>
+              </div>
+              <div className = "upper_lefter">
+                  <div className = "upper_num">
+                    <span className = "jovouch_left_q">No.</span>
+                    <span className = "jovouch_upper_right">145</span>
+                  </div>
+                  <div>
+                    <span className = "jovouch_left_q">Dated</span>
+                    <span className = "jovouch_upper_right">22/07/2000</span>
+                </div>
+              </div>
+          </div>
               <div className = "upper_entry_print">
               <span className = "jovouch_left_q">Received with thanks from M/s.</span>
               <span className = "jovouch_right_q">{this.props.josupp}</span>
               </div>
               <div className = "upper_entry_print">
               <span className = "jovouch_left_q">The sum of Rs.</span>
-              <span className = "jovouch_right_q">{this.props.jobill_amount}</span>
+              <span className = "jovouch_right_q">{this.props.jobill_amount} </span>
               </div>
               <div className = "upper_entry_print">
-              <span className = "jovouch_left_q">By Check</span>
-              <span className = "jovouch_right_q">Check Number</span>
+              <span className = "jovouch_left_q">By Check/Draft No.</span>
+              <span className = "jovouch_right_pay">45454</span>
+              <span className = "jovouch_left_q">Date</span>
+              <span className = "jovouch_right_pay">2020-07-04</span>
+              <span className = "jovouch_left_q">of</span>
+              <span className = "jovouch_right_pay"></span>
+              <span className = "jovouch_left_q">on</span>
+              <span className = "jovouch_right_pay"></span>
               </div>
               <div className = "upper_entry_print">
               <span className = "jovouch_left_q">part/full on A/c of M/s</span>
-              <span className = "jovouch_right_q">{this.props.jocust}</span>
+              <span className = "jovouch_right_q">{this.props.jocust} </span>
               </div>
               <div className = "print_table_jo" >
                 <table >
@@ -256,19 +284,20 @@ class AddJovouch extends React.Component {
                       <th>Date</th>
                      
                       <th>Bill No.</th>
-                      <th>Draft</th>
                       <th>Balance</th>
+                      <th>Draft</th>
+                      <th className = "last_col"></th>
                      
                     </tr>
                   </thead>
                   <tbody>
                   <tr>
-                  <td> </td>
+                  <td> 1</td>
                   <td >{this.props.jobill_date} </td>
-                  <td>{this.props.jobill_num.join(' , ')} </td>
-                  <td > </td>
+                  <td>{this.props.jobill_num} </td>
                   <td> {this.props.jobill_amount} </td>
-                  
+                  <td > </td> 
+                  <td className = "last_col"> </td>
                 </tr>
 
                 <tr>
@@ -277,6 +306,7 @@ class AddJovouch extends React.Component {
                 <td> </td>
                 <td > </td>
                 <td> </td>
+                <td className = "last_col"> </td>
                 
               </tr>
 
@@ -286,13 +316,133 @@ class AddJovouch extends React.Component {
               <td> </td>
               <td > </td>
               <td> </td>
+              <td className = "last_col"> </td>
              
             </tr>
+
+            <tr>
+            <td> </td>
+            <td > </td>
+            <td> </td>
+            <td > </td>
+            <td> </td>
+            <td className = "last_col"> </td>
+           
+          </tr>
+
+
+
 
             </tbody>
           </table>
         </div>
         </div>
+        <div className = "for_print_jovouch">
+          <div className = "print_upper_jo">
+                  <div className = "upper_lefter">
+                    <div className = "upper_num">
+                      <span className = "jovouch_left_q">Duplicate</span>
+                    </div>
+                    <div>
+                      <span className = "jovouch_left_q">Rs.</span>
+                      <span className = "jovouch_upper_right">31500</span>
+                    </div>
+              </div>
+              <div className = "upper_lefter">
+                  <div className = "upper_num">
+                    <span className = "jovouch_left_q">No.</span>
+                    <span className = "jovouch_upper_right">145</span>
+                  </div>
+                  <div>
+                    <span className = "jovouch_left_q">Dated</span>
+                    <span className = "jovouch_upper_right">22/07/2000</span>
+                </div>
+              </div>
+          </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">Received with thanks from M/s.</span>
+              <span className = "jovouch_right_q">{this.props.josupp}</span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">The sum of Rs.</span>
+              <span className = "jovouch_right_q">{this.props.jobill_amount} </span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">By Check/Draft No.</span>
+              <span className = "jovouch_right_pay">45454</span>
+              <span className = "jovouch_left_q">Date</span>
+              <span className = "jovouch_right_pay">2020-07-04</span>
+              <span className = "jovouch_left_q">of</span>
+              <span className = "jovouch_right_pay"></span>
+              <span className = "jovouch_left_q">on</span>
+              <span className = "jovouch_right_pay"></span>
+              </div>
+              <div className = "upper_entry_print">
+              <span className = "jovouch_left_q">part/full on A/c of M/s</span>
+              <span className = "jovouch_right_q">{this.props.jocust} </span>
+              </div>
+              <div className = "print_table_jo" >
+                <table >
+                  <thead>
+                    <tr>
+                      <th>S.No.</th>
+                      <th>Date</th>
+                     
+                      <th>Bill No.</th>
+                      <th>Balance</th>
+                      <th>Draft</th>
+                      <th className = "last_col"></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                  <td> 1</td>
+                  <td >{this.props.jobill_date} </td>
+                  <td>{this.props.jobill_num} </td>
+                  <td> {this.props.jobill_amount} </td>
+                  <td > </td> 
+                  <td className = "last_col"> </td>
+                </tr>
+
+                <tr>
+                <td> </td>
+                <td > </td>
+                <td> </td>
+                <td > </td>
+                <td> </td>
+                <td className = "last_col"> </td>
+                
+              </tr>
+
+              <tr>
+              <td> </td>
+              <td > </td>
+              <td> </td>
+              <td > </td>
+              <td> </td>
+              <td className = "last_col"> </td>
+             
+            </tr>
+
+            <tr>
+            <td> </td>
+            <td > </td>
+            <td> </td>
+            <td > </td>
+            <td> </td>
+            <td className = "last_col"> </td>
+           
+          </tr>
+
+     
+
+            </tbody>
+          </table>
+        </div>
+        </div>
+        </div>
+      
 
         <div className="jovouch_body">
           <form action="/api/jovouch" id="jovouch_det" method="post">
