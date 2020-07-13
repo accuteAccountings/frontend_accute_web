@@ -1,4 +1,6 @@
 import React from "react";
+import pencil from "../img/pencil.svg";
+import trash_can from "../img/trash.svg";
 import cross from "./../img/cancel.svg";
 
 async function postData(url = "", data, m) {
@@ -366,7 +368,8 @@ class AddVouch extends React.Component {
       grossAmt: 0,
       disAmt: 0,
       pro: [],
-      gst: 5
+      gst: 5,
+      defaultDiscon: 0
     };
     this.getProducts();
     this.getAccounts();
@@ -465,11 +468,18 @@ class AddVouch extends React.Component {
                         })}
                     </select>
                   </div>
-
                   <div className="vouch_si">
                     <span>Supplier/Seller</span>
                     <br />
-                    <select name="vouch_sup" id="vouch_sup">
+                    <select
+                      onFocus={() => {
+                        let arr = this.state.accounts;
+                        arr = arr.sort();
+                        this.setState({ accounts: arr });
+                      }}
+                      name="vouch_sup"
+                      id="vouch_sup"
+                    >
                       <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
@@ -483,6 +493,9 @@ class AddVouch extends React.Component {
                                 }
                                 key={i}
                                 value={acc.acc_name}
+                                disabled={
+                                  document.getElementById("vouch_customer").value === acc.acc_name ? true : false
+                                }
                               >
                                 {acc.acc_name}
                               </option>
@@ -520,7 +533,7 @@ class AddVouch extends React.Component {
                     <br />
                     <span id="percentage">%</span>
                     <input
-                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.gst : 0}
+                      defaultValue={this.props.mode === "edit" ? this.props.EData.det.gst : 5}
                       type="number"
                       name="vouch_gst"
                       id="vouch_gst"
@@ -536,7 +549,15 @@ class AddVouch extends React.Component {
                   <div className="vouch_si">
                     <span>Customer/Buyer</span>
                     <br />
-                    <select name="customer" id="vouch_customer">
+                    <select
+                      onFocus={() => {
+                        let arr = this.state.accounts;
+                        arr = arr.sort();
+                        this.setState({ accounts: arr });
+                      }}
+                      name="customer"
+                      id="vouch_customer"
+                    >
                       <option>None</option>
                       {this.state.accounts &&
                         this.state.accounts.map((acc, i) => {
@@ -550,6 +571,7 @@ class AddVouch extends React.Component {
                                     ? true
                                     : false
                                 }
+                                disabled={document.getElementById("vouch_sup").value === acc.acc_name ? true : false}
                               >
                                 {acc.acc_name}
                               </option>
@@ -695,7 +717,7 @@ class AddVouch extends React.Component {
                   {this.state.items.map((i, index) => {
                     return (
                       <tr key={index}>
-                        <td>{index + 1}</td>
+                        <td className="tbtn">{index + 1}</td>
                         <td>{i.product_name}</td>
                         <td>{i.hsn_num}</td>
                         <td>{i.quantity}</td>
@@ -708,7 +730,7 @@ class AddVouch extends React.Component {
                             this.editItem(index);
                           }}
                         >
-                          <span>Edit</span>
+                          <img className="vouch_edit_pencil" src={pencil} />
                         </td>
                         <td
                           className="tbtn"
@@ -716,7 +738,7 @@ class AddVouch extends React.Component {
                             this.removeItem(index);
                           }}
                         >
-                          <span>X</span>
+                          <img className="vouch_trash_can" src={trash_can} />
                         </td>
                       </tr>
                     );

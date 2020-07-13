@@ -170,17 +170,6 @@ class App extends React.Component {
     });
   };
 
-  specificJoVouch = (bill_num , bill_date , bill_amount , josupp , jocust) => {
-    this.setState(() => {
-      return{
-        jobill_num : bill_num,
-        jobill_date : bill_date,
-        jobill_amount : bill_amount,
-        josupp : josupp,
-        jocust : jocust
-      }
-    })
-  }
 
   rmVouch = () => {
     this.setState(prevState => {
@@ -236,11 +225,6 @@ class App extends React.Component {
 
       vouchMode: "add",
       vouchData: [],
-      jobill_num : null,
-      jobill_date : null,
-      jobill_amount : null,
-      josupp : null,
-      jocust : null
     };
   }
 

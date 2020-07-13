@@ -4,7 +4,6 @@ import * as serviceWorker from "./serviceWorker";
 import App from "./Containers/App";
 // import AddJoVoucher from './Components/AddJoVouch'
 import "./Styles/Styles.scss";
-import Printed_ledger from "./Components/printed_ledger";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
