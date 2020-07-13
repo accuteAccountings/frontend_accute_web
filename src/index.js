@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as serviceWorker from './serviceWorker';
-import App from './Containers/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import * as serviceWorker from "./serviceWorker";
+import App from "./Containers/App";
 // import AddJoVoucher from './Components/AddJoVouch'
-import './Styles/Styles.scss';
-import Printed_ledger from './Components/printed_ledger'
+import "./Styles/Styles.scss";
+import Printed_ledger from "./Components/printed_ledger";
 
-ReactDOM.render(<Printed_ledger />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // serviceWorker.unregister();
 // // window.onbeforeunload = function(e) {
