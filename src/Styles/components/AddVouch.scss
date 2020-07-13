@@ -201,13 +201,25 @@ th {
 }
 
 th:nth-child(1) {
-  width: 70px;
+  width: 40px;
+}
+th:nth-child(3) {
+  width: 170px;
 }
 th:nth-child(4) {
-  width: 70px;
+  width: 80px;
 }
 th:nth-child(5) {
-  width: 100px;
+  width: 70px;
+}
+th:nth-child(6) {
+  width: 90px;
+}
+th:nth-child(8) {
+  width: 70px;
+}
+th:nth-child(7) {
+  width: 70px;
 }
 
 tr:nth-child(even) {
@@ -253,4 +265,13 @@ tr:nth-child(even) {
 
 #vouch_gst {
   width: 50px;
+}
+.vouch_edit_pencil {
+  height: 25px;
+}
+.vouch_trash_can {
+  height: 25px;
+}
+.tbtn {
+  text-align: center;
 }

@@ -185,33 +185,6 @@ input::-webkit-inner-spin-button {
   width: 100%;
 }
 
-table,
-th,
-td {
-  border: 1px solid $l_grey_text;
-  border-collapse: collapse;
-  padding: 5px;
-  font-size: $p_font;
-  height: 40px;
-}
-
-th {
-  color: $grey_text;
-}
-
-th:nth-child(1) {
-  width: 70px;
-}
-th:nth-child(4) {
-  width: 70px;
-}
-th:nth-child(5) {
-  width: 100px;
-}
-
-tr:nth-child(even) {
-  background-color: #f0f0f0;
-}
 .jovouch_plus {
   font-size: 2.3rem;
   margin-left: 10px;
@@ -297,24 +270,24 @@ tr:nth-child(even) {
   border: 1px solid $grey_text;
   cursor: pointer;
 }
-.jovouch_bill_list:hover #bill_cross_btn{
-		display:block;
+.jovouch_bill_list:hover #bill_cross_btn {
+  display: block;
 }
 .jovouch_bill_list {
   position: relative;
 
-  span{
-		  position:absolute;
-		  border:1px solid $grey_text;
-		  border-radius:30px;
-		  top:-10px;
-		  left:-10px;
-		  padding:0px 7px 2px 7px ;
-		  background-color:white;
-		  font-size:20px;
-		  transform :rotateZ(45deg);
-		  cursor:pointer;
-		  display:none;
+  span {
+    position: absolute;
+    border: 1px solid $grey_text;
+    border-radius: 30px;
+    top: -10px;
+    left: -10px;
+    padding: 0px 7px 2px 7px;
+    background-color: white;
+    font-size: 20px;
+    transform: rotateZ(45deg);
+    cursor: pointer;
+    display: none;
   }
 
   ul {
@@ -358,110 +331,108 @@ tr:nth-child(even) {
   margin-top: 8px;
 }
 
-
-.jovoamt:hover #amt_cross_btn{
-		display:block;
+.jovoamt:hover #amt_cross_btn {
+  display: block;
 }
 .jovoamt {
   position: relative;
-  padding-right:50px;
-  }
-  #amt_cross_btn{
-		  position:absolute;
-		  border:1px solid $grey_text;
-		  border-radius:30px;
-		  top:27px;
-		  right:10px;
-		  padding:0px 7px 2px 7px ;
-		  background-color:white;
-		  font-size:20px;
-		  transform :rotateZ(45deg);
-		  cursor:pointer;
-		  display:none;
-  }
-
-  .print{
-    display: none;
-    visibility: hidden;
-  }
-
-  .for_print_jovouch{
-    border: solid black;
-    padding: 0.5rem 2rem;
-    margin-bottom: 2rem;
-  }
-  .for_print_jovouch_dup{
-    // margin-top: 3rem;
-    border: solid black;
-    padding: 0.5rem 2rem;
-  }
-  .jovouch_right_q{
-    width: 50rem;
-    margin-left: 1rem;
-    padding: 0 10rem;
-    border-bottom: 1px solid black;
-    font-size: 1.3rem;
-    border-bottom-style: dotted;
-  }
-  .jovouch_right_pay{
-    margin-left: 1rem;
-    padding: 0 1rem;
-    border-bottom: 1px solid black;
-    font-size: 1.3rem;
-    border-bottom-style: dotted;
-  }
-  .jovouch_left_q{
-    font-size: 1.3rem;
-    font-weight: 600;
-  }
-  .last_col{
-    width: 5rem;
-  }
-  .print_table_jo{
-    margin-top: 1rem;
-    table{
-      width: 40rem;
-    }
-    td{
-      text-align: center;
-    }
-  }
-  .upper_entry_print{
-    margin-bottom: 1rem;
-  }
-  .jovouch_upper_right{
-    width: 50rem;
-    margin-left: 1rem;
-    padding: 0 1rem;
-    border-bottom: 1px solid black;
-    font-size: 1.3rem;
-    border-bottom-style: dotted;
-  }
-  .print_upper_jo{
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100% ;
-  }
-  .upper_lefter{
-    display: flex;
-    flex-direction: column;
-    // justify-content: ;
-  }
-  .upper_num{
-    margin-bottom: 1rem;
-  }
-  .upper_rs{
-    margin-top: 2.3rem;
-  }
-  @media print{
-.print{
-  visibility: visible;
-  display: unset;
-  position: fixed;
-  top: 1rem;
-  left: 0.5rem;
- 
+  padding-right: 50px;
 }
+#amt_cross_btn {
+  position: absolute;
+  border: 1px solid $grey_text;
+  border-radius: 30px;
+  top: 27px;
+  right: 10px;
+  padding: 0px 7px 2px 7px;
+  background-color: white;
+  font-size: 20px;
+  transform: rotateZ(45deg);
+  cursor: pointer;
+  display: none;
+}
+
+.print {
+  display: none;
+  visibility: hidden;
+}
+
+.for_print_jovouch {
+  border: solid black;
+  padding: 0.5rem 2rem;
+  margin-bottom: 2rem;
+}
+.for_print_jovouch_dup {
+  // margin-top: 3rem;
+  border: solid black;
+  padding: 0.5rem 2rem;
+}
+.jovouch_right_q {
+  width: 50rem;
+  margin-left: 1rem;
+  padding: 0 10rem;
+  border-bottom: 1px solid black;
+  font-size: 1.3rem;
+  border-bottom-style: dotted;
+}
+.jovouch_right_pay {
+  margin-left: 1rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid black;
+  font-size: 1.3rem;
+  border-bottom-style: dotted;
+}
+.jovouch_left_q {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.last_col {
+  width: 5rem;
+}
+.print_table_jo {
+  margin-top: 1rem;
+  table {
+    width: 40rem;
   }
+  td {
+    text-align: center;
+  }
+}
+.upper_entry_print {
+  margin-bottom: 1rem;
+}
+.jovouch_upper_right {
+  width: 50rem;
+  margin-left: 1rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid black;
+  font-size: 1.3rem;
+  border-bottom-style: dotted;
+}
+.print_upper_jo {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.upper_lefter {
+  display: flex;
+  flex-direction: column;
+  // justify-content: ;
+}
+.upper_num {
+  margin-bottom: 1rem;
+}
+.upper_rs {
+  margin-top: 2.3rem;
+}
+@media print {
+  .print {
+    visibility: visible;
+    display: unset;
+    position: fixed;
+    top: 1rem;
+    left: 0.5rem;
+  }
+}

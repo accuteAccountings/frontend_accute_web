@@ -7,15 +7,13 @@
 @import "./components/NavSec.scss";
 
 .pro_compo {
-	@import "./components/ProCon.scss";
-	@import "./components//VouchCon.scss";
+  @import "./components/ProCon.scss";
+  @import "./components//VouchCon.scss";
 }
 @import "./components/Account_pro";
 @import "./components//DailyBook";
 @import "./containers/Dash.scss";
 @import "./components/AddVouch.scss";
 @import "./components/AddJoVouch.scss";
-@import "./components/AddDebit.scss";
 @import "./components//Ledger.scss";
-@import "./components/AddCredit.scss";
 @import "./components/Delete.scss";
