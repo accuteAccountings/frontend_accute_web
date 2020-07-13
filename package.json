@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:5001",
+  "proxy": "http://localhost:5000",
   "name": "ledger_main_react",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +15,7 @@
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
+    "react-modal": "^3.11.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
   },

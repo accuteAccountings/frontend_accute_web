@@ -170,6 +170,18 @@ class App extends React.Component {
     });
   };
 
+  specificJoVouch = (bill_num , bill_date , bill_amount , josupp , jocust) => {
+    this.setState(() => {
+      return{
+        jobill_num : bill_num,
+        jobill_date : bill_date,
+        jobill_amount : bill_amount,
+        josupp : josupp,
+        jocust : jocust
+      }
+    })
+  }
+
   rmVouch = () => {
     this.setState(prevState => {
       return {
@@ -223,7 +235,12 @@ class App extends React.Component {
       vouchEData: null,
 
       vouchMode: "add",
-      vouchData: []
+      vouchData: [],
+      jobill_num : null,
+      jobill_date : null,
+      jobill_amount : null,
+      josupp : null,
+      jocust : null
     };
   }
 
@@ -317,7 +334,9 @@ class App extends React.Component {
             <AddVouch rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
           )}
           {this.state.PVoJVoDN === "jv" && (
-            <AddJovouch mode={this.state.vouchMode} EData={this.state.vouchEData} rm={this.rmVouch} />
+            <AddJovouch mode={this.state.vouchMode} EData={this.state.vouchEData} rm={this.rmVouch}
+            jobill_num = {this.state.jobill_num} jobill_amount = {this.state.jobill_amount} jobill_date = {this.state.jobill_date}
+            josupp = {this.state.josupp} jocust = {this.state.jocust} />
           )}
           {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmDebit} />}
           {this.state.PVoJVoDN === "cn" && <AddCredit rm={this.rmCredit} />}
@@ -326,6 +345,7 @@ class App extends React.Component {
               setPVoJVoDN={this.setPVoJVoDN}
               vouchPage={this.state.vouchPage}
               setVouchPage={this.setVouchPage}
+              specificJoVouch = {this.specificJoVouch}
             />
           )}
         </div>
