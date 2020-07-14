@@ -1,6 +1,6 @@
 import React from "react";
 import cross from "./../img/cancel.svg";
-import Printed_joVouch from './Printed_jovouch'
+import Printed_joVouch from "./Printed_jovouch";
 
 async function postData(url = "", data, m) {
   // Default options are marked with *
@@ -91,8 +91,17 @@ class AddJovouch extends React.Component {
         }
       });
 
+      let f = arr;
+
+      f = f.filter(e => {
+        if (e.det.status == 0) {
+          return false;
+        } else {
+          return true;
+        }
+      });
       this.setState({
-        vouchData: arr
+        vouchData: f
       });
     } else {
       const is = this.state.data.map(e => {
@@ -154,18 +163,9 @@ class AddJovouch extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        let f = data;
-
-        f = f.filter(e => {
-          if (e.det.status == 0) {
-            return false;
-          } else {
-            return true;
-          }
-        });
         this.setState(() => {
           return {
-            data: f
+            data: data
           };
         });
         this.updateBillAmt();
@@ -218,10 +218,15 @@ class AddJovouch extends React.Component {
           <h1>Add Journal jovoucher</h1>
 
           <div className="add_jovouch_right_btns">
-          {this.props.mode === 'edit' && (<p 
-            onClick = {() => {
-              window.print()
-            }}>Print</p>)}
+            {this.props.mode === "edit" && (
+              <p
+                onClick={() => {
+                  window.print();
+                }}
+              >
+                Print
+              </p>
+            )}
             <p onClick={this.addjovouch}>Save</p>
             <p
               onClick={() => {
@@ -239,9 +244,7 @@ class AddJovouch extends React.Component {
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
-          <Printed_joVouch 
-              jobill_num =  {this.props.jobill_num}
-          />
+        <Printed_joVouch jobill_num={this.props.jobill_num} tpayAmt={this.state.amt} tbillAmt={this.state.billAmt} />
 
         <div className="jovouch_body">
           <form action="/api/jovouch" id="jovouch_det" method="post">
@@ -284,7 +287,7 @@ class AddJovouch extends React.Component {
                         >
                           +
                         </span>
-                        {this.state.data.length !== 0 && (
+                        {(this.state.data.length !== 0 || this.props.mode === "edit") && (
                           <input
                             type="text"
                             placeholder="Bill No."
@@ -412,6 +415,12 @@ class AddJovouch extends React.Component {
                         defaultValue={e.det}
                         className="paydet"
                         id={"payDet" + index}
+                        onBlur={() => {
+                          let arr = this.state.payArr;
+                          if (arr[index]) {
+                            arr[index].det = document.getElementById("payDet" + index).value;
+                          }
+                        }}
                       />
                     </div>
                   </div>
