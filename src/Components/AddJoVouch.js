@@ -154,10 +154,18 @@ class AddJovouch extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        let f = data;
 
+        f = f.filter(e => {
+          if (e.det.status == 0) {
+            return false;
+          } else {
+            return true;
+          }
+        });
         this.setState(() => {
           return {
-            data: data
+            data: f
           };
         });
         this.updateBillAmt();

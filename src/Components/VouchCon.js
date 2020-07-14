@@ -38,7 +38,7 @@ class VouchCon extends React.Component {
         console.log(data);
         this.setState(() => {
           return {
-            data: data
+            data: data.reverse()
           };
         });
       });
@@ -72,7 +72,7 @@ class VouchCon extends React.Component {
       .then(data => {
         this.setState(() => {
           return {
-            JoVouchdata: data
+            JoVouchdata: data.reverse()
           };
         });
       });
@@ -259,7 +259,7 @@ class DetCont extends React.Component {
         </div>
         <div className="det_cont_right_vouch vouch_right">
           <div className=" vouch_status">
-            <span className="acc_right_vouch">Status:</span> {this.props.status == 0 ? "Paid" : "UnPaid"}
+            <span className="acc_right_vouch">Status:</span> {this.props.status}
           </div>
           <div className="vouch_date">
             <span className="acc_right_vouch"> Date:</span> {this.props.date}
