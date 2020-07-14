@@ -224,6 +224,7 @@ class VouchCon extends React.Component {
                           deleteIt={this.deleteIt}
                           updateJoVouchData={this.updateJoVouchData}
                           specificJoVouch={this.props.specificJoVouch}
+                          setjoBill = {this.props.setjoBill}
                         />
                       );
                     })}
@@ -290,18 +291,7 @@ class JoVouchDet extends React.Component {
   render() {
     return (
       <div
-        className="det_cont_jovouch"
-        // onClick={() => {
-        //   this.props.setPVoJVoDN("jv", "print", this.props.data);
-        //   this.props.specificJoVouch(
-        //     this.props.bills,
-        //     this.props.date,
-        //     this.props.amount,
-        //     this.props.seller,
-        //     this.props.cust
-        //   );
-        // }}
-      >
+        className="det_cont_jovouch" >
         <div className="det_cont_right_jovouch_m">
           <div className="vouch_bills">
             <span className="acc_id_vouch">{this.props.i} </span>
@@ -336,6 +326,7 @@ class JoVouchDet extends React.Component {
           <div
             onClick={() => {
               this.props.setPVoJVoDN("jv", "edit", this.props.data);
+              this.props.setjoBill(this.props.bills)
             }}
           >
             <img src={pencil} alt=" " />

@@ -194,6 +194,15 @@ class App extends React.Component {
     });
   };
 
+  setjoBill = (ans) => {
+    
+    this.setState(() => {
+      return{
+        jobill_num : ans
+      }
+    })
+  }
+
   setVouchPage = p => {
     this.setState({ vouchPage: p });
   };
@@ -205,7 +214,7 @@ class App extends React.Component {
     this.setProOrAcc = this.setProOrAcc.bind(this);
     this.backToAcc = this.backToAcc.bind(this);
     this.fi = this.fi.bind(this);
-
+    this.setjoBill = this.setjoBill.bind(this)
     this.navTo = this.navTo.bind(this);
 
     this.state = {
@@ -222,7 +231,7 @@ class App extends React.Component {
       isacc_pro: "acc_det",
       specific_acc: null,
       vouchEData: null,
-
+      jobill_num : null,
       vouchMode: "add",
       vouchData: [],
     };
@@ -319,8 +328,7 @@ class App extends React.Component {
           )}
           {this.state.PVoJVoDN === "jv" && (
             <AddJovouch mode={this.state.vouchMode} EData={this.state.vouchEData} rm={this.rmVouch}
-            jobill_num = {this.state.jobill_num} jobill_amount = {this.state.jobill_amount} jobill_date = {this.state.jobill_date}
-            josupp = {this.state.josupp} jocust = {this.state.jocust} />
+            jobill_num = {this.state.jobill_num}  />
           )}
           {this.state.PVoJVoDN === "dn" && <AddDebit rm={this.rmDebit} />}
           {this.state.PVoJVoDN === "cn" && <AddCredit rm={this.rmCredit} />}
@@ -330,6 +338,7 @@ class App extends React.Component {
               vouchPage={this.state.vouchPage}
               setVouchPage={this.setVouchPage}
               specificJoVouch = {this.specificJoVouch}
+              setjoBill = {this.setjoBill}
             />
           )}
         </div>
