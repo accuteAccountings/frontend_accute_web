@@ -49,8 +49,12 @@
   border: 1px solid rgb(172, 172, 172);
   border-radius: 10px;
   margin-bottom: 0.6rem;
-  box-shadow: 0px 3px 10px #d0d0d0;
+  box-shadow: 2px 2px 4px #a0a0a0;
+  transition: 0.3s;
   cursor: pointer;
+}
+.det_cont:hover {
+  box-shadow: 0px 0px 2px #d0d0d0;
 }
 .det_cont_left {
   display: flex;
@@ -137,6 +141,11 @@
   border: 1px solid rgb(172, 172, 172);
   border-radius: 10px;
   margin-bottom: 0.6rem;
+  box-shadow: 2px 2px 4px #a0a0a0;
+  transition: 0.3s;
+}
+.det_cont_pro:hover {
+  box-shadow: 0px 0px 2px #d0d0d0;
 }
 .det_sub_cont {
   // border: solid black;
