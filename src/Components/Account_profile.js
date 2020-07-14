@@ -9,20 +9,7 @@ export default class Account_pro extends React.Component {
   totalDebit = () => {
     let t = 0;
 
-    if(this.state.details.length != 0){ 
-        this.state.details.map(e => {
-            if (e.supplier === this.props.account.acc_name) {
-              t = parseInt(t) + parseInt(e.totalAmt);
-            }
-            else if (e.debit_acc === this.props.account.acc_name) {
-              t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-            }
-          })
-
-          return t;
-        }
-      else{
-        this.state.det2.map(e => {
+        this.state.bal.map(e => {
           if (e.supplier === this.props.account.acc_name) {
             t = parseInt(t) + parseInt(e.totalAmt);
           }
@@ -32,26 +19,13 @@ export default class Account_pro extends React.Component {
         });
     
         return t;
-      }
+      
     }
 
   totalCredit = () => {
     let t = 0;
-
-    if(this.state.details.length){
-      this.state.details.map(e => {
-        if (e.customer === this.props.account.acc_name) {
-          t = parseInt(t) + parseInt(e.totalAmt);
-        }
-        else  if (e.credit_acc === this.props.account.acc_name) {
-          t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-        }
-      });
-
-
-      return t;
-    }else{
-      this.state.det2.map(e => {
+    
+      this.state.bal.map(e => {
         if (e.customer === this.props.account.acc_name) {
           t = parseInt(t) + parseInt(e.totalAmt);
         }
@@ -62,7 +36,7 @@ export default class Account_pro extends React.Component {
   
   
       return t;
-    }
+    
   };
 
   getDet = async () => {
@@ -187,18 +161,6 @@ export default class Account_pro extends React.Component {
     })
   }
 
-//   handleSearch = () => {
-//     if(document.getElementById('specific_search_ledger').value != null){
-//         let input = document.getElementById('specific_search_ledger')
-//         input.addEventListener('keyup',  function(event) {
-//     if (event.keyCode == 13) {
-//       event.preventDefault();
-      
-//     }
-//   });
-//     }
-// }
-
 
   constructor(props) {
     super(props);
@@ -210,7 +172,8 @@ export default class Account_pro extends React.Component {
         this.setState(() => {
           return {
             det2: data.reverse(),
-            details : []
+            details : [],
+            bal : data
           };
         });
       }else{
@@ -221,7 +184,8 @@ export default class Account_pro extends React.Component {
     this.state = {
       details: [],
       det2 : [],
-      filter : null
+      filter : null,
+      bal : []
     };
 
     
