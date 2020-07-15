@@ -263,7 +263,7 @@ class AddVouch extends React.Component {
     let dicon = parseInt(vouch_dicon) / 100;
     let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
     let g_amt = parseInt(v_amount);
-    v_amount = v_amount * dicon + v_amount;
+    v_amount = v_amount - v_amount * dicon;
     v_amount = v_amount.toFixed(2);
     let arr = this.state.items;
 
@@ -707,6 +707,7 @@ class AddVouch extends React.Component {
                     <th>HSN No.</th>
                     <th>Quantity</th>
                     <th>Rate</th>
+                    <th>Discount</th>
 
                     <th>Amount</th>
                     <th>Edit</th>
@@ -722,6 +723,7 @@ class AddVouch extends React.Component {
                         <td>{i.hsn_num}</td>
                         <td>{i.quantity}</td>
                         <td>{i.rate}</td>
+                        <td>{i.dicon}%</td>
 
                         <td>{i.amount}</td>
                         <td
@@ -753,10 +755,12 @@ class AddVouch extends React.Component {
                       <td> </td>
                       <td> </td>
                       <td> </td>
+                      <td> </td>
                     </tr>
                   )}
                   {this.state.items.length < 2 && (
                     <tr>
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -777,10 +781,12 @@ class AddVouch extends React.Component {
                       <td> </td>
                       <td> </td>
                       <td> </td>
+                      <td> </td>
                     </tr>
                   )}
                   {this.state.items.length < 4 && (
                     <tr>
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
@@ -801,10 +807,12 @@ class AddVouch extends React.Component {
                       <td> </td>
                       <td> </td>
                       <td> </td>
+                      <td> </td>
                     </tr>
                   )}
                   {this.state.items.length < 6 && (
                     <tr>
+                      <td> </td>
                       <td> </td>
                       <td> </td>
                       <td> </td>
