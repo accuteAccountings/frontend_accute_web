@@ -244,7 +244,9 @@ class AddJovouch extends React.Component {
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
-        <Printed_joVouch jobill_num={this.props.jobill_num} tpayAmt={this.state.amt} tbillAmt={this.state.billAmt} />
+        {this.props.mode === "edit" && (
+          <Printed_joVouch jobill_num={this.props.jobill_num} tpayAmt={this.state.amt} tbillAmt={this.state.billAmt} />
+        )}
 
         <div className="jovouch_body">
           <form action="/api/jovouch" id="jovouch_det" method="post">
