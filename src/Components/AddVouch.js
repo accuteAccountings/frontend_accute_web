@@ -23,6 +23,15 @@ async function postData(url = "", data, m) {
 }
 
 class AddVouch extends React.Component {
+  enterError = id => {
+    document.getElementById(id).style.borderColor = "red";
+    document.getElementById(id + "_error").style.display = "block";
+  };
+  rmEnterError = id => {
+    document.getElementById(id).style.borderColor = "#505050";
+    document.getElementById(id + "_error").style.display = "none";
+  };
+
   setData = () => {
     let d = this.props.EData.det;
     document.querySelector("#vouch_bill_date").defaultValue = d.bill_date;
@@ -74,7 +83,31 @@ class AddVouch extends React.Component {
     total = parseInt(total) + (parseInt(total) * parseInt(gst)) / 100;
     this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt });
   };
+
   async addVouch() {
+    let bool = false;
+    if (document.getElementById("vouch_bill_no").value === "") {
+      this.enterError("vouch_bill_no");
+      bool = true;
+    } else {
+      this.rmEnterError("vouch_bill_no");
+    }
+
+    if (document.getElementById("vouch_sup").value === "None") {
+      this.enterError("vouch_sup");
+      bool = true;
+    } else {
+      this.rmEnterError("vouch_sup");
+    }
+    if (document.getElementById("vouch_customer").value === "None") {
+      this.enterError("vouch_customer");
+      bool = true;
+    } else {
+      this.rmEnterError("vouch_customer");
+    }
+    if (bool) {
+      return;
+    }
     let bill_date = document.querySelector("#vouch_bill_date").value;
     let type = document.querySelector("#vouch_type").value;
     let bill_num = document.querySelector("#vouch_bill_no").value;
@@ -431,7 +464,20 @@ class AddVouch extends React.Component {
                   <div className="vouch_si">
                     <span>Bill No.</span>
                     <br />
-                    <input type="number" name="vouch_bill_no" id="vouch_bill_no" />
+                    <input
+                      onBlur={() => {
+                        if (document.getElementById("vouch_bill_no").value !== "") {
+                          this.rmEnterError("vouch_bill_no");
+                        }
+                      }}
+                      type="number"
+                      name="vouch_bill_no"
+                      id="vouch_bill_no"
+                    />
+                    <p className="error_p" id="vouch_bill_no_error">
+                      {" "}
+                      Please Enter Bill Number
+                    </p>
                   </div>
 
                   <div className="vouch_si">
@@ -452,7 +498,7 @@ class AddVouch extends React.Component {
                             return (
                               <option
                                 selected={
-                                  this.props.mode === "edit" && this.props.EData.transport_name === acc.acc_name
+                                  this.props.mode === "edit" && this.props.EData.det.transport_name === acc.acc_name
                                     ? true
                                     : false
                                 }
@@ -476,6 +522,11 @@ class AddVouch extends React.Component {
                         let arr = this.state.accounts;
                         arr = arr.sort();
                         this.setState({ accounts: arr });
+                      }}
+                      onBlur={() => {
+                        if (document.getElementById("vouch_sup").value !== "None") {
+                          this.rmEnterError("vouch_sup");
+                        }
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
@@ -505,6 +556,10 @@ class AddVouch extends React.Component {
                           }
                         })}
                     </select>
+                    <p className="error_p" id="vouch_sup_error">
+                      {" "}
+                      Please Enter Supplier/Seller Name
+                    </p>
                   </div>
 
                   <div className="vouch_si">
@@ -538,6 +593,9 @@ class AddVouch extends React.Component {
                       name="vouch_gst"
                       id="vouch_gst"
                       onBlur={() => {
+                        if (document.getElementById("vouch_gst").value === "") {
+                          document.getElementById("vouch_gst").value = 0;
+                        }
                         this.setState({ gst: document.getElementById("vouch_gst").value });
                         this.updateTotal();
                       }}
@@ -554,6 +612,11 @@ class AddVouch extends React.Component {
                         let arr = this.state.accounts;
                         arr = arr.sort();
                         this.setState({ accounts: arr });
+                      }}
+                      onBlur={() => {
+                        if (document.getElementById("vouch_customer").value !== "None") {
+                          this.rmEnterError("vouch_customer");
+                        }
                       }}
                       name="customer"
                       id="vouch_customer"
@@ -581,6 +644,10 @@ class AddVouch extends React.Component {
                           }
                         })}
                     </select>
+                    <p className="error_p" id="vouch_customer_error">
+                      {" "}
+                      Please Enter Customer Name
+                    </p>
                   </div>
                   {this.state.subAgent ? (
                     <div className="vouch_si">
@@ -670,12 +737,24 @@ class AddVouch extends React.Component {
               <div className="vouch_si">
                 <span>Quantity</span>
                 <br />
-                <input type="number" name="vouch_quantity" id="vouch_quantity" defaultValue="1" />
+                <input
+                  onFocus={e => e.target.select()}
+                  type="number"
+                  name="vouch_quantity"
+                  id="vouch_quantity"
+                  defaultValue="1"
+                />
               </div>
               <div className="vouch_si">
                 <span>Rate</span>
                 <br />
-                <input type="number" name="vouch_rate" id="vouch_rate" defaultValue="1" />
+                <input
+                  onFocus={e => e.target.select()}
+                  type="number"
+                  name="vouch_rate"
+                  id="vouch_rate"
+                  defaultValue="1"
+                />
               </div>
               <div className="vouch_si" id="gst_con">
                 <span>Discount</span>
@@ -683,10 +762,14 @@ class AddVouch extends React.Component {
                 <span id="percentage">%</span>
                 <input
                   onBlur={() => {
+                    if (document.getElementById("vouch_dicon").value === "") {
+                      document.getElementById("vouch_dicon").value = 0;
+                    }
                     this.setState({ defaultDiscon: document.getElementById("vouch_dicon").value });
                   }}
                   type="number"
                   name="vouch_dicon"
+                  onFocus={e => e.target.select()}
                   id="vouch_dicon"
                   defaultValue={this.state.defaultDiscon}
                 />

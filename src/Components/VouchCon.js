@@ -224,7 +224,7 @@ class VouchCon extends React.Component {
                           deleteIt={this.deleteIt}
                           updateJoVouchData={this.updateJoVouchData}
                           specificJoVouch={this.props.specificJoVouch}
-                          setjoBill = {this.props.setjoBill}
+                          setjoBill={this.props.setjoBill}
                         />
                       );
                     })}
@@ -243,7 +243,7 @@ class DetCont extends React.Component {
       <div className="det_cont_vouch">
         <div className="det_cont_left vouc_det_left">
           <div className="acc_name_vouch">
-            <span className="acc_id_vouch">{this.props.i}. </span>
+            <span className="acc_id_vouch">{this.props.id}. </span>
             {this.props.supplier}
             <span className="vouch_to">TO</span>
             <span className="vouch_costumer_name">{this.props.costumer}</span>
@@ -290,11 +290,10 @@ class DetCont extends React.Component {
 class JoVouchDet extends React.Component {
   render() {
     return (
-      <div
-        className="det_cont_jovouch" >
+      <div className="det_cont_jovouch">
         <div className="det_cont_right_jovouch_m">
           <div className="vouch_bills">
-            <span className="acc_id_vouch">{this.props.i} </span>
+            <span className="acc_id_vouch">{this.props.id} </span>
             <span className="acc_right_vouch">Bills:</span> {this.props.bills.join(" , ")}
           </div>
           <div className="acc_name_jovouch jovouch_det">
@@ -326,7 +325,7 @@ class JoVouchDet extends React.Component {
           <div
             onClick={() => {
               this.props.setPVoJVoDN("jv", "edit", this.props.data);
-              this.props.setjoBill(this.props.bills)
+              this.props.setjoBill(this.props.bills);
             }}
           >
             <img src={pencil} alt=" " />
