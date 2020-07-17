@@ -737,12 +737,24 @@ class AddVouch extends React.Component {
               <div className="vouch_si">
                 <span>Quantity</span>
                 <br />
-                <input type="number" name="vouch_quantity" id="vouch_quantity" defaultValue="1" />
+                <input
+                  onFocus={e => e.target.select()}
+                  type="number"
+                  name="vouch_quantity"
+                  id="vouch_quantity"
+                  defaultValue="1"
+                />
               </div>
               <div className="vouch_si">
                 <span>Rate</span>
                 <br />
-                <input type="number" name="vouch_rate" id="vouch_rate" defaultValue="1" />
+                <input
+                  onFocus={e => e.target.select()}
+                  type="number"
+                  name="vouch_rate"
+                  id="vouch_rate"
+                  defaultValue="1"
+                />
               </div>
               <div className="vouch_si" id="gst_con">
                 <span>Discount</span>
@@ -757,6 +769,7 @@ class AddVouch extends React.Component {
                   }}
                   type="number"
                   name="vouch_dicon"
+                  onFocus={e => e.target.select()}
                   id="vouch_dicon"
                   defaultValue={this.state.defaultDiscon}
                 />

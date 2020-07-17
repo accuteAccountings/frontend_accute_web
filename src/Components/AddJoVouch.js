@@ -232,7 +232,7 @@ class AddJovouch extends React.Component {
               onClick={() => {
                 this.setState({
                   BillArr: [""],
-                  payArr: [],
+                  payArr: [""],
                   Cbill: [],
                   amt: 0,
                   billAmt: 0
