@@ -1,0 +1,135 @@
+.chart_pro{
+    padding: 10px;
+    height: 14vw;
+    width: 25vw;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(129, 129, 129);
+    margin-right: 3rem;
+    margin-bottom: 15px;
+    // margin-left: 5rem;
+    transition: 0.2s;
+    // margin-top: 20px;
+}
+.charts_pro{
+    canvas {
+        height: 13vw !important;
+        width: 24vw !important;
+    }
+    width: 75rem;
+    margin-left: 5rem;
+    height: 45rem;
+    // border: solid black;
+   
+    padding: 0 1rem;
+}
+.report_box{
+    width: 93%;
+    height: 36rem;
+    // border: solid black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.5rem 0.5rem;
+}
+.report_icons{
+//    margin-left: 82%;
+    img{
+        height: 20px;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
+    // #blue_grid{
+    //     height: 40px;
+    // }
+
+    .black{
+        display: none;
+    }
+    .blue{
+        display: unset;
+    }
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    input{
+        width: 8.9rem;
+        margin-right: 15px;
+        background-color: transparent;
+        font-size: 0.9rem;
+        border: transparent;
+        border-bottom: 1px solid $l_grey_text;
+    }
+
+}
+
+.report_upper{
+    width: 83%;
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left_head{
+        font-size: 1.5rem;
+    }
+    margin-bottom: 0.2rem;
+    margin-top: 0.5rem;
+}
+
+.grid_report{
+    width: 93%;
+    height: 15rem;
+    // border: solid black;
+    // margin-left: 5rem;
+}
+
+.grid_box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.5rem 2rem;
+
+}
+.grid_tab{
+    width: 30rem;
+    height: 6rem;
+    
+    padding: 1rem ;
+    font-weight: 500;
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    
+
+    // align-items: center;
+
+    .percent{
+        font-size: 1rem;
+        color: red;
+        margin-left: 15px;
+    }
+    .value{
+    font-size: 1.4rem;
+    font-weight: 500;
+    }
+   
+}
+
+.ul{
+    border-bottom: 1px solid $l_grey_text;
+    border-right: 1px solid $l_grey_text;
+
+}
+.ur{
+    border-bottom: 1px solid $l_grey_text;
+    
+}
+.bl{
+    border-right: 1px solid $l_grey_text;
+
+}

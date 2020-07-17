@@ -2,6 +2,7 @@ import React from "react";
 import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg";
 import Ledger from './Ledger_Account'
+import Report_pro from './Report_Acc_pro'
 
 
 export default class Account_pro extends React.Component {
@@ -351,6 +352,12 @@ export default class Account_pro extends React.Component {
              handleSearch = {this.handleSearch}
              />
           )}
+
+         { this.props.acc_pro_val === "reports" && (
+           <Report_pro 
+            acc_name = {this.props.account.acc_name}
+           />
+         )} 
         </div>
       </div>
     );
