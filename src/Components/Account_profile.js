@@ -1,9 +1,8 @@
 import React from "react";
 import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg";
-import Ledger from './Ledger_Account'
-import Report_pro from './Report_Acc_pro'
-
+import Ledger from "./Ledger_Account";
+import Report_pro from "./Report_Acc_pro";
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {
@@ -162,7 +161,7 @@ export default class Account_pro extends React.Component {
           this.setState(() => {
             return {
               det2: data.reverse(),
-              det3 : data ,
+              det3: data,
               details: [],
               bal: data
             };
@@ -176,7 +175,7 @@ export default class Account_pro extends React.Component {
       details: [],
       det2: [],
       filter: null,
-      det3 : [],
+      det3: [],
       bal: []
     };
   }
@@ -204,7 +203,9 @@ export default class Account_pro extends React.Component {
                 </div>
                 <div className="leger_upp_right">
                   <span className="upp_head">Balance : </span>
-                  {parseInt(this.totalDebit()) - parseInt(this.totalCredit())}
+                  {parseInt(this.totalDebit()) - parseInt(this.totalCredit()) < 0
+                    ? parseInt(this.totalCredit()) - parseInt(this.totalDebit()) + " (Cr.)"
+                    : parseInt(this.totalDebit()) - parseInt(this.totalCredit()) + " (Dr.)"}
                 </div>
               </div>
             )}
@@ -335,15 +336,11 @@ export default class Account_pro extends React.Component {
               det2={this.state.det2}
               handleradio={this.handleradio}
               handleSearch={this.handleSearch}
-              det3 = {this.state.det3}
+              det3={this.state.det3}
             />
           )}
 
-         { this.props.acc_pro_val === "reports" && (
-           <Report_pro 
-            acc_name = {this.props.account.acc_name}
-           />
-         )} 
+          {this.props.acc_pro_val === "reports" && <Report_pro acc_name={this.props.account.acc_name} />}
         </div>
       </div>
     );
