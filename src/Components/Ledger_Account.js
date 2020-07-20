@@ -17,41 +17,35 @@ export default class Ledger extends React.Component {
     }
   }
 
-  Ledger_Balance = (id) => {
-    let t =0;
-    this.props.details.map((e , i) => {
+  Ledger_Balance = id => {
+    let t = 0;
+    this.props.details.map((e, i) => {
       i <= id &&
-      (e.credit_acc ? (
-        (e.credit_acc === this.props.account.acc_name ) ?
-      (t = parseInt(t) + parseInt(e.amount - e.balance)) :
-      (t = parseInt(t) - parseInt(e.amount - e.balance))
-      ) : (
-        (e.customer === this.props.account.acc_name ) ?
-      ( t = parseInt(t) + parseInt(e.totalAmt)) :
-      (t = parseInt(t) - parseInt(e.totalAmt))
-      )
-      )
-    })
-    return t
-  }
+        (e.credit_acc
+          ? e.credit_acc === this.props.account.acc_name
+            ? (t = parseInt(t) + parseInt(e.amount - e.balance))
+            : (t = parseInt(t) - parseInt(e.amount - e.balance))
+          : e.customer === this.props.account.acc_name
+          ? (t = parseInt(t) + parseInt(e.totalAmt))
+          : (t = parseInt(t) - parseInt(e.totalAmt)));
+    });
+    return t;
+  };
 
-  Rec_Ledger_Balance = (id) => {
-    let t =0;
-    this.props.det2.map((e , i) => {
+  Rec_Ledger_Balance = id => {
+    let t = 0;
+    this.props.det2.map((e, i) => {
       i <= id &&
-      (e.credit_acc ? (
-        (e.credit_acc === this.props.account.acc_name ) ?
-      (t = parseInt(t) + parseInt(e.amount - e.balance)) :
-      (t = parseInt(t) - parseInt(e.amount - e.balance))
-      ) : (
-        (e.customer === this.props.account.acc_name ) ?
-      ( t = parseInt(t) + parseInt(e.totalAmt)) :
-      (t = parseInt(t) - parseInt(e.totalAmt))
-      )
-      )
-    })
-    return t
-  }
+        (e.credit_acc
+          ? e.credit_acc === this.props.account.acc_name
+            ? (t = parseInt(t) + parseInt(e.amount - e.balance))
+            : (t = parseInt(t) - parseInt(e.amount - e.balance))
+          : e.customer === this.props.account.acc_name
+          ? (t = parseInt(t) + parseInt(e.totalAmt))
+          : (t = parseInt(t) - parseInt(e.totalAmt)));
+    });
+    return t;
+  };
 
   constructor(props) {
     super(props);
@@ -196,7 +190,11 @@ export default class Ledger extends React.Component {
                       <td className="td_bill">{e.billArr.join(" , ")}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
-                      <td>{this.Ledger_Balance(i)} </td>
+                      <td>
+                        {parseInt(this.Ledger_Balance(i)) < 0
+                          ? this.Ledger_Balance(i) + " (Dr.)"
+                          : this.Ledger_Balance(i) + " (Cr.)"}{" "}
+                      </td>
                     </tr>
                   ) : (
                     <tr className="tr_acc">
@@ -206,7 +204,11 @@ export default class Ledger extends React.Component {
                       <td className="td_bill">{e.bill_num}</td>
                       <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
                       <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
-                      <td>{this.Ledger_Balance(i)}  </td>
+                      <td>
+                        {parseInt(this.Ledger_Balance(i)) < 0
+                          ? this.Ledger_Balance(i) + " (Dr.)"
+                          : this.Ledger_Balance(i) + " (Cr.)"}{" "}
+                      </td>
                     </tr>
                   );
                 })}
@@ -220,7 +222,11 @@ export default class Ledger extends React.Component {
                       <td className="td_bill">{e.billArr.join(" , ")}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
-                      <td>{this.Rec_Ledger_Balance(i)} </td>
+                      <td>
+                        {parseInt(this.Rec_Ledger_Balance(i)) < 0
+                          ? -this.Rec_Ledger_Balance(i) + " (Dr.)"
+                          : this.Rec_Ledger_Balance(i) + " (Cr.)"}{" "}
+                      </td>
                     </tr>
                   ) : (
                     i < 7 && (
@@ -231,7 +237,11 @@ export default class Ledger extends React.Component {
                         <td className="td_bill">{e.bill_num}</td>
                         <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
                         <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
-                        <td>{this.Rec_Ledger_Balance(i)} </td>
+                        <td>
+                          {parseInt(this.Rec_Ledger_Balance(i)) < 0
+                            ? -this.Rec_Ledger_Balance(i) + " (Dr.)"
+                            : this.Rec_Ledger_Balance(i) + " (Cr.)"}{" "}
+                        </td>
                       </tr>
                     )
                   );
