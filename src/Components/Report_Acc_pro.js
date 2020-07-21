@@ -28,13 +28,13 @@ export default class Report_pro extends React.Component{
        
        await this.setState(() => {
             return{
-                labels : [this.DateWW('1') , this.DateWW('5') , this.DateWW('10') , this.DateWW('15') , this.DateWW('20') , this.DateWW('25'),
+                labels : ['' , this.DateWW('5') , this.DateWW('10') , this.DateWW('15') , this.DateWW('20') , this.DateWW('25'),
                  this.DateWW('31')],
-                data_sales : [ '0' , this.Total_sales_WW('1'), this.Total_sales_WW('2'), this.Total_sales_WW('3'), this.Total_sales_WW('4') ,
+                data_sales : [ 0 , this.Total_sales_WW('1'), this.Total_sales_WW('2'), this.Total_sales_WW('3'), this.Total_sales_WW('4') ,
              this.Total_sales_WW('5') , this.Total_sales_WW('6') ],
-                purchase : ['0' , this.Total_purchase_WW('1') , this.Total_purchase_WW('2') , this.Total_purchase_WW('3') , this.Total_purchase_WW('4') ,
+                purchase : [ 0 , this.Total_purchase_WW('1') , this.Total_purchase_WW('2') , this.Total_purchase_WW('3') , this.Total_purchase_WW('4') ,
               this.Total_purchase_WW('5') , this.Total_purchase_WW('6')],
-                payment : ['0' , this.Total_payment_WW('1') , this.Total_payment_WW('2') , this.Total_payment_WW('3') , this.Total_payment_WW('4') ,
+                payment : [ 0 , this.Total_payment_WW('1') , this.Total_payment_WW('2') , this.Total_payment_WW('3') , this.Total_payment_WW('4') ,
                 this.Total_payment_WW('5') , this.Total_payment_WW('6')]
             }
         })
@@ -55,17 +55,45 @@ export default class Report_pro extends React.Component{
                 
        await this.setState(() => {
         return{
-            labels : [ this.DateX('0'), this.DateX('1') , this.DateX('2'), this.DateX('3') , this.DateX('4') ,
-            this.DateX('5') , this.DateX('6')],
-            data_sales : [this.Sales_DW('0'), this.Sales_DW('1'), this.Sales_DW('2'), this.Sales_DW('3') , this.Sales_DW('4'),
-             this.Sales_DW('5') , this.Sales_DW('6') ],
-             purchase : [this.Purchase_DW('0'), this.Purchase_DW('1'), this.Purchase_DW('2'), this.Purchase_DW('3') , this.Purchase_DW('4'),
-             this.Purchase_DW('5') , this.Purchase_DW('6') ],
-             payment : [this.Payment_DW('0'), this.Payment_DW('1'), this.Payment_DW('2'), this.Payment_DW('3') , this.Payment_DW('4'),
-             this.Payment_DW('5') , this.Payment_DW('6') ],
+            labels : [ this.DateX('6'), this.DateX('5') , this.DateX('4'), this.DateX('3') , this.DateX('2') ,
+            this.DateX('1') , this.DateX('0')],
+            data_sales : [this.Sales_DW('6'), this.Sales_DW('5'), this.Sales_DW('4'), this.Sales_DW('3') , this.Sales_DW('2'),
+             this.Sales_DW('1') , this.Sales_DW('0') ],
+             purchase : [this.Purchase_DW('6'), this.Purchase_DW('5'), this.Purchase_DW('4'), this.Purchase_DW('3') , this.Purchase_DW('2'),
+             this.Purchase_DW('1') , this.Purchase_DW('0') ],
+             payment : [this.Payment_DW('6'), this.Payment_DW('5'), this.Payment_DW('4'), this.Payment_DW('3') , this.Payment_DW('2'),
+             this.Payment_DW('1') , this.Payment_DW('0') ],
         }
     })
             
+        }
+
+        if(ans == 'three_months'){
+            await fetch(`/api/report/threeMonths?supplier=${this.props.acc_name}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if(data){
+                    this.setState(() => {
+                        return{
+                            monthdata : data
+                        }
+                    })
+                }
+            })
+
+            await this.setState(() => {
+                return{
+                    labels : [ '', this.Date_MW('2' , '14'), this.Date_MW('2' , '31') , this.Date_MW('1' , '14'), this.Date_MW('1.' , '31') 
+                        , this.Date_MW('0' , '14') , this.Date_MW('0' , '31') ],
+                    data_sales : [ 0 , this.Sales_MW('0'), this.Sales_MW('1'), this.Sales_MW('2'), this.Sales_MW('3') , this.Sales_MW('4'),
+                     this.Sales_MW('5') ],
+                     purchase : [0 , this.Purchase_MW('0') , this.Purchase_MW('1') , this.Purchase_MW('2') , this.Purchase_MW('3') ,
+              this.Purchase_MW('4') , this.Purchase_MW('5')],
+                     payment : [ 0 , this.Payment_MW('0'), this.Payment_MW('1'), this.Payment_MW('2'), this.Payment_DW('3') , this.Payment_MW('4'),
+                     this.Payment_MW('5')],
+                }
+            })
+                  
         }
 
         let sales = await this.Total_sales(ans)
@@ -102,11 +130,81 @@ export default class Report_pro extends React.Component{
         let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
          'July' , 'August' , 'September' , 'October' , 'November' , 'December']
         let cdate = parseInt(i)
-       
+
         var finaldate =  cdate + ' ' + monthArr[month]
 
         return finaldate;
     }
+
+    Date_MW = (m,d) => {
+        var date = new Date()
+        let year = date.getFullYear()
+        let month = date.getMonth() -parseInt(m)
+        let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
+         'July' , 'August' , 'September' , 'October' , 'November' , 'December']
+        let cdate =  parseInt(d)
+        if(parseInt(cdate) < 10){
+            cdate = '0' + cdate
+        }
+        if(cdate > 14){
+            cdate = this.getDaysInMonth(month + 1 , year)
+        }
+        var finaldate =  cdate + ' ' + monthArr[month]
+
+        return finaldate
+    }
+
+     getDaysInMonth = (month,year) => {
+
+       return new Date(year, month, 0).getDate();
+      };
+
+    Sales_MW = (ans) => {
+        let t = 0
+        this.state.monthdata.map((e , i) => {
+            i == ans && (
+                e.vouch.map(x => {
+                    x.supplier === this.props.acc_name && (
+                        t = parseInt(t) + parseInt(x.totalAmt)
+                        )
+                })
+        
+            )
+        })
+        return t;
+    }
+
+    Purchase_MW = (ans) => {
+        let t = 0
+    
+            this.state.monthdata.map((e,i) => {
+                i == ans && (
+                    e.vouch.map(x => {
+                        x.customer === this.props.acc_name && (
+                            t = parseInt(t) + parseInt(x.totalAmt)
+                            )
+                    })
+            
+                )
+            })
+        return t;
+    }
+
+    Payment_MW = (ans) => {
+        let t = 0
+            this.state.monthdata.map((e,i) => {
+                i == ans && (
+                    e.jovouch.map(x => {
+                        x.credit_acc === this.props.acc_name && (
+                            t = parseInt(t) + parseInt(x.amount - x.balance)
+                            )
+                    })
+            
+                )
+            })
+        return t;
+    
+    }    
 
     Sales_DW  = (i) => {
         var date = new Date()
@@ -194,9 +292,8 @@ export default class Report_pro extends React.Component{
 
     Total_sales_WW = (ans) => {
         let t = 0
-        if(ans == '1'){
-        this.state.weekdata.map((e,i) => {
-            i == 0 && (
+        this.state.weekdata.map((e , i) => {
+            i == parseInt(ans-1) && (
                 e.vouch.map(x => {
                     x.supplier === this.props.acc_name && (
                         t = parseInt(t) + parseInt(x.totalAmt)
@@ -206,79 +303,14 @@ export default class Report_pro extends React.Component{
             )
         })
         return t;
-    }
-    else if(ans == '2'){
-        this.state.weekdata.map((e,i) => {
-            i == 1 && (
-                e.vouch.map(x => {
-                    x.supplier === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '3'){
-        this.state.weekdata.map((e,i) => {
-            i == 2 && (
-                e.vouch.map(x => {
-                    x.supplier === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '4'){
-        this.state.weekdata.map((e,i) => {
-            i == 3 && (
-                e.vouch.map(x => {
-                    x.supplier === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '5'){
-        this.state.weekdata.map((e,i) => {
-            i == 4 && (
-                e.vouch.map(x => {
-                    x.supplier === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '6'){
-        this.state.weekdata.map((e,i) => {
-            i == 5 && (
-                e.vouch.map(x => {
-                    x.supplier === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
+    
     }
 
     Total_purchase_WW = (ans) => {
         let t = 0
-        if(ans == '1'){
+    
             this.state.weekdata.map((e,i) => {
-                i == 0 && (
+                i == parseInt(ans - 1) && (
                     e.vouch.map(x => {
                         x.customer === this.props.acc_name && (
                             t = parseInt(t) + parseInt(x.totalAmt)
@@ -288,79 +320,13 @@ export default class Report_pro extends React.Component{
                 )
             })
         return t;
-    }
-    else if(ans == '2'){
-        this.state.weekdata.map((e,i) => {
-            i == 1 && (
-                e.vouch.map(x => {
-                    x.customer === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '3'){
-        this.state.weekdata.map((e,i) => {
-            i == 2 && (
-                e.vouch.map(x => {
-                    x.customer === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '4'){
-        this.state.weekdata.map((e,i) => {
-            i == 3 && (
-                e.vouch.map(x => {
-                    x.customer === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '5'){
-        this.state.weekdata.map((e,i) => {
-            i == 4 && (
-                e.vouch.map(x => {
-                    x.customer === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '6'){
-        this.state.weekdata.map((e,i) => {
-            i == 5 && (
-                e.vouch.map(x => {
-                    x.customer === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.totalAmt)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
+   
     }
 
     Total_payment_WW = (ans) => {
         let t = 0
-        if(ans == '1'){
             this.state.weekdata.map((e,i) => {
-                i == 0 && (
+                i == parseInt(ans - 1) && (
                     e.jovouch.map(x => {
                         x.credit_acc === this.props.acc_name && (
                             t = parseInt(t) + parseInt(x.amount - x.balance)
@@ -370,72 +336,7 @@ export default class Report_pro extends React.Component{
                 )
             })
         return t;
-    }
-    else if(ans == '2'){
-        this.state.weekdata.map((e,i) => {
-            i == 1 && (
-                e.jovouch.map(x => {
-                    x.credit_acc === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.amount - x.balance)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '3'){
-        this.state.weekdata.map((e,i) => {
-            i == 2 && (
-                e.jovouch.map(x => {
-                    x.credit_acc === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.amount - x.balance)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '4'){
-        this.state.weekdata.map((e,i) => {
-            i == 3 && (
-                e.jovouch.map(x => {
-                    x.credit_acc === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.amount - x.balance)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '5'){
-        this.state.weekdata.map((e,i) => {
-            i == 4 && (
-                e.jovouch.map(x => {
-                    x.credit_acc === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.amount - x.balance)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
-    else if(ans == '6'){
-        this.state.weekdata.map((e,i) => {
-            i == 5 && (
-                e.jovouch.map(x => {
-                    x.credit_acc === this.props.acc_name && (
-                        t = parseInt(t) + parseInt(x.amount - x.balance)
-                        )
-                })
-        
-            )
-        })
-        return t;
-    }
+    
     }    
 
     setmode = (ans) => {
@@ -470,6 +371,17 @@ export default class Report_pro extends React.Component{
             })
     })     
     }
+    else if(ans == 'three_months'){
+        this.state.monthdata.map(e => {
+
+            e.vouch.map(x => {
+                x.supplier === this.props.acc_name && (
+                    t = parseInt(t) + parseInt(x.totalAmt)
+                )
+                
+            })
+    })     
+    }
         return t;
     }
 
@@ -488,6 +400,17 @@ export default class Report_pro extends React.Component{
     }
     else if(ans == 'seven_days'){
         this.state.dayData.map(e => {
+
+            e.vouch.map(x => {
+                x.customer === this.props.acc_name && (
+                    t = parseInt(t) + parseInt(x.totalAmt)
+                )
+                
+            })
+    })     
+    }
+    else if(ans == 'three_months'){
+        this.state.monthdata.map(e => {
 
             e.vouch.map(x => {
                 x.customer === this.props.acc_name && (
@@ -525,6 +448,17 @@ export default class Report_pro extends React.Component{
             
     })    
     }
+    else if(ans == 'three_months'){
+        this.state.monthdata.map(e => {
+            e.jovouch.map(x => {
+                x.credit_acc === this.props.acc_name && (
+                    t = parseInt(t) + parseInt(x.amount - x.balance)
+                )
+                
+            })
+            
+    })    
+    }
         return t;
     }
 
@@ -544,6 +478,7 @@ export default class Report_pro extends React.Component{
             purchase : [],
             payment : [],
             dayData : [],
+            monthdata : [],
             sales_val : null,
             payment_val : null,
             purchase_val : null
