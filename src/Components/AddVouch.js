@@ -438,7 +438,6 @@ class AddVouch extends React.Component {
             >
               Save
             </p>
-            <p>Reset</p>
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
@@ -709,6 +708,11 @@ class AddVouch extends React.Component {
                     this.selectAllText();
                   }}
                   autoComplete="off"
+                  onBlur={() => {
+                    setTimeout(() => {
+                      document.getElementById("pro_list").style.display = "none";
+                    }, 500);
+                  }}
                 />
                 <ul id="pro_list">
                   {this.state.pro.map((pro, index) => {

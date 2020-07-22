@@ -38,23 +38,21 @@ class TopBar extends React.Component {
   }
 
   componentDidMount() {
-    let ison = false;
-    let pro_btn = document.getElementsByClassName("profile_btn")[0];
-    let pro_drop = document.getElementsByClassName("profile_drop_down")[0];
-    let ar = document.getElementById("arrow");
-
-    pro_btn.addEventListener("click", () => {
-      if (ison) {
-        pro_drop.style.display = "none";
-        ar.style.transform = "rotateZ(0deg)";
-
-        ison = false;
-      } else {
-        pro_drop.style.display = "block";
-        ar.style.transform = "rotateZ(180deg)";
-        ison = true;
-      }
-    });
+    // let ison = false;
+    // let pro_btn = document.getElementsByClassName("profile_btn")[0];
+    // let pro_drop = document.getElementsByClassName("profile_drop_down")[0];
+    // let ar = document.getElementById("arrow");
+    // pro_btn.addEventListener("click", () => {
+    //   if (ison) {
+    //     pro_drop.style.display = "none";
+    //     ar.style.transform = "rotateZ(0deg)";
+    //     ison = false;
+    //   } else {
+    //     pro_drop.style.display = "block";
+    //     ar.style.transform = "rotateZ(180deg)";
+    //     ison = true;
+    //   }
+    // });
   }
 
   constructor(props) {
@@ -78,21 +76,21 @@ class TopBar extends React.Component {
           <span>
             <img id="arrow" src={arrow} alt="?" />
           </span>{" "}
+          <div className="profile_drop_down">
+            <div>
+              <li>User Profile</li>
+              <li>Company Profile</li>
+              <li>Subscriptions & Billings</li>
+              <li>Manage Users</li>
+            </div>
+            <div id="pro_drop_lower">
+              <li>Support</li>
+              <li>Settings</li>
+              <li>Privacy Policy</li>
+              <li onClick={this.logout}>Sign Out</li>
+            </div>
+          </div>
         </li>
-        <div className="profile_drop_down">
-          <div>
-            <li>User Profile</li>
-            <li>Company Profile</li>
-            <li>Subscriptions & Billings</li>
-            <li>Manage Users</li>
-          </div>
-          <div id="pro_drop_lower">
-            <li>Support</li>
-            <li>Settings</li>
-            <li>Privacy Policy</li>
-            <li onClick={this.logout}>Sign Out</li>
-          </div>
-        </div>
 
         {/* <li className="top_btns help_btn" onClick={this.logout}><span><img src={help} alt="?" /></span> Help</li>
                 <li className="top_btns settings_btn"> <span><img src={settings} alt="" /></span> Settings</li> */}

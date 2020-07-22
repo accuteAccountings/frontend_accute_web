@@ -12,17 +12,11 @@ class AddAcc extends React.Component {
   };
 
   setValue = () => {
-    document.querySelector(
-      ".add_acc_inp_name"
-    ).value = this.props.data.acc_name;
+    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_name;
 
-    document.querySelector(
-      ".add_acc_inp_pname"
-    ).value = this.props.data.print_name;
+    document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
 
-    document.querySelector(
-      "#add_acc_inp_group"
-    ).value = this.props.data.acc_type;
+    document.querySelector("#add_acc_inp_group").value = this.props.data.acc_type;
 
     document.querySelector("#add_acc_status").value = this.props.data.status;
 
@@ -30,33 +24,23 @@ class AddAcc extends React.Component {
 
     document.querySelector(".add_acc_inp_pan").value = this.props.data.pan_num;
 
-    document.querySelector(
-      ".add_acc_inp_aadhar"
-    ).value = this.props.data.pan_num;
+    document.querySelector(".add_acc_inp_aadhar").value = this.props.data.pan_num;
 
-    document.querySelector(
-      "#add_acc_inp_add1"
-    ).value = this.props.data.address_line1;
+    document.querySelector("#add_acc_inp_add1").value = this.props.data.address_line1;
 
-    document.querySelector(
-      "#add_acc_inp_add2"
-    ).value = this.props.data.address_line2;
+    document.querySelector("#add_acc_inp_add2").value = this.props.data.address_line2;
 
     document.querySelector("#add_acc_inp_state").value = this.props.data.state;
 
     document.querySelector("#add_acc_inp_city").value = this.props.data.city;
 
-    document.querySelector(
-      ".add_acc_inp_pincode"
-    ).value = this.props.data.pincode;
+    document.querySelector(".add_acc_inp_pincode").value = this.props.data.pincode;
 
     // let  mob_num=document.querySelector("#add_acc_inp_mobnum").value + document.querySelector("#add_acc_inp_mob").value
 
     // let  phone_num=document.querySelector("#add_acc_inp_phonenum").value + document.querySelector("#add_acc_inp_phone").value
 
-    document.querySelector(
-      ".add_acc_inp_email"
-    ).value = this.props.data.emailId;
+    document.querySelector(".add_acc_inp_email").value = this.props.data.emailId;
 
     document.querySelector(".add_acc_inp_note").value = this.props.data.notes;
 
@@ -94,12 +78,9 @@ class AddAcc extends React.Component {
 
     let pincode = document.querySelector(".add_acc_inp_pincode").value;
 
-    let mob_num =
-      document.querySelector("#add_acc_inp_mob").value;
+    let mob_num = document.querySelector("#add_acc_inp_mob").value;
 
-    let phone_num =
-     
-      document.querySelector("#add_acc_inp_phone").value;
+    let phone_num = document.querySelector("#add_acc_inp_phone").value;
 
     let emailId = document.querySelector(".add_acc_inp_email").value;
 
@@ -254,7 +235,7 @@ class AddAcc extends React.Component {
                   >
                     <option value="debtors">Debtors</option>
                     <option value="creditors">Creditors</option>
-                    <option value="agent">Agent</option>
+                    <option value="Sub Agent">Sub Agent</option>
                     <option value="transport">Transport</option>
                     <option value="bank">Bank</option>
                     <option value="salary">Salary</option>
@@ -287,23 +268,11 @@ class AddAcc extends React.Component {
 
                 <span className="checkboxes">
                   {" "}
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="rr"
-                    name="n"
-                    type="radio"
-                  />{" "}
-                  Dr.
+                  <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Dr.
                 </span>
                 <span className="checkboxe">
                   {" "}
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="rr"
-                    name="n"
-                    type="radio"
-                  />{" "}
-                  Cr.
+                  <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Cr.
                 </span>
               </div>
 
@@ -314,13 +283,8 @@ class AddAcc extends React.Component {
                   <span>Status </span>
                   <br />
 
-                  <select
-                    readOnly={this.state.mode === "view" && true}
-                    id="add_acc_status"
-                  >
-                    <option value="regular registered">
-                      Regular Registered
-                    </option>
+                  <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
+                    <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
                   </select>
                 </div>
@@ -365,19 +329,11 @@ class AddAcc extends React.Component {
 
             <div className="add_acc_body_right ">
               <h1>
-                <span
-                  id="billing_add"
-                  onClick={this.billAdd}
-                  style={this.state.bil_add ? { color: "black" } : null}
-                >
+                <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: "black" } : null}>
                   Billing Address
                 </span>
 
-                <span
-                  onClick={this.shipAdd}
-                  id="shipping_add"
-                  style={this.state.bil_add ? null : { color: "black" }}
-                >
+                <span onClick={this.shipAdd} id="shipping_add" style={this.state.bil_add ? null : { color: "black" }}>
                   Shipping Address
                 </span>
               </h1>
@@ -409,22 +365,14 @@ class AddAcc extends React.Component {
                   <span>State</span>
                   <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    name="Group"
-                    id="add_acc_inp_state"
-                  />
+                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
                 </div>
 
                 <div className="add_acc_city si">
                   <span>City</span>
                   <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    name="Group"
-                    id="add_acc_inp_city"
-                  />
+                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
                 </div>
               </div>
               <div className="add_acc_pincode si">
@@ -490,22 +438,13 @@ class AddAcc extends React.Component {
           </div>
 
           <div id="bottom_btns" className="two_items">
-            <button
-              className="add_acc_can_btn"
-              onClick={this.props.AddAccCrossBtn}
-            >
+            <button className="add_acc_can_btn" onClick={this.props.AddAccCrossBtn}>
               Cancel
             </button>
 
             <button
               className="add_acc_btn"
-              onClick={
-                this.state.loading
-                  ? null
-                  : this.state.mode === "view"
-                  ? this.EditOn
-                  : this.addAccount
-              }
+              onClick={this.state.loading ? null : this.state.mode === "view" ? this.EditOn : this.addAccount}
             >
               {this.state.loading ? (
                 <img src={load} className="loading" alt=" " />

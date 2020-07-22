@@ -228,19 +228,6 @@ class AddJovouch extends React.Component {
               </p>
             )}
             <p onClick={this.addjovouch}>Save</p>
-            <p
-              onClick={() => {
-                this.setState({
-                  BillArr: [""],
-                  payArr: [""],
-                  Cbill: [],
-                  amt: 0,
-                  billAmt: 0
-                });
-              }}
-            >
-              Reset
-            </p>
             <img onClick={this.props.rm} src={cross} alt="" />
           </div>
         </div>
@@ -275,20 +262,22 @@ class AddJovouch extends React.Component {
                   {this.state.BillArr.map((e, i) => {
                     return (
                       <span className="jovouch_bill_list">
-                        <span
-                          id="bill_cross_btn"
-                          onClick={() => {
-                            let arr = this.state.BillArr;
-                            arr.splice(i, 1);
-                            this.setState({ BillArr: arr });
-                            this.updateBillAmt();
-                            this.state.BillArr.map((a, ii) => {
-                              document.querySelector(".jo_bill_no" + ii).value = a;
-                            });
-                          }}
-                        >
-                          +
-                        </span>
+                        {i != 0 && (
+                          <span
+                            id="bill_cross_btn"
+                            onClick={() => {
+                              let arr = this.state.BillArr;
+                              arr.splice(i, 1);
+                              this.setState({ BillArr: arr });
+                              this.updateBillAmt();
+                              this.state.BillArr.map((a, ii) => {
+                                document.querySelector(".jo_bill_no" + ii).value = a;
+                              });
+                            }}
+                          >
+                            +
+                          </span>
+                        )}
                         {(this.state.data.length !== 0 || this.props.mode === "edit") && (
                           <input
                             type="text"

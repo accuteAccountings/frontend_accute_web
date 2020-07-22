@@ -7,12 +7,11 @@
      border-spacing: 0;
      border-collapse: collapse;
      border-style: hidden;
-     width: 100%;
-    
+     width: 55rem;
+
 
   th{
       margin-bottom: 10px;
-      width: 50px;
   }
   td{
       text-align: center;
@@ -23,13 +22,14 @@
     background-color: white;
 }
 
-
+.td_dc{
+    width: 70px;
+}
   
 }
 
 .acc_pro_ledger{
-    width: 100%;
-    margin-right: 5rem;
+    width: 55rem;
 }
 
 .acc_pro_ledger_upper{
@@ -44,8 +44,9 @@
     flex-direction: row;
     // justify-content: space-evenly; 
     width: 40rem;
+    min-width: 20rem;
     font-size: 1.1rem;
-    margin-left: 30rem;
+    margin-left: 15rem;
 }
 .upp_date{
     font-size: 1.5rem;
