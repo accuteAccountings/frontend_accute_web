@@ -127,10 +127,17 @@ export default class Report_pro extends React.Component{
     DateWW = (i) => {
         var date = new Date()
         let month = date.getMonth()
+        let year = date.getFullYear()
         let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
          'July' , 'August' , 'September' , 'October' , 'November' , 'December']
         let cdate = parseInt(i)
-
+        let today = date.getDate()
+        if(cdate - parseInt(today) > 0 && cdate - parseInt(today) > 5){
+            return '';
+        }
+        if(cdate > 25){
+            cdate = this.getDaysInMonth(month + 1 , year)
+        }
         var finaldate =  cdate + ' ' + monthArr[month]
 
         return finaldate;
@@ -143,6 +150,10 @@ export default class Report_pro extends React.Component{
         let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
          'July' , 'August' , 'September' , 'October' , 'November' , 'December']
         let cdate =  parseInt(d)
+        let today = date.getDate()
+        if(cdate - parseInt(today) > 0 && cdate - parseInt(today) > 14 && month == date.getMonth()){
+            return '';
+        }
         if(parseInt(cdate) < 10){
             cdate = '0' + cdate
         }
@@ -292,6 +303,7 @@ export default class Report_pro extends React.Component{
 
     Total_sales_WW = (ans) => {
         let t = 0
+        if(this.DateWW(parseInt(ans)*5)){
         this.state.weekdata.map((e , i) => {
             i == parseInt(ans-1) && (
                 e.vouch.map(x => {
@@ -303,12 +315,13 @@ export default class Report_pro extends React.Component{
             )
         })
         return t;
+    }
     
     }
 
     Total_purchase_WW = (ans) => {
         let t = 0
-    
+        if(this.DateWW(parseInt(ans)*5)){
             this.state.weekdata.map((e,i) => {
                 i == parseInt(ans - 1) && (
                     e.vouch.map(x => {
@@ -320,11 +333,13 @@ export default class Report_pro extends React.Component{
                 )
             })
         return t;
+        }
    
     }
 
     Total_payment_WW = (ans) => {
         let t = 0
+        if(this.DateWW(parseInt(ans)*5)){
             this.state.weekdata.map((e,i) => {
                 i == parseInt(ans - 1) && (
                     e.jovouch.map(x => {
@@ -336,6 +351,7 @@ export default class Report_pro extends React.Component{
                 )
             })
         return t;
+        }   
     
     }    
 
@@ -463,7 +479,9 @@ export default class Report_pro extends React.Component{
     }
 
 
-
+componentDidMount(){
+    this.WeekWiseData()
+}
 
     constructor(props){
         super(props)
@@ -483,6 +501,8 @@ export default class Report_pro extends React.Component{
             payment_val : null,
             purchase_val : null
         }
+       
+
     }
     render(){
       let   data1 =  {
@@ -522,8 +542,7 @@ export default class Report_pro extends React.Component{
                     </div>
                     <div className = "report_icons">
                         <span>
-                            <select name = "period" id="report_period" onChange = {this.WeekWiseData}>
-                            <option>None</option>
+                            <select name = "period" id="report_period" onChange = {this.WeekWiseData} defaultValue='seven_days' >
                                 <option value = "this_month" >This Month</option>
                                 <option value = "seven_days">Last 7 Days</option>
                                 <option value = "three_months">Last 3 Months</option>
