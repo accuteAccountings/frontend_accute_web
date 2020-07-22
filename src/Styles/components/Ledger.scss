@@ -1,6 +1,6 @@
 .ledger_tab{
     width: 100%;
-    min-width: 85rem;
+    // min-width: 85rem;
 
     // border: solid black;
 }
@@ -16,7 +16,7 @@
   }
   td{
       text-align: center;
-      width: 6rem;
+      width: 150px;
   }
 
   .tr_acc{
@@ -27,7 +27,9 @@
   
 }
 
-
+.acc_pro_ledger{
+    width: 100%;
+}
 
 .acc_pro_ledger_upper{
     display: flex;
@@ -56,6 +58,7 @@
         background: transparent;
         cursor: pointer;
         margin-right: 1.5rem;
+        width: 10rem;
     }
     label{
         font-size: 1.2rem;
@@ -164,6 +167,9 @@
         height: 1rem;
         border: solid transparent;
         margin-left: 5px;
+    }
+    label{
+        font-size: 0.8vw;
     }
 }
 
