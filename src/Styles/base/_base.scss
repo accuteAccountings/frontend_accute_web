@@ -7,7 +7,6 @@ body {
   background-color: #eeeeee;
   overflow: hidden;
 }
-
 #none {
   display: none;
   text-align: center;
@@ -19,9 +18,13 @@ body {
 input:focus,
 select:focus {
   outline: solid 2px $pri_color !important;
+  border: none !important;
 }
 button:focus {
-  border: solid 1px blue !important;
+  box-shadow: 0px 0px 10px #aaaaaa;
+}
+button:active {
+  background-color: grey;
 }
 
 @media screen and (max-width: 961px) {

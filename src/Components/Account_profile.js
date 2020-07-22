@@ -1,4 +1,5 @@
 import React from "react";
+import user from "../img/user.svg";
 import pencil from "../img/pencil.svg";
 import back from "../img/camera-back.svg";
 import Ledger from "./Ledger_Account";
@@ -214,7 +215,9 @@ export default class Account_pro extends React.Component {
 
         <div className="acc_pro_body">
           <div className="acc_pro_sbar">
-            <div className="acc_pro_img" />
+            <div className="acc_pro_img">
+              <img alt=" " src={user} id="acc_pro_img_id" />
+            </div>
             <div className="acc_pro_name">{this.props.account.acc_name}</div>
             <div className="sbar_list" id="sbar_list">
               <div
