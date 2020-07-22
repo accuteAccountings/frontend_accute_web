@@ -170,7 +170,6 @@ export default class Ledger extends React.Component {
             <table className="acc_pro_table">
               <thead>
                 <tr>
-                  <th>S.No.</th>
                   <th>Date</th>
                   <th>Particulars</th>
                   <th>Bill No.</th>
@@ -184,10 +183,9 @@ export default class Ledger extends React.Component {
                 {this.props.details.map((e, i) => {
                   return e.credit_acc ? (
                     <tr className="tr_acc">
-                      <td>{i + 1}</td>
                       <td className="td_date">{e.bill_date}</td>
-                      <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                      <td className="td_bill">{e.billArr.join(" , ")}</td>
+                      <td className = "parti_td">{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
+                      <td>{e.billArr.join(" , ")}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
                       <td>
@@ -198,10 +196,9 @@ export default class Ledger extends React.Component {
                     </tr>
                   ) : (
                     <tr className="tr_acc">
-                      <td>{i + 1}</td>
                       <td className="td_date">{e.bill_date}</td>
-                      <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                      <td className="td_bill">{e.bill_num}</td>
+                      <td className = "parti_td">{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
+                      <td >{e.bill_num}</td>
                       <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
                       <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
                       <td>
@@ -216,10 +213,9 @@ export default class Ledger extends React.Component {
                 {this.props.det2.map((e, i) => {
                   return e.credit_acc && i < 7 ? (
                     <tr className="tr_acc">
-                      <td>{i + 1}</td>
                       <td className="td_date">{e.bill_date}</td>
-                      <td>{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                      <td className="td_bill">{e.billArr.join(" , ")}</td>
+                      <td className = "parti_td"> {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
+                      <td >{e.billArr.join(" , ")}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
                       <td>{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
                       <td>
@@ -231,10 +227,9 @@ export default class Ledger extends React.Component {
                   ) : (
                     i < 7 && (
                       <tr className="tr_acc">
-                        <td>{i + 1}</td>
                         <td className="td_date">{e.bill_date}</td>
-                        <td>{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                        <td className="td_bill">{e.bill_num}</td>
+                        <td className = "parti_td">{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
+                        <td >{e.bill_num}</td>
                         <td>{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
                         <td>{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
                         <td>
@@ -247,20 +242,18 @@ export default class Ledger extends React.Component {
                   );
                 })}
                 <tr className="tr_acc">
-                  <td></td>
                   <td className="td_date"> </td>
-                  <td> </td>
-                  <td className="td_bill"> </td>
+                  <td className = "parti_td"> </td>
+                  <td > </td>
                   <td> </td>
                   <td> </td>
                   <td> </td>
                 </tr>
 
                 <tr className="tr_acc">
-                  <td> </td>
                   <td className="td_date"> </td>
-                  <td> </td>
-                  <td className="td_bill"> </td>
+                  <td className = "parti_td"> </td>
+                  <td > </td>
                   <td> </td>
                   <td> </td>
                   <td> </td>

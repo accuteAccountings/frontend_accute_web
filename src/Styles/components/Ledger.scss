@@ -1,6 +1,6 @@
 .ledger_tab{
     width: 100%;
-    min-width: 90rem;
+    min-width: 85rem;
 
     // border: solid black;
 }
@@ -9,28 +9,25 @@
      border-collapse: collapse;
      border-style: hidden;
      width: 100%;
-  
+    
 
   th{
       margin-bottom: 10px;
   }
   td{
       text-align: center;
+      width: 6rem;
   }
 
   .tr_acc{
     background-color: white;
 }
 
-.td_date{
-    width: 8rem;
-}
 
-.td_bill{
-    width: 11rem;
-}
   
 }
+
+
 
 .acc_pro_ledger_upper{
     display: flex;
