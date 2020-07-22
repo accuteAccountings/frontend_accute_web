@@ -1,7 +1,6 @@
 .ledger_tab{
     width: 100%;
     // min-width: 85rem;
-
     // border: solid black;
 }
 .acc_pro_table{
@@ -13,6 +12,7 @@
 
   th{
       margin-bottom: 10px;
+      width: 50px;
   }
   td{
       text-align: center;
@@ -29,6 +29,7 @@
 
 .acc_pro_ledger{
     width: 100%;
+    margin-right: 5rem;
 }
 
 .acc_pro_ledger_upper{
