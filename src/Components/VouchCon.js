@@ -31,8 +31,7 @@ class VouchCon extends React.Component {
       err_credit : false,
     };
     this.updateVouchData();
-    this.updateDebitData();
-    this.updateCreditData();
+
     this.updateJoVouchData();
   }
   updateVouchData = () => {
@@ -317,7 +316,7 @@ class DetCont extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.editF("pv", "edit", this.props.EData);
+              this.props.editF(this.props.which, "edit", this.props.EData);
             }}
           >
             <img src={pencil} alt=" " />

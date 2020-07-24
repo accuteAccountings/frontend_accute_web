@@ -29,8 +29,8 @@
   position: absolute;
   background-color: white;
   top: 0px;
-  // width: 200px;
-  right: 0px;
+  width: 0px;
+  right: 3px;
   transform: translateX(102%);
   color: rgb(104, 104, 104);
   padding: 0px;
@@ -121,6 +121,7 @@ li {
 @keyframes hideSideItems {
   100% {
     opacity: 0;
+	visibility:hidden;
   }
 
   30% {
