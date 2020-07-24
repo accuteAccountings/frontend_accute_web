@@ -36,7 +36,11 @@ class App extends React.Component {
         }
       })
       .catch(err => {
-        // alert(err)
+        this.setState(() => {
+          return{
+            err_pro : true
+          }
+        })
       });
   };
 
@@ -76,7 +80,11 @@ class App extends React.Component {
         }
       })
       .catch(err => {
-        // alert(err)
+        this.setState(() => {
+          return{
+            err_acc : true
+          }
+        })
       });
   };
 
@@ -234,6 +242,8 @@ class App extends React.Component {
       jobill_num : null,
       vouchMode: "add",
       vouchData: [],
+      err_pro : false,
+      err_acc : false
     };
   }
 
@@ -286,6 +296,8 @@ class App extends React.Component {
             setAccProfile={this.setAccProfile}
             getspecific_acc={this.getspecific_acc}
             isacc_pro={this.state.isacc_pro}
+            err_acc = {this.state.err_acc}
+            err_pro = {this.state.err_pro}
           />
         </div>
       );

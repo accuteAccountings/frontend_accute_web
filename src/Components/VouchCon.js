@@ -24,7 +24,11 @@ class VouchCon extends React.Component {
       JoVouchdata: [],
       Creditdata: [],
       deleteUrl: null,
-      delete: false
+      delete: false,
+      err_vouch : false,
+      err_jovouch : false,
+      err_debit : false,
+      err_credit : false,
     };
     this.updateVouchData();
     this.updateDebitData();
@@ -35,13 +39,21 @@ class VouchCon extends React.Component {
     fetch("/api/vouch")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+     
         this.setState(() => {
           return {
             data: data.reverse()
           };
         });
-      });
+      }).catch(err => {
+       
+          this.setState(() => {
+            return{
+              err_vouch : true
+            }
+          })
+        
+      })
   };
   updateDebitData = () => {
     fetch("/api/debit")
@@ -52,7 +64,15 @@ class VouchCon extends React.Component {
             Debitdata: data
           };
         });
-      });
+      }).catch(err => {
+       
+        this.setState(() => {
+          return{
+            err_debit : true
+          }
+        })
+      
+    })
   };
   updateCreditData = () => {
     fetch("/api/credit")
@@ -63,7 +83,15 @@ class VouchCon extends React.Component {
             Creditdata: data
           };
         });
-      });
+      }).catch(err => {
+       
+        this.setState(() => {
+          return{
+            err_credit : true
+          }
+        })
+      
+    })
   };
 
   updateJoVouchData = () => {
@@ -75,7 +103,15 @@ class VouchCon extends React.Component {
             JoVouchdata: data.reverse()
           };
         });
-      });
+      }).catch(err => {
+       
+        this.setState(() => {
+          return{
+            err_jovouch : true
+          }
+        })
+      
+    })
   };
 
   render() {
@@ -150,7 +186,9 @@ class VouchCon extends React.Component {
           <div className="pro_con_vouch">
             {this.props.vouchPage === "pv" && (
               <div className="vouchCon">
-                {this.state.data.map((e, i) => {
+                {this.state.err_vouch ?
+                 (<div className = "wrong_alert">Something Went Wrong....</div>) :
+                  ( this.state.data.map((e, i) => {
                   return (
                     <DetCont
                       i={i + 1}
@@ -166,12 +204,14 @@ class VouchCon extends React.Component {
                       status={e.det.status}
                     />
                   );
-                })}
+                }) )}
               </div>
             )}
 
-            {this.props.vouchPage === "dn" && (
-              <div className="vouchCon">
+            { this.props.vouchPage === "dn" && (
+                this.state.err_debit ? 
+                (<div className = "wrong_alert">Something Went Wrong....</div>) :
+              (<div className="vouchCon">
                 {this.state.Debitdata.map((e, i) => {
                   return (
                     <DetCont
@@ -183,13 +223,17 @@ class VouchCon extends React.Component {
                       bill_num={e.det.bill_num}
                       id={e.det.id}
                     />
-                  );
+                  )
                 })}
               </div>
-            )}
+            ) )}
 
-            {this.props.vouchPage === "cn" && (
-              <div className="vouchCon">
+            {
+              
+              this.props.vouchPage === "cn" && (
+                this.state.err_credit ? 
+                (<div className = "wrong_alert">Something Went Wrong....</div>) :
+              (<div className="vouchCon">
                 {this.state.Creditdata.map((e, i) => {
                   return (
                     <DetCont
@@ -203,9 +247,13 @@ class VouchCon extends React.Component {
                   );
                 })}
               </div>
-            )}
+            ) )}
+
+            
             {this.props.vouchPage === "jv" && (
-              <div className="vouchCon">
+                this.state.err_jovouch ? 
+                (<div className = "wrong_alert">Something Went Wrong....</div>) :
+             ( <div className="vouchCon">
                 {this.state.JoVouchdata.error
                   ? null
                   : this.state.JoVouchdata.map((e, i) => {
@@ -229,7 +277,7 @@ class VouchCon extends React.Component {
                       );
                     })}
               </div>
-            )}
+            ) )}
           </div>
         </div>
       </div>

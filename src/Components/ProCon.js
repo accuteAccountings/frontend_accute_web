@@ -93,7 +93,9 @@ class ProCon extends React.Component {
 
         <div className="pro_con">
           {this.props.ProOrAcc === "Products" ? (
-            <div>
+            this.props.err_pro ? 
+            (<div className = "wrong_alert">Something Went Wrong....</div>) :
+            (<div>
               {this.props.products.map((pro, i) => {
                 return (
                   <div className="det_cont_pro">
@@ -124,11 +126,14 @@ class ProCon extends React.Component {
                       </div>
                     </div>
                   </div>
-                );
-              })}
+                )
+              }) }
             </div>
+            )
           ) : (
-            <div>
+            this.props.err_acc ?
+            (<div className = "wrong_alert">Something Went Wrong....</div>) :
+            (<div>
               {this.props.accounts.map((account, i) => {
                 return (
                   <div className="det_acc_div">
@@ -148,11 +153,11 @@ class ProCon extends React.Component {
                   </div>
                 );
               })}
-            </div>
+            </div>)
           )}
         </div>
       </div>
-    );
+    ) 
   }
 }
 

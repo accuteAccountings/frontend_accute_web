@@ -167,8 +167,6 @@ export default class Account_pro extends React.Component {
               bal: data
             };
           });
-        } else {
-          alert("nothing");
         }
       });
 
