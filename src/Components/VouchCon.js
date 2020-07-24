@@ -27,8 +27,7 @@ class VouchCon extends React.Component {
       delete: false
     };
     this.updateVouchData();
-    this.updateDebitData();
-    this.updateCreditData();
+
     this.updateJoVouchData();
   }
   updateVouchData = () => {
@@ -39,28 +38,6 @@ class VouchCon extends React.Component {
         this.setState(() => {
           return {
             data: data.reverse()
-          };
-        });
-      });
-  };
-  updateDebitData = () => {
-    fetch("/api/debit")
-      .then(res => res.json())
-      .then(data => {
-        this.setState(() => {
-          return {
-            Debitdata: data
-          };
-        });
-      });
-  };
-  updateCreditData = () => {
-    fetch("/api/credit")
-      .then(res => res.json())
-      .then(data => {
-        this.setState(() => {
-          return {
-            Creditdata: data
           };
         });
       });
@@ -151,56 +128,81 @@ class VouchCon extends React.Component {
             {this.props.vouchPage === "pv" && (
               <div className="vouchCon">
                 {this.state.data.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      editF={this.props.setPVoJVoDN}
-                      EData={e}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                      id={e.det.id}
-                      deleteIt={this.deleteIt}
-                      status={e.det.status}
-                    />
-                  );
+                  if (e.det.type === "purchase") {
+                    return (
+                      <DetCont
+                        i={i + 1}
+                        editF={this.props.setPVoJVoDN}
+                        EData={e}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                        id={e.det.id}
+                        deleteIt={this.deleteIt}
+					  which="pv"
+                        status={e.det.status}
+                      />
+                    );
+                  } else {
+                    return;
+                  }
                 })}
               </div>
             )}
 
             {this.props.vouchPage === "dn" && (
               <div className="vouchCon">
-                {this.state.Debitdata.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                      id={e.det.id}
-                    />
-                  );
+                {this.state.data.map((e, i) => {
+                  if (e.det.type === "debit") {
+                    return (
+                      <DetCont
+                        i={i + 1}
+                        editF={this.props.setPVoJVoDN}
+                        EData={e}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                        id={e.det.id}
+                        deleteIt={this.deleteIt}
+                        status={e.det.status}
+					  which="dn"
+                      />
+                    );
+                  } else {
+                    return;
+                  }
                 })}
               </div>
             )}
 
             {this.props.vouchPage === "cn" && (
               <div className="vouchCon">
-                {this.state.Creditdata.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                    />
-                  );
+                {this.state.data.map((e, i) => {
+                  if (e.det.type === "credit") {
+                    return (
+                      <DetCont
+                        i={i + 1}
+					  which="cn"
+                        editF={this.props.setPVoJVoDN}
+                        EData={e}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                        id={e.det.id}
+                        deleteIt={this.deleteIt}
+                        status={e.det.status}
+					  
+                      />
+                    );
+                  } else {
+                    return;
+                  }
                 })}
               </div>
             )}
@@ -269,7 +271,7 @@ class DetCont extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.editF("pv", "edit", this.props.EData);
+              this.props.editF(this.props.which, "edit", this.props.EData);
             }}
           >
             <img src={pencil} alt=" " />

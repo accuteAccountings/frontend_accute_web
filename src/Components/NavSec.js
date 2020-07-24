@@ -11,6 +11,7 @@ class NavSec extends React.Component {
 							return (
 								<li
 									className={this.props.ProOrAcc === item ? 'black' : 'grey'}
+								id={item === "Products" && "borderNone"}
 									onClick={() => {
 										this.props.setProOrAcc(item);
 									}}
