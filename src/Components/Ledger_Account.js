@@ -93,12 +93,39 @@ export default class Ledger extends React.Component {
               </button>
               </div>
               <div>
-                <input type = "search" placeholder = "Search Account/Bill No." />
+                <input type = "search" placeholder = "Search Account/Bill No." id="search_filters" 
+                onKeyPress={this.enterPressed.bind(this)} />
               </div>
             </div>
           </div>
 
+          <div className="ledger_upp_right_div">
+          <div className="ledger_upp_right">
+            <span className="upp_head">Debit : </span>
+            {this.props.totalDebit()}
+          </div>
+          <div className="ledger_upp_right">
+            <span className="upp_head">Credit : </span>
+            {this.props.totalCredit()}
+          </div>
+          <div className="leger_upp_right">
+            <span className="upp_head">Balance : </span>
+            {parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) < 0
+              ? parseInt(this.props.totalCredit()) - parseInt(this.props.totalDebit()) + " (Cr.)"
+              : parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) + " (Dr.)"}
+          </div>
+        </div>
+          </div>
           
+          <div className = "between_led">
+              <div className = 'sort'>
+                <span>Sort By</span>
+                <select id="filter_op" defaultValue="date" onChange={this.props.getDet} >
+                  <option value = "date">Date</option>
+                  <option value = "parti">Particulars</option>
+                  <option value = "bill">Bill no.</option>
+                </select>
+              </div>
           </div>
 
           <div>

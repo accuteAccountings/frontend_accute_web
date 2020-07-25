@@ -61,10 +61,13 @@
     display: flex;
     flex-direction: row;
     // justify-content: space-evenly; 
-    width: 40rem;
+    padding: 0.7rem;
+    width: 30rem;
     min-width: 20rem;
     font-size: 1.1rem;
     margin-left: 15rem;
+    // border: solid black;
+   margin-left: 45%;
 }
 .upp_date{
     font-size: 1.2rem;
@@ -253,6 +256,23 @@
         width: 140px;
         border: solid transparent;
         border-bottom: 1px solid $grey_text;
+    }
+}
+
+.between_led{
+    width: 55rem;
+    // border: solid black;
+    margin-left: 2rem;
+    .sort{
+        text-align: right;
+        select{
+            width: 100px;
+            margin-left: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: solid transparent;
+            background-color: transparent;
+        }
     }
 }
 

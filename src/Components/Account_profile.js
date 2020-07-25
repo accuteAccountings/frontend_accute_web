@@ -41,7 +41,10 @@ export default class Account_pro extends React.Component {
     let end_date = await document.getElementById("ledger_date_end").value;
     let parti = await document.getElementById("print_particulars");
     let subagent = await document.getElementById("print_sub_agent");
-    let part_search = await document.getElementById("specific_search_ledger");
+    let filter = await document.getElementById("search_filters");
+    let mode = await document.getElementById("filter_op");
+    
+
 
     if (parti && start_date_p && end_date_p && subagent) {
       await fetch(
@@ -59,9 +62,9 @@ export default class Account_pro extends React.Component {
             });
           }
         });
-    } else if (part_search && this.state.filter === "parti") {
+    } else if (filter && mode.value === "parti") {
       await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${part_search.value}&sdate=${start_date}&edate=${end_date}`
+        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}&sdate=${start_date}&edate=${end_date}`
       )
         .then(res => res.json())
         .then(data => {
@@ -89,22 +92,24 @@ export default class Account_pro extends React.Component {
             });
           }
         });
-    } else if (part_search && this.state.filter === "agent") {
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?agent=${part_search.value}`)
+      }
+     else if (filter && mode === 'date') {
+      await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
             this.setState(() => {
               return {
-                details: data,
-                det2: [],
+                details: [],
+                det2: data.reverse(),
                 recent: false
               };
             });
           }
         });
-    } else if (part_search && this.state.filter === "bill_num") {
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?bill_num=${part_search.value}`)
+    } 
+    else if (filter && mode.value === "bill") {
+      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?bill_num=${filter.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -123,10 +128,7 @@ export default class Account_pro extends React.Component {
   clearall = () => {
     document.getElementById("ledger_date_start").value = null;
     document.getElementById("ledger_date_end").value = null;
-    document.getElementById("specific_search_ledger").value = null;
-    document.getElementById("check_parti").checked = false;
-    document.getElementById("check_agent").checked = false;
-    document.getElementById("check_bill_num").checked = false;
+    document.getElementById("search_filters").value = null;
 
     fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
       .then(res => res.json())
@@ -319,6 +321,8 @@ export default class Account_pro extends React.Component {
               handleradio={this.handleradio}
               handleSearch={this.handleSearch}
               det3={this.state.det3}
+              totalDebit = {this.totalDebit}
+              totalCredit = {this.totalCredit}
             />
           )}
 
