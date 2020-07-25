@@ -32,10 +32,11 @@ export default class Ledger extends React.Component {
     return t;
   };
 
-  Rec_Ledger_Balance = id => {
+  Rec_Ledger_Balance = (id) => {
     let t = 0;
-    this.props.det2.map((e, i) => {
-      i <= id &&
+    // let arr = this.props.det2.splice(0,8)
+    this.props.det2.slice(0,7).reverse().map((e, i) => {
+      i <= 6 - parseInt(id) &&
         (e.credit_acc
           ? e.credit_acc === this.props.account.acc_name
             ? (t = parseInt(t) + parseInt(e.amount - e.balance))
