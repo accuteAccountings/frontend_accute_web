@@ -55,77 +55,80 @@ export default class Ledger extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="ledger_con">
         <div className="ledger_tab">
           <div className="acc_pro_ledger_upper">
-          <div className = "filters_ledger">
-            <div className="upp_date">
-              <div>
-                <label for="ledger_date_start">From </label>
-                <br />
-                <input type="date" id="ledger_date_start" name="ledger_date_start" placeholder="From" />
-              </div>
-              <div>
-                <label for="ledger_date_end">To </label>
-                <br />
-                <input type="date" id="ledger_date_end" />
-              </div>
-              <div className = "buttons_sec">
-              <div className="search_date">
-                <button onClick={this.props.getDet} className="btn_search">
-                  Search
-                </button>
-              </div>
-  
-              <div>
-                <button onClick={this.props.clearall} className="btn_search">
-                  Clear 
-                </button>
+            <div className="filters_ledger">
+              <div className="upp_date">
+                <div>
+                  <label for="ledger_date_start">From </label>
+                  <br />
+                  <input type="date" id="ledger_date_start" name="ledger_date_start" placeholder="From" />
+                </div>
+                <div>
+                  <label for="ledger_date_end">To </label>
+                  <br />
+                  <input type="date" id="ledger_date_end" />
+                </div>
+                <div className="buttons_sec">
+                  <div className="search_date">
+                    <button onClick={this.props.getDet} className="btn_search">
+                      Search
+                    </button>
+                  </div>
+
+                  <div>
+                    <button onClick={this.props.clearall} className="btn_search">
+                      Clear
+                    </button>
+                  </div>
                 </div>
               </div>
-            
-            </div>
-            
-          <div className = "print_search">
-            <div>
-              <button onClick={this.handleModal} className="print_btn_ledger">
-                Print ledger
-              </button>
+
+              <div className="print_search">
+                <div>
+                  <button onClick={this.handleModal} className="print_btn_ledger">
+                    Print ledger
+                  </button>
+                </div>
+                <div>
+                  <input
+                    type="search"
+                    placeholder="Search Account/Bill No."
+                    id="search_filters"
+                    onKeyPress={this.enterPressed.bind(this)}
+                  />
+                </div>
               </div>
-              <div>
-                <input type = "search" placeholder = "Search Account/Bill No." id="search_filters" 
-                onKeyPress={this.enterPressed.bind(this)} />
+            </div>
+
+            <div className="ledger_upp_right_div">
+              <div className="ledger_upp_right">
+                <span className="upp_head">Debit : </span>
+                {this.props.totalDebit()}
+              </div>
+              <div className="ledger_upp_right">
+                <span className="upp_head">Credit : </span>
+                {this.props.totalCredit()}
+              </div>
+              <div className="leger_upp_right">
+                <span className="upp_head">Balance : </span>
+                {parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) < 0
+                  ? parseInt(this.props.totalCredit()) - parseInt(this.props.totalDebit()) + " (Cr.)"
+                  : parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) + " (Dr.)"}
               </div>
             </div>
           </div>
 
-          <div className="ledger_upp_right_div">
-          <div className="ledger_upp_right">
-            <span className="upp_head">Debit : </span>
-            {this.props.totalDebit()}
-          </div>
-          <div className="ledger_upp_right">
-            <span className="upp_head">Credit : </span>
-            {this.props.totalCredit()}
-          </div>
-          <div className="leger_upp_right">
-            <span className="upp_head">Balance : </span>
-            {parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) < 0
-              ? parseInt(this.props.totalCredit()) - parseInt(this.props.totalDebit()) + " (Cr.)"
-              : parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) + " (Dr.)"}
-          </div>
-        </div>
-          </div>
-          
-          <div className = "between_led">
-              <div className = 'sort'>
-                <span>Sort By</span>
-                <select id="filter_op" defaultValue="date" onChange={this.props.getDet} >
-                  <option value = "date">Date</option>
-                  <option value = "parti">Particulars</option>
-                  <option value = "bill">Bill no.</option>
-                </select>
-              </div>
+          <div className="between_led">
+            <div className="sort">
+              <span>Sort By</span>
+              <select id="filter_op" defaultValue="date" onChange={this.props.getDet}>
+                <option value="date">Date</option>
+                <option value="parti">Particulars</option>
+                <option value="bill">Bill no.</option>
+              </select>
+            </div>
           </div>
 
           <div>
@@ -185,10 +188,16 @@ export default class Ledger extends React.Component {
                   return e.credit_acc ? (
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
-                      <td className = "parti_td">{e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                      <td >{e.billArr.join(" , ")}</td>
-                      <td className = "td_dc">{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
-                      <td className = "td_dc">{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
+                      <td className="parti_td">
+                        {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}
+                      </td>
+                      <td>{e.billArr.join(" , ")}</td>
+                      <td className="td_dc">
+                        {e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}
+                      </td>
+                      <td className="td_dc">
+                        {e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}
+                      </td>
                       <td>
                         {parseInt(this.Ledger_Balance(i)) < 0
                           ? this.Ledger_Balance(i) + " (Dr.)"
@@ -198,10 +207,12 @@ export default class Ledger extends React.Component {
                   ) : (
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
-                      <td className = "parti_td">{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                      <td >{e.bill_num}</td>
-                      <td className = "td_dc">{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
-                      <td className = "td_dc">{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
+                      <td className="parti_td">
+                        {e.customer === this.props.account.acc_name ? e.supplier : e.customer}
+                      </td>
+                      <td>{e.bill_num}</td>
+                      <td className="td_dc">{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
+                      <td className="td_dc">{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
                       <td>
                         {parseInt(this.Ledger_Balance(i)) < 0
                           ? this.Ledger_Balance(i) + " (Dr.)"
@@ -215,10 +226,17 @@ export default class Ledger extends React.Component {
                   return e.credit_acc && i < 7 ? (
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
-                      <td className = "parti_td"> {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
-                      <td >{e.billArr.join(" , ")}</td>
-                      <td className = "td_dc">{e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}</td>
-                      <td className = "td_dc">{e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}</td>
+                      <td className="parti_td">
+                        {" "}
+                        {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}
+                      </td>
+                      <td>{e.billArr.join(" , ")}</td>
+                      <td className="td_dc">
+                        {e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}
+                      </td>
+                      <td className="td_dc">
+                        {e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}
+                      </td>
                       <td>
                         {parseInt(this.Rec_Ledger_Balance(i)) < 0
                           ? -this.Rec_Ledger_Balance(i) + " (Dr.)"
@@ -229,10 +247,12 @@ export default class Ledger extends React.Component {
                     i < 7 && (
                       <tr className="tr_acc">
                         <td className="td_date">{e.bill_date}</td>
-                        <td className = "parti_td">{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
-                        <td >{e.bill_num}</td>
-                        <td className = "td_dc">{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
-                        <td className = "td_dc">{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
+                        <td className="parti_td">
+                          {e.customer === this.props.account.acc_name ? e.supplier : e.customer}
+                        </td>
+                        <td>{e.bill_num}</td>
+                        <td className="td_dc">{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
+                        <td className="td_dc">{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
                         <td>
                           {parseInt(this.Rec_Ledger_Balance(i)) < 0
                             ? -this.Rec_Ledger_Balance(i) + " (Dr.)"
@@ -244,19 +264,19 @@ export default class Ledger extends React.Component {
                 })}
                 <tr className="tr_acc">
                   <td className="td_date"> </td>
-                  <td className = "parti_td"> </td>
-                  <td > </td>
-                  <td className = "td_dc"> </td>
-                  <td className = "td_dc"> </td>
+                  <td className="parti_td"> </td>
+                  <td> </td>
+                  <td className="td_dc"> </td>
+                  <td className="td_dc"> </td>
                   <td> </td>
                 </tr>
 
                 <tr className="tr_acc">
                   <td className="td_date"> </td>
-                  <td className = "parti_td"> </td>
-                  <td > </td>
-                  <td className = "td_dc"> </td>
-                  <td className = "td_dc"> </td>
+                  <td className="parti_td"> </td>
+                  <td> </td>
+                  <td className="td_dc"> </td>
+                  <td className="td_dc"> </td>
                   <td> </td>
                 </tr>
               </tbody>
