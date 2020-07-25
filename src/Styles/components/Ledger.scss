@@ -5,8 +5,7 @@
 }
 .acc_pro_table{
      border-spacing: 0;
-     border-collapse: collapse;
-     border-style: hidden;
+  
      width: 55rem;
 
 
@@ -28,17 +27,36 @@
   
 }
 
-.acc_pro_ledger{
+.acc_pro_ledger {
+    background-color: white;
+    margin-left: 2rem;
     width: 55rem;
-}
+    // border-radius: 20px;
+    border: 1px solid #cccccc;
+  }
 
 .acc_pro_ledger_upper{
     display: flex;
-    flex-direction: row;
-    // justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    background-color: white;
+    width: 55rem;
+    
+    margin-left: 2rem;
     margin-bottom: 0.3rem;
+    border: 1px solid #cccccc;
 }
+
+.filters_ledger{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 2px solid $l_grey_text;
+}
+
 .ledger_upp_right_div{
     display: flex;
     flex-direction: row;
@@ -49,10 +67,13 @@
     margin-left: 15rem;
 }
 .upp_date{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: $grey_text;
-    margin-left: 3rem;
+    margin-left: 1rem;
+    margin-top: 20px;
+    // margin-bottom: 1    0px;
     display: flex;
+    // border: solid black;
     flex-direction: row;
     input{
         font-size: 1.2rem;
@@ -64,9 +85,9 @@
     }
     label{
         font-size: 1.2rem;
-        font-weight: 600;
-        color: black;
-        margin-left: 2rem;
+        // font-weight: 600;
+        color: $grey_text;
+        // margin-left: 2rem;
     }
 
 }
@@ -187,11 +208,10 @@
 }
 
 .btn_search{
-    margin-top: 1.5rem;
     margin-right: 0.5rem;
-    // background-color: ;
-    // color: $pri_color;
-    // border: solid $pri_color;
+    width: 70px;
+    color: $grey_text;
+    background-color: transparent;
     cursor: pointer;
 }
 .btn_search:hover{
@@ -199,6 +219,41 @@
     color: white;
     border: solid $pri_color;
 
+}
+
+.print_btn_ledger{
+    width: 120px;
+    background-color: transparent;
+    font-size: 1.2rem;
+    border: 2px solid $pri_color;
+    color: $grey_text;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.buttons_sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // border: solid black;
+    height: 50px;
+   
+    // margin-top: 20px;
+}
+
+.print_search{
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    // border: solid black;
+
+    input{
+        width: 140px;
+        border: solid transparent;
+        border-bottom: 1px solid $grey_text;
+    }
 }
 
 @media print {

@@ -58,73 +58,47 @@ export default class Ledger extends React.Component {
       <div>
         <div className="ledger_tab">
           <div className="acc_pro_ledger_upper">
+          <div className = "filters_ledger">
             <div className="upp_date">
               <div>
-                <label for="ledger_date_start">From : </label>
+                <label for="ledger_date_start">From </label>
                 <br />
                 <input type="date" id="ledger_date_start" name="ledger_date_start" placeholder="From" />
               </div>
               <div>
-                <label for="ledger_date_end">To : </label>
+                <label for="ledger_date_end">To </label>
                 <br />
                 <input type="date" id="ledger_date_end" />
               </div>
-            </div>
-
-            <div className="filter">
-              <div className="checkboxes_search">
-                <input
-                  type="radio"
-                  name="parti"
-                  id="check_parti"
-                  value="A"
-                  onClick={() => {
-                    this.props.handleradio("parti");
-                  }}
-                />
-                <label for="A">Particulars</label>
-                <input
-                  type="radio"
-                  name="parti"
-                  id="check_agent"
-                  value="B"
-                  onClick={() => {
-                    this.props.handleradio("agent");
-                  }}
-                />
-                <label for="B">Sub Agent</label>
-                <input
-                  type="radio"
-                  name="parti"
-                  id="check_bill_num"
-                  value="C"
-                  onClick={() => {
-                    this.props.handleradio("bill_num");
-                  }}
-                />
-                <label for="C">Bill No.</label>
+              <div className = "buttons_sec">
+              <div className="search_date">
+                <button onClick={this.props.getDet} className="btn_search">
+                  Search
+                </button>
               </div>
-              <input
-                type="search"
-                placeholder="Search"
-                id="specific_search_ledger"
-                onKeyPress={this.enterPressed.bind(this)}
-              />
+  
+              <div>
+                <button onClick={this.props.clearall} className="btn_search">
+                  Clear 
+                </button>
+                </div>
+              </div>
+            
             </div>
-
-            <div className="search_date">
-              <button onClick={this.props.getDet} className="btn_search">
-                search
+            
+          <div className = "print_search">
+            <div>
+              <button onClick={this.handleModal} className="print_btn_ledger">
+                Print ledger
               </button>
+              </div>
+              <div>
+                <input type = "search" placeholder = "Search Account/Bill No." />
+              </div>
             </div>
+          </div>
 
-            <button onClick={this.props.clearall} className="btn_search">
-              clear filters
-            </button>
-
-            <button onClick={this.handleModal} className="btn_search">
-              Print ledger
-            </button>
+          
           </div>
 
           <div>

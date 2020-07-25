@@ -189,26 +189,7 @@ export default class Account_pro extends React.Component {
             </span>
             accounting / accounts / account profile
           </div>
-          <div>
-            {this.props.acc_pro_val === "ledger" && (
-              <div className="ledger_upp_right_div">
-                <div className="ledger_upp_right">
-                  <span className="upp_head">Debit : </span>
-                  {this.totalDebit()}
-                </div>
-                <div className="ledger_upp_right">
-                  <span className="upp_head">Credit : </span>
-                  {this.totalCredit()}
-                </div>
-                <div className="leger_upp_right">
-                  <span className="upp_head">Balance : </span>
-                  {parseInt(this.totalDebit()) - parseInt(this.totalCredit()) < 0
-                    ? parseInt(this.totalCredit()) - parseInt(this.totalDebit()) + " (Cr.)"
-                    : parseInt(this.totalDebit()) - parseInt(this.totalCredit()) + " (Dr.)"}
-                </div>
-              </div>
-            )}
-          </div>
+        
         </div>
 
         <div className="acc_pro_body">
