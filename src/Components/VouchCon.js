@@ -25,10 +25,10 @@ class VouchCon extends React.Component {
       Creditdata: [],
       deleteUrl: null,
       delete: false,
-      err_vouch : false,
-      err_jovouch : false,
-      err_debit : false,
-      err_credit : false,
+      err_vouch: false,
+      err_jovouch: false,
+      err_debit: false,
+      err_credit: false
     };
     this.updateVouchData();
 
@@ -38,21 +38,19 @@ class VouchCon extends React.Component {
     fetch("/api/vouch")
       .then(res => res.json())
       .then(data => {
-     
         this.setState(() => {
           return {
             data: data.reverse()
           };
         });
-      }).catch(err => {
-       
-          this.setState(() => {
-            return{
-              err_vouch : true
-            }
-          })
-        
       })
+      .catch(err => {
+        this.setState(() => {
+          return {
+            err_vouch: true
+          };
+        });
+      });
   };
   updateDebitData = () => {
     fetch("/api/debit")
@@ -63,15 +61,14 @@ class VouchCon extends React.Component {
             Debitdata: data
           };
         });
-      }).catch(err => {
-       
+      })
+      .catch(err => {
         this.setState(() => {
-          return{
-            err_debit : true
-          }
-        })
-      
-    })
+          return {
+            err_debit: true
+          };
+        });
+      });
   };
   updateCreditData = () => {
     fetch("/api/credit")
@@ -82,15 +79,14 @@ class VouchCon extends React.Component {
             Creditdata: data
           };
         });
-      }).catch(err => {
-       
+      })
+      .catch(err => {
         this.setState(() => {
-          return{
-            err_credit : true
-          }
-        })
-      
-    })
+          return {
+            err_credit: true
+          };
+        });
+      });
   };
 
   updateJoVouchData = () => {
@@ -102,15 +98,14 @@ class VouchCon extends React.Component {
             JoVouchdata: data.reverse()
           };
         });
-      }).catch(err => {
-       
+      })
+      .catch(err => {
         this.setState(() => {
-          return{
-            err_jovouch : true
-          }
-        })
-      
-    })
+          return {
+            err_jovouch: true
+          };
+        });
+      });
   };
 
   render() {
@@ -181,102 +176,104 @@ class VouchCon extends React.Component {
           </div>
         </div>
 
-        <div className="pro_compo">
+        <div className="pro_compo_con">
           <div className="pro_con_vouch">
             {this.props.vouchPage === "pv" && (
               <div className="vouchCon">
-                {this.state.err_vouch ?
-                 (<div className = "wrong_alert">Something Went Wrong....</div>) :
-                  ( this.state.data.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      editF={this.props.setPVoJVoDN}
-                      EData={e}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                      id={e.det.id}
-                      deleteIt={this.deleteIt}
-                      status={e.det.status}
-                    />
-                  );
-                }) )}
+                {this.state.err_vouch ? (
+                  <div className="wrong_alert">Something Went Wrong....</div>
+                ) : (
+                  this.state.data.map((e, i) => {
+                    return (
+                      <DetCont
+                        i={i + 1}
+                        editF={this.props.setPVoJVoDN}
+                        EData={e}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                        id={e.det.id}
+                        deleteIt={this.deleteIt}
+                        status={e.det.status}
+                      />
+                    );
+                  })
+                )}
               </div>
             )}
 
-            { this.props.vouchPage === "dn" && (
-                this.state.err_debit ? 
-                (<div className = "wrong_alert">Something Went Wrong....</div>) :
-              (<div className="vouchCon">
-                {this.state.Debitdata.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                      id={e.det.id}
-                    />
-                  )
-                })}
-              </div>
-            ) )}
+            {this.props.vouchPage === "dn" &&
+              (this.state.err_debit ? (
+                <div className="wrong_alert">Something Went Wrong....</div>
+              ) : (
+                <div className="vouchCon">
+                  {this.state.Debitdata.map((e, i) => {
+                    return (
+                      <DetCont
+                        i={i + 1}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                        id={e.det.id}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
 
-            {
-              
-              this.props.vouchPage === "cn" && (
-                this.state.err_credit ? 
-                (<div className = "wrong_alert">Something Went Wrong....</div>) :
-              (<div className="vouchCon">
-                {this.state.Creditdata.map((e, i) => {
-                  return (
-                    <DetCont
-                      i={i + 1}
-                      supplier={e.det.supplier}
-                      costumer={e.det.customer}
-                      date={e.det.bill_date}
-                      amt={e.det.totalAmt}
-                      bill_num={e.det.bill_num}
-                    />
-                  );
-                })}
-              </div>
-            ) )}
+            {this.props.vouchPage === "cn" &&
+              (this.state.err_credit ? (
+                <div className="wrong_alert">Something Went Wrong....</div>
+              ) : (
+                <div className="vouchCon">
+                  {this.state.Creditdata.map((e, i) => {
+                    return (
+                      <DetCont
+                        i={i + 1}
+                        supplier={e.det.supplier}
+                        costumer={e.det.customer}
+                        date={e.det.bill_date}
+                        amt={e.det.totalAmt}
+                        bill_num={e.det.bill_num}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
 
-            
-            {this.props.vouchPage === "jv" && (
-                this.state.err_jovouch ? 
-                (<div className = "wrong_alert">Something Went Wrong....</div>) :
-             ( <div className="vouchCon">
-                {this.state.JoVouchdata.error
-                  ? null
-                  : this.state.JoVouchdata.map((e, i) => {
-                      return (
-                        <JoVouchDet
-                          bills={e.billArr}
-                          i={i + 1}
-                          amount={e.amount}
-                          balance={e.balance}
-                          date={e.bill_date}
-                          seller={e.debit_acc}
-                          cust={e.credit_acc}
-                          setPVoJVoDN={this.props.setPVoJVoDN}
-                          data={e}
-                          id={e.id}
-                          deleteIt={this.deleteIt}
-                          updateJoVouchData={this.updateJoVouchData}
-                          specificJoVouch={this.props.specificJoVouch}
-                          setjoBill={this.props.setjoBill}
-                        />
-                      );
-                    })}
-              </div>
-            ) )}
+            {this.props.vouchPage === "jv" &&
+              (this.state.err_jovouch ? (
+                <div className="wrong_alert">Something Went Wrong....</div>
+              ) : (
+                <div className="vouchCon">
+                  {this.state.JoVouchdata.error
+                    ? null
+                    : this.state.JoVouchdata.map((e, i) => {
+                        return (
+                          <JoVouchDet
+                            bills={e.billArr}
+                            i={i + 1}
+                            amount={e.amount}
+                            balance={e.balance}
+                            date={e.bill_date}
+                            seller={e.debit_acc}
+                            cust={e.credit_acc}
+                            setPVoJVoDN={this.props.setPVoJVoDN}
+                            data={e}
+                            id={e.id}
+                            deleteIt={this.deleteIt}
+                            updateJoVouchData={this.updateJoVouchData}
+                            specificJoVouch={this.props.specificJoVouch}
+                            setjoBill={this.props.setjoBill}
+                          />
+                        );
+                      })}
+                </div>
+              ))}
           </div>
         </div>
       </div>
