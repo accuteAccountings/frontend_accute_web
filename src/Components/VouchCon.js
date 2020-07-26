@@ -209,18 +209,20 @@ class VouchCon extends React.Component {
                 <div className="wrong_alert">Something Went Wrong....</div>
               ) : (
                 <div className="vouchCon">
-                  {this.state.Debitdata.map((e, i) => {
-                    return (
-                      <DetCont
-                        i={i + 1}
-                        supplier={e.det.supplier}
-                        costumer={e.det.customer}
-                        date={e.det.bill_date}
-                        amt={e.det.totalAmt}
-                        bill_num={e.det.bill_num}
-                        id={e.det.id}
-                      />
-                    );
+                  {this.state.data.map((e, i) => {
+                    if (e.det.type === "debit") {
+                      return (
+                        <DetCont
+                          i={i + 1}
+                          supplier={e.det.supplier}
+                          costumer={e.det.customer}
+                          date={e.det.bill_date}
+                          amt={e.det.totalAmt}
+                          bill_num={e.det.bill_num}
+                          id={e.det.id}
+                        />
+                      );
+                    }
                   })}
                 </div>
               ))}
@@ -230,17 +232,19 @@ class VouchCon extends React.Component {
                 <div className="wrong_alert">Something Went Wrong....</div>
               ) : (
                 <div className="vouchCon">
-                  {this.state.Creditdata.map((e, i) => {
-                    return (
-                      <DetCont
-                        i={i + 1}
-                        supplier={e.det.supplier}
-                        costumer={e.det.customer}
-                        date={e.det.bill_date}
-                        amt={e.det.totalAmt}
-                        bill_num={e.det.bill_num}
-                      />
-                    );
+                  {this.state.data.map((e, i) => {
+                    if (e.det.type === "credit") {
+                      return (
+                        <DetCont
+                          i={i + 1}
+                          supplier={e.det.supplier}
+                          costumer={e.det.customer}
+                          date={e.det.bill_date}
+                          amt={e.det.totalAmt}
+                          bill_num={e.det.bill_num}
+                        />
+                      );
+                    }
                   })}
                 </div>
               ))}
