@@ -93,47 +93,48 @@ class ProCon extends React.Component {
 
         <div className="pro_con">
           {this.props.ProOrAcc === "Products" ? (
-            this.props.err_pro ? 
-            (<div className = "wrong_alert">Something Went Wrong....</div>) :
-            (<div>
-              {this.props.products.map((pro, i) => {
-                return (
-                  <div className="det_cont_pro">
-                    <div className="det_sub_cont">
-                      <div className="pro_name">
-                        <span className="acc_id">{i + 1}. </span>
-                        {pro.product_name}
+            this.props.err_pro ? (
+              <div className="wrong_alert">Something Went Wrong....</div>
+            ) : (
+              <div className="pro_con_con">
+                {this.props.products.map((pro, i) => {
+                  return (
+                    <div className="det_cont_pro">
+                      <div className="det_sub_cont">
+                        <div className="pro_name">
+                          <span className="acc_id">{i + 1}. </span>
+                          {pro.product_name}
+                        </div>
+                        <div className="pro_num">
+                          <span className="acc_adress_head">HSN No.:</span>
+                          {pro.hsn_num}
+                        </div>
                       </div>
-                      <div className="pro_num">
-                        <span className="acc_adress_head">HSN No.:</span>
-                        {pro.hsn_num}
+                      <div className="det_cont_icons_pro">
+                        <div
+                          onClick={() => {
+                            this.showAddProduct(pro.id);
+                          }}
+                        >
+                          <img src={pencil} alt=" " />
+                        </div>
+                        <div
+                          onClick={() => {
+                            this.deleteIt(`/api/products/${pro.id}`);
+                          }}
+                        >
+                          <img src={trash} alt=" " />
+                        </div>
                       </div>
                     </div>
-                    <div className="det_cont_icons_pro">
-                      <div
-                        onClick={() => {
-                          this.showAddProduct(pro.id);
-                        }}
-                      >
-                        <img src={pencil} alt=" " />
-                      </div>
-                      <div
-                        onClick={() => {
-                          this.deleteIt(`/api/products/${pro.id}`);
-                        }}
-                      >
-                        <img src={trash} alt=" " />
-                      </div>
-                    </div>
-                  </div>
-                )
-              }) }
-            </div>
+                  );
+                })}
+              </div>
             )
+          ) : this.props.err_acc ? (
+            <div className="wrong_alert">Something Went Wrong....</div>
           ) : (
-            this.props.err_acc ?
-            (<div className = "wrong_alert">Something Went Wrong....</div>) :
-            (<div>
+            <div>
               {this.props.accounts.map((account, i) => {
                 return (
                   <div className="det_acc_div">
@@ -153,11 +154,11 @@ class ProCon extends React.Component {
                   </div>
                 );
               })}
-            </div>)
+            </div>
           )}
         </div>
       </div>
-    ) 
+    );
   }
 }
 
