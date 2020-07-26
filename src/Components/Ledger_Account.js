@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import cross from "./../img/cancel.svg";
+import search from '../img/search.svg'
 
 export default class Ledger extends React.Component {
   handleModal = () => {
@@ -18,9 +19,18 @@ export default class Ledger extends React.Component {
   }
 
   Ledger_Balance = id => {
+    let num = 0
+    let arr = []
+    if(document.getElementById('filter_op').value ===  'recents'){
+       num = this.props.details.length -1 - parseInt(id)
+       arr = this.props.details.slice(0,this.props.details.length).reverse()
+    }else{
+      num = id
+      arr = this.props.details
+    }
     let t = 0;
-    this.props.details.map((e, i) => {
-      i <= id &&
+    arr.map((e, i) => {
+      i <= num &&
         (e.credit_acc
           ? e.credit_acc === this.props.account.acc_name
             ? (t = parseInt(t) + parseInt(e.amount - e.balance))
@@ -33,10 +43,19 @@ export default class Ledger extends React.Component {
   };
 
   Rec_Ledger_Balance = (id) => {
+    let num = 0
+    let arr = []
+    
+    if(document.getElementById('filter_op') && document.getElementById('filter_op').value ===  'date'){
+      num = id
+      arr = this.props.det2
+    }else{
+      num = this.props.det2.length -1 - parseInt(id)
+      arr = this.props.det2.slice(0,this.props.details.det2).reverse()
+    }
     let t = 0;
-    // let arr = this.props.det2.splice(0,8)
-    this.props.det2.slice(0,7).reverse().map((e, i) => {
-      i <= 6 - parseInt(id) &&
+     arr.reverse().map((e, i) => {
+      i <= num &&
         (e.credit_acc
           ? e.credit_acc === this.props.account.acc_name
             ? (t = parseInt(t) + parseInt(e.amount - e.balance))
@@ -47,6 +66,8 @@ export default class Ledger extends React.Component {
     });
     return t;
   };
+
+  
 
   constructor(props) {
     super(props);
@@ -93,9 +114,14 @@ export default class Ledger extends React.Component {
                 Print ledger
               </button>
               </div>
-              <div>
-                <input type = "search" placeholder = "Search Account/Bill No." id="search_filters" 
-                onKeyPress={this.enterPressed.bind(this)} />
+              <div className = "icon_input">
+                <div>
+                  <input type = "search" placeholder = " Account/Bill No." id="search_filters" 
+                  onKeyPress={this.enterPressed.bind(this)} />
+                </div>
+                <div>
+                  <img src = {search} alt = ' ' />
+                </div>
               </div>
             </div>
           </div>
@@ -121,10 +147,9 @@ export default class Ledger extends React.Component {
           <div className = "between_led">
               <div className = 'sort'>
                 <span>Sort By</span>
-                <select id="filter_op" defaultValue="date" onChange={this.props.getDet} >
+                <select id="filter_op" defaultValue="recents" onChange={this.props.getDet} >
+                  <option value = "recents">Recents</option>
                   <option value = "date">Date</option>
-                  <option value = "parti">Particulars</option>
-                  <option value = "bill">Bill no.</option>
                 </select>
               </div>
           </div>
@@ -182,7 +207,7 @@ export default class Ledger extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.details.map((e, i) => {
+                { this.props.details.map((e, i) => {
                   return e.credit_acc ? (
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
@@ -213,7 +238,7 @@ export default class Ledger extends React.Component {
                 })}
 
                 {this.props.det2.map((e, i) => {
-                  return e.credit_acc && i < 7 ? (
+                  return e.credit_acc ? (
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
                       <td className = "parti_td"> {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}</td>
@@ -227,7 +252,6 @@ export default class Ledger extends React.Component {
                       </td>
                     </tr>
                   ) : (
-                    i < 7 && (
                       <tr className="tr_acc">
                         <td className="td_date">{e.bill_date}</td>
                         <td className = "parti_td">{e.customer === this.props.account.acc_name ? e.supplier : e.customer}</td>
@@ -240,7 +264,7 @@ export default class Ledger extends React.Component {
                             : this.Rec_Ledger_Balance(i) + " (Cr.)"}{" "}
                         </td>
                       </tr>
-                    )
+                    
                   );
                 })}
                 <tr className="tr_acc">

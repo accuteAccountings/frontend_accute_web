@@ -45,10 +45,27 @@ export default class Account_pro extends React.Component {
     let mode = await document.getElementById("filter_op");
     
 
+    if(this.state.det2 != null && mode.value){
+      await fetch(`/api/vouch/recent/${this.props.account.acc_name}?mode=${mode.value}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          this.setState(() => {
+            return {
+              det2: data,
+              det3: data,
+              details: [],
+              bal : data
+            };
+          });
+        }
+      })
+    }
 
     if (parti && start_date_p && end_date_p && subagent) {
       await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${parti.value}&sdate=${start_date_p.value}&edate=${end_date_p.value}&agent=${subagent.value}`
+        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${parti.value}&sdate=$
+        {start_date_p.value}&edate=${end_date_p.value}&agent=${subagent.value}`
       )
         .then(res => res.json())
         .then(data => {
@@ -57,14 +74,16 @@ export default class Account_pro extends React.Component {
               return {
                 details: data,
                 det2: [],
+                bal : data,
                 recent: false
               };
             });
           }
         });
-    } else if (filter && mode.value === "parti") {
+    } else if (filter.value) {
       await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}&sdate=${start_date}&edate=${end_date}`
+        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}
+        &sdate=${start_date}&edate=${end_date}&bill_num=${filter.value}&mode=${mode.value}`
       )
         .then(res => res.json())
         .then(data => {
@@ -73,13 +92,14 @@ export default class Account_pro extends React.Component {
               return {
                 details: data,
                 det2: [],
+                bal : data ,
                 recent: false
               };
             });
           }
         });
     } else if (start_date && end_date) {
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}`)
+      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -87,42 +107,17 @@ export default class Account_pro extends React.Component {
               return {
                 details: data,
                 det2: [],
+                bal : data ,
                 recent: false
               };
             });
           }
         });
       }
-     else if (filter && mode === 'date') {
-      await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data) {
-            this.setState(() => {
-              return {
-                details: [],
-                det2: data.reverse(),
-                recent: false
-              };
-            });
-          }
-        });
-    } 
-    else if (filter && mode.value === "bill") {
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?bill_num=${filter.value}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data) {
-            this.setState(() => {
-              return {
-                details: data,
-                det2: [],
-                recent: false
-              };
-            });
-          }
-        });
-    }
+     
+
+        
+
   };
 
   clearall = () => {
@@ -136,8 +131,9 @@ export default class Account_pro extends React.Component {
         if (data) {
           this.setState(() => {
             return {
-              det2: data.reverse(),
-              details: []
+              det2: data,
+              details: [],
+              bal :data
             };
           });
         } else {
@@ -154,30 +150,35 @@ export default class Account_pro extends React.Component {
     });
   };
 
-  constructor(props) {
-    super(props);
 
-    fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+ async componentDidMount(){
+ 
+    await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              det2: data.reverse(),
+              det2: data,
               det3: data,
               details: [],
-              bal: data
+              bal : data
             };
           });
         }
-      });
+      })
+     
+  }
+
+  constructor(props) {
+    super(props);
 
     this.state = {
       details: [],
       det2: [],
       filter: null,
       det3: [],
-      bal: []
+      bal : []
     };
   }
 

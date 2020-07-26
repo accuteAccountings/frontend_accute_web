@@ -247,7 +247,6 @@
 .print_search{
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
     align-items: center;
     padding: 10px 10px;
     // border: solid black;
@@ -256,6 +255,14 @@
         width: 140px;
         border: solid transparent;
         border-bottom: 1px solid $grey_text;
+    }
+    img{
+        height: 15px;
+    }
+    .icon_input{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 }
 
