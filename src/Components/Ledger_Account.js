@@ -1,7 +1,7 @@
-import React from 'react';
-import Modal from 'react-modal';
-import cross from './../img/cancel.svg';
-import search from '../img/search.svg';
+import React from "react";
+import Modal from "react-modal";
+import cross from "./../img/cancel.svg";
+import search from "../img/search.svg";
 
 export default class Ledger extends React.Component {
 	handleModal = () => {
