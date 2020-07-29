@@ -307,7 +307,8 @@ class DetCont extends React.Component {
         </div>
         <div className="det_cont_right_vouch vouch_right">
           <div className=" vouch_status">
-            <span className="acc_right_vouch">Status:</span> {this.props.status}
+            <span className="acc_right_vouch">Status:</span>{" "}
+            {this.props.status === "0" ? <span style={{ color: "green" }}>Paid</span> : "UnPaid"}
           </div>
           <div className="vouch_date">
             <span className="acc_right_vouch"> Date:</span> {this.props.date}
