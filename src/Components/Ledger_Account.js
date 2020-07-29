@@ -54,7 +54,7 @@ export default class Ledger extends React.Component {
       arr = this.props.det2.slice(0,this.props.details.det2).reverse()
     }
     let t = 0;
-     arr.reverse().map((e, i) => {
+     arr.map((e, i) => {
       i <= num &&
         (e.credit_acc
           ? e.credit_acc === this.props.account.acc_name
