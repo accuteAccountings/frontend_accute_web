@@ -112,7 +112,9 @@ export default class Ledger extends React.Component {
 
 							<div className="print_search">
 								<div>
-									<button onClick={this.handleModal} className="print_btn_ledger">
+									<button onClick={() => {
+										window.print()
+									}} className="print_btn_ledger">
 										Print ledger
 									</button>
 								</div>
@@ -121,7 +123,7 @@ export default class Ledger extends React.Component {
 										type="search"
 										placeholder="Search Account/Bill No."
 										id="search_filters"
-										onKeyPress={this.enterPressed.bind(this)}
+										// onKeyPress={this.props.getDet()}
 									/>
 								</div>
 							</div>
@@ -158,50 +160,7 @@ export default class Ledger extends React.Component {
 						</div>
 					</div>
 
-					<div>
-						<Modal isOpen={this.state.open} onRequestClose={this.handleModal} className="modal">
-							<div className="acc_modal">
-								<div className="acc_modal_head">
-									<div className="acc_modal_text">GET LEDGER</div>
-									<div>
-										<img onClick={this.handleModal} src={cross} alt="" />
-									</div>
-								</div>
-								<div className="acc_modal_below">
-									<span>Account Name : </span>
-									<span>
-										<input type="text" value={this.props.account.acc_name} />
-									</span>
-								</div>
-								<div className="date_print_modal">
-									<label for="ledger_date_start">From : </label>
-									<input
-										type="date"
-										id="ledger_date_start_p"
-										name="ledger_date_start"
-										placeholder="From"
-									/>
-									<label for="ledger_date_end">To : </label>
-									<input type="date" id="ledger_date_end_p" />
-								</div>
-								<div className="parti_agent">
-									<input type="text" id="print_particulars" placeholder="particulars" />
-									<input type="text" id="print_sub_agent" placeholder="Supplier Agent" />
-								</div>
-								<div className="submit_modal">
-									<button
-										onClick={async () => {
-											await this.props.getDet();
-											await window.print();
-										}}
-										className="print_btn_modal"
-									>
-										Print
-									</button>
-								</div>
-							</div>
-						</Modal>
-					</div>
+					
 					<div className="acc_pro_ledger print_table">
 						<table className="acc_pro_table">
 							<thead>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Line} from 'react-chartjs-2';
+import {Line, Bar} from 'react-chartjs-2';
 import graph_icon from '../img/graph_view.svg'
 import menu from '../img/grid.svg'
 import blue_menu from '../img/blue_grid.svg'
@@ -55,13 +55,13 @@ export default class Report_pro extends React.Component{
                 
        await this.setState(() => {
         return{
-            labels : [ this.DateX('6'), this.DateX('5') , this.DateX('4'), this.DateX('3') , this.DateX('2') ,
+            labels : [this.DateX('9'), this.DateX('8') , this.DateX('7') ,this.DateX('6'), this.DateX('5') , this.DateX('4'), this.DateX('3') , this.DateX('2') ,
             this.DateX('1') , this.DateX('0')],
-            data_sales : [this.Sales_DW('6'), this.Sales_DW('5'), this.Sales_DW('4'), this.Sales_DW('3') , this.Sales_DW('2'),
+            data_sales : [ this.Sales_DW('9') , this.Sales_DW('8') , this.Sales_DW('7') , this.Sales_DW('6'), this.Sales_DW('5'), this.Sales_DW('4'), this.Sales_DW('3') , this.Sales_DW('2'),
              this.Sales_DW('1') , this.Sales_DW('0') ],
-             purchase : [this.Purchase_DW('6'), this.Purchase_DW('5'), this.Purchase_DW('4'), this.Purchase_DW('3') , this.Purchase_DW('2'),
+             purchase : [ this.Purchase_DW('9') , this.Purchase_DW('8') , this.Purchase_DW('7') , this.Purchase_DW('6'), this.Purchase_DW('5'), this.Purchase_DW('4'), this.Purchase_DW('3') , this.Purchase_DW('2'),
              this.Purchase_DW('1') , this.Purchase_DW('0') ],
-             payment : [this.Payment_DW('6'), this.Payment_DW('5'), this.Payment_DW('4'), this.Payment_DW('3') , this.Payment_DW('2'),
+             payment : [this.Payment_DW('9') , this.Payment_DW('8') , this.Payment_DW('7') , this.Payment_DW('6'), this.Payment_DW('5'), this.Payment_DW('4'), this.Payment_DW('3') , this.Payment_DW('2'),
              this.Payment_DW('1') , this.Payment_DW('0') ],
         }
     })
@@ -510,27 +510,32 @@ componentDidMount(){
         labels: this.state.labels,
         datasets: [{
                 label: 'Sales',
-                // backgroundColor: 'white',
+                backgroundColor: '#29a8ab',
                 borderColor: '#1f888a',
-                data: this.state.data_sales
+                color : 'black',
+                data: this.state.data_sales,
+                tension: 0,
             }]
         }
         let   data2 =  {
             labels: this.state.labels,
             datasets: [{
                 label: 'Purchase',
-                // backgroundColor: 'white',
+                display: true,
+                backgroundColor: '#29a8ab',
                 borderColor: '#1f888a',
-                data: this.state.purchase
+                data: this.state.purchase,
+                tension: 0
             }]
         }
         let   data3 =  {
             labels: this.state.labels,
             datasets: [{
                 label: 'Payment',
-                // backgroundColor: 'white',
+                backgroundColor: '#29a8ab',
                 borderColor: '#1f888a',
-                data: this.state.payment
+                data: this.state.payment,
+                tension: 0
             }]
         }
 
@@ -544,78 +549,29 @@ componentDidMount(){
                         <span>
                             <select name = "period" id="report_period" onChange = {this.WeekWiseData} defaultValue='seven_days' >
                                 <option value = "this_month" >This Month</option>
-                                <option value = "seven_days">Last 7 Days</option>
+                                <option value = "seven_days">Last 10 Days</option>
                                 <option value = "three_months">Last 3 Months</option>
                             </select>
                         </span>
-                        <span className = "menu" onClick = {() => {
-                            this.setmode('grid')
-                        }}>
-                            <img className = {this.state.mode === 'grid'? 'black' : 'blue'} src = {menu} alt = ''  />
-                            <img className = {this.state.mode === 'grid'? 'blue' : 'black'} id = "blue_grid"  src = {blue_menu} alt = ''  />
-                        </span>
-                        <span className = "menu" onClick = {() => {
-                            this.setmode('graph')
-                            
-                        }}>
-                            <img className = {this.state.mode === 'graph'? 'black' : 'blue'}
-                            src = {graph_icon} alt = '' />
-                            <img className = {this.state.mode === 'graph'? 'blue' : 'black'} src = {blue_graph} alt = '' />
-                        </span>
-                       
                         </div>
                         
                     </div>
-                    {this.state.mode === 'graph' ? (
+            
                         <div className = "report_box">
                             <div className = "chart_pro">
-                                <Line data = {data1} options={{ maintainAspectRatio: false }} />
+                                <Bar data = {data1} options={{ maintainAspectRatio: false }} />
                             </div>
                             <div className = "chart_pro">
-                                <Line data = {data2} options={{ maintainAspectRatio: false }} />
+                                <Bar data = {data2} options={{ maintainAspectRatio: false }} />
                             </div>
                             <div className = "chart_pro">
-                                <Line data = {data3} options={{ maintainAspectRatio: false }} />
+                                <Bar data = {data3} options={{ maintainAspectRatio: false }} />
                             </div>
                             <div className = "chart_pro">
-                                <Line data = {data1} options={{ maintainAspectRatio: false }} />
+                                <Bar data = {data1} options={{ maintainAspectRatio: false }} />
                             </div>
                          </div>
-                             ) : (
-                             <div className = "grid_report ">
-                                <div className = "grid_box ">
-                                    <div className = "grid_tab ul">
-                                      <div>Sales</div>
-                                      <div>
-                                        <span className = "value">{this.state.sales_val}</span>
-                                        <span className = "percent">-60%</span>
-                                      </div>
-                                    </div>
-                                    <div className = "grid_tab ur">
-                                        <div>Purchase</div>
-                                        <div>
-                                            <span className = "value">{this.state.purchase_val}</span>
-                                            <span className = "percent">-60%</span>
-                                        </div>
-                                    </div>
-                                     <div className = "grid_tab bl">
-                                        <div>Payment</div>
-                                        <div>
-                                            <span className = "value">{this.state.payment_val}</span>
-                                            <span className = "percent">-60%</span>
-                                        </div>
-                                    </div>
-                                    <div className = "grid_tab br">
-                                        <div>Goods Return</div>
-                                        <div>
-                                             <span className = "value"></span>
-                                            <span className = "percent"></span>
-                                         </div> 
-                                    </div>
-                                </div>
-                             </div>    
-                             )}
-                
+                            
             </div>
         )
     }

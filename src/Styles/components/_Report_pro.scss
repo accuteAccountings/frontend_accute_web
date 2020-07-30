@@ -1,26 +1,40 @@
 .chart_pro{
     padding: 10px;
-    height: 14vw;
-    width: 25vw;
+    height: 20vw;
+    width: 30vw;
     background-color: white;
-    box-shadow: 0 0 10px rgb(129, 129, 129);
-    margin-right: 3rem;
     margin-bottom: 15px;
-    // margin-left: 5rem;
     transition: 0.2s;
-    // margin-top: 20px;
+    // margin-left: auto;
+    // margin-right: auto;
+    margin-top: 1rem;
+    // border: solid black;
 }
 .charts_pro{
     canvas {
-        height: 13vw !important;
-        width: 24vw !important;
+        height: 19vw !important;
+        width: 25vw !important;
+        // border: solid black;
     }
-    width: 75rem;
-    margin-left: 5rem;
-    height: 45rem;
-    // border: solid black;
+    width: 100%;
+    // margin-left: 5rem;
+    // height: unset;
+    border: solid black;
    
     padding: 0 1rem;
+
+    .Val{
+        width: 40%;
+        font-size: 1.6rem;
+        margin-top: 1vw;
+        // border : solid black;
+        margin-left: 2vw;
+        color: $grey_text;
+        span{
+            font-size: 1.8rem;
+            margin-right: 1vw;
+        }
+    }
 }
 .report_box{
     width: 93%;
