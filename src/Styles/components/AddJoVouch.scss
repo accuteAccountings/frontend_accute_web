@@ -59,7 +59,7 @@
 }
 
 .jovouch_si {
-  margin: 5px 15px;
+  margin: 6px 15px;
 
   span {
     color: $grey_text;
@@ -118,6 +118,10 @@ input::-webkit-inner-spin-button {
 .jovouch_customer {
   display: flex;
   flex-direction: row;
+  margin-bottom: 10px;
+  input {
+    width: 70px;
+  }
 }
 
 .jovouch_body_middle {
@@ -227,8 +231,8 @@ input::-webkit-inner-spin-button {
     color: $l_grey_text;
     font-size: 1rem;
     border: 1px solid $grey_text;
-    width: auto;
-    padding: 2px 2rem;
+    width: 100px;
+    padding: 2px 10px;
     text-align: center;
     // width: 1;
   }
@@ -237,7 +241,7 @@ input::-webkit-inner-spin-button {
     border: 1px solid $grey_text;
     padding: 1px 6px;
     font-size: 1rem;
-    width: auto;
+    width: 100px;
     text-align: center;
   }
 }
@@ -297,7 +301,7 @@ input::-webkit-inner-spin-button {
     border: 1px solid #a0a0a0;
     box-sizing: border-box;
     padding: 0px 0px;
-    width: 110px;
+    width: 200%;
     top: 16px;
     left: 0px;
     border-top: none;
@@ -317,6 +321,11 @@ input::-webkit-inner-spin-button {
     background-color: rgb(231, 231, 231);
   }
 }
+.bill_date {
+  position: absolute;
+  font-size: 12px;
+  margin-left: 25px;
+}
 #jovouch_balance {
   border: none;
   text-align: left;
@@ -328,6 +337,7 @@ input::-webkit-inner-spin-button {
   text-align: left;
 }
 .paydet,
+.paydet2,
 .amount {
   margin-top: 8px;
 }

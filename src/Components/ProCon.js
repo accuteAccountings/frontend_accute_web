@@ -52,8 +52,8 @@ class ProCon extends React.Component {
   };
 
   showFilter = () => {
-let arr = document.querySelectorAll('input[name="filter"]:checked')
-this.props.filter(arr)
+    let arr = document.querySelectorAll('input[name="filter"]:checked');
+    this.props.filter(arr);
   };
 
   constructor(props) {
@@ -77,36 +77,53 @@ this.props.filter(arr)
   render() {
     return (
       <div className="pro_compo acc_pro_con">
-			  {this.props.ProOrAcc ==="Accounts" && <div className="filter_acc">
-          <h2 className="filter_acc_h">Filter</h2>
-          <hr />
-          <ul>
-            <li>
-              <input value="debtors" name="filter"  id="check_deb" onClick={this.showFilter} type="checkbox" />
-              Debtors
-            </li>
-            <li>
-              <input  name="filter" value="creditors" id="check_cred" onClick={this.showFilter} type="checkbox" />
-              Creditors
-            </li>
-            <li>
-              <input id="check_sub_ag"  name="filter" value="sub agent"  type="checkbox" onClick={this.showFilter} />
-              Sub Agent
-            </li>
-            <li>
-              <input id="check_trans" type="checkbox"  name="filter" value="transport"  onClick={this.showFilter} />
-              Transport
-            </li>
-            <li>
-              <input id="check_bank" type="checkbox"  name="filter" value="bank"  onClick={this.showFilter} />
-              Bank
-            </li>
-            <li>
-              <input onClick={this.showFilter} id="check_sal"  name="filter" value="salary"  type="checkbox" />
-              Salary
-            </li>
-          </ul>
-        </div>}
+        {this.props.ProOrAcc === "Accounts" && !this.props.err_pro && (
+          <div className="filter_acc">
+            <h2 className="filter_acc_h">Show Only</h2>
+            <hr />
+            <ul>
+              <li>
+                <input name="filter" value="traders" id="check_cred" onClick={this.showFilter} type="checkbox" />
+                Traders
+              </li>
+              <li>
+                <input id="check_sub_ag" name="filter" value="Sub Agent" type="checkbox" onClick={this.showFilter} />
+                Sub Agent
+              </li>
+              <li>
+                <input id="check_trans" type="checkbox" name="filter" value="transport" onClick={this.showFilter} />
+                Transport
+              </li>
+              <li>
+                <input id="check_bank" type="checkbox" name="filter" value="bank" onClick={this.showFilter} />
+                Bank
+              </li>
+              <li>
+                <input
+                  onClick={e => {
+                    if (e.target.checked) {
+                      document.getElementById("check_cred").checked = true;
+                      document.getElementById("check_sub_ag").checked = true;
+                      document.getElementById("check_trans").checked = true;
+                      document.getElementById("check_bank").checked = true;
+                    } else {
+                      document.getElementById("check_cred").checked = false;
+                      document.getElementById("check_sub_ag").checked = false;
+                      document.getElementById("check_trans").checked = false;
+                      document.getElementById("check_bank").checked = false;
+                    }
+                    this.showFilter();
+                  }}
+                  id="check_sal"
+                  name="filter"
+                  value="all"
+                  type="checkbox"
+                />
+                All
+              </li>
+            </ul>
+          </div>
+        )}
         {this.state.addProduct && (
           <AddProducts
             AddProCrossBtn={this.hideAddProduct}

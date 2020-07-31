@@ -238,7 +238,9 @@ class AddAcc extends React.Component {
                     <option value="Sub Agent">Sub Agent</option>
                     <option value="transport">Transport</option>
                     <option value="bank">Bank</option>
-                    <option value="salary">Salary</option>
+                    <option disabled value="salary">
+                      Salary
+                    </option>
                   </select>
                 </div>
               </div>

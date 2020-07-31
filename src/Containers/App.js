@@ -17,14 +17,17 @@ import DailyBook from "../Components/DailyBook";
 
 class App extends React.Component {
   filter = arr => {
-
-
-
     let temp = this.state.tempAcc.filter(e => {
-if(arr.length === 0 ){return true}
+      if (arr.length === 0) {
+        return true;
+      }
       for (let a of arr) {
-
-
+        if (a.value === "all") {
+          return true;
+        }
+        if (a.value === "traders" && (e.acc_type === "debtors" || e.acc_type === "creditors")) {
+          return true;
+        }
         if (a.value === e.acc_type) {
           return true;
         }
