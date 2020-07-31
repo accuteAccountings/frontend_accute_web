@@ -65,13 +65,16 @@ export default class Ledger extends React.Component {
 						: (t = parseInt(t) - parseInt(e.totalAmt)));
 		});
 		return t;
-	};
+	}
+
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			open: false
 		};
+
+	
 	}
 	render() {
 		return (
@@ -123,7 +126,7 @@ export default class Ledger extends React.Component {
 										type="search"
 										placeholder="Search Account/Bill No."
 										id="search_filters"
-										// onKeyPress={this.props.getDet()}
+										onChange = {() => this.props.filter_al()}
 									/>
 								</div>
 							</div>
@@ -152,10 +155,9 @@ export default class Ledger extends React.Component {
 					<div className="between_led">
 						<div className="sort">
 							<span>Sort By</span>
-							<select id="filter_op" defaultValue="date" onChange={this.props.getDet}>
-								<option value="date">Date</option>
-								<option value="parti">Particulars</option>
-								<option value="bill">Bill no.</option>
+							<select id="filter_op" defaultValue="recents" onChange={this.props.getDet}>
+								<option value="recents">Newest First</option>
+								<option value="date">Oldest First</option>
 							</select>
 						</div>
 					</div>

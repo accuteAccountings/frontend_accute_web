@@ -80,24 +80,24 @@ export default class Account_pro extends React.Component {
             });
           }
         });
-    } else if (filter.value) {
-      await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}
-        &sdate=${start_date}&edate=${end_date}&bill_num=${filter.value}&mode=${mode.value}`
-      )
-        .then(res => res.json())
-        .then(data => {
-          if (data) {
-            this.setState(() => {
-              return {
-                details: data,
-                det2: [],
-                bal : data ,
-                recent: false
-              };
-            });
-          }
-        });
+    // } else if (filter.value) {
+    //   await fetch(
+    //     `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}
+    //     &sdate=${start_date}&edate=${end_date}&bill_num=${filter.value}&mode=${mode.value}`
+    //   )
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       if (data) {
+    //         this.setState(() => {
+    //           return {
+    //             details: data,
+    //             det2: [],
+    //             bal : data ,
+    //             recent: false
+    //           };
+    //         });
+    //       }
+    //     });
     } else if (start_date && end_date) {
       await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`)
         .then(res => res.json())
@@ -151,27 +151,66 @@ export default class Account_pro extends React.Component {
   };
 
 
- async componentDidMount(){
- 
-    await fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+  filter_al = () => {
+    let data = document.getElementById("search_filters").value;
+
+    data = data.toLowerCase();
+    
+      let fPro = this.state.det2.filter(e => { 
+       
+        if (data === "") {
+          return true;
+        } else if (e.customer != null &&
+            e.customer.toLowerCase().indexOf(data) === -1
+              && e.supplier.toLowerCase().indexOf(data) === -1
+            &&
+              e.bill_num.indexOf(data) === -1
+          ){
+          return false;
+        }else if (e.credit_acc &&
+            e.credit_acc.toLowerCase().indexOf(data) === -1
+              && e.debit_acc.toLowerCase().indexOf(data) === -1
+            &&
+            e.billArr.indexOf(data) === -1
+            ){
+          return false;
+          
+        }else{
+          return true
+        }
+  
+
+      })
+
+      this.setState(() => {
+        return {
+          det2 : fPro
+        };
+      });
+  
+
+  }
+
+
+
+  constructor(props) {
+    super(props);
+
+
+    fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
               det2: data,
-              det3: data,
+              recents : data ,  
               details: [],
               bal : data
             };
           });
         }
       })
-     
-  }
-
-  constructor(props) {
-    super(props);
 
     this.state = {
       details: [],
@@ -324,6 +363,7 @@ export default class Account_pro extends React.Component {
               det3={this.state.det3}
               totalDebit = {this.totalDebit}
               totalCredit = {this.totalCredit}
+              filter_al = {this.filter_al}
             />
           )}
 
