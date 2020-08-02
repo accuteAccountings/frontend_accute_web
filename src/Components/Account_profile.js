@@ -35,70 +35,30 @@ export default class Account_pro extends React.Component {
   };
 
   getDet = async () => {
-    let end_date_p = await document.getElementById("ledger_date_end_p");
-    let start_date_p = await document.getElementById("ledger_date_start_p");
     let start_date = await document.getElementById("ledger_date_start").value;
     let end_date = await document.getElementById("ledger_date_end").value;
-    let parti = await document.getElementById("print_particulars");
-    let subagent = await document.getElementById("print_sub_agent");
-    let filter = await document.getElementById("search_filters");
     let mode = await document.getElementById("filter_op");
     
 
-    if(this.state.det2 != null && mode.value){
-      await fetch(`/api/vouch/recent/${this.props.account.acc_name}?mode=${mode.value}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              det2: data,
-              det3: data,
-              details: [],
-              bal : data
-            };
-          });
-        }
-      })
-    }
-
-    if (parti && start_date_p && end_date_p && subagent) {
-      await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?particulars=${parti.value}&sdate=$
-        {start_date_p.value}&edate=${end_date_p.value}&agent=${subagent.value}`
-      )
+    if(!start_date && !end_date && mode.value){
+      let sdate = '2020-03-01'
+      let edate = '2021-04-01'
+      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
             this.setState(() => {
               return {
+                temp_det2 : data ,  
                 details: data,
-                det2: [],
-                bal : data,
-                recent: false
+                bal : data
               };
             });
           }
-        });
-    // } else if (filter.value) {
-    //   await fetch(
-    //     `/api/vouch/specific/${this.props.account.acc_name}?particulars=${filter.value}
-    //     &sdate=${start_date}&edate=${end_date}&bill_num=${filter.value}&mode=${mode.value}`
-    //   )
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       if (data) {
-    //         this.setState(() => {
-    //           return {
-    //             details: data,
-    //             det2: [],
-    //             bal : data ,
-    //             recent: false
-    //           };
-    //         });
-    //       }
-    //     });
-    } else if (start_date && end_date) {
+        })
+    }
+
+     if (start_date && end_date) {
       await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
@@ -106,17 +66,14 @@ export default class Account_pro extends React.Component {
             this.setState(() => {
               return {
                 details: data,
-                det2: [],
                 bal : data ,
-                recent: false
               };
             });
           }
         });
       }
      
-
-        
+      
 
   };
 
@@ -125,21 +82,21 @@ export default class Account_pro extends React.Component {
     document.getElementById("ledger_date_end").value = null;
     document.getElementById("search_filters").value = null;
 
-    fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+    let sdate = '2020-03-01'
+    let edate = '2021-04-01'
+    fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              det2: data,
-              details: [],
-              bal :data
+              temp_det2 : data ,  
+              details: data,
+              bal : data
             };
           });
-        } else {
-          alert("nothing");
         }
-      });
+      })
   };
 
   handleradio = val => {
@@ -156,7 +113,7 @@ export default class Account_pro extends React.Component {
 
     data = data.toLowerCase();
     
-      let fPro = this.state.det2.filter(e => { 
+      let fPro = this.state.temp_det2.filter(e => { 
        
         if (data === "") {
           return true;
@@ -184,7 +141,7 @@ export default class Account_pro extends React.Component {
 
       this.setState(() => {
         return {
-          det2 : fPro
+          details : fPro
         };
       });
   
@@ -196,16 +153,16 @@ export default class Account_pro extends React.Component {
   constructor(props) {
     super(props);
 
-
-    fetch(`/api/vouch/recent/${this.props.account.acc_name}`)
+    let sdate = '2020-03-01'
+    let edate = '2021-04-01'
+    fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              det2: data,
-              recents : data ,  
-              details: [],
+              temp_det2 : data ,  
+              details: data,
               bal : data
             };
           });
@@ -214,11 +171,10 @@ export default class Account_pro extends React.Component {
 
     this.state = {
       details: [],
-      det2: [],
       filter: null,
-      det3: [],
-      bal : []
-    };
+      bal : [],
+      temp_det2 : []
+    }
   }
 
   render() {

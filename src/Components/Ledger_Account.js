@@ -21,12 +21,12 @@ export default class Ledger extends React.Component {
 	Ledger_Balance = (id) => {
 		let num = 0;
 		let arr = [];
-		if (document.getElementById('filter_op').value === 'recents') {
-			num = this.props.details.length - 1 - parseInt(id);
-			arr = this.props.details.slice(0, this.props.details.length).reverse();
-		} else {
+		if ( document.getElementById('filter_op') && document.getElementById('filter_op').value === 'date') {
 			num = id;
 			arr = this.props.details;
+		} else {
+			num = this.props.details.length - 1 - parseInt(id);
+			arr = this.props.details.slice(0, this.props.details.length).reverse();
 		}
 		let t = 0;
 		arr.map((e, i) => {
@@ -41,31 +41,6 @@ export default class Ledger extends React.Component {
 		});
 		return t;
 	};
-
-	Rec_Ledger_Balance = (id) => {
-		let num = 0;
-		let arr = [];
-
-		if (document.getElementById('filter_op') && document.getElementById('filter_op').value === 'date') {
-			num = id;
-			arr = this.props.det2;
-		} else {
-			num = this.props.det2.length - 1 - parseInt(id);
-			arr = this.props.det2.slice(0, this.props.details.det2).reverse();
-		}
-		let t = 0;
-		arr.map((e, i) => {
-			i <= num &&
-				(e.credit_acc
-					? e.credit_acc === this.props.account.acc_name
-						? (t = parseInt(t) + parseInt(e.amount - e.balance))
-						: (t = parseInt(t) - parseInt(e.amount - e.balance))
-					: e.customer === this.props.account.acc_name
-						? (t = parseInt(t) + parseInt(e.totalAmt))
-						: (t = parseInt(t) - parseInt(e.totalAmt)));
-		});
-		return t;
-	}
 
 
 	constructor(props) {
@@ -235,64 +210,6 @@ export default class Ledger extends React.Component {
 									);
 								})}
 
-								{this.props.det2.map((e, i) => {
-									return e.credit_acc ? (
-										<tr className="tr_acc">
-											<td className="td_date">{e.bill_date}</td>
-											<td className="parti_td">
-												{' '}
-												{e.credit_acc === this.props.account.acc_name ? (
-													e.debit_acc
-												) : (
-													e.credit_acc
-												)}
-											</td>
-											<td>{e.billArr.join(' , ')}</td>
-											<td className="td_dc">
-												{e.credit_acc === this.props.account.acc_name ? (
-													'-'
-												) : (
-													e.amount - e.balance
-												)}
-											</td>
-											<td className="td_dc">
-												{e.credit_acc === this.props.account.acc_name ? (
-													e.amount - e.balance
-												) : (
-													'-'
-												)}
-											</td>
-											<td>
-												{parseInt(this.Rec_Ledger_Balance(i)) < 0 ? (
-													-this.Rec_Ledger_Balance(i) + ' (Dr.)'
-												) : (
-													this.Rec_Ledger_Balance(i) + ' (Cr.)'
-												)}{' '}
-											</td>
-										</tr>
-									) : (
-										<tr className="tr_acc">
-											<td className="td_date">{e.bill_date}</td>
-											<td className="parti_td">
-												{e.customer === this.props.account.acc_name ? e.supplier : e.customer}
-											</td>
-											<td>{e.bill_num}</td>
-											<td className="td_dc">
-												{e.supplier === this.props.account.acc_name ? e.totalAmt : '-'}
-											</td>
-											<td className="td_dc">
-												{e.customer === this.props.account.acc_name ? e.totalAmt : '-'}{' '}
-											</td>
-											<td>
-												{parseInt(this.Rec_Ledger_Balance(i)) < 0 ? (
-													-this.Rec_Ledger_Balance(i) + ' (Dr.)'
-												) : (
-													this.Rec_Ledger_Balance(i) + ' (Cr.)'
-												)}{' '}
-											</td>
-										</tr>
-									);
-								})}
 								<tr className="tr_acc">
 									<td className="td_date"> </td>
 									<td className="parti_td"> </td>
