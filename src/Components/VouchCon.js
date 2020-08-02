@@ -288,13 +288,14 @@ class VouchCon extends React.Component {
 class DetCont extends React.Component {
   render() {
     return (
-      <div className="det_cont_vouch">
+      <div className={this.props.deleted ? " det_cont_vouch   vouch_del" : "det_cont_vouch"}>
         <div className="det_cont_left vouc_det_left">
           <div className="acc_name_vouch">
             <span className="acc_id_vouch">{this.props.id}. </span>
             {this.props.supplier}
             <span className="vouch_to">TO</span>
             <span className="vouch_costumer_name">{this.props.costumer}</span>
+            {this.props.deleted && <span id="delete_msg">This will be permanently deleted in 10 days</span>}
           </div>
           <div className="vouch_bill_detail">
             <div className="acc_adress">
