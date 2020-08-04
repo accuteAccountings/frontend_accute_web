@@ -17,55 +17,10 @@ class VouchCon extends React.Component {
 
   ModeHandler = async() => {
 
-    if(this.props.vouchPage === "pv"){ 
+
     let mode = await document.getElementById('mode_selecter_pur')
-    if(mode.value == 'oldest' || mode.value == 'newest'){
-      this.updateVouchData(`/api/vouch?mode=${mode.value}`)
-    }
-    else if(mode.value == 'low' || mode.value == 'high'){
-      this.updateVouchData(`/api/vouch?dir=${mode.value}`)
-    }
-    else if(mode.value == '0'){
 
-        let fPro = this.state.tempdata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (
-            data.det.status == '0'
-          ) {
-            return true;
-          } 
-        })
-  
-        this.setState(() => {
-          return {
-            data: fPro
-          }
-        })
-    
-      }
-      else if(mode.value == 'UNPAID'){
-
-        let fPro = this.state.tempdata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (
-            data.det.status != '0'
-          ) {
-            return true;
-          } 
-        })
-  
-        this.setState(() => {
-          return {
-            data: fPro
-          }
-        })
-    
-      }
-    }
-
-    else if(this.props.vouchPage === "jv"){ 
+     if(this.props.vouchPage === "jv"){ 
       let mode = await document.getElementById('mode_selecter_pur')
       if(mode.value == 'oldest' || mode.value == 'newest'){
         this.updateJoVouchData(`/api/jovouch?mode=${mode.value}`)
@@ -112,7 +67,57 @@ class VouchCon extends React.Component {
       
         }
       }
+      else {
+
+    if(mode.value == 'oldest' || mode.value == 'newest'){
+      this.updateVouchData(`/api/vouch?mode=${mode.value}`)
     }
+    else if(mode.value == 'low' || mode.value == 'high'){
+      this.updateVouchData(`/api/vouch?dir=${mode.value}`)
+    }
+    else if(mode.value == '0'){
+
+        let fPro = this.state.tempdata.filter(data => {
+          if (data === "") {
+            return true;
+          } else if (
+            data.det.status == '0'
+          ) {
+            return true;
+          } 
+        })
+  
+        this.setState(() => {
+          return {
+            data: fPro
+          }
+        })
+    
+      
+       if(mode.value == 'UNPAID'){
+
+        let fPro = this.state.tempdata.filter(data => {
+          if (data === "") {
+            return true;
+          } else if (
+            data.det.status != '0'
+          ) {
+            return true;
+          } 
+        })
+  
+        this.setState(() => {
+          return {
+            data: fPro
+          }
+        })
+    
+      }
+    }
+  }
+
+
+}
 
   constructor(props) {
     super(props);
