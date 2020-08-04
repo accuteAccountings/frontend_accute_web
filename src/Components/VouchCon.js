@@ -14,110 +14,82 @@ class VouchCon extends React.Component {
     this.setState({ delete: false });
   };
 
+  ModeHandler = async () => {
+    let mode = await document.getElementById("mode_selecter_pur");
 
-  ModeHandler = async() => {
+    if (this.props.vouchPage === "jv") {
+      let mode = await document.getElementById("mode_selecter_pur");
+      if (mode.value == "oldest" || mode.value == "newest") {
+        this.updateJoVouchData(`/api/jovouch?mode=${mode.value}`);
+      } else if (mode.value == "low" || mode.value == "high") {
+        this.updateJoVouchData(`/api/jovouch?dir=${mode.value}`);
+      } else if (mode.value == "0") {
+        let fPro = this.state.tempJodata.filter(data => {
+          if (data === "") {
+            return true;
+          } else if (parseInt(data.balance) <= 0) {
+            return true;
+          }
+        });
 
+        this.setState(() => {
+          return {
+            JoVouchdata: fPro
+          };
+        });
+      } else if (mode.value == "UNPAID") {
+        let fPro = this.state.tempJodata.filter(data => {
+          if (data === "") {
+            return true;
+          } else if (parseInt(data.balance) > 0) {
+            return true;
+          }
+        });
 
-    let mode = await document.getElementById('mode_selecter_pur')
-
-     if(this.props.vouchPage === "jv"){ 
-      let mode = await document.getElementById('mode_selecter_pur')
-      if(mode.value == 'oldest' || mode.value == 'newest'){
-        this.updateJoVouchData(`/api/jovouch?mode=${mode.value}`)
+        this.setState(() => {
+          return {
+            JoVouchdata: fPro
+          };
+        });
       }
-      else if(mode.value == 'low' || mode.value == 'high'){
-        this.updateJoVouchData(`/api/jovouch?dir=${mode.value}`)
-      }
-      else if(mode.value == '0'){
-  
-          let fPro = this.state.tempJodata.filter(data => {
-            if (data === "") {
-              return true;
-            } else if (
-              parseInt(data.balance) <= 0
-            ) {
-              return true;
-            } 
-          })
-    
-          this.setState(() => {
-            return {
-              JoVouchdata: fPro
-            }
-          })
-      
-        }
-        else if(mode.value == 'UNPAID'){
-  
-          let fPro = this.state.tempJodata.filter(data => {
-            if (data === "") {
-              return true;
-            } else if (
-              parseInt(data.balance) > 0
-            ) {
-              return true;
-            } 
-          })
-    
-          this.setState(() => {
-            return {
-              JoVouchdata: fPro
-            }
-          })
-      
-        }
-      }
-      else {
-
-    if(mode.value == 'oldest' || mode.value == 'newest'){
-      this.updateVouchData(`/api/vouch?mode=${mode.value}`)
-    }
-    else if(mode.value == 'low' || mode.value == 'high'){
-      this.updateVouchData(`/api/vouch?dir=${mode.value}`)
-    }
-    else if(mode.value == '0'){
-
+    } else {
+      if (mode.value == "oldest" || mode.value == "newest") {
+        this.updateVouchData(`/api/vouch?mode=${mode.value}`);
+      } else if (mode.value == "low" || mode.value == "high") {
+        this.updateVouchData(`/api/vouch?dir=${mode.value}`);
+      } else if (mode.value == "0") {
         let fPro = this.state.tempdata.filter(data => {
           if (data === "") {
             return true;
-          } else if (
-            data.det.status == '0'
-          ) {
+          } else if (data.det.status == "0") {
             return true;
-          } 
-        })
-  
-        this.setState(() => {
-          return {
-            data: fPro
           }
-        })
-    
-      
-       if(mode.value == 'UNPAID'){
+        });
 
-        let fPro = this.state.tempdata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (
-            data.det.status != '0'
-          ) {
-            return true;
-          } 
-        })
-  
         this.setState(() => {
           return {
             data: fPro
-          }
-        })
-    
+          };
+        });
+
+        if (mode.value == "UNPAID") {
+          let fPro = this.state.tempdata.filter(data => {
+            if (data === "") {
+              return true;
+            } else if (data.det.status != "0") {
+              return true;
+            }
+          });
+
+          this.setState(() => {
+            return {
+              data: fPro
+            };
+          });
+        }
       }
     }
-  }
-
-
-}
+  };
 
   constructor(props) {
     super(props);
@@ -126,10 +98,10 @@ class VouchCon extends React.Component {
       addVouch: false,
       addDebit: false,
       data: [],
-      tempdata : [],
+      tempdata: [],
       Debitdata: [],
       JoVouchdata: [],
-      tempJodata : [],
+      tempJodata: [],
       Creditdata: [],
       deleteUrl: null,
       delete: false,
@@ -138,18 +110,18 @@ class VouchCon extends React.Component {
       err_debit: false,
       err_credit: false
     };
-    this.updateVouchData('/api/vouch?mode=newest');
+    this.updateVouchData("/api/vouch?mode=newest");
 
-    this.updateJoVouchData('/api/jovouch?mode=newest');
+    this.updateJoVouchData("/api/jovouch?mode=newest");
   }
-  updateVouchData = (url) => {
+  updateVouchData = url => {
     fetch(url)
       .then(res => res.json())
       .then(data => {
         this.setState(() => {
           return {
             data: data,
-            tempdata : data
+            tempdata: data
           };
         });
       })
@@ -198,14 +170,14 @@ class VouchCon extends React.Component {
       });
   };
 
-  updateJoVouchData = (url) => {
+  updateJoVouchData = url => {
     fetch(url)
       .then(res => res.json())
       .then(data => {
         this.setState(() => {
           return {
             JoVouchdata: data,
-            tempJodata : data
+            tempJodata: data
           };
         });
       })
@@ -218,11 +190,10 @@ class VouchCon extends React.Component {
       });
   };
 
-
   render() {
     return (
       <div className="pro_compo">
-        <div className="nav_sec_trans">
+        <div className="nav_sec_trans nav_sec_vouch">
           {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
           <div className="nav_items">
             <li
@@ -284,16 +255,16 @@ class VouchCon extends React.Component {
 							this.props.fi();
 						}}
           /> */}
-          <div>
-            <select id = "mode_selecter_pur" defaultValue = "newest" onChange = {this.ModeHandler} >
-              <option value = "newest">Newest First</option>
-              <option value = "oldest">Oldest First</option>
-              <option value = "low">Ammount(Low to high)</option>
-              <option value = "high">Ammount(High to Low)</option>
-              <option value = "0">Paid </option>
-              <option value = "UNPAID">Unpaid</option>
-            </select>
-          </div>
+            <div>
+              <select id="mode_selecter_pur" defaultValue="newest" onChange={this.ModeHandler}>
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="low">Ammount(Low to high)</option>
+                <option value="high">Ammount(High to Low)</option>
+                <option value="0">Paid </option>
+                <option value="UNPAID">Unpaid</option>
+              </select>
+            </div>
           </div>
         </div>
 
