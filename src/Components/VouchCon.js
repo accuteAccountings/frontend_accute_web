@@ -223,12 +223,16 @@ class VouchCon extends React.Component {
                       return (
                         <DetCont
                           i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
                           date={e.det.bill_date}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
                           id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          status={e.det.status}
                         />
                       );
                     }
@@ -249,11 +253,16 @@ class VouchCon extends React.Component {
                       return (
                         <DetCont
                           i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
                           date={e.det.bill_date}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
+                          id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          status={e.det.status}
                         />
                       );
                     }
@@ -342,7 +351,6 @@ class DetCont extends React.Component {
           <div
             onClick={() => {
               this.props.deleteIt("/api/vouch/" + this.props.id);
-			  
             }}
           >
             <img src={trash} alt=" " />
