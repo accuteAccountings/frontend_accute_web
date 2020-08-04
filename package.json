@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild": "mv build main && rm -r ../ledger_backend/public/main && mv main ../ledger_backend/public",
+    "postbuild": "mv build main && rm -r ../backend_accute_web/public/main && mv main ../backend_accute_web/public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

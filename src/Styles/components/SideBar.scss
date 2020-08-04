@@ -121,7 +121,7 @@ li {
 @keyframes hideSideItems {
   100% {
     opacity: 0;
-	visibility:hidden;
+    visibility: hidden;
   }
 
   30% {
@@ -140,4 +140,12 @@ li {
   0% {
     opacity: 0;
   }
+}
+.trash_btn {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  padding: 5px;
+  background-color: $d_pri_color;
+  cursor: pointer;
 }

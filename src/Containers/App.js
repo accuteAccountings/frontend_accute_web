@@ -14,6 +14,7 @@ import Dash from "./Dash";
 import AddJovouch from "../Components/AddJoVouch";
 import Account_pro from "../Components/Account_profile";
 import DailyBook from "../Components/DailyBook";
+import Trash from "../Components/Trash";
 
 class App extends React.Component {
   filter = arr => {
@@ -343,6 +344,21 @@ class App extends React.Component {
             isacc_pro={this.state.isacc_pro}
             err_pro={this.state.err_pro}
             err_acc={this.state.err_acc}
+          />
+        </div>
+      );
+    }
+    if (this.state.page === "trash") {
+      currentPage = (
+        <div className="pageBody">
+          <TopBar />
+          <Clogo />
+          <Trash
+            setPVoJVoDN={this.setPVoJVoDN}
+            vouchPage={this.state.vouchPage}
+            setVouchPage={this.setVouchPage}
+            specificJoVouch={this.specificJoVouch}
+            setjoBill={this.setjoBill}
           />
         </div>
       );

@@ -2,11 +2,23 @@ import React from "react";
 import Delete from "./Delete";
 import ref from "./../img/refresh.svg";
 import trash from "../img/trash.svg";
-import pencil from "../img/pencil.svg";
+import restore from "../img/restore.svg";
 
-class VouchCon extends React.Component {
+class Trash extends React.Component {
   deleteIt = url => {
     this.setState({ delete: true, deleteUrl: url });
+  };
+  restoreIt = async url => {
+    try {
+      let a = await fetch(url, { method: "PUT" });
+      if (a) {
+        this.deleteHide();
+      } else {
+        alert("Internal Error: Cannot Delete ");
+      }
+    } catch (err) {
+      alert("Fetching Error : Cannot Delete ");
+    }
   };
   deleteHide = () => {
     this.updateVouchData();
@@ -111,6 +123,9 @@ class VouchCon extends React.Component {
   render() {
     return (
       <div className="pro_compo">
+        <h1 style={{ width: 200, margin: "30px auto" }} className="trash_header">
+          Trash
+        </h1>
         <div className="nav_sec_trans">
           {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
           <div className="nav_items">
@@ -148,31 +163,19 @@ class VouchCon extends React.Component {
             </li>
           </div>
           <div className="other_det">
-            <div
-              className="add_account"
-              onClick={() => {
-                this.props.setPVoJVoDN(this.props.vouchPage, "add");
-              }}
-            >
-              + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
-              {this.props.vouchPage === "pv" && "Purchase Vouchers"}
-              {this.props.vouchPage === "dn" && "Debit Note"}
-              {this.props.vouchPage === "cn" && "Credit Note"}
-            </div>
-
             <img
               src={ref}
               alt=" "
               onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
             />
 
-            {/* <input
-						type="text"
-						id="searchForProOrAcc"
-						onChange={() => {
-							this.props.fi();
-						}}
-					/> */}
+            <input
+              type="text"
+              id="searchForProOrAcc"
+              onChange={() => {
+                this.props.fi();
+              }}
+            />
           </div>
         </div>
 
@@ -184,27 +187,28 @@ class VouchCon extends React.Component {
                   <div className="wrong_alert">Something Went Wrong....</div>
                 ) : (
                   this.state.data.map((e, i) => {
-                    if (!(e.det.type === "purchase")) {
-                      return;
-                    }
                     if (e.det.IsDeleted) {
-                      return;
+                      if (!(e.det.type === "purchase")) {
+                        return;
+                      }
+                      return (
+                        <DetCont
+                          i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
+                          supplier={e.det.supplier}
+                          costumer={e.det.customer}
+                          date={e.det.bill_date}
+                          amt={e.det.totalAmt}
+                          bill_num={e.det.bill_num}
+                          id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          restoreIt={this.restoreIt}
+                          status={e.det.status}
+                        />
+                      );
+                    } else {
                     }
-                    return (
-                      <DetCont
-                        i={i + 1}
-                        editF={this.props.setPVoJVoDN}
-                        EData={e}
-                        supplier={e.det.supplier}
-                        costumer={e.det.customer}
-                        date={e.det.bill_date}
-                        amt={e.det.totalAmt}
-                        bill_num={e.det.bill_num}
-                        id={e.det.id}
-                        deleteIt={this.deleteIt}
-                        status={e.det.status}
-                      />
-                    );
                   })
                 )}
               </div>
@@ -217,18 +221,23 @@ class VouchCon extends React.Component {
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
                     if (e.det.type === "debit") {
-                      if (e.det.IsDeleted) {
+                      if (!e.det.IsDeleted) {
                         return;
                       }
                       return (
                         <DetCont
                           i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
+                          restoreIt={this.restoreIt}
                           date={e.det.bill_date}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
                           id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          status={e.det.status}
                         />
                       );
                     }
@@ -243,17 +252,23 @@ class VouchCon extends React.Component {
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
                     if (e.det.type === "credit") {
-                      if (e.det.IsDeleted) {
+                      if (!e.det.IsDeleted) {
                         return;
                       }
                       return (
                         <DetCont
                           i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
                           date={e.det.bill_date}
+                          restoreIt={this.restoreIt}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
+                          id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          status={e.det.status}
                         />
                       );
                     }
@@ -269,7 +284,7 @@ class VouchCon extends React.Component {
                   {this.state.JoVouchdata.error
                     ? null
                     : this.state.JoVouchdata.map((e, i) => {
-                        if (e.IsDeleted) {
+                        if (!e.IsDeleted) {
                           return;
                         }
                         return (
@@ -280,6 +295,7 @@ class VouchCon extends React.Component {
                             balance={e.balance}
                             date={e.bill_date}
                             seller={e.debit_acc}
+                            restoreIt={this.restoreIt}
                             cust={e.credit_acc}
                             setPVoJVoDN={this.props.setPVoJVoDN}
                             data={e}
@@ -334,15 +350,14 @@ class DetCont extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.editF(this.props.which, "edit", this.props.EData);
+              this.props.restoreIt(`/api/vouch/res/${this.props.id}`);
             }}
           >
-            <img src={pencil} alt=" " />
+            <img src={restore} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt("/api/vouch/" + this.props.id);
-			  
+              this.props.deleteIt("/api/vouch/permanent/" + this.props.id);
             }}
           >
             <img src={trash} alt=" " />
@@ -390,15 +405,14 @@ class JoVouchDet extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.setPVoJVoDN("jv", "edit", this.props.data);
-              this.props.setjoBill(this.props.bills);
+              this.props.restoreIt(`/api/jovouch/res/${this.props.id}`);
             }}
           >
-            <img src={pencil} alt=" " />
+            <img src={restore} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt(`/api/jovouch/${this.props.id}`);
+              this.props.deleteIt(`/api/jovouch/permanent/${this.props.id}`);
             }}
           >
             <img src={trash} alt=" " />
@@ -409,4 +423,4 @@ class JoVouchDet extends React.Component {
   }
 }
 
-export default VouchCon;
+export default Trash;
