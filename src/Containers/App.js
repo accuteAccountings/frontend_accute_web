@@ -17,6 +17,67 @@ import DailyBook from "../Components/DailyBook";
 import Trash from "../Components/Trash";
 
 class App extends React.Component {
+
+  Sorting_Pro = async() => {
+    let mode = await document.getElementById('new_old_navsec')
+    
+    if(this.state.ProOrAcc == "Products"){
+      fetch(`/api/products?mode=${mode.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.Products) {
+            this.setState(() => {
+              return {
+                products: data.Products,
+                tempProducts: data.Products
+              };
+            });
+          }
+        })
+        .catch(err => {
+          this.setState(() => {
+            return {
+              err_pro: true
+            };
+          });
+        });
+    }
+    else{
+      fetch(`/api/accounts?mode=${mode.value}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.accounts) {
+            this.setState(() => {
+              return {
+                accounts: data.accounts,
+                tempAcc: data.accounts
+              };
+            });
+          }
+        })
+        .catch(err => {
+          this.setState(() => {
+            return {
+              err_acc: true
+            };
+          });
+        });
+    }
+
+  }
+
   filter = arr => {
     let temp = this.state.tempAcc.filter(e => {
       if (arr.length === 0) {
@@ -38,8 +99,16 @@ class App extends React.Component {
 
     this.setState({ accounts: temp });
   };
-  getProducts = () => {
-    fetch("/api/products", {
+  getProducts = async() => {
+
+    let url = '/api/products?mode=newest'
+    let mode = await document.getElementById('new_old_navsec')
+
+    if(mode && mode.value == 'oldest'){
+      url = '/api/products?mode=oldest'
+    }
+
+    fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -84,7 +153,7 @@ class App extends React.Component {
   }
 
   getAccounts = () => {
-    fetch("/api/accounts", {
+    fetch("/api/accounts?mode=newest", {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -268,6 +337,7 @@ class App extends React.Component {
     this.fi = this.fi.bind(this);
     this.setjoBill = this.setjoBill.bind(this);
     this.navTo = this.navTo.bind(this);
+    this.Sorting_Pro = this.Sorting_Pro.bind(this)
 
     this.state = {
       AddPro: false,
@@ -330,6 +400,7 @@ class App extends React.Component {
             ProOrAcc={this.state.ProOrAcc}
             AddAccCrossBtn={this.AddAccCrossBtn}
             fi={this.fi}
+            Sorting_Pro = {this.Sorting_Pro}
           />
 
           <ProCon

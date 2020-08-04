@@ -154,7 +154,7 @@ class ProCon extends React.Component {
                     <div className="det_cont_pro">
                       <div className="det_sub_cont">
                         <div className="pro_name">
-                          <span className="acc_id">{i + 1}. </span>
+                          <span className="acc_id">{pro.id}. </span>
                           {pro.product_name}
                         </div>
                         <div className="pro_num">
