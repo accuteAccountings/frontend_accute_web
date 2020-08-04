@@ -92,9 +92,10 @@ class VouchCon extends React.Component {
             data: fPro
           }
         })
+      }
     
       
-       if(mode.value == 'UNPAID'){
+       else if(mode.value == 'UNPAID'){
 
         let fPro = this.state.tempdata.filter(data => {
           if (data === "") {
@@ -113,7 +114,7 @@ class VouchCon extends React.Component {
         })
     
       }
-    }
+    
   }
 
 
