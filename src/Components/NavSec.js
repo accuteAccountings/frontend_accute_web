@@ -36,6 +36,7 @@ class NavSec extends React.Component {
             onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
           />
 
+
           <input
             type="text"
             id="searchForProOrAcc"
@@ -43,6 +44,14 @@ class NavSec extends React.Component {
               this.props.fi();
             }}
           />
+
+          <div>
+          <select id = "new_old_navsec" defaultValue = "newest" onChange = {() => {this.props.Sorting_Pro()}} >
+            <option value = "newest">Newest First</option>
+            <option value = "oldest">Oldest First</option>
+          </select>
+        </div>
+
         </div>
       </div>
     );
