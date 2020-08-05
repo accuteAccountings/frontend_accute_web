@@ -108,6 +108,65 @@ class VouchCon extends React.Component {
     }
   };
 
+
+  Filter_Search = async() => {
+    let search = await document.getElementById('searc_vouchers').value
+
+    if (this.props.vouchPage === "jv") {
+
+      let fPro = this.state.tempJodata.filter(e => { 
+       
+        if (search === "") {
+          return true;
+        } else if (
+            e.debit_acc.toLowerCase().indexOf(search) === -1
+              && e.credit_acc.toLowerCase().indexOf(search) === -1
+            &&
+              e.billArr.join('').indexOf(search) === -1
+          ){
+          return false;
+        }
+          else{
+          return true
+        }
+  
+
+      })
+
+      this.setState(() => {
+        return {
+          JoVouchdata : fPro
+        };
+      });
+
+    }else{
+      let fPro = this.state.tempdata.filter(e => { 
+       
+        if (search === "") {
+          return true;
+        } else if (
+            e.det.customer.toLowerCase().indexOf(search) === -1
+              && e.det.supplier.toLowerCase().indexOf(search) === -1
+            &&
+              e.det.bill_num.indexOf(search) === -1
+          ){
+          return false;
+        }
+          else{
+          return true
+        }
+  
+
+      })
+
+      this.setState(() => {
+        return {
+          data : fPro
+        };
+      });
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -267,9 +326,9 @@ class VouchCon extends React.Component {
 
              <input
 						type="text"
-						id="searchForProOrAcc"
+						id="searc_vouchers"
 						onChange={() => {
-							this.props.fi();
+              this.Filter_Search()
 						}}
           /> 
       
