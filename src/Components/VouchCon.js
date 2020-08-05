@@ -15,15 +15,27 @@ class VouchCon extends React.Component {
   };
 
   ModeHandler = async () => {
-    let mode = await document.getElementById("mode_selecter_pur");
+    let newest = await document.getElementById("newest");
+    let oldest = await document.getElementById("oldest");
+    let high = await document.getElementById("high");
+    let low = await document.getElementById("low");
+    let paid = await document.getElementById("paid");
+    let unpaid = await document.getElementById("unpaid");
 
     if (this.props.vouchPage === "jv") {
-      let mode = await document.getElementById("mode_selecter_pur");
-      if (mode.value == "oldest" || mode.value == "newest") {
-        this.updateJoVouchData(`/api/jovouch?mode=${mode.value}`);
-      } else if (mode.value == "low" || mode.value == "high") {
-        this.updateJoVouchData(`/api/jovouch?dir=${mode.value}`);
-      } else if (mode.value == "0") {
+      if (oldest.checked ) {
+        this.updateJoVouchData('/api/jovouch?mode=oldest');
+      }
+      else if (newest.checked ) {
+        this.updateJoVouchData('/api/jovouch?mode=newest');
+      } 
+      else if (low.checked) {
+        this.updateJoVouchData('/api/jovouch?dir=low');
+      } 
+      else if (high.checked) {
+        this.updateJoVouchData('/api/jovouch?dir=high');
+      }
+      else if (paid.checked) {
         let fPro = this.state.tempJodata.filter(data => {
           if (data === "") {
             return true;
@@ -34,10 +46,10 @@ class VouchCon extends React.Component {
 
         this.setState(() => {
           return {
-            JoVouchdata: fPro
+            JoVouchdata : fPro
           };
         });
-      } else if (mode.value == "UNPAID") {
+      } else if (unpaid.checked) {
         let fPro = this.state.tempJodata.filter(data => {
           if (data === "") {
             return true;
@@ -52,16 +64,37 @@ class VouchCon extends React.Component {
           };
         });
       }
-    } else {
-      if (mode.value == "oldest" || mode.value == "newest") {
-        this.updateVouchData(`/api/vouch?mode=${mode.value}`);
-      } else if (mode.value == "low" || mode.value == "high") {
-        this.updateVouchData(`/api/vouch?dir=${mode.value}`);
-      } else if (mode.value == "0") {
+    } 
+    else {
+      if (oldest.checked ) {
+        this.updateVouchData('/api/vouch?mode=oldest');
+      }
+      else if (newest.checked ) {
+        this.updateVouchData('/api/vouch?mode=newest');
+      } 
+      else if (low.checked) {
+        this.updateVouchData('/api/vouch?dir=low');
+      } 
+      else if (high.checked) {
+        this.updateVouchData('/api/vouch?dir=high');
+      }
+      else if (paid.checked) {
+        let fPro = this.state.tempdata.filter(data => {
+         if ( data.det.status == '0') {
+            return true;
+          }
+        });
+
+        this.setState(() => {
+          return {
+            data : fPro
+          }
+        })
+      } else if (unpaid.checked) {
         let fPro = this.state.tempdata.filter(data => {
           if (data === "") {
             return true;
-          } else if (data.det.status == "0") {
+          } else if (data.det.status != '0') {
             return true;
           }
         });
@@ -71,22 +104,6 @@ class VouchCon extends React.Component {
             data: fPro
           };
         });
-
-        if (mode.value == "UNPAID") {
-          let fPro = this.state.tempdata.filter(data => {
-            if (data === "") {
-              return true;
-            } else if (data.det.status != "0") {
-              return true;
-            }
-          });
-
-          this.setState(() => {
-            return {
-              data: fPro
-            };
-          });
-        }
       }
     }
   };
@@ -248,25 +265,47 @@ class VouchCon extends React.Component {
               onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
             />
 
-            {/* <input
+             <input
 						type="text"
 						id="searchForProOrAcc"
 						onChange={() => {
 							this.props.fi();
 						}}
-          /> */}
-            <div>
-              <select id="mode_selecter_pur" defaultValue="newest" onChange={this.ModeHandler}>
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="low">Ammount(Low to high)</option>
-                <option value="high">Ammount(High to Low)</option>
-                <option value="0">Paid </option>
-                <option value="UNPAID">Unpaid</option>
-              </select>
-            </div>
+          /> 
+      
           </div>
         </div>
+
+        <div className="filter_vouch">
+        <h2 className="filter_acc_h">Show Only</h2>
+        <hr />
+        <ul>
+          <li>
+            <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
+            Newest First
+          </li>
+          <li>
+            <input id="oldest" name="filter" value="oldest" type="radio" onChange={this.ModeHandler} />
+            Oldest First
+          </li>
+          <li>
+            <input id="high" type="radio" name="filter" value="high" onClick={this.ModeHandler} />
+            Amount(High to low)
+          </li>
+          <li>
+            <input id="low" type="radio" name="filter" value="low" onClick={this.ModeHandler} />
+            Amount(low to high)
+          </li>
+          <li>
+            <input id="paid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
+              Paid
+            </li>
+          <li>
+            <input id="unpaid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
+              Unpaid
+            </li>
+        </ul>
+      </div>
 
         <div className="pro_compo_con">
           <div className="pro_con_vouch">
