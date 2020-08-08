@@ -2,8 +2,8 @@
 
 .add_vouch_con {
   background-color: white;
-  width: 95%;
-  max-width: 1100px;
+  width: 99%;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0px 0px 10px rgb(163, 163, 163);
@@ -50,8 +50,8 @@
 }
 
 .vouch_body_right {
-  border-left: 2px solid $l_grey_text;
-  width: 40%;
+  border-left: 1px solid $l_grey_text;
+  width: 50%;
 }
 
 .vouch_details {
@@ -98,7 +98,7 @@
   width: 160px;
 }
 #vouch_sup {
-  width: 160px;
+  width: 190px;
 }
 #vouch_sup_agent {
   width: 160px;
@@ -108,10 +108,10 @@
   text-align: center;
 }
 #vouch_customer {
-  width: 160px;
+  width: 190px;
 }
 #vouch_hsn_num {
-  width: 120px;
+  width: 70px;
 }
 input[type="number"] {
   -moz-appearance: textfield;
@@ -125,12 +125,13 @@ input::-webkit-inner-spin-button {
 .vouch_customer {
   display: flex;
   flex-direction: row;
+  padding: 5px 5px;
 }
 
 .vouch_body_middle {
   margin-top: 20px;
   padding-top: 10px;
-  border-top: 2px solid $l_grey_text;
+  border-top: 1px solid $l_grey_text;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -143,11 +144,105 @@ input::-webkit-inner-spin-button {
   width: 140px;
   color: rgb(155, 155, 155);
 }
-#vouch_pro_con {
+.vouch_customer_con {
   position: relative;
-  z-index: 10;
   ul {
     position: absolute;
+    display: none;
+
+    background-color: white;
+    border: 1px solid #a0a0a0;
+    box-sizing: border-box;
+    padding: 0px 0px;
+    width: 190px;
+    top: 33px;
+    left: 0px;
+    border-top: none;
+    box-shadow: 0 0 10px rgb(238, 238, 238);
+    z-index: 20;
+  }
+
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
+    cursor: pointer;
+  }
+
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+.vouch_sup_con {
+  position: relative;
+  ul {
+    position: absolute;
+    display: none;
+
+    background-color: white;
+    border: 1px solid #a0a0a0;
+    box-sizing: border-box;
+    padding: 0px 0px;
+    width: 190px;
+    top: 33px;
+    left: 0px;
+    border-top: none;
+    box-shadow: 0 0 10px rgb(238, 238, 238);
+    z-index: 20;
+  }
+
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
+    cursor: pointer;
+  }
+
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+.vouch_transport_name_con {
+  position: relative;
+  ul {
+    position: absolute;
+    display: none;
+
+    background-color: white;
+    border: 1px solid #a0a0a0;
+    box-sizing: border-box;
+    padding: 0px 0px;
+    width: 160px;
+    top: 33px;
+    left: 0px;
+    border-top: none;
+    box-shadow: 0 0 10px rgb(238, 238, 238);
+    z-index: 10;
+  }
+
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
+    cursor: pointer;
+  }
+
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+#vouch_pro_con {
+  position: relative;
+  ul {
+    position: absolute;
+    display: none;
+
     background-color: white;
     border: 1px solid #a0a0a0;
     box-sizing: border-box;
@@ -192,8 +287,15 @@ input::-webkit-inner-spin-button {
 #vouch_table {
   width: 100%;
 }
+table {
+  border: 1px solid $l_grey_text;
+  border-right: none;
+  border-collapse: collapse;
+  padding: 5px;
+  font-size: $p_font;
+  height: 40px;
+}
 
-table,
 th,
 td {
   border: 1px solid $l_grey_text;
@@ -236,15 +338,31 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 .vouch_num_items {
-  margin-right: 3rem;
+  margin: 1rem;
   text-align: left;
+  border: none;
+  width: 88%;
+
+  tr {
+    background-color: white;
+    border: none;
+  }
+  td {
+    font-size: 14px;
+    width: 80%;
+
+    border: none;
+  }
+  .bold {
+    font-weight: bold;
+    text-align: right;
+  }
 }
 
 .vouch_types_item {
   text-align: center;
 }
 .vouch_body_right {
-  padding: 1rem;
   color: $grey_text;
 
   input[type="text"] {
@@ -266,11 +384,13 @@ tr:nth-child(even) {
 #percentage {
   position: absolute;
   top: 25px;
-  right: 6px;
+  right: 10px;
   color: $l_grey_text;
 }
-#vouch_discount {
-  width: 60px;
+#vouch_dicon {
+  width: 50px;
+  text-align: right;
+  padding-right: 20px;
 }
 
 #vouch_gst {
@@ -290,4 +410,54 @@ tr:nth-child(even) {
   font-size: 10px;
   margin: 3px;
   display: none;
+}
+.add_discount_con {
+  margin-top: 20px;
+}
+#add_discount_input {
+  width: 30%;
+  margin-left: 20px;
+}
+.vouch_si_add_dis {
+  margin-left: 20px;
+  width: 30%;
+
+  select {
+    width: 100%;
+  }
+}
+.add_dis_btn_con {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  padding: 10px 10px;
+}
+#add_freight_input {
+  width: 30%;
+  margin-left: 20px;
+  box-sizing: border-box;
+}
+#add_freight_remark_input {
+  width: 30%;
+  margin-left: 20px;
+  box-sizing: border-box;
+}
+.add_fre_btn_con {
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  padding: 15px 10px;
+}
+#add_freight_addBtn {
+  padding: 3px 15px;
+  font-size: 15px;
+  color: $grey_text;
+  border: 1px solid $grey_text;
+  border-radius: 30px;
+  background-color: white;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 4px;
+  margin-top: 10px;
 }
