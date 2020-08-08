@@ -2,8 +2,8 @@
 
 .add_vouch_con {
   background-color: white;
-  width: 95%;
-  max-width: 1100px;
+  width: 99%;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0px 0px 10px rgb(163, 163, 163);
@@ -51,7 +51,7 @@
 
 .vouch_body_right {
   border-left: 1px solid $l_grey_text;
-  width: 40%;
+  width: 50%;
 }
 
 .vouch_details {
@@ -338,10 +338,10 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 .vouch_num_items {
-  margin-right: 3rem;
+  margin: 1rem;
   text-align: left;
   border: none;
-  width: 95%;
+  width: 88%;
 
   tr {
     background-color: white;
@@ -349,11 +349,13 @@ tr:nth-child(even) {
   }
   td {
     font-size: 14px;
-    width: 90%;
+    width: 80%;
+
     border: none;
   }
   .bold {
     font-weight: bold;
+    text-align: right;
   }
 }
 
@@ -361,7 +363,6 @@ tr:nth-child(even) {
   text-align: center;
 }
 .vouch_body_right {
-  padding: 1rem;
   color: $grey_text;
 
   input[type="text"] {
@@ -412,4 +413,51 @@ tr:nth-child(even) {
 }
 .add_discount_con {
   margin-top: 20px;
+}
+#add_discount_input {
+  width: 30%;
+  margin-left: 20px;
+}
+.vouch_si_add_dis {
+  margin-left: 20px;
+  width: 30%;
+
+  select {
+    width: 100%;
+  }
+}
+.add_dis_btn_con {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  padding: 10px 10px;
+}
+#add_freight_input {
+  width: 30%;
+  margin-left: 20px;
+  box-sizing: border-box;
+}
+#add_freight_remark_input {
+  width: 30%;
+  margin-left: 20px;
+  box-sizing: border-box;
+}
+.add_fre_btn_con {
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  padding: 15px 10px;
+}
+#add_freight_addBtn {
+  padding: 3px 15px;
+  font-size: 15px;
+  color: $grey_text;
+  border: 1px solid $grey_text;
+  border-radius: 30px;
+  background-color: white;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 4px;
+  margin-top: 10px;
 }

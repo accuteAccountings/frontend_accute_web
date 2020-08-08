@@ -80,8 +80,22 @@ class AddVouch extends React.Component {
       disAmt = parseInt(disAmt) + parseInt(e.g_amount) - parseInt(e.amount);
       total = parseInt(total) + parseInt(e.amount);
     });
-    total = parseInt(total) + (parseInt(total) * parseInt(gst)) / 100;
-    this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt });
+    let gstAmt = (parseInt(total) * parseInt(gst)) / 100;
+    total = parseInt(total) + gstAmt;
+    let FTotal = total;
+    this.state.discontArr.map(ele => {
+      if (ele.type === "Rate Discount") {
+        FTotal = parseInt(FTotal) - parseInt(ele.value);
+      }
+      if (ele.type !== "Rate Discount") {
+        let a = parseInt(total) * (parseInt(ele.value) / 100);
+        FTotal = parseInt(FTotal) - parseInt(a);
+      }
+    });
+    this.state.freightArr.map(ele => {
+      FTotal = parseInt(FTotal) + parseInt(ele.value);
+    });
+    this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt, mainAmnt: FTotal, gstAmt: gstAmt });
   };
 
   async addVouch() {
@@ -215,6 +229,7 @@ class AddVouch extends React.Component {
     let vouch_rate = document.querySelector("#vouch_rate").value;
     document.querySelector("#vouch_rate").value = "";
     let amount = document.querySelector("#vouch_amount").value;
+    document.querySelector("#vouch_amount").value = "";
     if (amount === "") {
       if (vouch_rate === "" && vouch_quantity === "") {
         alert("Please Add Quantity and Rate");
@@ -267,13 +282,14 @@ class AddVouch extends React.Component {
     let vouch_dicon = document.querySelector("#vouch_dicon");
     let vouch_rate = document.querySelector("#vouch_rate");
     let hsn_num = document.getElementById("vouch_hsn_num");
+    let amt = document.getElementById("vouch_amount");
 
     pro_name.value = this.state.items[index].product_name;
     vouch_quantity.value = this.state.items[index].quantity;
     vouch_dicon.value = this.state.items[index].dicon;
     vouch_rate.value = this.state.items[index].rate;
     hsn_num.value = this.state.items[index].hsn_num;
-
+    amt.value = this.state.items[index].amount;
     this.setState(() => {
       return {
         editItem: index
@@ -287,17 +303,24 @@ class AddVouch extends React.Component {
     let vouch_rate = document.querySelector("#vouch_rate").value;
     let pro_name = document.getElementById("vouch_pro_item").value;
     let hsn_num = document.getElementById("vouch_hsn_num").value;
+    let amt = document.getElementById("vouch_amount").value;
 
     document.querySelector("#vouch_pro_item").value = "";
 
-    document.querySelector("#vouch_quantity").value = 1;
+    document.querySelector("#vouch_quantity").value = "";
 
-    document.querySelector("#vouch_dicon").value = 5;
-    document.querySelector("#vouch_rate").value = 1;
+    document.querySelector("#vouch_dicon").value = this.state.defaultDiscon;
+    document.querySelector("#vouch_rate").value = "";
 
     document.getElementById("vouch_hsn_num").value = "";
+    if (amt === "") {
+      if (vouch_rate === "" && vouch_quantity === "") {
+        alert("Please Add Quantity and Rate");
+        return;
+      }
+    }
     let dicon = parseInt(vouch_dicon) / 100;
-    let v_amount = parseInt(vouch_rate) * parseInt(vouch_quantity);
+    let v_amount = parseInt(amt);
     let g_amt = parseInt(v_amount);
     v_amount = v_amount - v_amount * dicon;
     v_amount = v_amount.toFixed(2);
@@ -421,6 +444,10 @@ class AddVouch extends React.Component {
       pro: [],
       acc: [],
       gst: 5,
+      gstAmt: 0,
+      discontArr: [],
+      mainAmnt: 0,
+      freightArr: [],
       defaultDiscon: 0
     };
     this.getProducts();
@@ -876,6 +903,9 @@ class AddVouch extends React.Component {
                 </thead>
                 <tbody>
                   {this.state.items.map((i, index) => {
+                    if (index === this.state.editItem) {
+                      return;
+                    }
                     return (
                       <tr key={index}>
                         <td className="tbtn">{index + 1}</td>
@@ -999,13 +1029,15 @@ class AddVouch extends React.Component {
               <tr>
                 <td> Discount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.disAmt}</strong>
+                  <strong>
+                    {"-"}₹{this.state.disAmt}
+                  </strong>
                 </td>
               </tr>
               <tr>
                 <td> GST ({this.state.gst}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gst}</strong>
+                  <strong>₹{this.state.gstAmt}</strong>
                 </td>
               </tr>
               <tr>
@@ -1015,7 +1047,99 @@ class AddVouch extends React.Component {
                 </td>
               </tr>
             </table>
-            <div className="add_discount_con">sdfdsf</div>
+            <div className="add_discount_con">
+              <div className="add_dis_btn_con">
+                <div className="vouch_si_add_dis">
+                  <span>Type</span>
+                  <br />
+                  <select id="add_dis_discount_type">
+                    {" "}
+                    <option>Rate Discount </option>
+                    <option>Cash Discount </option>
+                    <option> No G.R. Less </option>
+                  </select>
+                </div>
+                <input id="add_discount_input" placeholder={"Discount"} />
+                <button
+                  onClick={e => {
+                    let a = {
+                      type: document.getElementById("add_dis_discount_type").value,
+                      value: document.getElementById("add_discount_input").value
+                    };
+                    let arr = this.state.discontArr;
+                    arr.push(a);
+                    this.setState({ discontArr: arr });
+                    document.getElementById("add_discount_input").value = "";
+
+                    this.updateTotal();
+                  }}
+                  id="add_freight_addBtn"
+                >
+                  Add
+                </button>
+              </div>
+              <table className="vouch_num_items">
+                {this.state.discontArr.map(ele => {
+                  return (
+                    <tr>
+                      <td> {ele.type}</td>
+                      <td className="bold">
+                        <strong>
+                          {"- "}
+                          {ele.type === "Rate Discount" && "₹"}
+                          {ele.value}
+                          {ele.type !== "Rate Discount" && "%"}
+                        </strong>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </table>
+              <div className="add_fre_btn_con">
+                <div className="vouch_si_add_fre">
+                  <input id="add_freight_input" placeholder="Freight" />
+                  <input id="add_freight_remark_input" placeholder="Remarks" />
+                  <button
+                    onClick={() => {
+                      let a = {
+                        remark: document.getElementById("add_freight_remark_input").value,
+                        value: document.getElementById("add_freight_input").value
+                      };
+                      let arr = this.state.freightArr;
+                      arr.push(a);
+                      this.setState({ freightArr: arr });
+                      this.updateTotal();
+                      document.getElementById("add_freight_remark_input").value = "";
+                      document.getElementById("add_freight_input").value = "";
+                    }}
+                    id="add_freight_addBtn"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+              <table className="vouch_num_items">
+                {this.state.freightArr.map(ele => {
+                  return (
+                    <tr>
+                      <td> {ele.remark}</td>
+                      <td className="bold">
+                        <strong>
+                          {"₹"}
+                          {ele.value}
+                        </strong>
+                      </td>
+                    </tr>
+                  );
+                })}
+                <tr>
+                  <td> Total Amount :</td>
+                  <td className="bold">
+                    <strong>₹{this.state.mainAmnt}</strong>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
