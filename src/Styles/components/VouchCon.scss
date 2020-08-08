@@ -6,7 +6,7 @@
   font-weight: 600;
 }
 .det_cont_vouch {
-  width: 100%;
+  width: 90%;
   height: 5rem;
   display: flex;
   flex-direction: row;
@@ -22,7 +22,7 @@
   box-shadow: 0px 2px 8px #a0a0a0;
 }
 .det_cont_jovouch {
-  width: 100%;
+  width: 90%;
   min-width: 50rem;
   height: 6.4rem;
   display: flex;
@@ -147,7 +147,89 @@
 .vouch_del {
   opacity: 0.5;
 }
-#delete_msg {
+
+
+#mode_selecter_pur{
+  width: 7rem;
 }
 
 
+.filter_vouch {
+  background-color: white;
+  position: absolute;
+  left: 82%;
+  width: 15%;
+  max-width: 240px;
+  // box-shadow: 0px 2px 10px #aaaaaa;
+  border: 1px solid #aaaaaa;
+  border-radius: 3px;
+
+  input{
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    padding-top: 3px;
+    width: 150px;
+    margin-right: auto;
+    margin-left: 10%;
+    margin-top: 8px;
+  }
+  .spe {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    padding-top: 3px;
+    width: 150px;
+    margin-right: auto;
+    margin-left: 10%;
+    margin-top: 0px;
+  }
+  ul {
+    margin: 0px;
+    margin-left: 0;
+    padding-left: 0px;
+    padding: 15px 5px;
+  }
+  h2 {
+    margin: 10px;
+    color: #505050;
+  }
+}
+
+.search_line{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  // border: solid black;
+
+  img {
+    height: 15px;
+    margin: 10px 10px;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+
+  input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $grey_text;
+    height: 30px;
+    font-size: $s_p_font;
+    background-image: url("../../img/search.svg");
+    background-size: 10%;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    padding-left: 30px;
+    cursor: pointer;
+  }
+}

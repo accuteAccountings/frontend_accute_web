@@ -128,7 +128,7 @@ export default class Account_pro extends React.Component {
             e.credit_acc.toLowerCase().indexOf(data) === -1
               && e.debit_acc.toLowerCase().indexOf(data) === -1
             &&
-            e.billArr.indexOf(data) === -1
+            e.billArr.join('').indexOf(data) === -1
             ){
           return false;
           
