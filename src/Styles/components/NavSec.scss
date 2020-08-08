@@ -94,6 +94,16 @@
   height: 25px;
   cursor: pointer;
 }
+.add_vouch {
+  padding: 3px 10px;
+  margin: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid $pri_color;
+  font-size: $p_font;
+  height: 25px;
+  margin-left: 40%;
+  cursor: pointer;
+}
 .other_det_pro {
   display: flex;
   flex-direction: row;

@@ -110,7 +110,7 @@ class VouchCon extends React.Component {
 
 
   Filter_Search = async() => {
-    let search = await document.getElementById('searc_vouchers').value
+    let search = await document.getElementById('searc_vouchers').value.toLowerCase()
 
     if (this.props.vouchPage === "jv") {
 
@@ -307,7 +307,7 @@ class VouchCon extends React.Component {
           </div>
           <div className="other_det">
             <div
-              className="add_account"
+              className="add_vouch"
               onClick={() => {
                 this.props.setPVoJVoDN(this.props.vouchPage, "add");
               }}
@@ -324,13 +324,7 @@ class VouchCon extends React.Component {
               onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
             />
 
-             <input
-						type="text"
-						id="searc_vouchers"
-						onChange={() => {
-              this.Filter_Search()
-						}}
-          /> 
+          
       
           </div>
         </div>
@@ -338,7 +332,18 @@ class VouchCon extends React.Component {
         <div className="filter_vouch">
         <h2 className="filter_acc_h">Show Only</h2>
         <hr />
+        <div className = "search_line">
+              <input
+              type="search"
+              id="searc_vouchers"
+              placeholder = "Search"
+              onChange={() => {
+                this.Filter_Search()
+              }}
+              /> 
+          </div>
         <ul>
+   
           <li>
             <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
             Newest First
