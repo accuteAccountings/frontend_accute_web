@@ -291,7 +291,7 @@ table {
   border: 1px solid $l_grey_text;
   border-right: none;
   border-collapse: collapse;
-  padding: 5px;
+  padding: 2px;
   font-size: $p_font;
   height: 40px;
 }
@@ -300,7 +300,7 @@ th,
 td {
   border: 1px solid $l_grey_text;
   border-collapse: collapse;
-  padding: 5px;
+  padding: 4px;
   font-size: $p_font;
   height: 40px;
 }
@@ -350,6 +350,7 @@ tr:nth-child(even) {
   td {
     font-size: 14px;
     width: 80%;
+    height: 30px;
 
     border: none;
   }
@@ -413,10 +414,32 @@ tr:nth-child(even) {
 }
 .add_discount_con {
   margin-top: 20px;
+  border-top: 0.5px solid black;
+  h3 {
+    margin: 10px;
+  }
+}
+.add_freight_con {
+  margin-top: 20px;
+  h3 {
+    margin: 10px;
+  }
 }
 #add_discount_input {
-  width: 30%;
+  width: 100%;
+  margin-left: 0px;
+}
+#add_freight_input {
+  width: 100%;
+  margin-left: 0px;
+}
+.vouch_si_add_fre {
   margin-left: 20px;
+  width: 30%;
+
+  select {
+    width: 100%;
+  }
 }
 .vouch_si_add_dis {
   margin-left: 20px;
@@ -430,24 +453,19 @@ tr:nth-child(even) {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  border-top: 0.5px solid black;
   border-bottom: 0.5px solid black;
-  padding: 10px 10px;
-}
-#add_freight_input {
-  width: 30%;
-  margin-left: 20px;
-  box-sizing: border-box;
-}
-#add_freight_remark_input {
-  width: 30%;
-  margin-left: 20px;
-  box-sizing: border-box;
+  padding: 0px 10px 20px 10px;
 }
 .add_fre_btn_con {
-  border-top: 0.5px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
   border-bottom: 0.5px solid black;
-  padding: 15px 10px;
+  padding: 0px 10px 20px 10px;
+}
+#add_freight_remark_input {
+  width: 100%;
+  box-sizing: border-box;
 }
 #add_freight_addBtn {
   padding: 3px 15px;
@@ -460,4 +478,26 @@ tr:nth-child(even) {
   margin-left: 20px;
   margin-bottom: 4px;
   margin-top: 10px;
+}
+.relative {
+  position: relative;
+  height: 30px;
+}
+
+.crossBtn {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+
+  border: 1px solid $grey_text;
+  border-radius: 30px;
+  top: 0px;
+  left: -25px;
+
+  padding: 0px 4px 0px 6px;
+  background-color: white;
+  font-size: 20px;
+  transform: rotateZ(45deg);
+  cursor: pointer;
+  display: block;
 }

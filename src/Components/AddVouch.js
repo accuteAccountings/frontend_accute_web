@@ -84,11 +84,12 @@ class AddVouch extends React.Component {
     total = parseInt(total) + gstAmt;
     let FTotal = total;
     this.state.discontArr.map(ele => {
-      if (ele.type === "Rate Discount") {
+      if (ele.type === "Less") {
         FTotal = parseInt(FTotal) - parseInt(ele.value);
       }
-      if (ele.type !== "Rate Discount") {
+      if (ele.type !== "Less") {
         let a = parseInt(total) * (parseInt(ele.value) / 100);
+        ele.amt = parseInt(a);
         FTotal = parseInt(FTotal) - parseInt(a);
       }
     });
@@ -446,6 +447,7 @@ class AddVouch extends React.Component {
       gst: 5,
       gstAmt: 0,
       discontArr: [],
+      dicountType: "Less",
       mainAmnt: 0,
       freightArr: [],
       defaultDiscon: 0
@@ -597,10 +599,10 @@ class AddVouch extends React.Component {
                       onBlur={() => {
                         if (document.getElementById("vouch_sup").value !== "") {
                           this.rmEnterError("vouch_sup");
-                          setTimeout(() => {
-                            document.getElementById("sup_list").style.display = "none";
-                          }, 500);
                         }
+                        setTimeout(() => {
+                          document.getElementById("sup_list").style.display = "none";
+                        }, 200);
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
@@ -694,7 +696,7 @@ class AddVouch extends React.Component {
                         }
                         setTimeout(() => {
                           document.getElementById("customer_list").style.display = "none";
-                        }, 500);
+                        }, 200);
                       }}
                       name="customer"
                       id="vouch_customer"
@@ -788,7 +790,7 @@ class AddVouch extends React.Component {
                   onBlur={() => {
                     setTimeout(() => {
                       document.getElementById("pro_list").style.display = "none";
-                    }, 500);
+                    }, 200);
                   }}
                 />
                 <ul id="pro_list">
@@ -1046,20 +1048,105 @@ class AddVouch extends React.Component {
                   <strong> ₹{this.state.totalAmt}</strong>
                 </td>
               </tr>
+              {this.state.discontArr.map((ele, i) => {
+                return (
+                  <tr>
+                    <td className="relative">
+                      <span
+                        value={i}
+                        onClick={e => {
+                          let a = this.state.discontArr;
+                          console.log(i);
+
+                          a.splice(i, 1);
+
+                          this.setState({ discontArr: a });
+                          this.updateTotal();
+                        }}
+                        className="crossBtn"
+                      >
+                        +
+                      </span>
+                      {ele.type} {ele.type !== "Less" && ` (${ele.value}%)`}
+                    </td>
+                    <td className="bold">
+                      <strong>
+                        {"-"}
+                        {"₹"}
+                        {ele.type !== "Less" && ele.amt}
+                        {ele.type === "Less" && ele.value}
+                      </strong>
+                    </td>
+                  </tr>
+                );
+              })}
+
+              {this.state.freightArr.map((ele, i) => {
+                return (
+                  <tr>
+                    <td className="relative">
+                      <span
+                        value={i}
+                        onClick={e => {
+                          let a = this.state.freightArr;
+                          console.log(i);
+
+                          a.splice(i, 1);
+
+                          this.setState({ freightArr: a });
+                          this.updateTotal();
+                        }}
+                        className="crossBtn"
+                      >
+                        +
+                      </span>
+
+                      {ele.remark}
+                    </td>
+                    <td className="bold">
+                      <strong>
+                        {"₹"}
+                        {ele.value}
+                      </strong>
+                    </td>
+                  </tr>
+                );
+              })}
+              <tr>
+                <td> Total Amount :</td>
+                <td className="bold">
+                  <strong>₹{this.state.mainAmnt}</strong>
+                </td>
+              </tr>
             </table>
             <div className="add_discount_con">
+              <h3>Add Discount</h3>
               <div className="add_dis_btn_con">
                 <div className="vouch_si_add_dis">
                   <span>Type</span>
                   <br />
-                  <select id="add_dis_discount_type">
+                  <select
+                    id="add_dis_discount_type"
+                    disabled={this.state.totalAmt === 0 ? true : false}
+                    onChange={e => {
+                      this.setState({ dicountType: e.target.value });
+                    }}
+                  >
                     {" "}
-                    <option>Rate Discount </option>
+                    <option>Less </option>
                     <option>Cash Discount </option>
                     <option> No G.R. Less </option>
                   </select>
                 </div>
-                <input id="add_discount_input" placeholder={"Discount"} />
+                <div className="vouch_si_add_dis">
+                  <span>{this.state.dicountType === "Less" ? "Amount" : "Percentage"}</span>
+                  <br />
+                  <input
+                    id="add_discount_input"
+                    placeholder={this.state.dicountType === "Less" ? "Amount" : "Percentage"}
+                    disabled={this.state.totalAmt === 0 ? true : false}
+                  />
+                </div>
                 <button
                   onClick={e => {
                     let a = {
@@ -1074,32 +1161,35 @@ class AddVouch extends React.Component {
                     this.updateTotal();
                   }}
                   id="add_freight_addBtn"
+                  disabled={this.state.totalAmt === 0 ? true : false}
                 >
                   Add
                 </button>
               </div>
-              <table className="vouch_num_items">
-                {this.state.discontArr.map(ele => {
-                  return (
-                    <tr>
-                      <td> {ele.type}</td>
-                      <td className="bold">
-                        <strong>
-                          {"- "}
-                          {ele.type === "Rate Discount" && "₹"}
-                          {ele.value}
-                          {ele.type !== "Rate Discount" && "%"}
-                        </strong>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </table>
-              <div className="add_fre_btn_con">
-                <div className="vouch_si_add_fre">
-                  <input id="add_freight_input" placeholder="Freight" />
-                  <input id="add_freight_remark_input" placeholder="Remarks" />
+              <div className="add_freight_con">
+                <h3>Add Freight</h3>
+                <div className="add_fre_btn_con">
+                  <div className="vouch_si_add_fre">
+                    <span>Remark</span>
+                    <br />
+                    <input
+                      id="add_freight_remark_input"
+                      placeholder="Freight"
+                      disabled={this.state.totalAmt === 0 ? true : false}
+                    />
+                  </div>
+                  <div className="vouch_si_add_fre">
+                    <span>Amount</span>
+                    <br />
+                    <input
+                      id="add_freight_input"
+                      placeholder={"Amount"}
+                      disabled={this.state.totalAmt === 0 ? true : false}
+                    />
+                  </div>
+
                   <button
+                    disabled={this.state.totalAmt === 0 ? true : false}
                     onClick={() => {
                       let a = {
                         remark: document.getElementById("add_freight_remark_input").value,
@@ -1118,27 +1208,6 @@ class AddVouch extends React.Component {
                   </button>
                 </div>
               </div>
-              <table className="vouch_num_items">
-                {this.state.freightArr.map(ele => {
-                  return (
-                    <tr>
-                      <td> {ele.remark}</td>
-                      <td className="bold">
-                        <strong>
-                          {"₹"}
-                          {ele.value}
-                        </strong>
-                      </td>
-                    </tr>
-                  );
-                })}
-                <tr>
-                  <td> Total Amount :</td>
-                  <td className="bold">
-                    <strong>₹{this.state.mainAmnt}</strong>
-                  </td>
-                </tr>
-              </table>
             </div>
           </div>
         </div>
