@@ -66,6 +66,23 @@ class AddVouch extends React.Component {
       };
       arr.push(a);
     });
+    console.log(d.discountArr);
+
+    let arr1 = [];
+    let arr2 = [];
+    if (d.discountArr[0] !== "") {
+      d.discountArr.map(e => {
+        let a = JSON.parse(e);
+        arr1.push(a);
+      });
+    }
+    if (d.freightArr[0] !== "") {
+      d.freightArr.map(e => {
+        let a = JSON.parse(e);
+        arr1.push(a);
+      });
+    }
+    this.setState({ discontArr: arr1, freightArr: arr2 });
 
     this.setState({ items: arr });
   };
@@ -149,6 +166,8 @@ class AddVouch extends React.Component {
       gst,
       set_commission,
       customer,
+      discountArr: this.state.discontArr,
+      freightArr: this.state.freightArr,
       items: this.state.items,
       totalAmt: this.state.totalAmt
     };

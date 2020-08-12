@@ -17,11 +17,10 @@ import DailyBook from "../Components/DailyBook";
 import Trash from "../Components/Trash";
 
 class App extends React.Component {
+  Sorting_Pro = async () => {
+    let mode = await document.getElementById("new_old_navsec");
 
-  Sorting_Pro = async() => {
-    let mode = await document.getElementById('new_old_navsec')
-    
-    if(this.state.ProOrAcc == "Products"){
+    if (this.state.ProOrAcc == "Products") {
       fetch(`/api/products?mode=${mode.value}`, {
         method: "GET",
         headers: {
@@ -47,8 +46,7 @@ class App extends React.Component {
             };
           });
         });
-    }
-    else{
+    } else {
       fetch(`/api/accounts?mode=${mode.value}`, {
         method: "GET",
         headers: {
@@ -75,8 +73,7 @@ class App extends React.Component {
           });
         });
     }
-
-  }
+  };
 
   filter = arr => {
     let temp = this.state.tempAcc.filter(e => {
@@ -99,13 +96,12 @@ class App extends React.Component {
 
     this.setState({ accounts: temp });
   };
-  getProducts = async() => {
+  getProducts = async () => {
+    let url = "/api/products?mode=newest";
+    let mode = await document.getElementById("new_old_navsec");
 
-    let url = '/api/products?mode=newest'
-    let mode = await document.getElementById('new_old_navsec')
-
-    if(mode && mode.value == 'oldest'){
-      url = '/api/products?mode=oldest'
+    if (mode && mode.value == "oldest") {
+      url = "/api/products?mode=oldest";
     }
 
     fetch(url, {
@@ -337,7 +333,7 @@ class App extends React.Component {
     this.fi = this.fi.bind(this);
     this.setjoBill = this.setjoBill.bind(this);
     this.navTo = this.navTo.bind(this);
-    this.Sorting_Pro = this.Sorting_Pro.bind(this)
+    this.Sorting_Pro = this.Sorting_Pro.bind(this);
 
     this.state = {
       AddPro: false,
@@ -353,7 +349,7 @@ class App extends React.Component {
       vouchPage: "pv",
       isacc_pro: "acc_det",
       specific_acc: null,
-      vouchEData: null,
+      vouchEData: [],
       jobill_num: null,
       vouchMode: "add",
       vouchData: [],
@@ -400,7 +396,7 @@ class App extends React.Component {
             ProOrAcc={this.state.ProOrAcc}
             AddAccCrossBtn={this.AddAccCrossBtn}
             fi={this.fi}
-            Sorting_Pro = {this.Sorting_Pro}
+            Sorting_Pro={this.Sorting_Pro}
           />
 
           <ProCon
