@@ -67,19 +67,21 @@ class AddVouch extends React.Component {
       arr.push(a);
     });
     console.log(d.discountArr);
+    console.log(d.freightArr);
+    console.log(JSON.parse(d.discountArr[0]));
 
     let arr1 = [];
     let arr2 = [];
-    if (d.discountArr[0] !== "") {
+    if (JSON.parse(d.discountArr[0]).type !== "") {
       d.discountArr.map(e => {
         let a = JSON.parse(e);
         arr1.push(a);
       });
     }
-    if (d.freightArr[0] !== "") {
+    if (JSON.parse(d.freightArr[0]).remark !== "") {
       d.freightArr.map(e => {
         let a = JSON.parse(e);
-        arr1.push(a);
+        arr2.push(a);
       });
     }
     this.setState({ discontArr: arr1, freightArr: arr2 });
