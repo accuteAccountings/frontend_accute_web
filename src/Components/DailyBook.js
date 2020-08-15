@@ -7,8 +7,244 @@ import up from '../img/up-arrow.svg'
 
 export default class DailyBook extends React.Component{
 
+  Account_data = () => {
+
+    fetch('/api/vouch/specific/Test1')
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          this.setState(() => {
+            return {
+              bal : data
+            };
+          });
+        }
+      })
+      return
+  }
+
+  totalDebit = (acc_name) => {
+    let t = 0;
+
+    this.state.bal.map(e => {
+      if (e.supplier === acc_name) {
+        t = parseInt(t) + parseInt(e.totalAmt);
+      } else if (e.debit_acc === acc_name) {
+        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+      }
+    });
+
+    return t;
+  };
+
+  totalCredit = (acc_name) => {
+    let t = 0;
+
+    this.state.bal.map(e => {
+      if (e.customer === acc_name) {
+        t = parseInt(t) + parseInt(e.totalAmt);
+      } else if (e.credit_acc === acc_name) {
+        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
+      }
+    })
+    return t;
+  }
+
+
+   getSales = async() => {
+    await fetch('/api/vouch/TotalSales')
+    .then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            sales : data
+          }
+        })
+      }
+    })   
+
+  }
+
+  getPayment = async() => { 
+    await fetch(`/api/jovouch/TotalPayment`)
+    .then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            payments : data
+          }
+        })
+      }
+    })
+  }
+
+  DayWiseSales = (num) => {
+
+    let t = 0
+
+    let date = new Date()
+    let today = date.getDate()
+    let cdate = parseInt(num)*3 + 3
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3){
+      return null;
+  }
+
+     this.state.sales.map((e , i) => {
+      i == num && (
+        e.map((x) => {
+          x.type == 'purchase' && (
+           t = parseInt(t) + parseInt(x.totalAmt)
+          )
+        })
+      )
+    })
+  
+    return t
+  }
+
+  DayWisepurchase = (num) => {
+
+    let t = 0
+
+    let date = new Date()
+    let today = date.getDate()
+    let cdate = parseInt(num)*3 + 3
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3){
+      return null;
+  }
+
+     this.state.payments.map((e , i) => {
+      i == num && (
+        e.map((x) => {
+          t = parseInt(t) + parseInt(x.amount) - x.balance
+        })
+      )
+    })
+  
+    return t
+  }
+
+
+  Total_sales = (arr) => {
+
+    let t = 0
+
+    arr.map( (e) => {
+              e.map((x) => {
+                  t = parseInt(t) + parseInt(x.totalAmt)
+              })
+          })
+          return t;
+      
+}
+
+number_goods = () => {
+  let t = 0
+
+  this.state.sales.map( (e) => {
+    e.map((x) => {
+      x.type !== 'purchase' && (
+                t = parseInt(t) + 1
+      )}
+      )
+        })
+
+  return t
+}
+number_sales = () => {
+  let t = 0
+
+  this.state.sales.map( (e) => {
+    e.map((x) => {
+      x.type == 'purchase' && (
+                t = parseInt(t) + 1
+      )}
+      )
+        })
+
+  return t
+}
+
+
+Total_goods = (arr) => {
+
+  let t = 0
+
+  arr.map( (e) => {
+    e.map((x) => {
+      x.type !== 'purchase' && (
+                t = parseInt(t) + parseInt(x.totalAmt)
+      )
+    })
+        })
+
+        return t;
+    
+}
+
+
+Total_payments = (arr) => {
+
+  let t = 0
+
+  arr.map( (e) => {
+    e.map((x) => {
+                t = parseInt(t) + parseInt(x.amount) - x.balance
+    })
+        })
+        return t;
+    
+}
+
+Date = (gdate) => {
+  let date = new Date()
+  let year = date.getFullYear()
+  let month = parseInt(date.getMonth())
+
+  let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
+         'July' , 'August' , 'September' , 'October' , 'November' , 'December']
+
+  let fdate = year + '-' + monthArr[month] + '-' + gdate
+  let today = date.getDate()
+  if(parseInt(gdate) - parseInt(today) > 0 && parseInt(gdate) - parseInt(today) > 3){
+      return '';
+  }
+  return fdate;
+}
+
+number_payments = () => {
+  let t = 0
+
+  this.state.payments.map( (e) => {
+    e.map((x) => {
+      x.amount && (
+                t = parseInt(t) + 1
+      )
+    })
+        })
+        return t;
+}
+
   constructor(props) {
     super(props);
+
+    this.getSales()
+    this.getPayment()
+    this.Account_data()
+    this.props.getAccounts()
+
+    fetch('/api/accounts').then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            accounts : data.accounts
+          }
+        })
+      }
+    })
 
       this.state = {
         options: {
@@ -18,38 +254,26 @@ export default class DailyBook extends React.Component{
             }
           },
           xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+            categories: [ this.Date(3), this.Date(6), this.Date(9), this.Date(12), this.Date(15),
+              this.Date(18), this.Date(21), this.Date(24), this.Date(27) , this.Date(31) ]
           }
         },
-        
-        series1: [
-          {
-            name: "sales",
-            data: [30, 40, 45, 50, 49, 60, 70, 91],
-            color : "#0040FF"
-          },
   
-        ],
-        series2: [
-      
-          {
-            name: "purchase",
-            data: [30 , 50 , 60 , 80 , 100 , 135 , 150 , 160],
-            color : "#FF0040"
-          },
-        ],
 
        options2 : {
         
           labels: ['Direct Sales', 'Referal Sales', 'Affilate Sales'],
         
         dataLabels : {enabled : false}
-       }
-
-        
+       },
+       sales : [],
+       payments : [],
+       accounts : [],
+       bal : []
       }
-    }
 
+
+    }
 
     render(){
  
@@ -59,14 +283,20 @@ export default class DailyBook extends React.Component{
                    <Det_bar 
                     src = {product}
                     head = "Total Sales"
+                    value = {this.Total_sales(this.state.sales)}
+                    bills = {this.number_sales()}
                     />
                    <Det_bar 
                     src = {rich}
                     head = "Payments"
+                    value = {this.Total_payments(this.state.payments)}
+                    bills = {this.number_payments()}
                    />
                    <Det_bar 
                     src = {truck}
                     head = "Good Returns"
+                    value = {this.Total_goods(this.state.sales)}
+                    bills = {this.number_goods()}
                    />
                    
                 </div>
@@ -75,13 +305,29 @@ export default class DailyBook extends React.Component{
                   <div className = "middle_db_lt">
                   <Graph_cont 
                     options = {this.state.options}
-                    series = {this.state.series1}
+                    series = {   [
+                      {
+                        name : "sales",
+                        data : [this.DayWiseSales(0), this.DayWiseSales(1), this.DayWiseSales(2), this.DayWiseSales(3),
+                          this.DayWiseSales(4), this.DayWiseSales(5), this.DayWiseSales(6), this.DayWiseSales(7) ,
+                          this.DayWiseSales(8) ,  this.DayWiseSales(9)],
+                        color : "#0040FF"
+                      }]}
                     lower = {true}
+                    cat = 'Sales'
                     />
                     <Graph_cont 
                     options = {this.state.options}
-                    series = {this.state.series2}
+                    series = {   [
+                      {
+                        name : "Payments",
+                        data : [this.DayWisepurchase(0), this.DayWisepurchase(1), this.DayWisepurchase(2), this.DayWisepurchase(3),
+                          this.DayWisepurchase(4), this.DayWisepurchase(5), this.DayWisepurchase(6), this.DayWisepurchase(7) ,
+                          this.DayWisepurchase(8) ,  this.DayWisepurchase(9)],
+                        color : "#ff0040"
+                      }]}
                     lower = {false}
+                    cat = 'Payments'
                     />
                   
                 </div>
@@ -109,42 +355,28 @@ export default class DailyBook extends React.Component{
                 <div className = "balance">Balance</div>
                 <div className = "action">Actions</div>
               </div>
-              <User_Det 
-              id = "1"
-              acc = "Sushant Textiles"
-              city = "Patna, Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
-              <User_Det 
-              id = "2"
-              acc = "Sushant Textiles"
-              city = "Patna ,Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
-              <User_Det 
-              id = "3"
-              acc = "Sushant Textiles"
-              city = "Patna, Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
-              <User_Det 
-              id = "4"
-              acc = "Sushant Textiles"
-              city = "Patna, Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
-              <User_Det 
-              id = "5"
-              acc = "Sushant Textiles"
-              city = "Patna, Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
-              <User_Det 
-              id = "6"
-              acc = "Sushant Textiles"
-              city = "Patna , Bihar"
-              payment = "PENDING"
-              balance = "$466"/>
+              <div className = "scroller">
+              {this.state.accounts.map((e ,i) => {
+                //  this.Account_data(e.acc_name)
+                return(
+                  <User_Det 
+                  id = {i + 1}
+                  acc = {e.acc_name}
+                  city = {e.address_line1}
+                  payment = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
+                  balance = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
+                  acc_name = {e.acc_name}
+                  Account_data = {this.Account_data}
+                  navTo = {this.props.navTo}
+                  getspecific_acc = {this.props.getspecific_acc}
+                  i = {i}
+                  len = {this.state.accounts.length - 1}
+                  setAccProfile = {this.props.setAccProfile}
+                  />
+                )
+              })}
+              </div>
+             
             </div>
 
             </div>
@@ -162,7 +394,7 @@ const Graph_cont = (props) => {
             <span className = "dollar">$</span>
             <span className = "val">589</span>
           </div>
-          <div className = {props.lower ? 'lower_three' : 'lower_four' }>purchase</div>
+          <div className = {props.lower ? 'lower_three' : 'lower_four' }>{props.cat}</div>
       </div>
 
     </div>
@@ -170,14 +402,13 @@ const Graph_cont = (props) => {
         <Chart
         options={props.options}
         series={props.series}
-        width="70%"
+        width="80%"
         type = "line"
         height = "100"
       
       />
     </div>
-    <div className = {props.lower ? 'lower_gp_one' : 'lower_gp_two'}>
-    </div>
+
 
   </div>
   )
@@ -191,9 +422,9 @@ const Det_bar = (props) => {
     </div>
     <div className = "middle">
       <div className = "head">{props.head} <div className = "fade">This month</div></div>
-      <div className = "num">1896 
+      <div className = "num">{props.value} 
         <div className = "perc">
-          50%<img src = {up} />
+          for {props.bills} bills
         </div>
       </div>
     </div>
@@ -209,9 +440,16 @@ const User_Det = (props) => {
       <div className = "acc_name">{props.acc}</div>
       <div className = "city">{props.city}</div>
     </div>
-    <div className = "status"><span>{props.payment}</span></div>
-    <div className = "balance">{props.balance}</div>
-    <div className = "action"><span>Details</span></div>
+    <div className = {props.payment == 0 ? 'completed' : 'status'}><span>{props.payment == 0 ? 'Completed' : 'Pending'}</span></div>
+    <div className = "balance">{parseInt(props.balance) > 0 ? <span>{props.balance} {' '} Cr</span> :
+    <span>{ parseInt(props.balance) < 0 ? (<span> {parseInt(props.balance)*(-1)} {' '} Dr</span>) : '0'}</span>
+  }</div>
+    <div className = "action" onClick = {async() => {
+      await props.getspecific_acc(props.len - props.i)
+      await props.setAccProfile('ledger')
+      await props.navTo('accounting')
+      
+    }}><span>Open Ledge</span></div>
   </div>
   )
 }

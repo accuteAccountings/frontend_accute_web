@@ -211,10 +211,19 @@
 }
 
 .lower_db {
-  width: 95%;
+  width: 60%;
+  height: 400px;
   margin-left: 2.5%;
   margin-bottom: 4rem;
   // border: solid black;
+
+  
+  .scroller{
+    height: 300px;
+    white-space: nowrap;
+    overflow-y: scroll;
+    // padding: 10px 0;
+  }
 
   .upper {
     width: 100%;
@@ -250,7 +259,7 @@
     width: 40%;
   }
   .acc_name {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
   .city {
     font-size: 1rem;
@@ -268,6 +277,19 @@
       border-radius: 5px;
     }
   }
+  .completed {
+    // border: solid black;
+    width: 20%;
+    text-align: center;
+    margin: auto;
+    span {
+      background-color: green;
+      color: white;
+      font-size: 0.8rem;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
   .balance {
     // border: solid black;
     width: 15%;
@@ -278,6 +300,7 @@
     width: 10%;
     text-align: center;
     margin: auto;
+    cursor: pointer;
     span {
       background-color: #0040ff;
       font-size: 0.8rem;
@@ -295,9 +318,10 @@
   // justify-content: space-between;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px 1%;
+  padding: 15px 1%;
   font-size: 1.2rem;
   // margin-bottom: 10px;
+
 }
 .lower_ud_even {
   width: 100%;
@@ -307,7 +331,7 @@
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  padding: 10px 1%;
+  padding: 15px 1%;
   font-size: 1.2rem;
   // margin-bottom: 10px;
 }
