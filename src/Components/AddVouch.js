@@ -45,24 +45,23 @@ class AddVouch extends React.Component {
     document.querySelector("#vouch_customer").defaultValue = d.customer;
     if (d.supplier_agent2) {
       this.setState({ subAgent: true });
+      setTimeout(() => {
+        document.querySelector("#vouch_sup_agent2").defaultValue = d.supplier_agent2;
+      }, 500);
     }
     document.querySelector("#vouch_gst").defaultValue = parseInt(d.gst);
     let arr = [];
     let i = this.props.EData.product;
 
     i.map((e, index) => {
-      let amt = parseInt(e.quantity) * parseInt(e.rate);
-      let gamt = parseInt(amt);
-      amt = parseInt(amt) - (parseInt(amt) * parseInt(e.dicon)) / 100;
-
       let a = {
         dicon: e.dicon,
         hsn_num: e.hsn_num,
         product_name: e.product_name,
         rate: e.rate,
         quantity: e.quantity,
-        g_amount: gamt,
-        amount: amt
+        g_amount: e.g_amount,
+        amount: e.amount
       };
       arr.push(a);
     });
@@ -171,7 +170,7 @@ class AddVouch extends React.Component {
       discountArr: this.state.discontArr,
       freightArr: this.state.freightArr,
       items: this.state.items,
-      totalAmt: this.state.totalAmt
+      totalAmt: this.state.mainAmnt
     };
     let m = this.props.mode === "edit" ? "PUT" : "POST";
     let url = this.props.mode === "edit" ? "/api/vouch/" + this.props.EData.det.id : "/api/vouch";
@@ -581,6 +580,26 @@ class AddVouch extends React.Component {
                       onBlur={() => {
                         setTimeout(() => {
                           document.getElementById("transport_list").style.display = "none";
+                          if (!document.getElementById("vouch_transport_name").value) {
+                            return;
+                          }
+                          let data = {
+                            acc_name: document.getElementById("vouch_transport_name").value,
+                            acc_type: "transport"
+                          };
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_transport_name").value = "";
+                            });
                         }, 500);
                       }}
                       name="vouch_sup"
@@ -623,6 +642,26 @@ class AddVouch extends React.Component {
                         }
                         setTimeout(() => {
                           document.getElementById("sup_list").style.display = "none";
+                          if (!document.getElementById("vouch_sup").value) {
+                            return;
+                          }
+                          let data = {
+                            acc_name: document.getElementById("vouch_sup").value,
+                            acc_type: "debtors"
+                          };
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_sup").value = "";
+                            });
                         }, 200);
                       }}
                       name="vouch_sup"
@@ -631,7 +670,7 @@ class AddVouch extends React.Component {
                     <ul id="sup_list">
                       {this.state.acc.map((acc, index) => {
                         if (
-                          (acc.acc_type !== "debtors" && acc.acc_name !== "creditors") ||
+                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
                           document.getElementById("vouch_customer").value === acc.acc_name
                         ) {
                           return;
@@ -717,6 +756,27 @@ class AddVouch extends React.Component {
                         }
                         setTimeout(() => {
                           document.getElementById("customer_list").style.display = "none";
+                          if (!document.getElementById("vouch_customer").value) {
+                            return;
+                          }
+
+                          let data = {
+                            acc_name: document.getElementById("vouch_customer").value,
+                            acc_type: "debtors"
+                          };
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_customer").value = "";
+                            });
                         }, 200);
                       }}
                       name="customer"
@@ -749,32 +809,67 @@ class AddVouch extends React.Component {
                     </p>
                   </div>
                   {this.state.subAgent ? (
-                    <div className="vouch_si">
+                    <div className="vouch_si vouch_sub_agnent_con">
                       <span>Sub Agent</span>
                       <br />
-                      <select name="vouch_sup_agent" id="vouch_sup_agent2">
-                        <option>None</option>
-                        {this.state.accounts &&
-                          this.state.accounts.map((acc, i) => {
-                            if (acc.acc_type === "agent") {
-                              return (
-                                <option
-                                  key={i}
-                                  selected={
-                                    this.props.mode === "edit" && this.props.EData.det.supplier_agent2 === acc.acc_name
-                                      ? true
-                                      : false
-                                  }
-                                  value={acc.acc_name}
-                                >
-                                  {acc.acc_name}
-                                </option>
-                              );
+                      <input
+                        onChange={() => {
+                          this.filterAcc("subAgnet_list", "vouch_sup_agent2");
+                        }}
+                        onFocus={() => {
+                          this.filterAcc("subAgnet_list", "vouch_sup_agent2");
+                        }}
+                        autoComplete="off"
+                        onBlur={() => {
+                          if (document.getElementById("vouch_sup_agent2").value !== "") {
+                          }
+                          setTimeout(() => {
+                            document.getElementById("subAgnet_list").style.display = "none";
+
+                            if (!document.getElementById("vouch_sup_agent2").value) {
+                              return;
                             } else {
-                              return null;
+                              let data = {
+                                acc_name: document.getElementById("vouch_sup_agent2").value,
+                                acc_type: "Sub Agent"
+                              };
+
+                              fetch("/api/accounts", {
+                                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                                headers: {
+                                  "Content-Type": "application/json"
+                                  // 'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: JSON.stringify(data) // body data type must match "Content-Type" header
+                              })
+                                .then(res => res.json())
+                                .catch(() => {
+                                  document.getElementById("vouch_sup_agent2").value = "";
+                                });
                             }
-                          })}
-                      </select>
+                          }, 200);
+                        }}
+                        name="customer"
+                        id="vouch_sup_agent2"
+                      />
+                      <ul id="subAgnet_list">
+                        {this.state.acc.map((acc, index) => {
+                          if (acc.acc_type !== "Sub Agent") {
+                            return;
+                          }
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => {
+                                document.getElementById("subAgnet_list").style.display = "none";
+                                document.getElementById("vouch_sup_agent2").value = acc.acc_name;
+                              }}
+                            >
+                              {acc.acc_name}
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </div>
                   ) : (
                     <span

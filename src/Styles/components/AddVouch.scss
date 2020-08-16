@@ -206,6 +206,38 @@ input::-webkit-inner-spin-button {
     background-color: rgb(231, 231, 231);
   }
 }
+.vouch_sub_agnent_con {
+  position: relative;
+}
+#subAgnet_list {
+  position: absolute;
+  display: none;
+
+  background-color: white;
+  border: 1px solid #a0a0a0;
+  box-sizing: border-box;
+  padding: 0px 0px;
+  width: 160px;
+  top: 33px;
+  left: 0px;
+  border-top: none;
+  box-shadow: 0 0 10px rgb(238, 238, 238);
+  z-index: 10;
+
+  li {
+    // position: absolute;
+    width: 100%;
+    text-align: center;
+    color: $grey_text;
+    padding: 7px;
+    cursor: pointer;
+  }
+
+  li:hover {
+    background-color: rgb(231, 231, 231);
+  }
+}
+
 .vouch_transport_name_con {
   position: relative;
   ul {
