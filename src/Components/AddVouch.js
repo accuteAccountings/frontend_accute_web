@@ -649,6 +649,15 @@ class AddVouch extends React.Component {
                             acc_name: document.getElementById("vouch_sup").value,
                             acc_type: "debtors"
                           };
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
 
                           fetch("/api/accounts", {
                             method: "POST", // *GET, POST, PUT, DELETE, etc.
