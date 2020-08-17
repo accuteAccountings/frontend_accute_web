@@ -588,6 +588,16 @@ class AddVouch extends React.Component {
                             acc_type: "transport"
                           };
 
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
+
                           fetch("/api/accounts", {
                             method: "POST", // *GET, POST, PUT, DELETE, etc.
                             headers: {
@@ -774,6 +784,16 @@ class AddVouch extends React.Component {
                             acc_type: "debtors"
                           };
 
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
+
                           fetch("/api/accounts", {
                             method: "POST", // *GET, POST, PUT, DELETE, etc.
                             headers: {
@@ -842,6 +862,16 @@ class AddVouch extends React.Component {
                                 acc_name: document.getElementById("vouch_sup_agent2").value,
                                 acc_type: "Sub Agent"
                               };
+
+                              let exist = false;
+                              this.state.accounts.map(e => {
+                                if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                                  exist = true;
+                                }
+                              });
+                              if (exist) {
+                                return;
+                              }
 
                               fetch("/api/accounts", {
                                 method: "POST", // *GET, POST, PUT, DELETE, etc.
