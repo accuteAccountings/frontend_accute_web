@@ -15,7 +15,7 @@ import AddJovouch from "../Components/AddJoVouch";
 import Account_pro from "../Components/Account_profile";
 import DailyBook from "../Components/DailyBook";
 import Trash from "../Components/Trash";
-import TaskManager from '../Components/TaskManager'
+import Agency from './Agency'
 
 class App extends React.Component {
 
@@ -470,7 +470,7 @@ class App extends React.Component {
       currentPage = (
         <div className="pageBody">
           <TopBar />
-          <TaskManager />
+          <Agency />
         </div>
       );
     }
