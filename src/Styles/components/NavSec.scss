@@ -55,8 +55,12 @@
 .other_det {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  margin-right: 8rem;
+  // justify-content: space-around;
+  width: 35rem;
+
+  text-align: left;
+
+  // border: solid black;
   img {
     height: 20px;
     margin: 10px 10px;
@@ -84,6 +88,15 @@
 }
 
 .add_account {
+  padding: 3px 10px;
+  margin: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid $pri_color;
+  font-size: $p_font;
+  height: 25px;
+  cursor: pointer;
+}
+.add_vouch {
   padding: 3px 10px;
   margin: 6px 20px;
   border-radius: 20px;
@@ -123,8 +136,7 @@
   }
 }
 
-
-#new_old_navsec{
+#new_old_navsec {
   width: 6rem;
   margin-left: 10px;
 }

@@ -2,171 +2,29 @@ import React from "react";
 import Delete from "./Delete";
 import ref from "./../img/refresh.svg";
 import trash from "../img/trash.svg";
-import pencil from "../img/pencil.svg";
+import restore from "../img/restore.svg";
 
-class VouchCon extends React.Component {
+class Trash extends React.Component {
   deleteIt = url => {
     this.setState({ delete: true, deleteUrl: url });
+  };
+  restoreIt = async url => {
+    try {
+      let a = await fetch(url, { method: "PUT" });
+      if (a) {
+        this.deleteHide();
+      } else {
+        alert("Internal Error: Cannot Delete ");
+      }
+    } catch (err) {
+      alert("Fetching Error : Cannot Delete ");
+    }
   };
   deleteHide = () => {
     this.updateVouchData();
     this.updateJoVouchData();
     this.setState({ delete: false });
   };
-
-  ModeHandler = async () => {
-    let newest = await document.getElementById("newest");
-    let oldest = await document.getElementById("oldest");
-    let high = await document.getElementById("high");
-    let low = await document.getElementById("low");
-    let paid = await document.getElementById("paid");
-    let unpaid = await document.getElementById("unpaid");
-
-    if (this.props.vouchPage === "jv") {
-      if (oldest.checked ) {
-        this.updateJoVouchData('/api/jovouch?mode=oldest');
-      }
-      else if (newest.checked ) {
-        this.updateJoVouchData('/api/jovouch?mode=newest');
-      } 
-      else if (low.checked) {
-        this.updateJoVouchData('/api/jovouch?dir=low');
-      } 
-      else if (high.checked) {
-        this.updateJoVouchData('/api/jovouch?dir=high');
-      }
-      else if (paid.checked) {
-        let fPro = this.state.tempJodata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (parseInt(data.balance) <= 0) {
-            return true;
-          }
-        });
-
-        this.setState(() => {
-          return {
-            JoVouchdata : fPro
-          };
-        });
-      } else if (unpaid.checked) {
-        let fPro = this.state.tempJodata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (parseInt(data.balance) > 0) {
-            return true;
-          }
-        });
-
-        this.setState(() => {
-          return {
-            JoVouchdata: fPro
-          };
-        });
-      }
-    } 
-    else {
-      if (oldest.checked ) {
-        this.updateVouchData('/api/vouch?mode=oldest');
-      }
-      else if (newest.checked ) {
-        this.updateVouchData('/api/vouch?mode=newest');
-      } 
-      else if (low.checked) {
-        this.updateVouchData('/api/vouch?dir=low');
-      } 
-      else if (high.checked) {
-        this.updateVouchData('/api/vouch?dir=high');
-      }
-      else if (paid.checked) {
-        let fPro = this.state.tempdata.filter(data => {
-         if ( data.det.status == '0') {
-            return true;
-          }
-        });
-
-        this.setState(() => {
-          return {
-            data : fPro
-          }
-        })
-      } else if (unpaid.checked) {
-        let fPro = this.state.tempdata.filter(data => {
-          if (data === "") {
-            return true;
-          } else if (data.det.status != '0') {
-            return true;
-          }
-        });
-
-        this.setState(() => {
-          return {
-            data: fPro
-          };
-        });
-      }
-    }
-  };
-
-
-  Filter_Search = async() => {
-    let search = await document.getElementById('searc_vouchers').value.toLowerCase()
-
-    if (this.props.vouchPage === "jv") {
-
-      let fPro = this.state.tempJodata.filter(e => { 
-       
-        if (search === "") {
-          return true;
-        } else if (
-            e.debit_acc.toLowerCase().indexOf(search) === -1
-              && e.credit_acc.toLowerCase().indexOf(search) === -1
-            &&
-              e.billArr.join('').indexOf(search) === -1
-          ){
-          return false;
-        }
-          else{
-          return true
-        }
-  
-
-      })
-
-      this.setState(() => {
-        return {
-          JoVouchdata : fPro
-        };
-      });
-
-    }else{
-      let fPro = this.state.tempdata.filter(e => { 
-       
-        if (search === "") {
-          return true;
-        } else if (
-            e.det.customer.toLowerCase().indexOf(search) === -1
-              && e.det.supplier.toLowerCase().indexOf(search) === -1
-            &&
-              e.det.bill_num.indexOf(search) === -1
-          ){
-          return false;
-        }
-          else{
-          return true
-        }
-  
-
-      })
-
-      this.setState(() => {
-        return {
-          data : fPro
-        };
-      });
-    }
-  }
-
   constructor(props) {
     super(props);
 
@@ -174,10 +32,8 @@ class VouchCon extends React.Component {
       addVouch: false,
       addDebit: false,
       data: [],
-      tempdata: [],
       Debitdata: [],
       JoVouchdata: [],
-      tempJodata: [],
       Creditdata: [],
       deleteUrl: null,
       delete: false,
@@ -186,18 +42,17 @@ class VouchCon extends React.Component {
       err_debit: false,
       err_credit: false
     };
-    this.updateVouchData("/api/vouch?mode=newest");
+    this.updateVouchData();
 
-    this.updateJoVouchData("/api/jovouch?mode=newest");
+    this.updateJoVouchData();
   }
-  updateVouchData = url => {
-    fetch(url)
+  updateVouchData = () => {
+    fetch("/api/vouch")
       .then(res => res.json())
       .then(data => {
         this.setState(() => {
           return {
-            data: data,
-            tempdata: data
+            data: data.reverse()
           };
         });
       })
@@ -246,14 +101,13 @@ class VouchCon extends React.Component {
       });
   };
 
-  updateJoVouchData = url => {
-    fetch(url)
+  updateJoVouchData = () => {
+    fetch("/api/jovouch")
       .then(res => res.json())
       .then(data => {
         this.setState(() => {
           return {
-            JoVouchdata: data,
-            tempJodata: data
+            JoVouchdata: data.reverse()
           };
         });
       })
@@ -269,7 +123,10 @@ class VouchCon extends React.Component {
   render() {
     return (
       <div className="pro_compo">
-        <div className="nav_sec_trans nav_sec_vouch">
+        <h1 style={{ width: 200, margin: "30px auto" }} className="trash_header">
+          Trash
+        </h1>
+        <div className="nav_sec_trans">
           {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
           <div className="nav_items">
             <li
@@ -306,70 +163,21 @@ class VouchCon extends React.Component {
             </li>
           </div>
           <div className="other_det">
-            <div
-              className="add_vouch"
-              onClick={() => {
-                this.props.setPVoJVoDN(this.props.vouchPage, "add");
-              }}
-            >
-              + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
-              {this.props.vouchPage === "pv" && "Purchase Vouchers"}
-              {this.props.vouchPage === "dn" && "Debit Note"}
-              {this.props.vouchPage === "cn" && "Credit Note"}
-            </div>
-
             <img
               src={ref}
               alt=" "
               onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
             />
 
-          
-      
+            <input
+              type="text"
+              id="searchForProOrAcc"
+              onChange={() => {
+                this.props.fi();
+              }}
+            />
           </div>
         </div>
-
-        <div className="filter_vouch">
-        <h2 className="filter_acc_h">Show Only</h2>
-        <hr />
-        <div className = "search_line">
-              <input
-              type="search"
-              id="searc_vouchers"
-              placeholder = "Search"
-              onChange={() => {
-                this.Filter_Search()
-              }}
-              /> 
-          </div>
-        <ul>
-   
-          <li>
-            <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
-            Newest First
-          </li>
-          <li>
-            <input id="oldest" name="filter" value="oldest" type="radio" onChange={this.ModeHandler} />
-            Oldest First
-          </li>
-          <li>
-            <input id="high" type="radio" name="filter" value="high" onClick={this.ModeHandler} />
-            Amount(High to low)
-          </li>
-          <li>
-            <input id="low" type="radio" name="filter" value="low" onClick={this.ModeHandler} />
-            Amount(low to high)
-          </li>
-          <li>
-            <input id="paid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
-              Paid
-            </li>
-          <li>
-            <input id="unpaid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
-              Unpaid
-            </li>
-        </ul>
-      </div>
 
         <div className="pro_compo_con">
           <div className="pro_con_vouch">
@@ -379,27 +187,28 @@ class VouchCon extends React.Component {
                   <div className="wrong_alert">Something Went Wrong....</div>
                 ) : (
                   this.state.data.map((e, i) => {
-                    if (!(e.det.type === "purchase")) {
-                      return;
-                    }
                     if (e.det.IsDeleted) {
-                      return;
+                      if (!(e.det.type === "purchase")) {
+                        return;
+                      }
+                      return (
+                        <DetCont
+                          i={i + 1}
+                          editF={this.props.setPVoJVoDN}
+                          EData={e}
+                          supplier={e.det.supplier}
+                          costumer={e.det.customer}
+                          date={e.det.bill_date}
+                          amt={e.det.totalAmt}
+                          bill_num={e.det.bill_num}
+                          id={e.det.id}
+                          deleteIt={this.deleteIt}
+                          restoreIt={this.restoreIt}
+                          status={e.det.status}
+                        />
+                      );
+                    } else {
                     }
-                    return (
-                      <DetCont
-                        i={i + 1}
-                        editF={this.props.setPVoJVoDN}
-                        EData={e}
-                        supplier={e.det.supplier}
-                        costumer={e.det.customer}
-                        date={e.det.bill_date}
-                        amt={e.det.totalAmt}
-                        bill_num={e.det.bill_num}
-                        id={e.det.id}
-                        deleteIt={this.deleteIt}
-                        status={e.det.status}
-                      />
-                    );
                   })
                 )}
               </div>
@@ -412,7 +221,7 @@ class VouchCon extends React.Component {
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
                     if (e.det.type === "debit") {
-                      if (e.det.IsDeleted) {
+                      if (!e.det.IsDeleted) {
                         return;
                       }
                       return (
@@ -422,6 +231,7 @@ class VouchCon extends React.Component {
                           EData={e}
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
+                          restoreIt={this.restoreIt}
                           date={e.det.bill_date}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
@@ -442,7 +252,7 @@ class VouchCon extends React.Component {
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
                     if (e.det.type === "credit") {
-                      if (e.det.IsDeleted) {
+                      if (!e.det.IsDeleted) {
                         return;
                       }
                       return (
@@ -453,6 +263,7 @@ class VouchCon extends React.Component {
                           supplier={e.det.supplier}
                           costumer={e.det.customer}
                           date={e.det.bill_date}
+                          restoreIt={this.restoreIt}
                           amt={e.det.totalAmt}
                           bill_num={e.det.bill_num}
                           id={e.det.id}
@@ -473,7 +284,7 @@ class VouchCon extends React.Component {
                   {this.state.JoVouchdata.error
                     ? null
                     : this.state.JoVouchdata.map((e, i) => {
-                        if (e.IsDeleted) {
+                        if (!e.IsDeleted) {
                           return;
                         }
                         return (
@@ -484,6 +295,7 @@ class VouchCon extends React.Component {
                             balance={e.balance}
                             date={e.bill_date}
                             seller={e.debit_acc}
+                            restoreIt={this.restoreIt}
                             cust={e.credit_acc}
                             setPVoJVoDN={this.props.setPVoJVoDN}
                             data={e}
@@ -510,7 +322,7 @@ class DetCont extends React.Component {
       <div className={this.props.deleted ? " det_cont_vouch   vouch_del" : "det_cont_vouch"}>
         <div className="det_cont_left vouc_det_left">
           <div className="acc_name_vouch">
-            <span className="acc_id_vouch">{this.props.i}. </span>
+            <span className="acc_id_vouch">{this.props.id}. </span>
             {this.props.supplier}
             <span className="vouch_to">TO</span>
             <span className="vouch_costumer_name">{this.props.costumer}</span>
@@ -538,14 +350,14 @@ class DetCont extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.editF(this.props.which, "edit", this.props.EData);
+              this.props.restoreIt(`/api/vouch/res/${this.props.id}`);
             }}
           >
-            <img src={pencil} alt=" " />
+            <img src={restore} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt("/api/vouch/" + this.props.id);
+              this.props.deleteIt("/api/vouch/permanent/" + this.props.id);
             }}
           >
             <img src={trash} alt=" " />
@@ -593,15 +405,14 @@ class JoVouchDet extends React.Component {
         <div className="det_cont_icons">
           <div
             onClick={() => {
-              this.props.setPVoJVoDN("jv", "edit", this.props.data);
-              this.props.setjoBill(this.props.bills);
+              this.props.restoreIt(`/api/jovouch/res/${this.props.id}`);
             }}
           >
-            <img src={pencil} alt=" " />
+            <img src={restore} alt=" " />
           </div>
           <div
             onClick={() => {
-              this.props.deleteIt(`/api/jovouch/${this.props.id}`);
+              this.props.deleteIt(`/api/jovouch/permanent/${this.props.id}`);
             }}
           >
             <img src={trash} alt=" " />
@@ -612,4 +423,4 @@ class JoVouchDet extends React.Component {
   }
 }
 
-export default VouchCon;
+export default Trash;
