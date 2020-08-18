@@ -1,7 +1,15 @@
 import React from 'react'
+import Invoice from './Invoice_form'
 
 export default class AgencyPage extends React.Component{
 
+    handleMode = (mode) => {
+        this.setState(() => {
+            return{
+                mode : mode
+            }
+        })
+    }
 
     constructor(props){
         super(props)
@@ -19,35 +27,40 @@ export default class AgencyPage extends React.Component{
 
         this.state = {
             accounts : [],
+            mode : 'task'
         }
     }
     render(){
         return(
-            <div>
-                <div className = "lower_db">
-                    <div className = "upper">
-                    <div className = "hd">ACTIVE USERS</div>  
+            <div className  = "agency_page">
+                <div className = "invoice_form">
+                    <Invoice />
                 </div>
-                <div className = "lower">
-                    <div className = "id">Id.</div>
-                    <div className = "name_city">Account Name</div>
-                    <div className = "balance">Commision(with GST)</div>
-                    <div className = "balance">Commision(without GST)</div>
+                <div>
+                    <div className = "lower_db">
+                        <div className = "upper">
+                        <div className = "hd">ACTIVE USERS</div>  
+                    </div>
+                    <div className = "lower">
+                        <div className = "id">Id.</div>
+                        <div className = "name_city">Account Name</div>
+                        <div className = "balance">Commision(with GST)</div>
+                        <div className = "balance">Commision(without GST)</div>
+                    </div>
+                    <div className = "scroller">
+                        {this.state.accounts.map((e ,i) => {
+                        return(
+                                <User_Det 
+                                id = {i + 1}
+                                acc = {e.acc_name}
+                                city = {e.address_line1}
+                                />
+                            )
+                            })}
+                    </div>
+                
+                     </div>
                 </div>
-                <div className = "scroller">
-                    {this.state.accounts.map((e ,i) => {
-                    return(
-                            <User_Det 
-                            id = {i + 1}
-                            acc = {e.acc_name}
-                            city = {e.address_line1}
-                            />
-                        )
-                        })}
-                </div>
-            
-            </div>
-
             </div>
         )
     }

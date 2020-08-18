@@ -87,7 +87,7 @@ export default class DailyBook extends React.Component{
     let date = new Date()
     let today = date.getDate()
     let cdate = parseInt(num)*3 + 3
-    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3){
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) >= 3){
       return null;
   }
 
@@ -111,7 +111,7 @@ export default class DailyBook extends React.Component{
     let date = new Date()
     let today = date.getDate()
     let cdate = parseInt(num)*3 + 3
-    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3){
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) >= 3){
       return null;
   }
 
@@ -208,7 +208,7 @@ Date = (gdate) => {
 
   let fdate = year + '-' + monthArr[month] + '-' + gdate
   let today = date.getDate()
-  if(parseInt(gdate) - parseInt(today) > 0 && parseInt(gdate) - parseInt(today) > 3){
+  if(parseInt(gdate) - parseInt(today) > 0 && parseInt(gdate) - parseInt(today) >= 3){
       return '';
   }
   return fdate;

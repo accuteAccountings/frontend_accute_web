@@ -3,11 +3,39 @@ import TaskManager from '../Components/TaskManager'
 import AgencyPage from '../Components/AgencyPage'
 
 export default class Agency extends React.Component{
+
+    handleMode = (mode) => {
+        this.setState(() => {
+            return{
+                mode : mode
+            }
+        })
+    }
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            mode : 'task'
+        }
+    }
     render(){
     return(
         <div className = "agency">
-            <AgencyPage />
-            <TaskManager />
+            <button onClick = {() => {
+                this.handleMode('invoice')
+            }}>Invoice</button>
+            <button onClick = {() => {
+                this.handleMode('task')
+            }}>Task Mangaer</button>
+
+            {this.state.mode == 'invoice' && (
+                <AgencyPage />
+            )}
+            {this.state.mode == 'task' && (
+                <TaskManager />
+            )}
+            
         </div>
     )
     }
