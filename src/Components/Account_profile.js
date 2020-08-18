@@ -81,9 +81,11 @@ export default class Account_pro extends React.Component {
     document.getElementById("ledger_date_start").value = null;
     document.getElementById("ledger_date_end").value = null;
     document.getElementById("search_filters").value = null;
+    let date = new Date()
+    let year = date.getFullYear()
 
-    let sdate = '2020-03-01'
-    let edate = '2021-04-01'
+    let sdate = year + '-03-01'
+    let edate = parseInt(year) + 1 + '-04-01'
     fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
@@ -153,8 +155,11 @@ export default class Account_pro extends React.Component {
   constructor(props) {
     super(props);
 
-    let sdate = '2020-03-01'
-    let edate = '2021-04-01'
+    let date = new Date()
+    let year = date.getFullYear()
+
+    let sdate = year + '-03-01'
+    let edate = parseInt(year) + 1 + '-04-01'
     fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
