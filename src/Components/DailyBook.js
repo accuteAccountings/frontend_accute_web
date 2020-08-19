@@ -315,6 +315,7 @@ number_payments = () => {
                       }]}
                     lower = {true}
                     cat = 'Sales'
+                    sales = {this.Total_sales(this.state.sales)}
                     />
                     <Graph_cont 
                     options = {this.state.options}
@@ -328,6 +329,7 @@ number_payments = () => {
                       }]}
                     lower = {false}
                     cat = 'Payments'
+                    sales = {this.Total_payments(this.state.payments)}
                     />
                   
                 </div>
@@ -392,7 +394,7 @@ const Graph_cont = (props) => {
         <div className = "value_lt">
           <div>
             <span className = "dollar">$</span>
-            <span className = "val">589</span>
+            <span className = "val">{props.sales}</span>
           </div>
           <div className = {props.lower ? 'lower_three' : 'lower_four' }>{props.cat}</div>
       </div>

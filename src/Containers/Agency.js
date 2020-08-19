@@ -16,7 +16,7 @@ export default class Agency extends React.Component{
         super(props)
 
         this.state = {
-            mode : 'task'
+            mode : 'invoice'
         }
     }
     render(){
