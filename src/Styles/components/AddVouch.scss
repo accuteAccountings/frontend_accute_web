@@ -140,6 +140,9 @@ input::-webkit-inner-spin-button {
     width: 60px;
   }
 }
+#vouch_amount {
+  width: 80px;
+}
 #vouch_pro_item {
   width: 140px;
   color: rgb(155, 155, 155);
@@ -414,10 +417,16 @@ tr:nth-child(even) {
 #gst_con {
   position: relative;
 }
-#percentage {
+#percentage_gst {
   position: absolute;
   top: 25px;
-  right: 10px;
+  right: 5px;
+  color: $l_grey_text;
+}
+#percentage_dis {
+  position: absolute;
+  top: 25px;
+  right: 8px;
   color: $l_grey_text;
 }
 #vouch_dicon {
@@ -428,6 +437,7 @@ tr:nth-child(even) {
 
 #vouch_gst {
   width: 50px;
+  padding-right: 20px;
 }
 .vouch_edit_pencil {
   height: 25px;

@@ -98,8 +98,6 @@ class AddVouch extends React.Component {
       disAmt = parseInt(disAmt) + parseInt(e.g_amount) - parseInt(e.amount);
       total = parseInt(total) + parseInt(e.amount);
     });
-    let gstAmt = (parseInt(total) * parseInt(gst)) / 100;
-    total = parseInt(total) + gstAmt;
     let FTotal = total;
     this.state.discontArr.map(ele => {
       if (ele.type === "Less") {
@@ -114,6 +112,8 @@ class AddVouch extends React.Component {
     this.state.freightArr.map(ele => {
       FTotal = parseInt(FTotal) + parseInt(ele.value);
     });
+    let gstAmt = (parseInt(FTotal) * parseInt(gst)) / 100;
+    FTotal = parseInt(FTotal) + gstAmt;
     this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt, mainAmnt: FTotal, gstAmt: gstAmt });
   };
 
@@ -246,7 +246,8 @@ class AddVouch extends React.Component {
     document.querySelector("#vouch_quantity").value = "";
 
     let vouch_dicon = document.querySelector("#vouch_dicon").value;
-    document.querySelector("#vouch_dicon").value = this.state.defaultDiscon;
+    document.querySelector("#vouch_dicon").value = 0;
+
     let vouch_rate = document.querySelector("#vouch_rate").value;
     document.querySelector("#vouch_rate").value = "";
     let amount = document.querySelector("#vouch_amount").value;
@@ -310,7 +311,7 @@ class AddVouch extends React.Component {
     vouch_dicon.value = this.state.items[index].dicon;
     vouch_rate.value = this.state.items[index].rate;
     hsn_num.value = this.state.items[index].hsn_num;
-    amt.value = this.state.items[index].amount;
+    amt.value = this.state.items[index].g_amount;
     this.setState(() => {
       return {
         editItem: index
@@ -325,12 +326,13 @@ class AddVouch extends React.Component {
     let pro_name = document.getElementById("vouch_pro_item").value;
     let hsn_num = document.getElementById("vouch_hsn_num").value;
     let amt = document.getElementById("vouch_amount").value;
-
+    document.getElementById("vouch_amount").value = "";
     document.querySelector("#vouch_pro_item").value = "";
 
     document.querySelector("#vouch_quantity").value = "";
 
-    document.querySelector("#vouch_dicon").value = this.state.defaultDiscon;
+    document.querySelector("#vouch_dicon").value = 0;
+
     document.querySelector("#vouch_rate").value = "";
 
     document.getElementById("vouch_hsn_num").value = "";
@@ -469,8 +471,7 @@ class AddVouch extends React.Component {
       discontArr: [],
       dicountType: "Less",
       mainAmnt: 0,
-      freightArr: [],
-      defaultDiscon: 0
+      freightArr: []
     };
     this.getProducts();
     this.getAccounts();
@@ -549,7 +550,7 @@ class AddVouch extends React.Component {
                           this.rmEnterError("vouch_bill_no");
                         }
                       }}
-                      type="number"
+                      type="text"
                       name="vouch_bill_no"
                       id="vouch_bill_no"
                     />
@@ -562,7 +563,7 @@ class AddVouch extends React.Component {
                   <div className="vouch_si">
                     <span>G. R. No.</span>
                     <br />
-                    <input type="number" name="vouch_gr_no" id="vouch_gr_no" />
+                    <input type="text" name="vouch_gr_no" id="vouch_gr_no" />
                   </div>
 
                   <div className="vouch_si vouch_transport_name_con">
@@ -639,10 +640,19 @@ class AddVouch extends React.Component {
                     <br />
 
                     <input
-                      onChange={() => {
+                      onChange={e => {
+                        if (document.getElementById("vouch_customer").value === "") {
+                          e.target.value = "";
+                          return;
+                        }
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
-                      onFocus={() => {
+                      onFocus={e => {
+                        if (document.getElementById("vouch_customer").value === "") {
+                          e.target.value = "";
+                          return;
+                        }
+
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
                       autoComplete="off"
@@ -739,7 +749,7 @@ class AddVouch extends React.Component {
                   <div id="gst_con" className="vouch_si">
                     <span>GST</span>
                     <br />
-                    <span id="percentage">%</span>
+                    <span id="percentage_gst">%</span>
                     <input
                       defaultValue={this.props.mode === "edit" ? this.props.EData.det.gst : 5}
                       type="number"
@@ -1009,19 +1019,18 @@ class AddVouch extends React.Component {
               <div className="vouch_si" id="gst_con">
                 <span>Discount</span>
                 <br />
-                <span id="percentage">%</span>
+                <span id="percentage_dis">%</span>
                 <input
                   onBlur={() => {
                     if (document.getElementById("vouch_dicon").value === "") {
                       document.getElementById("vouch_dicon").value = 0;
                     }
-                    this.setState({ defaultDiscon: document.getElementById("vouch_dicon").value });
                   }}
                   type="number"
                   name="vouch_dicon"
                   onFocus={e => e.target.select()}
                   id="vouch_dicon"
-                  defaultValue={this.state.defaultDiscon}
+                  defaultValue={0}
                 />
               </div>
               <div className="vouch_si">
