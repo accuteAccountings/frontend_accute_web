@@ -1,0 +1,93 @@
+@import "../base/settings";
+
+.abouttext {
+  margin: 40vh auto;
+  width: 60vw;
+  padding: 30px;
+  text-align: center;
+
+  h1 {
+    font: $heading_font;
+    letter-spacing: 6px;
+    font-weight: bold;
+  }
+
+  p {
+    color: $grey_text;
+  }
+}
+
+.back_img_about {
+  background-image: url("http://demo.agnidesigns.com/candy/wp-content/themes/candy/img/about_bg.jpg");
+  background-size: cover;
+  height: 800px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  background-attachment: fixed;
+}
+
+.about_img_text {
+  height: 800px;
+  min-width: 400px;
+  width: 40%;
+  margin-left: 50vw;
+  background-color: black;
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 4px;
+  line-height: 23px;
+  font-weight: 1;
+  box-sizing: border-box;
+  padding: 5vw;
+  font-family: Helvetica;
+}
+
+@media screen and (max-width: 808px) {
+  .about_img_text {
+    box-sizing: border-box;
+    margin: 0px auto;
+    opacity: 0.7;
+    width: 100vw;
+    height: 800px;
+    // display: none;
+
+    min-width: 0px;
+    // width: 40%;
+    // margin-left: 50vw;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    line-height: 23px;
+    font-weight: 1;
+    box-sizing: border-box;
+    padding: 5vw;
+    font-family: Helvetica;
+  }
+
+  .abouttext {
+    box-sizing: border-box;
+    width: 100vw;
+    h1 {
+      font: $heading_font_m;
+      letter-spacing: 6px;
+      font-weight: bold;
+    }
+    margin: 20vh auto;
+  }
+  .back_img_about {
+    width: 100vw;
+    background-image: url("http://demo.agnidesigns.com/candy/wp-content/themes/candy/img/about_bg.jpg");
+    background-size: cover;
+    height: 800px;
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #464646;
+    background-attachment: fixed;
+  }
+}

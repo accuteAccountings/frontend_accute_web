@@ -1,0 +1,45 @@
+@import "../base/settings";
+
+.landing_overlay {
+  background-color: black;
+  height: 100%;
+  opacity: 0.6;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.landing_con {
+  background-image: url(http://demo.agnidesigns.com/candy/wp-content/uploads/2015/05/slide_12.jpg);
+  height: 100vh;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #464646;
+  text-align: center;
+
+  .landing_text {
+    color: $white_text;
+    font: $heading_font;
+    font-size: 32px;
+  }
+  .landing_text_big {
+    color: $white_text;
+    font: $heading_font;
+    font-size: 42px;
+    transition: 0.5s;
+    margin: 10px 40px;
+  }
+
+  .landing_text_area {
+    position: absolute;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    top: 40%;
+    transform: translateY(-50%);
+    user-select: none;
+  }
+}

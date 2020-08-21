@@ -1,0 +1,55 @@
+@import "../base/settings";
+
+.menu_btn {
+  height: 28px;
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  z-index: 205;
+  cursor: pointer;
+}
+
+.bar {
+  background-color: rgb(255, 255, 255);
+  height: 4px;
+  width: 80%;
+  transition: 0.2s;
+}
+
+.white {
+  background-color: rgb(255, 255, 255);
+}
+
+.black {
+  background-color: black;
+}
+
+.menu_btn:active .bar {
+  height: 2px;
+}
+
+#cross {
+  background-color: black;
+  height: 3px;
+  width: 80%;
+  transition: 0.2s;
+  transform-origin: left;
+  transition-delay: 0.2s;
+}
+
+#cross:nth-child(1) {
+  transform: rotate(45deg);
+  margin-bottom: 4px;
+}
+#cross:nth-child(2) {
+  width: 0px;
+}
+#cross:nth-child(3) {
+  transform: rotate(-45deg);
+}
+@media screen and (min-width:720px){
+		.menu_btn{display:none;}
+}

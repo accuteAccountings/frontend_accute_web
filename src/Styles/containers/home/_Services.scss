@@ -1,0 +1,59 @@
+@import "../base/settings";
+
+.ser_head {
+  margin: auto;
+  padding: 20vh 20px;
+  text-align: center;
+  width: 50vw;
+  h1 {
+    font: $heading_font;
+  }
+  p {
+    color: $grey_text;
+  }
+}
+
+.ser_body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.ser_items {
+  margin: 30px;
+  padding: 30px;
+  width: 300px;
+  box-sizing: border-box;
+
+  h1 {
+    display: inline;
+    font: $heading_font;
+    font-size: 30px;
+  }
+
+  img {
+    display: inline;
+    height: 25px;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: $grey_text;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .ser_head {
+    margin: auto;
+    padding: 30vh 0px;
+    text-align: center;
+    width: 80vw;
+    h1 {
+      font: $heading_font_m;
+    }
+    p {
+      color: $grey_text;
+    }
+  }
+}

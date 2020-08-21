@@ -96,3 +96,119 @@ select {
 button:focus {
   outline: none;
 }
+
+body {
+  margin: 0px;
+  padding: 0px;
+  scroll-behavior: smooth;
+  // overflow-x: hidden;
+}
+
+* {
+  // overflow-x: hidden;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #29a8ab !important;
+  border-color: #ffffff;
+}
+// Alerts
+
+$black: #66615b;
+$grey: #ccc;
+$white: #fff;
+$yellow: #ff0;
+$green: #8bc34a;
+$blue: #29d2e4;
+$orange: #f87d09;
+$dark-pink: #e91e63;
+$purple: #9c27b0;
+$light-purple: #efedff;
+//Body
+$main-background: $light-purple;
+
+@mixin alert-variant($alert-vertical-padding, $alert-horizontal-padding, $background, $border-color, $text-color) {
+  background-color: $background;
+  border: 1px solid $border-color;
+  color: $text-color;
+  padding: $alert-vertical-padding $alert-horizontal-padding;
+  .alert-icon {
+    float: left;
+    margin-right: 10px;
+  }
+  .alert-info {
+    margin: 0 5px 0 0;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 0.8rem;
+  }
+  .alert-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .close-icon {
+    float: right;
+    color: #000;
+    margin-top: 0;
+    margin-left: 0;
+    width: 21px;
+    height: 21px;
+    position: relative;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-indent: -999px;
+    overflow: hidden;
+    white-space: nowrap;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      width: 15px;
+      height: 2px;
+      left: 0;
+    }
+    &:before {
+      background-color: #fff;
+      transform: rotate(-45deg);
+    }
+    &:after {
+      background-color: #fff;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.alert {
+  width: 310px;
+  @include alert-variant(15px, 20px, $blue, $blue, #fff);
+  &.alert-custom {
+    @include alert-variant(null, null, $black, $black, null);
+  }
+  &.alert-info {
+    @include alert-variant(null, null, $blue, $blue, null);
+  }
+  &.alert-success {
+    @include alert-variant(null, null, $green, $green, null);
+  }
+  &.alert-warning {
+    @include alert-variant(null, null, $orange, $orange, null);
+  }
+  &.alert-danger {
+    @include alert-variant(null, null, $dark-pink, $dark-pink, null);
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  // * {
+  // 	overflow-x: hidden;
+  // }
+}
