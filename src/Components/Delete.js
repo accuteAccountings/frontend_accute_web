@@ -1,5 +1,5 @@
 import React from "react";
-import load from "../img/loading.svg";
+import load from "assets/icons/loading.svg";
 
 class Delete extends React.Component {
   deleteThis = () => {

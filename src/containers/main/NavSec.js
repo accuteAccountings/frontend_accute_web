@@ -1,5 +1,5 @@
 import React from "react";
-import ref from "./../img/refresh.svg";
+import ref from "assets/icons/refresh.svg";
 
 class NavSec extends React.Component {
   render() {
@@ -36,7 +36,6 @@ class NavSec extends React.Component {
             onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
           />
 
-
           <input
             type="text"
             id="searchForProOrAcc"
@@ -46,12 +45,17 @@ class NavSec extends React.Component {
           />
 
           <div>
-          <select id = "new_old_navsec" defaultValue = "newest" onChange = {() => {this.props.Sorting_Pro()}} >
-            <option value = "newest">Newest First</option>
-            <option value = "oldest">Oldest First</option>
-          </select>
-        </div>
-
+            <select
+              id="new_old_navsec"
+              defaultValue="newest"
+              onChange={() => {
+                this.props.Sorting_Pro();
+              }}
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+          </div>
         </div>
       </div>
     );

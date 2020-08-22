@@ -1,8 +1,8 @@
 import React from "react";
-import Delete from "./Delete";
-import ref from "./../img/refresh.svg";
-import trash from "../img/trash.svg";
-import restore from "../img/restore.svg";
+import Delete from "components/Delete";
+import ref from "assets/icons/refresh.svg";
+import trash from "assets/icons/trash.svg";
+import restore from "assets/icons/restore.svg";
 
 class Trash extends React.Component {
   deleteIt = url => {

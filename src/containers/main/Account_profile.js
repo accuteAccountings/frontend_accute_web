@@ -1,9 +1,9 @@
 import React from "react";
-import user from "../img/user.svg";
-import pencil from "../img/pencil.svg";
-import back from "../img/camera-back.svg";
-import Ledger from "./Ledger_Account";
-import Report_pro from "./Report_Acc_pro";
+import user from "assets/icons/user.svg";
+import pencil from "assets/icons/pencil.svg";
+import back from "assets/icons/camera-back.svg";
+import Ledger from "containers/main/Ledger_Account";
+import Report_pro from "containers/main/Report_Acc_pro";
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {
@@ -38,67 +38,65 @@ export default class Account_pro extends React.Component {
     let start_date = await document.getElementById("ledger_date_start").value;
     let end_date = await document.getElementById("ledger_date_end").value;
     let mode = await document.getElementById("filter_op");
-    
 
-    if(!start_date && !end_date && mode.value){
-      let sdate = '2020-03-01'
-      let edate = '2021-04-01'
+    if (!start_date && !end_date && mode.value) {
+      let sdate = "2020-03-01";
+      let edate = "2021-04-01";
       await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
             this.setState(() => {
               return {
-                temp_det2 : data ,  
+                temp_det2: data,
                 details: data,
-                bal : data
+                bal: data
               };
             });
           }
-        })
+        });
     }
 
-     if (start_date && end_date) {
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`)
+    if (start_date && end_date) {
+      await fetch(
+        `/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
+      )
         .then(res => res.json())
         .then(data => {
           if (data) {
             this.setState(() => {
               return {
                 details: data,
-                bal : data ,
+                bal: data
               };
             });
           }
         });
-      }
-     
-      
-
+    }
   };
 
   clearall = () => {
     document.getElementById("ledger_date_start").value = null;
     document.getElementById("ledger_date_end").value = null;
     document.getElementById("search_filters").value = null;
-    let date = new Date()
-    let year = date.getFullYear()
+    let date = new Date();
+    let year = date.getFullYear();
 
-    let sdate = year + '-03-01'
-    let edate = parseInt(year) + 1 + '-04-01'
+    let sdate = year + "-03-01";
+    let edate = parseInt(year) + 1 + "-04-01";
     fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              temp_det2 : data ,  
+              temp_det2: data,
               details: data,
-              bal : data
+              bal: data
             };
           });
         }
-      })
+      });
   };
 
   handleradio = val => {
@@ -109,77 +107,68 @@ export default class Account_pro extends React.Component {
     });
   };
 
-
   filter_al = () => {
     let data = document.getElementById("search_filters").value;
 
     data = data.toLowerCase();
-    
-      let fPro = this.state.temp_det2.filter(e => { 
-       
-        if (data === "") {
-          return true;
-        } else if (e.customer != null &&
-            e.customer.toLowerCase().indexOf(data) === -1
-              && e.supplier.toLowerCase().indexOf(data) === -1
-            &&
-              e.bill_num.indexOf(data) === -1
-          ){
-          return false;
-        }else if (e.credit_acc &&
-            e.credit_acc.toLowerCase().indexOf(data) === -1
-              && e.debit_acc.toLowerCase().indexOf(data) === -1
-            &&
-            e.billArr.join('').indexOf(data) === -1
-            ){
-          return false;
-          
-        }else{
-          return true
-        }
-  
 
-      })
+    let fPro = this.state.temp_det2.filter(e => {
+      if (data === "") {
+        return true;
+      } else if (
+        e.customer != null &&
+        e.customer.toLowerCase().indexOf(data) === -1 &&
+        e.supplier.toLowerCase().indexOf(data) === -1 &&
+        e.bill_num.indexOf(data) === -1
+      ) {
+        return false;
+      } else if (
+        e.credit_acc &&
+        e.credit_acc.toLowerCase().indexOf(data) === -1 &&
+        e.debit_acc.toLowerCase().indexOf(data) === -1 &&
+        e.billArr.join("").indexOf(data) === -1
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    });
 
-      this.setState(() => {
-        return {
-          details : fPro
-        };
-      });
-  
-
-  }
-
-
+    this.setState(() => {
+      return {
+        details: fPro
+      };
+    });
+  };
 
   constructor(props) {
     super(props);
 
-    let date = new Date()
-    let year = date.getFullYear()
+    let date = new Date();
+    let year = date.getFullYear();
 
-    let sdate = year + '-03-01'
-    let edate = parseInt(year) + 1 + '-04-01'
+    let sdate = year + "-03-01";
+    let edate = parseInt(year) + 1 + "-04-01";
     fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              temp_det2 : data ,  
+              temp_det2: data,
               details: data,
-              bal : data
+              bal: data
             };
           });
         }
-      })
+      });
 
     this.state = {
       details: [],
       filter: null,
-      bal : [],
-      temp_det2 : []
-    }
+      bal: [],
+      temp_det2: []
+    };
   }
 
   render() {
@@ -192,7 +181,6 @@ export default class Account_pro extends React.Component {
             </span>
             accounting / accounts / account profile
           </div>
-        
         </div>
 
         <div className="acc_pro_body">
@@ -322,9 +310,9 @@ export default class Account_pro extends React.Component {
               handleradio={this.handleradio}
               handleSearch={this.handleSearch}
               det3={this.state.det3}
-              totalDebit = {this.totalDebit}
-              totalCredit = {this.totalCredit}
-              filter_al = {this.filter_al}
+              totalDebit={this.totalDebit}
+              totalCredit={this.totalCredit}
+              filter_al={this.filter_al}
             />
           )}
 

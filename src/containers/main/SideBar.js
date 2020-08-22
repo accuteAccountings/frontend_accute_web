@@ -1,5 +1,5 @@
 import React from "react";
-import d_img from "./../img/social-media.svg";
+import d_img from "assets/icons/social-media.svg";
 
 class SideBar extends React.Component {
   navToDash() {
@@ -143,7 +143,7 @@ class SideBar extends React.Component {
           <li
             className={this.props.actPage === "agency" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
-              this.props.navTo('agency')
+              this.props.navTo("agency");
             }}
           >
             <span>Agency</span>

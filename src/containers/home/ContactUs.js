@@ -1,5 +1,5 @@
 import React from "react";
-import cross from "../img/svg/cancel.svg";
+import cross from "assets/icons/cancel.svg";
 
 export default class Contact extends React.Component {
   render() {
@@ -13,30 +13,14 @@ export default class Contact extends React.Component {
           </div>
 
           <div className="cross_div">
-            <img
-              className="gotohomebtn"
-              src={cross}
-              alt=" "
-              onClick={this.props.gotohome}
-            />
+            <img className="gotohomebtn" src={cross} alt=" " onClick={this.props.gotohome} />
           </div>
         </div>
 
         <div className="form_contact">
           <div className="contact_name">
-            <input
-              type="text"
-              name="full_name"
-              placeholder="First Name"
-              required
-            />
-            <input
-              className="last_name_cu"
-              type="text"
-              name="full_name"
-              placeholder="Last Name"
-              required
-            />
+            <input type="text" name="full_name" placeholder="First Name" required />
+            <input className="last_name_cu" type="text" name="full_name" placeholder="Last Name" required />
           </div>
 
           <input type="email" placeholder="Email" required />

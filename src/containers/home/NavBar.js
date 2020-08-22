@@ -28,7 +28,7 @@ function myFunction() {
 class NavBar extends React.Component {
   render() {
     return (
-      <nav>
+      <nav className="nav_bar">
         <div className="nav_con" id="nav">
           <div
             className={
@@ -39,12 +39,12 @@ class NavBar extends React.Component {
           </div>
           <div className="nn">
             <MenuBtn toggleMenu={this.props.toggleMenu} btn={this.props.btn} />
-          <li>Home</li>
-          <li id="about_btn">About</li>
-          <li>Home</li>
-          <li>Home</li>
-          <li onClick={this.props.toggle_Contact}>Contact Us</li>
-          <li onClick={this.props.toggleLogin}>Login/Register</li>
+            <li>Home</li>
+            <li id="about_btn">About</li>
+            <li>Home</li>
+            <li>Home</li>
+            <li onClick={this.props.toggle_Contact}>Contact Us</li>
+            <li onClick={this.props.toggleLogin}>Login/Register</li>
           </div>
         </div>
       </nav>

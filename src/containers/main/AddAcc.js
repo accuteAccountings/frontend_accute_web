@@ -1,6 +1,6 @@
 import React from "react";
-import cross from "./../img/cancel.svg";
-import load from "./../img/loading.svg";
+import cross from "assets/icons/cancel.svg";
+import load from "assets/icons/loading.svg";
 
 class AddAcc extends React.Component {
   EditOn = () => {

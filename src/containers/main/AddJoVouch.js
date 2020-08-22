@@ -1,6 +1,6 @@
 import React from "react";
-import cross from "./../img/cancel.svg";
-import Printed_joVouch from "./Printed_jovouch";
+import cross from "assets/icons/cancel.svg";
+import Printed_joVouch from "containers/main/Printed_jovouch";
 
 async function postData(url = "", data, m) {
   // Default options are marked with *

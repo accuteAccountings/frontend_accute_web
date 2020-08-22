@@ -1,11 +1,11 @@
 import React from "react";
-import samplesvg from "../img/svg/menu.svg";
+import samplesvg from "assets/icons/menu.svg";
 
 class Data extends React.Component {
   constructor() {
     super();
     this.state = {
-      datavalue: 0,
+      datavalue: 0
     };
   }
 
@@ -15,20 +15,17 @@ class Data extends React.Component {
         <div className="data_con">
           <div className="data_items">
             {" "}
-            <img src={samplesvg} alt="" />{" "}
-            <span className="data_value">121</span>
+            <img src={samplesvg} alt="" /> <span className="data_value">121</span>
             <br /> <span className="data_text"> Sleepless Hours</span>
           </div>
           <div className="data_items">
             {" "}
-            <img src={samplesvg} alt="" />{" "}
-            <span className="data_value">123</span>
+            <img src={samplesvg} alt="" /> <span className="data_value">123</span>
             <br /> <span className="data_text"> Sleepless Hours</span>
           </div>
           <div className="data_items">
             {" "}
-            <img src={samplesvg} alt="" />{" "}
-            <span className="data_value">123</span>
+            <img src={samplesvg} alt="" /> <span className="data_value">123</span>
             <br /> <span className="data_text"> Sleepless Hours</span>
           </div>
         </div>

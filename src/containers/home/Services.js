@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import svg from "../img/svg/menu.svg";
+import svg from "assets/icons/menu.svg";
 
 class Services extends Component {
   render() {
@@ -8,9 +8,8 @@ class Services extends Component {
         <div className="ser_head">
           <h1>SERVICES</h1>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga,
-            adipisci recusandae fugit autem a aliquam explicabo placeat magni
-            tempore distinctio eos{" "}
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, adipisci recusandae fugit autem a aliquam
+            explicabo placeat magni tempore distinctio eos{" "}
           </p>
         </div>
 
@@ -23,9 +22,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
           <div className="ser_items">
@@ -36,9 +34,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
           <div className="ser_items">
@@ -49,9 +46,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
           <div className="ser_items">
@@ -62,9 +58,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
           <div className="ser_items">
@@ -75,9 +70,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
           <div className="ser_items">
@@ -88,9 +82,8 @@ class Services extends Component {
             </h1>
             <br />
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              voluptatem minima possimus. Nemo corrupti fugiat unde ut.
-              Accusantium{" "}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus voluptatem minima possimus. Nemo
+              corrupti fugiat unde ut. Accusantium{" "}
             </p>
           </div>
         </div>

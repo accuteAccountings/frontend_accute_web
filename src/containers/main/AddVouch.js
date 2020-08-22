@@ -1,7 +1,7 @@
 import React from "react";
-import pencil from "../img/pencil.svg";
-import trash_can from "../img/trash.svg";
-import cross from "./../img/cancel.svg";
+import pencil from "assets/icons/pencil.svg";
+import trash_can from "assets/icons/trash.svg";
+import cross from "assets/icons/cancel.svg";
 
 async function postData(url = "", data, m) {
   // Default options are marked with *

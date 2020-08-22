@@ -1,8 +1,8 @@
 import React from "react";
-import Delete from "./Delete";
-import ref from "./../img/refresh.svg";
-import trash from "../img/trash.svg";
-import pencil from "../img/pencil.svg";
+import Delete from "components/Delete";
+import ref from "assets/icons/refresh.svg";
+import trash from "assets/icons/trash.svg";
+import pencil from "assets/icons/pencil.svg";
 
 class VouchCon extends React.Component {
   deleteIt = url => {
@@ -23,19 +23,15 @@ class VouchCon extends React.Component {
     let unpaid = await document.getElementById("unpaid");
 
     if (this.props.vouchPage === "jv") {
-      if (oldest.checked ) {
-        this.updateJoVouchData('/api/jovouch?mode=oldest');
-      }
-      else if (newest.checked ) {
-        this.updateJoVouchData('/api/jovouch?mode=newest');
-      } 
-      else if (low.checked) {
-        this.updateJoVouchData('/api/jovouch?dir=low');
-      } 
-      else if (high.checked) {
-        this.updateJoVouchData('/api/jovouch?dir=high');
-      }
-      else if (paid.checked) {
+      if (oldest.checked) {
+        this.updateJoVouchData("/api/jovouch?mode=oldest");
+      } else if (newest.checked) {
+        this.updateJoVouchData("/api/jovouch?mode=newest");
+      } else if (low.checked) {
+        this.updateJoVouchData("/api/jovouch?dir=low");
+      } else if (high.checked) {
+        this.updateJoVouchData("/api/jovouch?dir=high");
+      } else if (paid.checked) {
         let fPro = this.state.tempJodata.filter(data => {
           if (data === "") {
             return true;
@@ -46,7 +42,7 @@ class VouchCon extends React.Component {
 
         this.setState(() => {
           return {
-            JoVouchdata : fPro
+            JoVouchdata: fPro
           };
         });
       } else if (unpaid.checked) {
@@ -64,37 +60,32 @@ class VouchCon extends React.Component {
           };
         });
       }
-    } 
-    else {
-      if (oldest.checked ) {
-        this.updateVouchData('/api/vouch?mode=oldest');
-      }
-      else if (newest.checked ) {
-        this.updateVouchData('/api/vouch?mode=newest');
-      } 
-      else if (low.checked) {
-        this.updateVouchData('/api/vouch?dir=low');
-      } 
-      else if (high.checked) {
-        this.updateVouchData('/api/vouch?dir=high');
-      }
-      else if (paid.checked) {
+    } else {
+      if (oldest.checked) {
+        this.updateVouchData("/api/vouch?mode=oldest");
+      } else if (newest.checked) {
+        this.updateVouchData("/api/vouch?mode=newest");
+      } else if (low.checked) {
+        this.updateVouchData("/api/vouch?dir=low");
+      } else if (high.checked) {
+        this.updateVouchData("/api/vouch?dir=high");
+      } else if (paid.checked) {
         let fPro = this.state.tempdata.filter(data => {
-         if ( data.det.status == '0') {
+          if (data.det.status == "0") {
             return true;
           }
         });
 
         this.setState(() => {
           return {
-            data : fPro
-          }
-        })
+            data: fPro
+          };
+        });
       } else if (unpaid.checked) {
         let fPro = this.state.tempdata.filter(data => {
           if (data === "") {
             return true;
-          } else if (data.det.status != '0') {
+          } else if (data.det.status != "0") {
             return true;
           }
         });
@@ -108,64 +99,51 @@ class VouchCon extends React.Component {
     }
   };
 
-
-  Filter_Search = async() => {
-    let search = await document.getElementById('searc_vouchers').value.toLowerCase()
+  Filter_Search = async () => {
+    let search = await document.getElementById("searc_vouchers").value.toLowerCase();
 
     if (this.props.vouchPage === "jv") {
-
-      let fPro = this.state.tempJodata.filter(e => { 
-       
+      let fPro = this.state.tempJodata.filter(e => {
         if (search === "") {
           return true;
         } else if (
-            e.debit_acc.toLowerCase().indexOf(search) === -1
-              && e.credit_acc.toLowerCase().indexOf(search) === -1
-            &&
-              e.billArr.join('').indexOf(search) === -1
-          ){
+          e.debit_acc.toLowerCase().indexOf(search) === -1 &&
+          e.credit_acc.toLowerCase().indexOf(search) === -1 &&
+          e.billArr.join("").indexOf(search) === -1
+        ) {
           return false;
+        } else {
+          return true;
         }
-          else{
-          return true
-        }
-  
-
-      })
-
-      this.setState(() => {
-        return {
-          JoVouchdata : fPro
-        };
       });
 
-    }else{
-      let fPro = this.state.tempdata.filter(e => { 
-       
+      this.setState(() => {
+        return {
+          JoVouchdata: fPro
+        };
+      });
+    } else {
+      let fPro = this.state.tempdata.filter(e => {
         if (search === "") {
           return true;
         } else if (
-            e.det.customer.toLowerCase().indexOf(search) === -1
-              && e.det.supplier.toLowerCase().indexOf(search) === -1
-            &&
-              e.det.bill_num.indexOf(search) === -1
-          ){
+          e.det.customer.toLowerCase().indexOf(search) === -1 &&
+          e.det.supplier.toLowerCase().indexOf(search) === -1 &&
+          e.det.bill_num.indexOf(search) === -1
+        ) {
           return false;
+        } else {
+          return true;
         }
-          else{
-          return true
-        }
-  
-
-      })
+      });
 
       this.setState(() => {
         return {
-          data : fPro
+          data: fPro
         };
       });
     }
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -323,53 +301,49 @@ class VouchCon extends React.Component {
               alt=" "
               onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
             />
-
-          
-      
           </div>
         </div>
 
         <div className="filter_vouch">
-        <h2 className="filter_acc_h">Show Only</h2>
-        <hr />
-        <div className = "search_line">
-              <input
+          <h2 className="filter_acc_h">Show Only</h2>
+          <hr />
+          <div className="search_line">
+            <input
               type="search"
               id="searc_vouchers"
-              placeholder = "Search"
+              placeholder="Search"
               onChange={() => {
-                this.Filter_Search()
+                this.Filter_Search();
               }}
-              /> 
+            />
           </div>
-        <ul>
-   
-          <li>
-            <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
-            Newest First
-          </li>
-          <li>
-            <input id="oldest" name="filter" value="oldest" type="radio" onChange={this.ModeHandler} />
-            Oldest First
-          </li>
-          <li>
-            <input id="high" type="radio" name="filter" value="high" onClick={this.ModeHandler} />
-            Amount(High to low)
-          </li>
-          <li>
-            <input id="low" type="radio" name="filter" value="low" onClick={this.ModeHandler} />
-            Amount(low to high)
-          </li>
-          <li>
-            <input id="paid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
+          <ul>
+            <li>
+              <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
+              Newest First
+            </li>
+            <li>
+              <input id="oldest" name="filter" value="oldest" type="radio" onChange={this.ModeHandler} />
+              Oldest First
+            </li>
+            <li>
+              <input id="high" type="radio" name="filter" value="high" onClick={this.ModeHandler} />
+              Amount(High to low)
+            </li>
+            <li>
+              <input id="low" type="radio" name="filter" value="low" onClick={this.ModeHandler} />
+              Amount(low to high)
+            </li>
+            <li>
+              <input id="paid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
               Paid
             </li>
-          <li>
-            <input id="unpaid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
+            <li>
+              <input id="unpaid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
               Unpaid
             </li>
-        </ul>
-      </div>
+          </ul>
+        </div>
 
         <div className="pro_compo_con">
           <div className="pro_con_vouch">

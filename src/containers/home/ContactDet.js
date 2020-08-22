@@ -1,5 +1,5 @@
 import React from "react";
-import map from "../img/svg/map.svg";
+import map from "assets/icons/map.svg";
 
 class ContactDet extends React.Component {
   render() {

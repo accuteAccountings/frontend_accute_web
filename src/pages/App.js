@@ -1,21 +1,21 @@
-import React from "./node_modules/react";
-import SideBar from "../Components/SideBar";
-import TopBar from "../Components/TopBar";
-import AddProducts from "../Components/AddProduct";
-import AddAcc from "../Components/AddAcc";
-import Clogo from "../Components/Clogo";
-import NavSec from "../Components/NavSec";
-import ProCon from "../Components/ProCon";
-import AddVouch from "../Components/AddVouch";
+import React from "react";
+import SideBar from "containers/main/SideBar";
+import TopBar from "containers/main/TopBar";
+import AddProducts from "containers/main/AddProduct";
+import AddAcc from "containers/main/AddAcc";
+import Clogo from "containers/main/Clogo";
+import NavSec from "containers/main/NavSec";
+import ProCon from "containers/main/ProCon";
+import AddVouch from "containers/main/AddVouch";
 // import AddDebit from "../Components/AddDebit.js";
 // import AddCredit from "../Components/AddCredit.js";
-import VouchCon from "../Components/VouchCon";
+import VouchCon from "containers/main/VouchCon";
 import Dash from "./Dash";
-import AddJovouch from "../Components/AddJoVouch";
-import Account_pro from "../Components/Account_profile";
-import DailyBook from "../Components/DailyBook";
-import Trash from "../Components/Trash";
-import Agency from "./Agency";
+import AddJovouch from "containers/main/AddJoVouch";
+import Account_pro from "containers/main/Account_profile";
+import DailyBook from "containers/main/DailyBook";
+import Trash from "containers/main/Trash";
+import Agency from "containers/main/Agency";
 
 class App extends React.Component {
   Sorting_Pro = async () => {
@@ -25,25 +25,25 @@ class App extends React.Component {
       fetch(`/api/products?mode=${mode.value}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
           // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.Products) {
             this.setState(() => {
               return {
                 products: data.Products,
-                tempProducts: data.Products,
+                tempProducts: data.Products
               };
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState(() => {
             return {
-              err_pro: true,
+              err_pro: true
             };
           });
         });
@@ -51,33 +51,33 @@ class App extends React.Component {
       fetch(`/api/accounts?mode=${mode.value}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
           // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.accounts) {
             this.setState(() => {
               return {
                 accounts: data.accounts,
-                tempAcc: data.accounts,
+                tempAcc: data.accounts
               };
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState(() => {
             return {
-              err_acc: true,
+              err_acc: true
             };
           });
         });
     }
   };
 
-  filter = (arr) => {
-    let temp = this.state.tempAcc.filter((e) => {
+  filter = arr => {
+    let temp = this.state.tempAcc.filter(e => {
       if (arr.length === 0) {
         return true;
       }
@@ -85,10 +85,7 @@ class App extends React.Component {
         if (a.value === "all") {
           return true;
         }
-        if (
-          a.value === "traders" &&
-          (e.acc_type === "debtors" || e.acc_type === "creditors")
-        ) {
+        if (a.value === "traders" && (e.acc_type === "debtors" || e.acc_type === "creditors")) {
           return true;
         }
         if (a.value === e.acc_type) {
@@ -111,34 +108,34 @@ class App extends React.Component {
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.Products) {
           this.setState(() => {
             return {
               products: data.Products,
-              tempProducts: data.Products,
+              tempProducts: data.Products
             };
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState(() => {
           return {
-            err_pro: true,
+            err_pro: true
           };
         });
       });
   };
 
-  getspecific_acc = (i) => {
+  getspecific_acc = i => {
     this.setState(() => {
       return {
-        specific_acc: this.state.accounts[i],
+        specific_acc: this.state.accounts[i]
       };
     });
   };
@@ -147,7 +144,7 @@ class App extends React.Component {
     this.setState(() => {
       return {
         specific_acc: null,
-        isacc_pro: "acc_det",
+        isacc_pro: "acc_det"
       };
     });
   }
@@ -156,25 +153,25 @@ class App extends React.Component {
     fetch("/api/accounts?mode=newest", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      }
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.accounts) {
           this.setState(() => {
             return {
               accounts: data.accounts,
-              tempAcc: data.accounts,
+              tempAcc: data.accounts
             };
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState(() => {
           return {
-            err_acc: true,
+            err_acc: true
           };
         });
       });
@@ -184,7 +181,7 @@ class App extends React.Component {
     let data = document.getElementById("searchForProOrAcc").value;
     data = data.toLowerCase();
     if (this.state.ProOrAcc === "Products") {
-      let fPro = this.state.tempProducts.filter((pro) => {
+      let fPro = this.state.tempProducts.filter(pro => {
         if (data === "") {
           return true;
         } else if (
@@ -199,12 +196,12 @@ class App extends React.Component {
 
       this.setState(() => {
         return {
-          products: fPro,
+          products: fPro
         };
       });
     }
     if (this.state.ProOrAcc === "Accounts") {
-      let fPro = this.state.tempAcc.filter((acc) => {
+      let fPro = this.state.tempAcc.filter(acc => {
         if (data === "") {
           return true;
         } else if (
@@ -219,7 +216,7 @@ class App extends React.Component {
 
       this.setState(() => {
         return {
-          accounts: fPro,
+          accounts: fPro
         };
       });
     }
@@ -228,20 +225,20 @@ class App extends React.Component {
   navTo(page) {
     this.setState(() => {
       return {
-        page: page,
+        page: page
       };
     });
   }
 
   AddProCrossBtn = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       if (this.state.AddPro)
         return {
-          AddPro: false,
+          AddPro: false
         };
       else
         return {
-          AddPro: true,
+          AddPro: true
         };
     });
   };
@@ -250,11 +247,11 @@ class App extends React.Component {
     this.setState(() => {
       if (this.state.AddAcc)
         return {
-          AddAcc: false,
+          AddAcc: false
         };
       else
         return {
-          AddAcc: true,
+          AddAcc: true
         };
     });
   }
@@ -262,7 +259,7 @@ class App extends React.Component {
   setAccProfile(ans) {
     this.setState(() => {
       return {
-        isacc_pro: ans,
+        isacc_pro: ans
       };
     });
   }
@@ -277,54 +274,54 @@ class App extends React.Component {
 
       this.getProducts();
     }
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        ProOrAcc: ans,
+        ProOrAcc: ans
       };
     });
   }
   setPVoJVoDN = (ans, mode, data) => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         PVoJVoDN: ans,
         vouchMode: mode,
-        vouchEData: data,
+        vouchEData: data
       };
     });
   };
 
   rmVouch = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: "no"
       };
     });
   };
   rmDebit = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: "no"
       };
     });
   };
 
   rmCredit = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: "no"
       };
     });
   };
 
-  setjoBill = (ans) => {
+  setjoBill = ans => {
     this.setState(() => {
       return {
-        jobill_num: ans,
+        jobill_num: ans
       };
     });
   };
 
-  setVouchPage = (p) => {
+  setVouchPage = p => {
     this.setState({ vouchPage: p });
   };
   constructor(props) {
@@ -358,7 +355,7 @@ class App extends React.Component {
       vouchMode: "add",
       vouchData: [],
       err_pro: null,
-      err_acc: null,
+      err_acc: null
     };
   }
 
@@ -370,10 +367,7 @@ class App extends React.Component {
         <div className="pageBody">
           <TopBar />
           <Clogo />
-          <NavSec
-            AddProCrossBtn={this.AddProCrossBtn}
-            navItems={["Challen Reg.", "Daily Book ", "Ledger"]}
-          />
+          <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />
           {/* <ProCon /> */}
         </div>
       );
@@ -481,17 +475,12 @@ class App extends React.Component {
         <div className="pageBody">
           <TopBar
             margin={{
-              marginBottom: "50px",
+              marginBottom: "50px"
             }}
           />
 
           {this.state.PVoJVoDN === "pv" && (
-            <AddVouch
-              which="pv"
-              rm={this.rmVouch}
-              mode={this.state.vouchMode}
-              EData={this.state.vouchEData}
-            />
+            <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
           )}
           {this.state.PVoJVoDN === "jv" && (
             <AddJovouch
@@ -502,20 +491,10 @@ class App extends React.Component {
             />
           )}
           {this.state.PVoJVoDN === "dn" && (
-            <AddVouch
-              which="dn"
-              rm={this.rmVouch}
-              mode={this.state.vouchMode}
-              EData={this.state.vouchEData}
-            />
+            <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
           )}
           {this.state.PVoJVoDN === "cn" && (
-            <AddVouch
-              which="cn"
-              rm={this.rmVouch}
-              mode={this.state.vouchMode}
-              EData={this.state.vouchEData}
-            />
+            <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
           )}
           {this.state.PVoJVoDN === "no" && (
             <VouchCon
@@ -546,18 +525,8 @@ class App extends React.Component {
 
         {currentPage}
 
-        {this.state.AddPro ? (
-          <AddProducts
-            AddProCrossBtn={this.AddProCrossBtn}
-            getProducts={this.getProducts}
-          />
-        ) : null}
-        {this.state.AddAcc ? (
-          <AddAcc
-            AddAccCrossBtn={this.AddAccCrossBtn}
-            getAccounts={this.getAccounts}
-          />
-        ) : null}
+        {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
+        {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
       </div>
     );
   }

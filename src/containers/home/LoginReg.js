@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
-import cross from "../img/svg/cancel.svg";
-import lod from "../img/svg/refresh.svg";
+import cross from "assets/icons/cancel.svg";
+import lod from "assets/icons/refresh.svg";
 
 class LoginReg extends Component {
   login = () => {
@@ -285,8 +285,8 @@ class LoginReg extends Component {
 
   render() {
     return (
-      <div>
-        <div className="overlay" onClick={this.props.remLogReg} />
+      <div className="log_reg">
+        <div className="overlay_home" onClick={this.props.remLogReg} />
 
         <div className="logReg">
           <div className="login_head">

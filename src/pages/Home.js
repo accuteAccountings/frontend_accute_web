@@ -1,16 +1,16 @@
 import React from "react";
-import NavBar from "../containers/home/NavBar";
-import Landing from "../containers/home/Landing";
-import Features from "../containers/home/Features";
-import MenuItems from "../containers/home/MenuItems";
-import About from "../containers/home/About";
-import Data from "../containers/home/Data";
-import Services from "../containers/home/Services";
-import Pricing from "../containers/home/Pricing";
-import Quotes from "../containers/home/Quotes";
-import ContactDet from "../containers/home/ContactDet";
-import LoginReg from "../containers/home/LoginReg";
-import Contact from "../containers/home/ContactUs";
+import NavBar from "containers/home/NavBar";
+import Landing from "containers/home/Landing";
+import Features from "containers/home/Features";
+import MenuItems from "containers/home/MenuItems";
+import About from "containers/home/About";
+import Data from "containers/home/Data";
+import Services from "containers/home/Services";
+import Pricing from "containers/home/Pricing";
+import Quotes from "containers/home/Quotes";
+import ContactDet from "containers/home/ContactDet";
+import LoginReg from "containers/home/LoginReg";
+import Contact from "containers/home/ContactUs";
 
 class Home extends React.Component {
   toggleMenu() {
@@ -27,7 +27,7 @@ class Home extends React.Component {
   toggle_Contact() {
     this.setState(() => {
       return {
-        ContactPage: true,
+        ContactPage: true
       };
     });
   }
@@ -35,7 +35,7 @@ class Home extends React.Component {
     this.setState(() => {
       return {
         loginPage: false,
-        ContactPage: false,
+        ContactPage: false
       };
     });
   }
@@ -52,7 +52,7 @@ class Home extends React.Component {
     this.state = {
       menuItem: false,
       loginPage: false,
-      ContactPage: false,
+      ContactPage: false
     };
   }
 
@@ -62,11 +62,7 @@ class Home extends React.Component {
         {this.state.loginPage ? <LoginReg gotohome={this.gotohome} /> : null}
         {this.state.ContactPage && <Contact gotohome={this.gotohome} />}
         <MenuItems
-          isOn={
-            this.state.menuItem
-              ? { transform: "translateY(0px)" }
-              : { transform: "translateY(-200vh)" }
-          }
+          isOn={this.state.menuItem ? { transform: "translateY(0px)" } : { transform: "translateY(-200vh)" }}
           toggleLogin={this.toggleLogin}
           toggle_Contact={this.toggle_Contact}
         />

@@ -4,7 +4,9 @@
 @import "./containers/home/NavBar";
 @import "./containers/home/Landing";
 @import "./containers/home/Features";
-@import "./containers/home/_menuBtn.scss";
+.nav_con {
+  @import "./containers/home/_menuBtn.scss";
+}
 @import "./containers/home/MenuItems";
 @import "./containers/home/About";
 @import "./containers/home/Data";
@@ -12,14 +14,18 @@
 @import "./containers/home/Pricing";
 @import "./containers/home/Quotes";
 @import "./containers/home/ContactDet";
-@import "./containers/home/LogReg";
+.log_reg {
+  @import "./containers/home/LogReg";
+}
 @import "./containers/home/ContactUs";
 
 //main
 @import "./containers/main/SideBar.scss";
 @import "./containers/main/TopBar.scss";
 @import "./containers/main/AddProducts.scss";
-@import "./containers/main/AddAcc.scss";
+.add_acc {
+  @import "./containers/main/AddAcc.scss";
+}
 @import "./containers/main/Clogo.scss";
 @import "./containers/main/NavSec.scss";
 
@@ -36,4 +42,4 @@
 @import "./containers/main//Report_pro";
 @import "./containers/main/TaskManager";
 @import "./containers/main/Agency.scss";
-@import "./containers/main/Delete.scss";
+@import "./components/main/Delete.scss";

@@ -1,5 +1,5 @@
 import React from "react";
-import svg from "../img/svg/menu.svg";
+import svg from "assets/icons/menu.svg";
 
 class FeaturesCard extends React.Component {
   render() {
@@ -9,10 +9,9 @@ class FeaturesCard extends React.Component {
 
         <h1>Sleek Design</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Exercitationem magnam saepe laborum officia, cupiditate omnis enim
-          aperiam sequi earum aspernatur reprehenderit ducimus, incidunt iure
-          voluptatem quas? Assumenda quis adipisci obcaecati.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem magnam saepe laborum officia,
+          cupiditate omnis enim aperiam sequi earum aspernatur reprehenderit ducimus, incidunt iure voluptatem quas?
+          Assumenda quis adipisci obcaecati.
         </p>
       </div>
     );

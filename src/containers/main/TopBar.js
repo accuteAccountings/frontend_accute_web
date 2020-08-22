@@ -1,8 +1,8 @@
 import React from "react";
-import MenuBtn from "./../img/menu.svg";
+import MenuBtn from "assets/icons/menu.svg";
 // import help from './../img/info.svg'
 // import settings from './../img/settings.svg'
-import arrow from "./../img/multimedia.svg";
+import arrow from "assets/icons/multimedia.svg";
 
 class TopBar extends React.Component {
   logout() {

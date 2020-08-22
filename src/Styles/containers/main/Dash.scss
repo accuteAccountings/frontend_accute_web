@@ -1,98 +1,96 @@
-@import "../base/settings";
-
 .Dash {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .dash_con {
-    // height: 500vh;
+  // height: 500vh;
 
-    width: 66%;
-    background-color: white;
-    box-shadow: 0 0 10px rgb(129, 129, 129);
-    margin: 30px;
+  width: 66%;
+  background-color: white;
+  box-shadow: 0 0 10px rgb(129, 129, 129);
+  margin: 30px;
 }
 canvas {
-    height: 20vw !important;
-    width: 20vw !important;
+  height: 20vw !important;
+  width: 20vw !important;
 }
 
 .chart {
-    padding: 10px;
-    height: 23vw;
-    width: 23vw;
-    background-color: white;
-    box-shadow: 0 0 10px rgb(129, 129, 129);
-    margin-right: 30px;
-    transition: 0.2s;
-    margin-top: 30px;
+  padding: 10px;
+  height: 23vw;
+  width: 23vw;
+  background-color: white;
+  box-shadow: 0 0 10px rgb(129, 129, 129);
+  margin-right: 30px;
+  transition: 0.2s;
+  margin-top: 30px;
 }
 .charts {
-    // width: 30vw;
-    transform: translateY(-40px);
+  // width: 30vw;
+  transform: translateY(-40px);
 }
 
 .chart_con {
-    margin: auto;
-    height: 300px;
-    width: 300px;
+  margin: auto;
+  height: 300px;
+  width: 300px;
 }
 
 .empty_con {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .empty_box {
-    box-sizing: content-box;
-    padding: 40px;
-    text-align: center;
-    border: 2px solid $pri_color;
-    margin: 50px;
-    width: 30vw;
-    height: 10vw;
-    cursor: pointer;
-    user-select: none;
-    h1 {
-        font-size: 2vw;
-        color: $grey_text;
-    }
+  box-sizing: content-box;
+  padding: 40px;
+  text-align: center;
+  border: 2px solid $pri_color;
+  margin: 50px;
+  width: 30vw;
+  height: 10vw;
+  cursor: pointer;
+  user-select: none;
+  h1 {
+    font-size: 2vw;
+    color: $grey_text;
+  }
 
-    img {
-        height: 70px;
-    }
+  img {
+    height: 70px;
+  }
 }
 
 .empty_box1:nth-child(1) {
-    border-top-left-radius: 70px;
+  border-top-left-radius: 70px;
 }
 .empty_box1:nth-child(2) {
-    border-top-right-radius: 70px;
+  border-top-right-radius: 70px;
 }
 .empty_box2:nth-child(1) {
-    border-bottom-left-radius: 70px;
+  border-bottom-left-radius: 70px;
 }
 .empty_box2:nth-child(2) {
-    border-bottom-right-radius: 70px;
+  border-bottom-right-radius: 70px;
 }
 
 .empty_con_text {
-    text-align: center;
-    height: 50px;
+  text-align: center;
+  height: 50px;
 
-    p {
-        text-align: center;
-        color: $l_grey_text;
-        font-size: $h_font;
-        user-select: none;
-        margin: 0px;
-    }
+  p {
+    text-align: center;
+    color: $l_grey_text;
+    font-size: $h_font;
+    user-select: none;
+    margin: 0px;
+  }
 }
 
 .chartjs-render-monitor {
-    display: block;
-    width: 10vw;
+  display: block;
+  width: 10vw;
 }

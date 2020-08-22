@@ -1,9 +1,9 @@
 import React from "react";
-import AddAcc from "../Components/AddAcc";
-import AddProducts from "../Components/AddProduct";
-import Delete from "../Components/Delete";
-import pencil from "../img/pencil.svg";
-import trash from "../img/trash.svg";
+import AddAcc from "containers/main/AddAcc";
+import AddProducts from "containers/main/AddProduct";
+import Delete from "components/Delete";
+import pencil from "assets/icons/pencil.svg";
+import trash from "assets/icons/trash.svg";
 
 class ProCon extends React.Component {
   deleteHide = () => {
