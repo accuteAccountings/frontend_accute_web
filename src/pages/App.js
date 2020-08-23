@@ -7,8 +7,6 @@ import Clogo from "containers/main/Clogo";
 import NavSec from "containers/main/NavSec";
 import ProCon from "containers/main/ProCon";
 import AddVouch from "containers/main/AddVouch";
-// import AddDebit from "../Components/AddDebit.js";
-// import AddCredit from "../Components/AddCredit.js";
 import VouchCon from "containers/main/VouchCon";
 import Dash from "./Dash";
 import AddJovouch from "containers/main/AddJoVouch";
