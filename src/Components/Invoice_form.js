@@ -6,29 +6,34 @@ import cross from "./../img/cancel.svg";
 class Invoice extends React.Component {
 
   async addInv() {
-  
+
     let supplier = document.querySelector("#inv_supplier").value;
-    let commission = document.querySelector("#inv_comm").value;
     let gst = document.querySelector('#inv_gst').value;
-    let service_details = document.querySelector('#inv_sdetails').value;
-    let sales_amount = document.querySelector('#inv_sales_amount').value
+  
+    if(this.state.inv_id === null){
 
     let data = {
       supplier,
-      gst,
-      commission,
-      service_details,
-      sales_amount
+      gst
     }
 
     const isTrue = await postData('/api/invoice' , data);
-    if (isTrue) {
-     alert('submitted')
-    } 
+    if(isTrue){
+      alert('posted')
+      await this.setState(() => {
+        return{
+          inv_id : isTrue.id,
+          gst : gst
+        }
+      })
+    }
+
+    }
+       await this.addCommission()
   }
 
-  getVouch = (acc) => {
-    fetch(`/api/vouch/specific/${acc}`)
+  getVouch = async(acc) => {
+    await fetch(`/api/vouch/specific/${acc}`)
     .then((res) => res.json())
     .then((data) => {
         if(data){
@@ -46,6 +51,7 @@ class Invoice extends React.Component {
 
         await this.getVouch(acc)
 
+        if(this.state.vouch.length){
         await this.state.vouch.map(e => {
             if(e.supplier === acc && e.type == 'purchase' && e.status == 0 ){ 
                 t = parseInt(t) + (parseInt(e.totalAmt))
@@ -61,6 +67,7 @@ class Invoice extends React.Component {
             amount : t
         }
     })
+  }
     
 }
 
@@ -110,32 +117,45 @@ class Invoice extends React.Component {
     document.getElementById("vouch_pro_item").select();
   };
 
-  addCommission = () => {
-      let arr = this.state.items
-    let supplier = document.querySelector("#inv_supplier").value;
-    let commission = document.querySelector("#inv_comm").value;
-    let gst = document.querySelector('#inv_gst').value;
+  addCommission = async() => {
+
+    let arr = this.state.items
+
     let service_details = document.querySelector('#inv_sdetails').value;
     let sales_amount = document.querySelector('#inv_sales_amount').value;
-
-
+    let commission = document.querySelector("#inv_comm").value;
+    let inv_id = await this.state.inv_id
     let data = {
-        supplier,
-        gst,
         commission,
         service_details,
-        sales_amount
+        sales_amount,
+        inv_id
       }
 
-     arr.push(data)
-     this.setState(() => {
-         return{
-             items : arr
-         }
-     })
+      let res = await postData('/api/invoice/Services' , data)
 
+      if(res){
+        arr.push(data)
+        this.setState(() => {
+            return{
+                items : arr,
+                sales_amount : sales_amount,
+                commission : commission
+            }
+        })
+      }
+  
 
   }
+
+  gstAmt = () => {
+    let gst = parseInt(this.state.sales_amount)*parseInt(this.state.gst)*0.01
+    let total = parseInt(gst) + parseInt(this.state.sales_amount)
+    let comm = parseInt(total)*parseInt(this.state.commission)*0.01
+
+    return comm;
+  }
+
 
   constructor(props) {
     super(props);
@@ -149,7 +169,10 @@ class Invoice extends React.Component {
         discontArr : [],
         freightArr : [],
         vouch : [],
-        amount : 0
+        amount : null,
+        inv_id : null,
+        sales_amount : null,
+        commission : null
     };
     this.getAccounts();
   }
@@ -184,15 +207,18 @@ class Invoice extends React.Component {
     return (
       <div className="add_vouch_con">
         <div className="add_pro_head">
+          <h1>Add Invoice</h1>
           <div className="add_vouch_right_btns">
             <p
-              onClick={() => {
-                this.addInv();
+              onClick={async() => {
+                await this.addInv();
+                await this.props.handleForm('list') 
+                await this.props.getInvoices()
               }}
             >
               Save
             </p>
-            <img onClick={this.props.rm} src={cross} alt="" />
+            <img onClick={ () => { this.props.handleForm('list') }} src={cross} alt="" />
           </div>
         </div>
 
@@ -338,7 +364,7 @@ class Invoice extends React.Component {
           
               <div className="vouch_si">
                 <button id="vouch_add_btn" onClick={() => {
-                    this.addCommission()
+                    this.addInv()
                 
                 }}>
                   Add
@@ -463,19 +489,26 @@ class Invoice extends React.Component {
               <tr>
                 <td> Sales Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.grossAmt}</strong>
+                  <strong>₹{this.state.sales_amount}</strong>
                 </td>
               </tr>
               <tr>
-                <td> Commission (2 %) :</td>
+                <td> GST ({this.state.gst}{' '}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gstAmt}</strong>
+                  <strong>₹{parseInt(this.state.sales_amount)*parseInt(this.state.gst)*0.01}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td> Commission ({this.state.commission}{' '}%) :</td>
+                <td className="bold">
+                  <strong>₹{this.gstAmt()}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{this.state.totalAmt}</strong>
+                  <strong> ₹{parseInt(this.state.sales_amount)*parseInt(this.state.commission)*0.01 + 
+                    parseInt(this.state.sales_amount)*parseInt(this.state.gst)*0.01  }</strong>
                 </td>
               </tr>
             </table>

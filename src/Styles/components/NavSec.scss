@@ -25,6 +25,40 @@
   min-width: 76rem;
 }
 
+.nav_sec_trans {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 1px solid black;
+  width: 80%;
+  min-width: 76rem;
+}
+
+.nav_sec_inv{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 1px solid black;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 76rem;
+}
+
+.nav_items_inv{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  li {
+    padding: 3px 15px;
+    margin: 5px 0px;
+    font-weight: $h_font_we;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+}
+
 .nav_items {
   display: flex;
   flex-direction: row;
