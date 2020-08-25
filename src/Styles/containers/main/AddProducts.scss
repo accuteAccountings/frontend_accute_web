@@ -1,0 +1,99 @@
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 500;
+}
+
+.add_pro_con {
+  height: 20rem;
+  width: 40rem;
+  background-color: white;
+  position: fixed;
+  z-index: 550;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.add_pro_head {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: 2px solid $pri_color;
+
+  img {
+    margin-top: 18px;
+    margin-right: 30px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  h1 {
+    margin-left: 30px;
+    font-size: $h_font;
+    color: $pri_color;
+  }
+}
+
+.add_pro_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+
+  height: 16.1rem;
+
+  font-size: $p_font;
+  color: $grey_text;
+
+  input {
+    border: none;
+    border-bottom: 2px solid $l_grey_text;
+    font-size: $s_p_font;
+
+    text-align: center;
+    margin-left: 30px;
+  }
+}
+
+.add_pro_btn {
+  height: 40px;
+  width: 30%;
+  margin: 0px auto;
+  font-size: $h_font;
+  background-color: $pri_color;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 30px;
+}
+.add_pro_can_btn {
+  border-radius: 30px;
+
+  height: 40px;
+  width: 30%;
+  margin: 0px auto;
+  font-size: $h_font;
+  background-color: transparent;
+  border: 1px solid $grey_text;
+  color: $grey_text;
+  cursor: pointer;
+}
+
+.add_pro_btn:hover {
+  background-color: $l_pri_color;
+}
+.add_pro_btn:active {
+  background-color: $d_pri_color;
+}
+
+#add_pro_btns {
+  padding: 0px 70px;
+  // width: 70%;
+  // margin: auto;
+}

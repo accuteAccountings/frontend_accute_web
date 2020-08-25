@@ -1,0 +1,12 @@
+.c_logo {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+
+.c_name {
+  color: $grey_text;
+  margin: 30px;
+  margin-top: 0px;
+  font-size: $ss_h_font;
+}

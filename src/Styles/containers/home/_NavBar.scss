@@ -1,0 +1,63 @@
+.nav_con {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: calc(50px + 2vw);
+  z-index: 201;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  color: white;
+  user-select: none;
+}
+
+.nn {
+  li {
+    display: none;
+  }
+  margin: 10px 15vw;
+}
+
+.cross {
+  transition-delay: 0.3s;
+  color: black;
+}
+
+@keyframes dowhite {
+  from {
+    background-color: transparent;
+    color: white;
+    border: none;
+  }
+  to {
+    background-color: white;
+    color: black;
+    border-bottom: 1px solid rgba(197, 197, 197, 0.513);
+  }
+}
+@keyframes dotrans {
+  from {
+    background-color: white;
+    color: black;
+    border-bottom: 1px solid rgba(197, 197, 197, 0.511);
+  }
+  to {
+    background-color: transparent;
+    color: white;
+    border: none;
+  }
+}
+@media screen and (min-width: 720px) {
+  .nn {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 5vw;
+
+    li {
+      font-size: 16px;
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+.nav_sec {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 1px solid black;
+  width: 80%;
+  min-width: 50rem;
+}
+.nav_sec_pro {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 1px solid black;
+  width: 80%;
+  min-width: 70rem;
+}
+.nav_sec_trans {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // border: 1px solid black;
+  width: 80%;
+  min-width: 76rem;
+}
+
+.nav_items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+  li {
+    padding: 3px 15px;
+    margin: 5px 0px;
+    font-weight: $h_font_we;
+
+    cursor: pointer;
+    border-right: 1px solid $grey_text;
+  }
+
+  li:nth-child(4) {
+    border: none;
+  }
+
+  .active {
+    border-bottom: 2px solid $pri_color;
+
+    color: black;
+  }
+}
+#borderNone {
+  border: none;
+}
+.other_det {
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-around;
+  width: 35rem;
+
+  text-align: left;
+
+  // border: solid black;
+  img {
+    height: 20px;
+    margin: 10px 10px;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $grey_text;
+    height: 30px;
+    font-size: $s_p_font;
+    background-image: url("../../../assets/icons/search.svg");
+    background-size: 12%;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    padding-left: 30px;
+    cursor: pointer;
+  }
+
+  input:focus {
+    border-bottom: 2px solid $pri_color;
+  }
+}
+
+.add_account {
+  padding: 3px 10px;
+  margin: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid $pri_color;
+  font-size: $p_font;
+  height: 25px;
+  cursor: pointer;
+}
+.add_vouch {
+  padding: 3px 10px;
+  margin: 6px 20px;
+  border-radius: 20px;
+  border: 1px solid $pri_color;
+  font-size: $p_font;
+  height: 25px;
+  cursor: pointer;
+}
+.other_det_pro {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-right: 120px;
+  img {
+    height: 20px;
+    margin: 10px 10px;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $grey_text;
+    height: 30px;
+    font-size: $s_p_font;
+    background-image: url("../../../assets/icons/search.svg");
+    background-size: 12%;
+    background-repeat: no-repeat;
+    background-position: 0%;
+    padding-left: 30px;
+    cursor: pointer;
+  }
+
+  input:focus {
+    border-bottom: 2px solid $pri_color;
+  }
+}
+
+#new_old_navsec {
+  width: 6rem;
+  margin-left: 10px;
+}

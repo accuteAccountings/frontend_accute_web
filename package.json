@@ -3,7 +3,6 @@
   "name": "ledger_main_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/main",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -17,14 +16,16 @@
     "react-apexcharts": "^1.3.7",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.1.21",
     "react-modal": "^3.11.2",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-    "postbuild": "mv build main && rm -r ../backend_accute_web/public/main && mv main ../backend_accute_web/public",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -32,15 +33,7 @@
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }

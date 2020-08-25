@@ -1,0 +1,38 @@
+.feat_back {
+  background-color: $grey_back;
+  padding: 20vh 0px;
+  user-select: none;
+}
+
+.features_con {
+  // background-color: $grey_back;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  img {
+    height: 40px;
+  }
+}
+
+.feat_card_con {
+  margin: 40px;
+  width: 200px;
+  h1 {
+    color: black;
+    // font-size: large;
+  }
+  p {
+    color: $grey_text;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .feat_back {
+    background-color: $grey_back;
+    padding: 5vh 0px;
+    user-select: none;
+  }
+}
