@@ -15,8 +15,8 @@ import AddJovouch from "../Components/AddJoVouch";
 import Account_pro from "../Components/Account_profile";
 import DailyBook from "../Components/DailyBook";
 import Trash from "../Components/Trash";
-import Agency from './Agency'
-//dev
+import Agency from "./Agency";
+//desdfv
 
 class App extends React.Component {
   Sorting_Pro = async () => {
@@ -134,8 +134,7 @@ class App extends React.Component {
   };
 
   getspecific_acc = i => {
-
-     this.setState(() => {
+    this.setState(() => {
       return {
         specific_acc: this.state.accounts[i]
       };
@@ -437,7 +436,7 @@ class App extends React.Component {
     if (this.state.specific_acc) {
       currentPage = (
         <div className="pageBody">
-          <TopBar  />
+          <TopBar />
           <Account_pro
             account={this.state.specific_acc}
             acc_pro_val={this.state.isacc_pro}
@@ -452,12 +451,12 @@ class App extends React.Component {
       currentPage = (
         <div className="pageBody">
           <TopBar />
-          <DailyBook 
-            account = {this.state.specific_acc}
+          <DailyBook
+            account={this.state.specific_acc}
             navTo={this.navTo}
-            getspecific_acc = {this.getspecific_acc}
-            getAccounts = {this.getAccounts}
-            setAccProfile = {this.setAccProfile}
+            getspecific_acc={this.getspecific_acc}
+            getAccounts={this.getAccounts}
+            setAccProfile={this.setAccProfile}
           />
         </div>
       );
