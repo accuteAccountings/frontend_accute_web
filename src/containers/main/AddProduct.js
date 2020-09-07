@@ -141,9 +141,8 @@ class AddProducts extends React.Component {
                 className="add_pro_btn"
                 onClick={this.state.loading ? null : this.state.mode === "view" ? this.EditOn : this.addProSaveBtn}
               >
-                {this.state.loading ? (
-                  <img src={load} className="loading" alt=" " />
-                ) : this.state.mode === "view" ? (
+                {!this.state.loading &&
+                 this.state.mode === "view" ? (
                   "Edit"
                 ) : (
                   "Save"
