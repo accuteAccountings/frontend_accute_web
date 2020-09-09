@@ -64,7 +64,7 @@ class SideBar extends React.Component {
             Trash
           </li>
 
-          <li className="new_btn" onClick={this.props.AddAccCrossBtn}>
+          <li className="new_btn" onClick={this.props.AddAccFromUsersCrossBtn}>
             <span>New</span> <img src="" alt="" />
           </li>
 
