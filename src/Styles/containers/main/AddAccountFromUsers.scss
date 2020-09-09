@@ -1,0 +1,52 @@
+.AddAccountFromUsers {
+  position: absolute;
+  background: white;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  padding: 20px 30px;
+  border: 1px solid #a0a0a0;
+  text-align: center;
+  transform: translate(-50%, -200px);
+  box-shadow: 1px 1px 10px #707070;
+  border-radius: 10px;
+
+  button {
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #707070;
+    border-radius: 20px;
+    margin-left: 20px;
+  }
+  input {
+    padding: 5px 10px;
+    border: 1px solid grey;
+  }
+}
+
+.UserDetails {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 200px;
+  margin: 30px auto;
+  border: 1px solid #707070;
+
+  img {
+    height: 40px;
+    width: 40px;
+    border: 1px solid #a0a0a0;
+    border-radius: 20px;
+  }
+  h2 {
+    margin: 0;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 10px 0px;
+  }
+}

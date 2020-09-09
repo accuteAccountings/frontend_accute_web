@@ -14,6 +14,7 @@ import Account_pro from "containers/main/Account_profile";
 import DailyBook from "containers/main/DailyBook";
 import Trash from "containers/main/Trash";
 import Agency from "containers/main/Agency";
+import AddAccountFromUsers from "containers/main/AddAccountFromUsers";
 //test
 
 class App extends React.Component {
@@ -254,6 +255,18 @@ class App extends React.Component {
         };
     });
   }
+  AddAccFromUsersCrossBtn = () => {
+    this.setState(() => {
+      if (this.state.AddAccountFromUsers)
+        return {
+          AddAccountFromUsers: false
+        };
+      else
+        return {
+          AddAccountFromUsers: true
+        };
+    });
+  };
 
   setAccProfile(ans) {
     this.setState(() => {
@@ -338,6 +351,7 @@ class App extends React.Component {
     this.state = {
       AddPro: false,
       AddAcc: false,
+      AddAccountFromUsers: false,
       page: "dash",
       ProOrAcc: "Accounts",
       PVoJVoDN: "no",
@@ -513,6 +527,7 @@ class App extends React.Component {
         <div className="side">
           <SideBar
             AddAccCrossBtn={this.AddAccCrossBtn}
+            AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn}
             setProOrAcc={this.setProOrAcc}
             navTo={this.navTo}
             actPage={this.state.page}
@@ -526,6 +541,9 @@ class App extends React.Component {
 
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
+        {this.state.AddAccountFromUsers ? (
+          <AddAccountFromUsers AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
+        ) : null}
       </div>
     );
   }
