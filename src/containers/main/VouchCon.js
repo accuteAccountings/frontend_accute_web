@@ -377,6 +377,7 @@ class VouchCon extends React.Component {
                         id={e.det.id}
                         deleteIt={this.deleteIt}
                         status={e.det.status}
+                        which="pv"
                       />
                     );
                   })
@@ -407,6 +408,7 @@ class VouchCon extends React.Component {
                           id={e.det.id}
                           deleteIt={this.deleteIt}
                           status={e.det.status}
+                          which="dn"
                         />
                       );
                     }
@@ -437,6 +439,7 @@ class VouchCon extends React.Component {
                           id={e.det.id}
                           deleteIt={this.deleteIt}
                           status={e.det.status}
+                          which="cn"
                         />
                       );
                     }

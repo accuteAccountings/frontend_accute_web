@@ -26,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
+	"postbuild": "rm -rf ../backend_accute_web/build && mv build ../backend_accute_web",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
