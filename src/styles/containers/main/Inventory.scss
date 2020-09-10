@@ -1,0 +1,134 @@
+.inventory_page{
+    width: 95%;
+    border: 1px solid #d8d4d4;
+    min-width: 49.1rem;
+}
+
+.top_invt_heading{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    // text-align: center;
+    padding: 10px 4px;
+    border-bottom: 1px solid #b8b4b4;
+    // border: solid black;
+    color: $pri_color;
+    font-weight: 600;
+    background-color: white;
+}
+
+.top_invt{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 11px 4px;
+    border-bottom: 0.5px solid #e6e3e3;
+    color: $dark;
+    background-color: white;
+}
+
+.top_grey_invt{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    // text-align: center;
+    padding: 11px 4px;
+    border-bottom: 0.5px solid #e6e3e3;
+    color: $dark;
+    background-color: rgb(251, 248, 248);
+}
+
+.pro_invt{
+    width: 25%;
+    font-weight: 600;
+    margin-left: 5px;
+}
+.cat_invt{
+    width: 15%;
+}
+.status_invt{
+    width: 15%;
+
+    .status_val{
+        width: 95px;
+        background-color: $l_pri_color;
+        color: white;
+        text-align: center;
+        padding: 5px 5px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .status_crit{
+        width: 110px;
+        background-color: red;
+        color: white;
+        text-align: center;
+        padding: 5px ;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .status_low{
+        width: 100px;
+        background-color: #DBA901;
+        color: white;
+        text-align: center;
+        padding: 5px 5px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+}
+.unit_invt{
+    width: 15%;
+}
+.hsn_invt{
+    width: 15%;
+}
+.action_invt{
+    width: 15%;
+    color: $pri_color;
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-around;
+
+    span{
+        cursor: pointer;
+        margin-right: 5px;
+    }
+}
+
+.action_invt_heading{
+    width: 15%;
+    color: $dark;
+}
+
+.status_invt_heading{
+    width: 15%;
+}
+
+.dp_list_invt{
+    border: 1px solid $l_grey_text;
+    width: 180px;
+    position: absolute;
+    margin-left: 291px;
+    background-color: white;
+    max-height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // display: none;
+      
+    div{
+        cursor: pointer;
+        padding: 5px;
+    }
+    div:hover{
+        background-color: #eeeeee;
+    }
+}
+
+.dp_list_invt::-webkit-scrollbar{
+    display: none;
+}

@@ -13,7 +13,7 @@ import AddJovouch from "containers/main/AddJoVouch";
 import Account_pro from "containers/main/Account_profile";
 import DailyBook from "containers/main/DailyBook";
 import Trash from "containers/main/Trash";
-import Agency from "containers/main/Agency";
+import Agency from "pages/Agency";
 //test
 
 class App extends React.Component {

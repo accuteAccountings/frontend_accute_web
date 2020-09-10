@@ -3,6 +3,8 @@ import Delete from "components/Delete";
 import ref from "assets/icons/refresh.svg";
 import trash from "assets/icons/trash.svg";
 import pencil from "assets/icons/pencil.svg";
+import Printed_Invoice from './Printed_invoice'
+
 
 class VouchCon extends React.Component {
   deleteIt = url => {
@@ -247,6 +249,9 @@ class VouchCon extends React.Component {
   render() {
     return (
       <div className="pro_compo">
+        <div className = "print_inv">
+          <Printed_Invoice />
+        </div>
         <div className="nav_sec_trans nav_sec_vouch">
           {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
           <div className="nav_items">

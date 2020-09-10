@@ -37,13 +37,22 @@
         }
     }
     .tasks{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
          width: 100%;
          background-color: white;
          padding: 5%;   
          margin: 10px 0;
          border: 1px solid $pri_color;
          font-size: 1.1rem;
-         cursor: pointer;
+         .name{
+            cursor: pointer;
+         }
+         img{
+             height: 20px;
+             cursor: pointer;
+         }
     }
     .new_task{
         width: 100%;
@@ -105,6 +114,10 @@
         // justify-content: space-evenly;
         // border: solid black;
 
+        img{
+            height: 20px;
+            cursor: pointer;
+        }
         .id_st{
             width: 5%;
             // border: solid black;
