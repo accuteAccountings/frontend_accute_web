@@ -1,6 +1,7 @@
 import React from "react";
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
+import {Button} from "@material-ui/core"
 
 class AddAcc extends React.Component {
   EditOn = () => {
@@ -440,11 +441,11 @@ class AddAcc extends React.Component {
           </div>
 
           <div id="bottom_btns" className="two_items">
-            <button className="add_acc_can_btn" onClick={this.props.AddAccCrossBtn}>
+            <Button className="add_acc_can_btn" onClick={this.props.AddAccCrossBtn}>
               Cancel
-            </button>
+            </Button>
 
-            <button
+            <Button
               className="add_acc_btn"
               onClick={this.state.loading ? null : this.state.mode === "view" ? this.EditOn : this.addAccount}
             >
@@ -455,7 +456,7 @@ class AddAcc extends React.Component {
               ) : (
                 "Save"
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ export default class AddAccountFromUsers extends React.Component {
   render() {
     return (
       <>
-        <div className="overlay" />
+<div onClick={this.props.AddAccFromUsersCrossBtn} className="overlay" />
         <div className="AddAccountFromUsers">
           <h1 className="find_user_heading">Find Users</h1>
           <input id="getThisUsername" placeholder="Enter Username" />
