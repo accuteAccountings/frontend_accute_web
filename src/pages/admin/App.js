@@ -1,6 +1,6 @@
 import React from "react";
-import Home_Page from "./Home";
-import UserLists from "../containers/user_list";
+import Home_Page from "./Home"
+import UserLists from "containers/admin/user_list";
 import Profile from "./Profile";
 
 class App extends React.Component {
