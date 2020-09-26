@@ -1,0 +1,144 @@
+.home_cont{
+    display: flex;
+    flex-direction: row;
+}
+
+.left_border{
+    height:50px;
+    width: 20%;
+    border-bottom: 3px solid grey;
+}
+
+.inner_home_body{
+    width: 80%;
+    height: 97vh;
+    border-left: 3px solid grey;
+}
+    
+
+    .upper_border{
+        width: 100%;
+        height: 50px;
+        border-bottom: 3px solid grey;
+    }
+
+    .num_users_total{
+        background-color: white;
+        height: 150px;
+        width: 300px;
+        padding: 30px 50px;
+        margin: 50px 50px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        font-size: 2.4rem;
+        font-weight: 600;
+        .numbers{
+            color: grey;
+            
+        }
+        .total{
+            color: $l_grey_text;
+            font-size: 1.4rem;
+        }
+    }
+
+    .new_list_users_hap{
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        margin-left: 50px;
+        background-color: white;
+    }
+
+    .list_home_users{
+        width: 100%;
+
+        .head_top{
+            // height: 30px;
+            padding: 10px;
+            display: flex;
+            border: 1px solid rgb(223, 223, 223);
+            flex-direction: row;
+            justify-content: space-between;
+            
+            border-bottom: 1px solid rgb(139, 139, 139);
+
+            .new_user{
+                font-weight: 600;
+                color: $l_grey_text;
+            }
+            .vall{
+                color: $l_grey_text;
+                font-size: 0.9rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .user_new_ap{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border: 1px solid rgb(211, 209, 209);
+
+        .user_det_ap{
+            display: flex;
+            flex-direction: row;
+            width: 60%;
+            // border: solid black;
+            justify-content: space-between;
+            padding: 0 5%;
+            .pic{
+               width: 40px;
+               height: 40px;
+               border-radius: 50px;
+               border:1px solid grey;
+
+            }
+            .details_account{
+                display: flex;
+                flex-direction: column;
+
+                .acc_name_ap{
+
+                    .name{
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        color: grey;
+                    }
+
+                    .id{
+                      color: $l_grey_text;
+                    }
+                }
+
+                .company{
+                    .title{
+                        font-size: 0.9rem;
+                        color: rgb(168, 161, 161);
+                        margin-left: 2px;
+                    }
+                    .comp_name{
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+
+        .view_btn{
+            button{
+                background-color: rgb(18, 163, 18);
+                outline-style: rgb(18, 163, 18);
+                border: 1px solid rgb(18, 163, 18);
+                color: white;
+                cursor: pointer;
+                font-size: 0.8rem;
+            }
+        }
+    }
+

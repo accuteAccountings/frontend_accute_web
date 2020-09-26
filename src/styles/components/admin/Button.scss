@@ -1,0 +1,31 @@
+.btn {
+  padding: 2px 8px;
+  border: 1px solid;
+  cursor: pointer;
+  background-color: transparent;
+}
+.red_btn {
+  color: red;
+  border-color: red;
+}
+
+.red_btn:active {
+  background-color: red;
+  color: white;
+}
+
+.green_btn {
+  color: green;
+  border-color: green;
+}
+
+.green_btn:active {
+  background-color: green;
+  color: white;
+}
+
+.blue_btn {
+  color: blue;
+  border-color: blue;
+  border-radius: 40px;
+}
