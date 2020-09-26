@@ -1,0 +1,79 @@
+.profile_details_con {
+  height: 300px;
+  background-color: white;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-family: Verdana;
+  border: 1px solid #aaaaaa;
+  margin: 60px 20px;
+
+  label {
+    color: grey;
+  }
+  span {
+    margin-right: 30px;
+  }
+  div {
+    margin-top: 10px;
+  }
+}
+
+.profile_img {
+  height: 60%;
+  max-width: 25%;
+  border-radius: 300px;
+}
+
+.details_con {
+  height: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  label {
+    color: grey;
+  }
+}
+.top_details_con {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.account_name {
+  font-size: 29px;
+  font-weight: 400;
+  margin-right: 30px;
+}
+.account_id {
+}
+.account_company {
+}
+
+.top_details_right_con {
+  text-align: right;
+  div {
+    margin: 10px;
+  }
+}
+
+.top_details_left_con {
+  div {
+    margin: 10px;
+  }
+}
+.mid_details_con {
+  div {
+    margin: 10px;
+  }
+}
+.bottom_details_con {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 30px;
+  }
+}
