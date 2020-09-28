@@ -1,5 +1,11 @@
 import React from "react";
-import d_img from "assets/icons/social-media.svg";
+import DashBoardIcon from "assets/icons/dashboard1.svg";
+import AccountingIcon from "assets/icons/money.svg";
+import TransactionsIcon from "assets/icons/transaction.svg";
+import ReportsIcon from "assets/icons/reports.svg";
+import AgencyIcon from "assets/icons/agency.svg";
+import TrashIcon from "assets/icons/trash.svg";
+import sample from "assets/icons/user.svg"
 
 class SideBar extends React.Component {
   navToDash() {
@@ -15,62 +21,27 @@ class SideBar extends React.Component {
     this.props.navTo("trans");
   }
 
-  getUserProImg() {
-    fetch("/api/profile/img", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.pro_img) {
-          this.setState(() => {
-            return {
-              pro_img: data.pro_img
-            };
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   constructor(props) {
     super(props);
     this.navToDash = this.navToDash.bind(this);
     this.navToRep = this.navToRep.bind(this);
     this.navToAcc = this.navToAcc.bind(this);
     this.navToTrans = this.navToTrans.bind(this);
-    this.getUserProImg = this.getUserProImg.bind(this);
-
-    this.state = {
-      pro_img: d_img
-    };
-
-    this.getUserProImg();
   }
 
   render() {
     return (
       <div className="side_bar">
         <div className="side_bar_con">
-          <img className="add_img_btn" src={this.state.pro_img} alt="" />
-          <li
-            className="trash_btn"
-            onClick={() => {
-              this.props.navTo("trash");
-            }}
-          >
-            Trash
-          </li>
+          <img className="add_img_btn" src={sample} alt="" />
+          
 
           <li className="new_btn" onClick={this.props.AddAccFromUsersCrossBtn}>
             <span>New</span> <img src="" alt="" />
           </li>
 
           <li className={this.props.actPage === "dash" ? "side_btn act_s_btn" : "side_btn"} onClick={this.navToDash}>
-            <span>DashBoard</span>
-            <img src="" alt="" />
+            <img src={DashBoardIcon} alt="" /> <span>DashBoard</span>
             <div className="side_pop" />
           </li>
           <li
@@ -79,6 +50,7 @@ class SideBar extends React.Component {
               this.navToAcc();
             }}
           >
+            <img src={AccountingIcon} alt="" />
             <span>Accounting</span>
             <img src="" alt="" />
             <div className="side_pop">
@@ -104,6 +76,7 @@ class SideBar extends React.Component {
               this.navToTrans();
             }}
           >
+            <img src={TransactionsIcon} alt="" />
             <span>Transactions</span>
             <img src="" alt="" />
             <div className="side_pop">
@@ -131,6 +104,7 @@ class SideBar extends React.Component {
             </div>
           </li>
           <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"} onClick={this.navToRep}>
+            <img src={ReportsIcon} alt="" />
             <span>Reports</span>
             <img src="" alt="" />
             <div className="side_pop">
@@ -146,12 +120,23 @@ class SideBar extends React.Component {
               this.props.navTo("agency");
             }}
           >
+            <img src={AgencyIcon} alt="" />
             <span>Agency</span>
             <img src="" alt="" />
             <div className="side_pop">
               <li>Products</li>
               <li>Products</li>
             </div>
+          </li>
+          <hr className="hr_line" />
+          <li
+            className="side_btn"
+            onClick={() => {
+              this.props.navTo("trash");
+            }}
+          >
+            <img src={TrashIcon} alt="" />
+            Trash
           </li>
         </div>
       </div>

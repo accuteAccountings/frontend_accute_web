@@ -641,18 +641,9 @@ class AddVouch extends React.Component {
 
                     <input
                       onChange={e => {
-                        if (document.getElementById("vouch_customer").value === "") {
-                          e.target.value = "";
-                          return;
-                        }
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
                       onFocus={e => {
-                        if (document.getElementById("vouch_customer").value === "") {
-                          e.target.value = "";
-                          return;
-                        }
-
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
                       autoComplete="off"
@@ -671,7 +662,10 @@ class AddVouch extends React.Component {
                           };
                           let exist = false;
                           this.state.accounts.map(e => {
-                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                            if (
+                              e.acc_name === data.acc_name &&
+                              (e.acc_type === "creditors" || e.acc_type === "debtors")
+                            ) {
                               exist = true;
                             }
                           });
@@ -691,7 +685,7 @@ class AddVouch extends React.Component {
                             .catch(() => {
                               document.getElementById("vouch_sup").value = "";
                             });
-                        }, 200);
+                        }, 500);
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
@@ -796,7 +790,10 @@ class AddVouch extends React.Component {
 
                           let exist = false;
                           this.state.accounts.map(e => {
-                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                            if (
+                              e.acc_name === data.acc_name &&
+                              (e.acc_type === "creditors" || e.acc_type === "debtors")
+                            ) {
                               exist = true;
                             }
                           });
@@ -816,7 +813,7 @@ class AddVouch extends React.Component {
                             .catch(() => {
                               document.getElementById("vouch_customer").value = "";
                             });
-                        }, 200);
+                        }, 500);
                       }}
                       name="customer"
                       id="vouch_customer"
@@ -824,7 +821,7 @@ class AddVouch extends React.Component {
                     <ul id="customer_list">
                       {this.state.acc.map((acc, index) => {
                         if (
-                          (acc.acc_type !== "debtors" && acc.acc_name !== "creditors") ||
+                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
                           acc.acc_name === document.getElementById("vouch_sup").value
                         ) {
                           return;
@@ -896,7 +893,7 @@ class AddVouch extends React.Component {
                                   document.getElementById("vouch_sup_agent2").value = "";
                                 });
                             }
-                          }, 200);
+                          }, 500);
                         }}
                         name="customer"
                         id="vouch_sup_agent2"
@@ -955,7 +952,7 @@ class AddVouch extends React.Component {
                   onBlur={() => {
                     setTimeout(() => {
                       document.getElementById("pro_list").style.display = "none";
-                    }, 200);
+                    }, 500);
                   }}
                 />
                 <ul id="pro_list">
@@ -1317,6 +1314,9 @@ class AddVouch extends React.Component {
                       type: document.getElementById("add_dis_discount_type").value,
                       value: document.getElementById("add_discount_input").value
                     };
+                    if (a.value === "") {
+                      return;
+                    }
                     let arr = this.state.discontArr;
                     arr.push(a);
                     this.setState({ discontArr: arr });
@@ -1359,6 +1359,9 @@ class AddVouch extends React.Component {
                         remark: document.getElementById("add_freight_remark_input").value,
                         value: document.getElementById("add_freight_input").value
                       };
+                      if (a.value === "") {
+                        return;
+                      }
                       let arr = this.state.freightArr;
                       arr.push(a);
                       this.setState({ freightArr: arr });
