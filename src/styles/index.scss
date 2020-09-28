@@ -31,7 +31,8 @@
 
 .pro_compo {
   @import "./containers/main/ProCon.scss";
-  @import "./containers/main//VouchCon.scss";
+  @import "./containers/main/VouchCon.scss";
+
 }
 @import "./containers/main/Account_pro";
 @import "./containers/main//DailyBook";
@@ -42,5 +43,15 @@
 @import "./containers/main//Report_pro";
 @import "./containers/main/TaskManager";
 @import "./containers/main/Agency.scss";
-@import "./containers/main/AddAccountFromUsers.scss";
+
+// @import "./containers/main/AddAccountFromUsers.scss";
 @import "./components/main/Delete.scss";
+@import "./containers/main/Printed_Invoice.scss";
+@import "./containers/main/Inventory.scss";
+@import "./containers/main/Invoice.scss";
+@import "./containers/main/AgencyPage";
+@import './components/admin/Button.scss';
+@import './containers/admin/App.scss';
+@import './containers/admin/home.scss';
+@import './containers/admin/Profile.scss';
+@import './containers/admin/user_lists.scss';

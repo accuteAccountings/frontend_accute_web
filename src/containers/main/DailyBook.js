@@ -1,27 +1,29 @@
-import React from "react";
-import Chart from "react-apexcharts";
-import product from "assets/icons/product.svg";
-import rich from "assets/icons/rich.svg";
-import truck from "assets/icons/truck.svg";
-import up from "assets/icons/up-arrow.svg";
+import React from 'react'
+import Chart from 'react-apexcharts'
+import product from 'assets/icons/product.svg'
+import rich from 'assets/icons/rich.svg'
+import truck from 'assets/icons/truck.svg'
+import up from 'assets/icons/up-arrow.svg'
 
-export default class DailyBook extends React.Component {
+export default class DailyBook extends React.Component{
+
   Account_data = () => {
-    fetch("/api/vouch/specific/Test1")
+
+    fetch('/api/vouch/specific/Test1')
       .then(res => res.json())
       .then(data => {
         if (data) {
           this.setState(() => {
             return {
-              bal: data
+              bal : data
             };
           });
         }
-      });
-    return;
-  };
+      })
+      return
+  }
 
-  totalDebit = acc_name => {
+  totalDebit = (acc_name) => {
     let t = 0;
 
     this.state.bal.map(e => {
@@ -35,7 +37,7 @@ export default class DailyBook extends React.Component {
     return t;
   };
 
-  totalCredit = acc_name => {
+  totalCredit = (acc_name) => {
     let t = 0;
 
     this.state.bal.map(e => {
@@ -44,413 +46,412 @@ export default class DailyBook extends React.Component {
       } else if (e.credit_acc === acc_name) {
         t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
       }
-    });
+    })
     return t;
-  };
+  }
 
-  getSales = async () => {
-    await fetch("/api/vouch/TotalSales")
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              sales: data
-            };
-          });
-        }
-      });
-  };
 
-  getPayment = async () => {
+   getSales = async() => {
+    await fetch('/api/vouch/TotalSales')
+    .then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            sales : data
+          }
+        })
+      }
+    })   
+
+  }
+
+  getPayment = async() => { 
     await fetch(`/api/jovouch/TotalPayment`)
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              payments: data
-            };
-          });
-        }
-      });
-  };
+    .then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            payments : data
+          }
+        })
+      }
+    })
+  }
 
-  DayWiseSales = num => {
-    let t = 0;
+  DayWiseSales = (num) => {
 
-    let date = new Date();
-    let today = date.getDate();
-    let cdate = parseInt(num) * 3 + 3;
-    if (parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3) {
+    let t = 0
+
+    let date = new Date()
+    let today = date.getDate()
+    let cdate = parseInt(num)*3 + 3
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) >= 3){
       return null;
-    }
+  }
 
-    this.state.sales.map((e, i) => {
-      i == num &&
-        e.map(x => {
-          x.type == "purchase" && (t = parseInt(t) + parseInt(x.totalAmt));
-        });
-    });
+     this.state.sales.map((e , i) => {
+      i == num && (
+        e.map((x) => {
+          x.type == 'purchase' && (
+           t = parseInt(t) + parseInt(x.totalAmt)
+          )
+        })
+      )
+    })
+  
+    return t
+  }
 
-    return t;
-  };
+  DayWisepurchase = (num) => {
 
-  DayWisepurchase = num => {
-    let t = 0;
+    let t = 0
 
-    let date = new Date();
-    let today = date.getDate();
-    let cdate = parseInt(num) * 3 + 3;
-    if (parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) > 3) {
+    let date = new Date()
+    let today = date.getDate()
+    let cdate = parseInt(num)*3 + 3
+    if(parseInt(cdate) - parseInt(today) > 0 && parseInt(cdate) - parseInt(today) >= 3){
       return null;
-    }
+  }
 
-    this.state.payments.map((e, i) => {
-      i == num &&
-        e.map(x => {
-          t = parseInt(t) + parseInt(x.amount) - x.balance;
-        });
-    });
+     this.state.payments.map((e , i) => {
+      i == num && (
+        e.map((x) => {
+          t = parseInt(t) + parseInt(x.amount) - x.balance
+        })
+      )
+    })
+  
+    return t
+  }
 
-    return t;
-  };
 
-  Total_sales = arr => {
-    let t = 0;
+  Total_sales = (arr) => {
 
-    arr.map(e => {
-      e.map(x => {
-        t = parseInt(t) + parseInt(x.totalAmt);
-      });
-    });
-    return t;
-  };
+    let t = 0
 
-  number_goods = () => {
-    let t = 0;
+    arr.map( (e) => {
+              e.map((x) => {
+                  t = parseInt(t) + parseInt(x.totalAmt)
+              })
+          })
+          return t;
+      
+}
 
-    this.state.sales.map(e => {
-      e.map(x => {
-        x.type !== "purchase" && (t = parseInt(t) + 1);
-      });
-    });
+number_goods = () => {
+  let t = 0
 
-    return t;
-  };
-  number_sales = () => {
-    let t = 0;
+  this.state.sales.map( (e) => {
+    e.map((x) => {
+      x.type !== 'purchase' && (
+                t = parseInt(t) + 1
+      )}
+      )
+        })
 
-    this.state.sales.map(e => {
-      e.map(x => {
-        x.type == "purchase" && (t = parseInt(t) + 1);
-      });
-    });
+  return t
+}
+number_sales = () => {
+  let t = 0
 
-    return t;
-  };
+  this.state.sales.map( (e) => {
+    e.map((x) => {
+      x.type == 'purchase' && (
+                t = parseInt(t) + 1
+      )}
+      )
+        })
 
-  Total_goods = arr => {
-    let t = 0;
+  return t
+}
 
-    arr.map(e => {
-      e.map(x => {
-        x.type !== "purchase" && (t = parseInt(t) + parseInt(x.totalAmt));
-      });
-    });
 
-    return t;
-  };
+Total_goods = (arr) => {
 
-  Total_payments = arr => {
-    let t = 0;
+  let t = 0
 
-    arr.map(e => {
-      e.map(x => {
-        t = parseInt(t) + parseInt(x.amount) - x.balance;
-      });
-    });
-    return t;
-  };
+  arr.map( (e) => {
+    e.map((x) => {
+      x.type !== 'purchase' && (
+                t = parseInt(t) + parseInt(x.totalAmt)
+      )
+    })
+        })
 
-  Date = gdate => {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = parseInt(date.getMonth());
+        return t;
+    
+}
 
-    let monthArr = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ];
 
-    let fdate = year + "-" + monthArr[month] + "-" + gdate;
-    let today = date.getDate();
-    if (parseInt(gdate) - parseInt(today) > 0 && parseInt(gdate) - parseInt(today) > 3) {
-      return "";
-    }
-    return fdate;
-  };
+Total_payments = (arr) => {
 
-  number_payments = () => {
-    let t = 0;
+  let t = 0
 
-    this.state.payments.map(e => {
-      e.map(x => {
-        x.amount && (t = parseInt(t) + 1);
-      });
-    });
-    return t;
-  };
+  arr.map( (e) => {
+    e.map((x) => {
+                t = parseInt(t) + parseInt(x.amount) - x.balance
+    })
+        })
+        return t;
+    
+}
+
+Date = (gdate) => {
+  let date = new Date()
+  let year = date.getFullYear()
+  let month = parseInt(date.getMonth())
+
+  let monthArr = ['January' , 'February' , 'March' , 'April' , 'May' , 'June',
+         'July' , 'August' , 'September' , 'October' , 'November' , 'December']
+
+  let fdate = year + '-' + monthArr[month] + '-' + gdate
+  let today = date.getDate()
+  if(parseInt(gdate) - parseInt(today) > 0 && parseInt(gdate) - parseInt(today) >= 3){
+      return '';
+  }
+  return fdate;
+}
+
+number_payments = () => {
+  let t = 0
+
+  this.state.payments.map( (e) => {
+    e.map((x) => {
+      x.amount && (
+                t = parseInt(t) + 1
+      )
+    })
+        })
+        return t;
+}
 
   constructor(props) {
     super(props);
 
-    this.getSales();
-    this.getPayment();
-    this.Account_data();
-    this.props.getAccounts();
+    this.getSales()
+    this.getPayment()
+    this.Account_data()
+    this.props.getAccounts()
 
-    fetch("/api/accounts")
-      .then(res => res.json())
-      .then(data => {
-        if (data) {
-          this.setState(() => {
-            return {
-              accounts: data.accounts
-            };
-          });
-        }
-      });
+    fetch('/api/accounts').then((res) => res.json())
+    .then((data) => {
+      if(data){
+        this.setState(() => {
+          return{
+            accounts : data.accounts
+          }
+        })
+      }
+    })
 
-    this.state = {
-      options: {
-        chart: {
-          sparkline: {
-            enabled: true
+      this.state = {
+        options: {
+          chart: {
+            sparkline: {
+              enabled: true
+            }
+          },
+          xaxis: {
+            categories: [ this.Date(3), this.Date(6), this.Date(9), this.Date(12), this.Date(15),
+              this.Date(18), this.Date(21), this.Date(24), this.Date(27) , this.Date(31) ]
           }
         },
-        xaxis: {
-          categories: [
-            this.Date(3),
-            this.Date(6),
-            this.Date(9),
-            this.Date(12),
-            this.Date(15),
-            this.Date(18),
-            this.Date(21),
-            this.Date(24),
-            this.Date(27),
-            this.Date(31)
-          ]
-        }
-      },
+  
 
-      options2: {
-        labels: ["Direct Sales", "Referal Sales", "Affilate Sales"],
+       options2 : {
+        
+          labels: ['Direct Sales', 'Referal Sales', 'Affilate Sales'],
+        
+        dataLabels : {enabled : false}
+       },
+       sales : [],
+       payments : [],
+       accounts : [],
+       bal : []
+      }
 
-        dataLabels: { enabled: false }
-      },
-      sales: [],
-      payments: [],
-      accounts: [],
-      bal: []
-    };
-  }
 
-  render() {
-    return (
-      <div className="daily_book">
-        <div className="upper_db">
-          <Det_bar
-            src={product}
-            head="Total Sales"
-            value={this.Total_sales(this.state.sales)}
-            bills={this.number_sales()}
-          />
-          <Det_bar
-            src={rich}
-            head="Payments"
-            value={this.Total_payments(this.state.payments)}
-            bills={this.number_payments()}
-          />
-          <Det_bar
-            src={truck}
-            head="Good Returns"
-            value={this.Total_goods(this.state.sales)}
-            bills={this.number_goods()}
-          />
-        </div>
+    }
 
-        <div className="middle_db">
-          <div className="middle_db_lt">
-            <Graph_cont
-              options={this.state.options}
-              series={[
-                {
-                  name: "sales",
-                  data: [
-                    this.DayWiseSales(0),
-                    this.DayWiseSales(1),
-                    this.DayWiseSales(2),
-                    this.DayWiseSales(3),
-                    this.DayWiseSales(4),
-                    this.DayWiseSales(5),
-                    this.DayWiseSales(6),
-                    this.DayWiseSales(7),
-                    this.DayWiseSales(8),
-                    this.DayWiseSales(9)
-                  ],
-                  color: "#0040FF"
-                }
-              ]}
-              lower={true}
-              cat="Sales"
-            />
-            <Graph_cont
-              options={this.state.options}
-              series={[
-                {
-                  name: "Payments",
-                  data: [
-                    this.DayWisepurchase(0),
-                    this.DayWisepurchase(1),
-                    this.DayWisepurchase(2),
-                    this.DayWisepurchase(3),
-                    this.DayWisepurchase(4),
-                    this.DayWisepurchase(5),
-                    this.DayWisepurchase(6),
-                    this.DayWisepurchase(7),
-                    this.DayWisepurchase(8),
-                    this.DayWisepurchase(9)
-                  ],
-                  color: "#ff0040"
-                }
-              ]}
-              lower={false}
-              cat="Payments"
-            />
-          </div>
-          <div className="donut">
-            <div className="donut_div">
-              <Chart options={this.state.options2} series={[10, 20, 30]} type="donut" width="100%" height="80%" />
+    render(){
+ 
+        return(
+            <div className = "daily_book">
+                <div className = "upper_db">
+                   <Det_bar 
+                    src = {product}
+                    head = "Total Sales"
+                    value = {this.Total_sales(this.state.sales)}
+                    bills = {this.number_sales()}
+                    />
+                   <Det_bar 
+                    src = {rich}
+                    head = "Payments"
+                    value = {this.Total_payments(this.state.payments)}
+                    bills = {this.number_payments()}
+                   />
+                   <Det_bar 
+                    src = {truck}
+                    head = "Good Returns"
+                    value = {this.Total_goods(this.state.sales)}
+                    bills = {this.number_goods()}
+                   />
+                   
+                </div>
+
+                <div className = "middle_db">
+                  <div className = "middle_db_lt">
+                  <Graph_cont 
+                    options = {this.state.options}
+                    series = {   [
+                      {
+                        name : "sales",
+                        data : [this.DayWiseSales(0), this.DayWiseSales(1), this.DayWiseSales(2), this.DayWiseSales(3),
+                          this.DayWiseSales(4), this.DayWiseSales(5), this.DayWiseSales(6), this.DayWiseSales(7) ,
+                          this.DayWiseSales(8) ,  this.DayWiseSales(9)],
+                        color : "#0040FF"
+                      }]}
+                    lower = {true}
+                    cat = 'Sales'
+                    sales = {this.Total_sales(this.state.sales)}
+                    />
+                    <Graph_cont 
+                    options = {this.state.options}
+                    series = {   [
+                      {
+                        name : "Payments",
+                        data : [this.DayWisepurchase(0), this.DayWisepurchase(1), this.DayWisepurchase(2), this.DayWisepurchase(3),
+                          this.DayWisepurchase(4), this.DayWisepurchase(5), this.DayWisepurchase(6), this.DayWisepurchase(7) ,
+                          this.DayWisepurchase(8) ,  this.DayWisepurchase(9)],
+                        color : "#ff0040"
+                      }]}
+                    lower = {false}
+                    cat = 'Payments'
+                    sales = {this.Total_payments(this.state.payments)}
+                    />
+                  
+                </div>
+              </div>
+
+            <div className = "lower_db">
+              <div className = "table">
+                <div className = "upper">
+                  <div className = "hd">ACTIVE USERS</div>  
+                </div>
+                <div className = "lower">
+                  <div className = "id">Id.</div>
+                  <div className = "name_city">Account Name</div>
+                  <div className = "status">Payment Status</div>
+                  <div className = "balance">Balance</div>
+                  <div className = "action">Actions</div>
+                </div>
+                <div className = "scroller">
+                {this.state.accounts.map((e ,i) => {
+                  //  this.Account_data(e.acc_name)
+                  return(
+                    <User_Det 
+                    id = {i + 1}
+                    acc = {e.acc_name}
+                    city = {e.address_line1}
+                    payment = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
+                    balance = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
+                    acc_name = {e.acc_name}
+                    Account_data = {this.Account_data}
+                    navTo = {this.props.navTo}
+                    getspecific_acc = {this.props.getspecific_acc}
+                    i = {i}
+                    len = {this.state.accounts.length - 1}
+                    setAccProfile = {this.props.setAccProfile}
+                    />
+                  )
+                })}
+                </div>
+             </div>
+              <div className ="donut">
+                <div className = "donut_div">
+                  <Chart
+                  options = {this.state.options2}
+                  series ={[10 ,20 , 30]}
+                  type = "donut"
+                  width = "100%"
+                  height = "100%" />
+                </div>
             </div>
-          </div>
-        </div>
+            </div>
 
-        <div className="lower_db">
-          <div className="upper">
-            <div className="hd">ACTIVE USERS</div>
-          </div>
-          <div className="lower">
-            <div className="id">Id.</div>
-            <div className="name_city">Account Name</div>
-            <div className="status">Payment Status</div>
-            <div className="balance">Balance</div>
-            <div className="action">Actions</div>
-          </div>
-          <div className="scroller">
-            {this.state.accounts.map((e, i) => {
-              //  this.Account_data(e.acc_name)
-              return (
-                <User_Det
-                  id={i + 1}
-                  acc={e.acc_name}
-                  city={e.address_line1}
-                  payment={this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
-                  balance={this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
-                  acc_name={e.acc_name}
-                  Account_data={this.Account_data}
-                  navTo={this.props.navTo}
-                  getspecific_acc={this.props.getspecific_acc}
-                  i={i}
-                  len={this.state.accounts.length - 1}
-                  setAccProfile={this.props.setAccProfile}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    );
-  }
+            </div>
+        )
+    }
 }
 
-const Graph_cont = props => {
-  return (
-    <div className="graph_cont">
-      <div className="value">
-        <div className="value_lt">
+const Graph_cont = (props) => {
+  return(
+    <div className = "graph_cont">
+    <div className = "value">
+        
+        <div className = "value_lt">
           <div>
-            <span className="dollar">$</span>
-            <span className="val">589</span>
+            <span className = "dollar">$</span>
+            <span className = "val">{props.sales}</span>
           </div>
-          <div className={props.lower ? "lower_three" : "lower_four"}>{props.cat}</div>
-        </div>
+          <div className = {props.lower ? 'lower_three' : 'lower_four' }>{props.cat}</div>
       </div>
-      <div className="chart">
-        <Chart options={props.options} series={props.series} width="80%" type="line" height="100" />
-      </div>
-    </div>
-  );
-};
 
-const Det_bar = props => {
-  return (
-    <div className="det_db_bar">
-      <div className="img_bar">
-        <img src={props.src} alt=" " />
-      </div>
-      <div className="middle">
-        <div className="head">
-          {props.head} <div className="fade">This month</div>
-        </div>
-        <div className="num">
-          {props.value}
-          <div className="perc">for {props.bills} bills</div>
-        </div>
-      </div>
     </div>
-  );
-};
+    <div className = "chart">
+        <Chart
+        options={props.options}
+        series={props.series}
+        width="80%"
+        type = "line"
+        height = "100"
+      
+      />
+    </div>
 
-const User_Det = props => {
-  return (
-    <div className={parseInt(props.id) % 2 === 0 ? "lower_ud_even" : "lower_ud_odd"}>
-      <div className="id">{props.id}</div>
-      <div className="name_city">
-        <div className="acc_name">{props.acc}</div>
-        <div className="city">{props.city}</div>
-      </div>
-      <div className={props.payment == 0 ? "completed" : "status"}>
-        <span>{props.payment == 0 ? "Completed" : "Pending"}</span>
-      </div>
-      <div className="balance">
-        {parseInt(props.balance) > 0 ? (
-          <span>{props.balance} Cr</span>
-        ) : (
-          <span>{parseInt(props.balance) < 0 ? <span> {parseInt(props.balance) * -1} Dr</span> : "0"}</span>
-        )}
-      </div>
-      <div
-        className="action"
-        onClick={async () => {
-          await props.getspecific_acc(props.len - props.i);
-          await props.setAccProfile("ledger");
-          await props.navTo("accounting");
-        }}
-      >
-        <span>Open Ledge</span>
+
+  </div>
+  )
+}
+
+const Det_bar = (props) => {
+  return(
+    <div className = "det_db_bar">
+    <div className = "img_bar">
+      <img src = {props.src} alt = " " />
+    </div>
+    <div className = "middle">
+      <div className = "head">{props.head} <div className = "fade">This month</div></div>
+      <div className = "num">{props.value} 
+        <div className = "perc">
+          for {props.bills} bills
+        </div>
       </div>
     </div>
-  );
-};
+  </div>
+  )
+} 
+
+const User_Det = (props) => {
+  return(
+    <div className = {parseInt(props.id)%2 === 0 ? 'lower_ud_even' : 'lower_ud_odd'  }>
+    <div className = "id">{props.id}</div>
+    <div className = "name_city">
+      <div className = "acc_name">{props.acc}</div>
+      <div className = "city">{props.city}</div>
+    </div>
+    <div className = {props.payment == 0 ? 'completed' : 'status'}><span>{props.payment == 0 ? 'Completed' : 'Pending'}</span></div>
+    <div className = "balance">{parseInt(props.balance) > 0 ? <span>{props.balance} {' '} Cr</span> :
+    <span>{ parseInt(props.balance) < 0 ? (<span> {parseInt(props.balance)*(-1)} {' '} Dr</span>) : '0'}</span>
+  }</div>
+    <div className = "action" onClick = {async() => {
+      await props.getspecific_acc(props.len - props.i)
+      await props.setAccProfile('ledger')
+      await props.navTo('accounting')
+      
+    }}><span>Open Ledge</span></div>
+  </div>
+  )
+}

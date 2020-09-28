@@ -1,0 +1,582 @@
+.print_invoice{
+    display: none;
+    // border: solid black;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    left: 0px;
+    height : 1000px;
+  
+    .top_pvouch{
+      // border: solid black ;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .comp_logo{
+          width: 100%;
+          text-align: center;
+          color: $l_pri_color;
+          margin-bottom: 15px;
+          .comp_name{
+            width: 100%;
+            text-align: center;
+            // padding: 30px 0;
+            // border: solid black;
+            color: $l_pri_color;
+            font-size: 30px;
+            font-weight: 550;
+            letter-spacing: -0.57px;
+          
+            .moto{
+              font-size: 22px;
+              width: 90%;
+              margin-left: auto;
+              margin-right: auto;
+              color: $l_grey_text;
+              font-weight: 500;
+              border-bottom: 0.5px solid rgb(248, 154, 154);
+            }
+
+            .address{
+              margin-top: 5px;
+              font-weight: 500;
+              font-size: 18px;
+              color: $l_grey_text;
+            }
+
+            .gst_phn{
+              width: 70%;
+              font-size: 18px;
+              margin-top: 3px;
+              color: $l_grey_text;
+              font-weight: 500;
+              margin-left: auto;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              span{
+                text-transform: uppercase;
+                font-weight: 600;
+                margin-left: 3px;
+                color: black;
+              }
+            }
+          }
+      }
+
+      .auto_mar_top{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-top: 1px solid #e6e3e3;
+        border-bottom: 1px solid #e6e3e3;
+        padding: 7px 0;
+        width: 100%;
+
+        .acc_bill_det{
+          width: 32%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-size: 0.9rem;
+          color: $l_grey_text;
+          // border: solid black;
+          border-left: 1px solid #e6e3e3;
+          
+          .heading{
+              font-weight: 500;
+              margin-bottom: 5px;
+              margin-left: 10px;
+          }
+
+          .bill_other_info{
+              display: flex;
+              flex-direction: row;
+              margin-left: 10px;
+              // justify-content: space-between;
+              width: 100%;
+              font-weight: 600;
+              margin-bottom: 10px;
+          }
+      }
+
+        .left{
+          display: flex;
+          flex-direction: column;
+          height: 100px;
+          width : 30% ;
+
+          .invoice_num{
+            color: red;
+            font-size: 1.3rem;
+          }
+          .amount_num{
+            color: rgb(27, 197, 27);
+            font-size: 1.3rem;
+          }
+
+          .invoice_gst_date{
+            color: rgb(177, 176, 176);
+            font-size: 1.3rem;
+          }
+        }
+      }
+
+      
+
+      .row_top{
+          display: flex;
+          flex-direction: row;
+        //   border: solid black;
+          width: 100%;
+
+          .headline{
+            font-size: 1.5rem;
+            font-weight: 500;
+            // font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: 2px;
+          }
+          .line{
+            width: 60px;
+            border-bottom: 4px solid $pri_color;
+            margin-right: 10px;
+          }
+
+      }
+
+      .row_top_ph_date{
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        //   border: solid black;
+          justify-content: space-between;
+          font-size: 1rem;
+          margin-top: 10px;
+          color: $dark;
+
+          span{
+            margin-right: 4px;
+          }
+
+        .num_head{
+            color: $l_grey_text;
+        }
+        .num{
+            font-weight: 600;
+
+        }
+        .date{
+            color: $l_grey_text;
+        }
+      }
+    }
+  }
+  
+.bill_adress{
+  margin-bottom: 3px;
+  margin-left: 10px;
+}
+
+
+  .billing_det_print{
+      width: 100%;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      margin-top: 10px;
+    //   border: solid black; 
+
+
+
+      .bill_amt{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          font-size: 1.1rem;
+          width: 40%;
+
+          .amt_value{
+              font-size: 2.3rem;
+          }
+      }
+  }
+
+  .tax_invoice_det{
+    width: 52%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    // border: solid black;
+    border-left: 1px solid #e6e3e3;
+
+    .transport_entry_head{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      // border: solid black;
+
+      .bolder{
+        font-weight: 600;
+      }
+
+      .ques{
+        margin-left: 10px;
+      }
+
+      .ques_val{
+        width: 80%;
+        margin-left: 10px;
+        text-align: left;
+        font-weight: 600;
+      }
+    }
+
+    .transport_entry{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      // border: solid black;
+
+      .ques{
+        margin-left: 10px;
+      }
+
+
+      .ques_val{
+        width: 80%;
+        text-align: left;
+        margin-left: 10px;
+        font-weight: 600;
+      }
+    }
+
+    .transport_entry_lr{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // border: solid black;
+      .lr_det{
+        width: 40%;
+      }
+      .case_det{
+        width: 40%;
+        // border: solid black;
+      }
+      .ques{
+        margin-left: 10px;
+      }
+
+      .ques_val{
+        width: 80%;
+        text-align: left;
+        margin-left: 10px;
+        font-weight: 600;
+      }
+    }
+  }
+
+
+
+  .agent_det_inv{
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    width: 55%;
+    font-size: 0.9rem;
+    // border: solid black;
+    
+    .agent_first{
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+    }
+
+    .bottom_row_age_inv{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // border: solid black;
+      margin-top: auto;
+    }
+
+    .agent_name{
+      width: 50%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 5px;
+
+      .name_val{
+        font-weight: 600;
+        width: 65%;
+        text-align: left;
+      }
+
+
+      .add_val{
+        width: 60%;
+        // border: solid black;
+        text-align: left;
+      }
+
+
+      .m_head{
+        width: 50%;
+        text-align: left;
+        font-size: 0.9rem;
+      }
+      .bottom_val{
+        width: 50%;
+      }
+
+      .m_head_date{
+        width: 60%;
+        text-align: left;
+        font-size: 0.9rem;
+      }
+
+      .bottom_val_date{
+        width: 40%;
+      }
+
+    }
+
+  }
+
+  .mid_inv_table{
+      width: 100%;
+      margin-top: 10px;
+
+      .headings_content{
+          width: 98%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 10px 5px;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: $dark;
+          border-bottom: 2px solid $l_grey_text;
+          // border-top: 2px solid $l_grey_text;
+
+      }
+      .sr{
+        width: 8%;
+      //   border: solid black;
+        text-align: center;
+    }
+    .item_des{
+      //   border: solid black;
+        width: 32%;
+    }
+    .unit_price{
+        // border: solid black;
+        width: 15%;
+        text-align: center;
+    }
+    .qty{
+        // border: solid black;
+        width: 10%;
+        text-align: center;
+    }
+    .rate{
+      width: 15%;
+      text-align: center;
+      // border: solid black;
+    }
+    .total{
+        // border: solid black;
+        width: 20%;
+        text-align: center;
+    }
+
+
+      .l_content{
+        width: 98%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 1rem;
+        font-weight: 500;
+        color: $dark;
+        padding: 8px 5px;
+        border-bottom: 0.5px solid #e6e3e3;  
+        }
+  }
+
+  .total_info_inv_pbill{
+      width: 98%;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // border : solid black;
+      border-bottom: 1px solid #e6e3e3;
+
+      .pay_methods{
+          display: flex;
+          flex-direction: column;
+          font-size: 1.2rem;
+          width: 49%;
+          margin-bottom: 3px;
+
+          .head_pay{
+              color: $l_grey_text;
+              font-weight: 500;
+              font-size: 14px;
+          }
+          .head{
+              .bank_name{
+                font-size: 14px;
+                font-weight: 600;
+                margin-left: 3px;
+              }
+          }
+          .upi{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+          }
+          .account_iifc{
+            width: 44%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            // border: solid black;
+            margin-bottom: 2px;
+             .pre{
+               color: $l_grey_text;
+               font-size: 12px;
+             }
+             .post{
+               font-weight: 600;
+               font-size: 14px;
+             }
+          }
+      }
+      .upi{
+          display: flex;
+          flex-direction: row;
+      }
+      .payment_time{
+        font-size: 14px;
+        margin-top: 2px;
+        border-top: 1px solid #e6e3e3;
+        .time_spent{
+          font-weight: 600;
+          margin-left: 3px;
+        }
+      }
+
+      .sub_totals{
+          display: flex;
+          flex-direction: column;
+          // height: 160px;
+          width: 45%;
+          margin-right: 5%;
+          margin-bottom: 3px;
+
+          .total_head_val{
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              width: 100%;
+              font-size: 14px;
+              // margin-bottom: 3px;
+              border-bottom: 1px solid #e6e3e3;
+              .sub_heads{
+                  color: $l_grey_text;
+                  
+              }
+              .bold{
+                font-weight: 600;
+                font-size: 15px;
+              }
+
+          }
+
+          .heads_val{
+            width: 50%;
+            text-align: right;
+            font-size: 14px;
+            // border: solid black;
+          }
+
+          .sgst_cgst{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid #e6e3e3;
+
+            .total_scgst{
+              width: 48%;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              font-size: 14px;
+
+              .sub_heads{
+                color: $l_grey_text;
+            }
+            }
+          }
+          
+          .grand_total{
+           
+            color: $pri_color;
+            font-weight: 600;
+            // border: solid black;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+          }
+      }
+  }
+
+  .bottom_most_tandc{
+      margin-top: 25px;
+      padding: 5px 0;
+      width: 100%;
+      border-top: 2px solid $l_grey_text;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .thnk_note{
+        // border-bottom: 2px solid $l_grey_text;
+        font-size: 1rem;
+        width: 80%;
+
+        .tandc_inv{
+          color: $l_grey_text;
+          font-size: 15px;
+        }
+
+        .tandc_val{
+          margin-bottom: 5px;
+          font-size: 14px;
+        }
+      }
+
+      .trader_name{
+        font-size: 18px;
+        font-weight: 600;
+        color: $pri_color;
+        width: 50%;
+        // border: solid black;
+      }
+  }
+  
+  @media print{
+    .print_invoice{
+      visibility: visible;
+      display: unset;
+    }
+  }
