@@ -15,7 +15,6 @@ import DailyBook from "containers/main/DailyBook";
 import Trash from "containers/main/Trash";
 import Agency from "pages/Agency";
 import AddAccountFromUsers from "containers/main/AddAccountFromUsers";
-//test
 
 class App extends React.Component {
   Sorting_Pro = async () => {
@@ -542,7 +541,7 @@ class App extends React.Component {
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
         {this.state.AddAccountFromUsers ? (
-          <AddAccountFromUsers AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
+          <AddAccountFromUsers  AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
         ) : null}
       </div>
     );

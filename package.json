@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -26,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build ",
-	"postbuild": "rm -rf ../backend_accute_web/build && mv build ../backend_accute_web",
+    "postbuild": "rm -rf ../backend_accute_web/build && mv build ../backend_accute_web",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

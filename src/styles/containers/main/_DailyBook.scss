@@ -112,6 +112,7 @@
 
 .middle_db_lt {
   display: flex;
+
   flex-direction: row;
   justify-content: space-between;
   // border: solid black;
@@ -120,15 +121,18 @@
 
 .graph_cont {
   width: 48%;
+
   height: 280px;
   background-color: white;
   // border: solid black;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+
   justify-content: space-evenly;
   margin-bottom: 20px;
   // margin-right: 50px;
+
 
   .chart {
     width: 100%;
@@ -197,12 +201,14 @@
   background-color: white;
   padding: 50px 0;
   height: 400px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   .donut_div {
     width: 100%;
+
     height: 80%;
     // border: solid black;
     margin-left: auto;
@@ -227,6 +233,7 @@
   .table{
     width: 60%;
   }
+
   .scroller{
     height: 300px;
     white-space: nowrap;
@@ -266,6 +273,7 @@
   }
   .name_city {
     width: 30%;
+
   }
   .acc_name {
     font-size: 1.2rem;
@@ -301,6 +309,7 @@
   }
   .balance {
     // border: solid black;column
+
     width: 15%;
     text-align: center;
     margin: auto;

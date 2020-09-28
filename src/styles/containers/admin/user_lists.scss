@@ -1,0 +1,180 @@
+.users_list_page{
+    width: 70%;
+    // border: solid black;
+   margin: 50px;
+
+}
+
+.top_user_lp{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+
+    .head{
+        font-size: 1.4rem;
+        font-weight: 590;
+        color: grey;
+    }
+
+    .search{
+        input{
+            padding: 5px 10px;
+        }
+    }
+}
+
+.user_table_lap{
+    width: 100%;
+    border: 1px solid rgb(179, 177, 177);
+    height: 800px;
+    background-color: white;
+
+    .top_vella{
+        width: 100%;
+        padding: 18px;
+        border-bottom: 1px solid rgb(179, 177, 177);
+    }
+
+    .user_div{
+        // border: solid black;
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .pic{
+        width: 60px;
+        height: 60px;
+        border-radius: 40px;
+    }
+    .details{
+        // border: solid black;
+        width: 50%;
+        min-width: 400px;
+
+        .acc_ap{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 80%;
+
+            .acc_name{
+                font-size: 1.3rem;
+                color: $grey_text;
+                font-weight: 600;
+            }
+
+            .userId_head{
+                font-size: 1.1rem;
+                color: $l_grey_text;
+            }
+
+            .userId{
+                .value{
+                    font-size: 1.2rem;
+                    color: $grey_text;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .companyName_ap{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 60%;
+            margin-top: 7px;
+
+            .compNAme_light{
+                color: $l_grey_text;
+            }
+
+            .compName_bold{
+                color: $grey_text;
+                font-weight: 600;
+            }
+        }
+
+        .active_products_ap{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 70%;
+            margin: 7px 0;
+            
+
+            .active_head{
+                color: $l_grey_text;
+            }
+
+            .agency{
+                .head_name_ap{
+                    font-weight: 600;
+                    color: $grey_text;
+                    margin-right: 3px;
+
+                    .code{
+                        color: $l_grey_text;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.user_list_det_row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(179, 177, 177);
+
+    .right_between_view{
+        display: flex;
+        flex-direction: column;
+
+        // border: solid black;
+    }
+
+    .btn_view_profile{
+        // border: solid black;
+        width: 50%;
+        margin-top: 10px;
+        // margin-left: 70px;
+       
+    }
+
+
+    .member_since{
+        // border: solid black;
+        margin-top: 15px;
+        margin-right: 10px;
+
+        .light_head_mmber{
+            color: $l_grey_text;
+        }
+
+
+        .time{
+            color: $grey_text;
+            width: 40%;
+            // border: solid black;
+            margin-left: auto;
+            margin-top: 3px;
+        }
+    }
+}
+
+.buttons_user_lists{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .suspend{
+        margin-top: 10px;
+    }
+}
