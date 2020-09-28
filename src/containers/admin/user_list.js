@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "../components/Button.jsx";
+import Button from "components/Button.jsx";
 
 export default class UserLists extends React.Component{
 

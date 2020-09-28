@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from '../containers/Home'
+import Home from 'containers/admin/Home'
 
 export default class Home_Page extends React.Component{
     render(){
