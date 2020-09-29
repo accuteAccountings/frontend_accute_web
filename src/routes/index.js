@@ -11,7 +11,7 @@ export default function Routes() {
         <Redirect exact from="/" to="/home" />
         <Route path="/home" component={Home} />
         <Route path="/main" component={Test} />
-          <Route path="/admin" component={Admin}/>
+        <Route path="/admin" component={Admin}/>
       </Switch>
     </BrowserRouter>
   );
