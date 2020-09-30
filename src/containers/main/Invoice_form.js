@@ -19,7 +19,6 @@ class Invoice extends React.Component {
 
     const isTrue = await postData('/api/invoice' , data);
     if(isTrue){
-      alert('posted')
       await this.setState(() => {
         return{
           inv_id : isTrue.id,
@@ -150,7 +149,7 @@ class Invoice extends React.Component {
 
   gstAmt = () => {
     let gst = parseInt(this.state.sales_amount)*parseInt(this.state.gst)*0.01
-    let total = parseInt(gst) + parseInt(this.state.sales_amount)
+    let total = parseInt(this.state.sales_amount) - parseInt(gst)
     let comm = parseInt(total)*parseInt(this.state.commission)*0.01
 
     return comm;
@@ -507,8 +506,7 @@ class Invoice extends React.Component {
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{parseInt(this.state.sales_amount)*parseInt(this.state.commission)*0.01 + 
-                    parseInt(this.state.sales_amount)*parseInt(this.state.gst)*0.01  }</strong>
+                  <strong> ₹{ this.gstAmt() }</strong>
                 </td>
               </tr>
             </table>

@@ -4,7 +4,7 @@ import Button from "components/Button.jsx";
 export default class UserLists extends React.Component{
 
     suspendUser = (id) => {
-        fetch(`dev.accute.live/api/users/suspend?id=${id}` , {
+        fetch(`/api/users/suspend?id=${id}` , {
             method : "PUT",
             headers : {
                 "Content-Type" : "application/json"
