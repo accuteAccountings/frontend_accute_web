@@ -3,33 +3,58 @@ import Button from "components/Button";
 
 export default class Profile extends React.Component {
 
+  state = {
+    user : null
+  }
+
+   componentDidMount = async() => {
+
+    const { id } = this.props.match.params;
+
+    await fetch(`/api/users/specific?id=${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      if(data){
+        this.setState(() => {
+          return{
+            user : data
+          }
+        })
+        
+      }
+    })
+
+  }
+
   render() {
-    let user = this.props.user
+   
     return (
       <div className="profile_con">
+        {this.state.user != null && 
         <div className="profile_details_con">
           <img
             className="profile_img"
-            src={ user.pro_pic || "https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" }
+            src={ this.state.user.pro_img  || "https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" }
             alt=" "
           />
           <div className="details_con">
             <div className="top_details_con">
               <div className="top_details_left_con">
                 <div>
-                  <span className="account_name">{user.full_name}</span>
-                  <span className="account_id">{user.id}</span>
+                  <span className="account_name">{this.state.user.full_name}</span>
+                  <span className="account_id">{this.state.user.id}</span>
                 </div>
                 <div>
-                  <span className="account_company">{user.company_name}</span>
+                  <span className="account_company"></span>
                 </div>
               </div>
               <div className="top_details_right_con">
                 <div>
                   <label>Member Since : </label>
-                  {user.createdAt.slice(0,10)}
+                  {this.state.user.createdAt.slice(0,10)}
                 </div>
-                <div>{user.createdAt.slice(11 , 16)}</div>
+                <div>{this.state.user.createdAt.slice(11 , 16)}</div>
               </div>
             </div>
             <div className="mid_details_con">
@@ -43,15 +68,15 @@ export default class Profile extends React.Component {
               </div>
               <div>
                 <span>
-                  <label>Address : </label> {user.address}
+                  <label>Address : </label> {this.state.user.address}
                 </span>
               </div>
               <div>
                 <span>
-                  <label>Mobile : </label> {user.phone_num}
+                  <label>Mobile : </label> {this.state.user.phone_num}
                 </span>
                 <span>
-                  <label>Email : </label> {user.email}
+                  <label>Email : </label> {this.state.user.email}
                 </span>
               </div>
               <div>
@@ -65,7 +90,7 @@ export default class Profile extends React.Component {
               <Button type="green">Send Message</Button>
             </div>
           </div>
-        </div>
+        </div> }
       </div>
     );
   }
