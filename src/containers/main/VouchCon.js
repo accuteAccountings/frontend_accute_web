@@ -11,8 +11,8 @@ class VouchCon extends React.Component {
     this.setState({ delete: true, deleteUrl: url });
   };
   deleteHide = () => {
-    this.updateVouchData();
-    this.updateJoVouchData();
+    this.updateVouchData("/api/vouch?mode=newest");
+    this.updateJoVouchData("/api/jovouch?mode=newest");
     this.setState({ delete: false });
   };
 
