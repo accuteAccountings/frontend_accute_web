@@ -118,6 +118,7 @@ class AddVouch extends React.Component {
   };
 
   async addVouch() {
+
     let bool = false;
     if (document.getElementById("vouch_bill_no").value === "") {
       this.enterError("vouch_bill_no");
@@ -141,6 +142,10 @@ class AddVouch extends React.Component {
     if (bool) {
       return;
     }
+
+this.CreateNewSupplier()
+this.CreateNewCustomer()
+this.CreateNewTransport()
     let bill_date = document.querySelector("#vouch_bill_date").value;
     let type = document.querySelector("#vouch_type").value;
     let bill_num = document.querySelector("#vouch_bill_no").value;
@@ -447,7 +452,115 @@ class AddVouch extends React.Component {
 
   selectAllText = () => {
     document.getElementById("vouch_pro_item").select();
-  };
+  }
+
+CreateNewSupplier = () =>{
+if (!document.getElementById("vouch_sup").value) {
+                            return;
+                          }
+                          let data = {
+                            acc_name: document.getElementById("vouch_sup").value,
+                            acc_type: "debtors"
+                          };
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (
+                              e.acc_name === data.acc_name &&
+                              (e.acc_type === "creditors" || e.acc_type === "debtors")
+                            ) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_sup").value = "";
+                            });
+
+} 
+ CreateNewTransport = () => {
+  if (!document.getElementById("vouch_transport_name").value) {
+                            return;
+                          }
+                          let data = {
+                            acc_name: document.getElementById("vouch_transport_name").value,
+                            acc_type: "transport"
+                          };
+
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_transport_name").value = "";
+                            })
+
+}
+
+ CreateNewCustomer = () => {
+   if (!document.getElementById("vouch_customer").value) {
+                            return;
+                          }
+
+                          let data = {
+                            acc_name: document.getElementById("vouch_customer").value,
+                            acc_type: "debtors"
+                          };
+
+                          let exist = false;
+                          this.state.accounts.map(e => {
+                            if (
+                              e.acc_name === data.acc_name &&
+                              (e.acc_type === "creditors" || e.acc_type === "debtors")
+                            ) {
+                              exist = true;
+                            }
+                          });
+                          if (exist) {
+                            return;
+                          }
+
+                          fetch("/api/accounts", {
+                            method: "POST", // *GET, POST, PUT, DELETE, etc.
+                            headers: {
+                              "Content-Type": "application/json"
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: JSON.stringify(data) // body data type must match "Content-Type" header
+                          })
+                            .then(res => res.json())
+                            .catch(() => {
+                              document.getElementById("vouch_customer").value = "";
+                            });
+
+
+}
 
   constructor(props) {
     super(props);
@@ -581,37 +694,7 @@ class AddVouch extends React.Component {
                       onBlur={() => {
                         setTimeout(() => {
                           document.getElementById("transport_list").style.display = "none";
-                          if (!document.getElementById("vouch_transport_name").value) {
-                            return;
-                          }
-                          let data = {
-                            acc_name: document.getElementById("vouch_transport_name").value,
-                            acc_type: "transport"
-                          };
-
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
-
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_transport_name").value = "";
-                            });
-                        }, 500);
+                                                }, 500);
                       }}
                       name="vouch_sup"
                       id="vouch_transport_name"
@@ -653,39 +736,7 @@ class AddVouch extends React.Component {
                         }
                         setTimeout(() => {
                           document.getElementById("sup_list").style.display = "none";
-                          if (!document.getElementById("vouch_sup").value) {
-                            return;
-                          }
-                          let data = {
-                            acc_name: document.getElementById("vouch_sup").value,
-                            acc_type: "debtors"
-                          };
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (
-                              e.acc_name === data.acc_name &&
-                              (e.acc_type === "creditors" || e.acc_type === "debtors")
-                            ) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
-
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_sup").value = "";
-                            });
-                        }, 500);
+                                                  }, 500);
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
@@ -779,41 +830,7 @@ class AddVouch extends React.Component {
                         }
                         setTimeout(() => {
                           document.getElementById("customer_list").style.display = "none";
-                          if (!document.getElementById("vouch_customer").value) {
-                            return;
-                          }
-
-                          let data = {
-                            acc_name: document.getElementById("vouch_customer").value,
-                            acc_type: "debtors"
-                          };
-
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (
-                              e.acc_name === data.acc_name &&
-                              (e.acc_type === "creditors" || e.acc_type === "debtors")
-                            ) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
-
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_customer").value = "";
-                            });
-                        }, 500);
+                                               }, 500);
                       }}
                       name="customer"
                       id="vouch_customer"
