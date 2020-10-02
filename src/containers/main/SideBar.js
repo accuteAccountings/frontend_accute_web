@@ -8,25 +8,15 @@ import TrashIcon from "assets/icons/trash.svg";
 import sample from "assets/icons/user.svg"
 
 class SideBar extends React.Component {
-  navToDash() {
-    this.props.navTo("dash");
-  }
-  navToRep() {
-    this.props.navTo("rep");
-  }
-  navToAcc() {
-    this.props.navTo("accounting");
-  }
-  navToTrans() {
-    this.props.navTo("trans");
+  
+  navTo(page) {
+    this.props.navTo(page);
   }
 
   constructor(props) {
     super(props);
-    this.navToDash = this.navToDash.bind(this);
-    this.navToRep = this.navToRep.bind(this);
-    this.navToAcc = this.navToAcc.bind(this);
-    this.navToTrans = this.navToTrans.bind(this);
+    this.navTo = this.navTo.bind(this);
+  
   }
 
   render() {
@@ -40,14 +30,14 @@ class SideBar extends React.Component {
             <span>New</span> <img src="" alt="" />
           </li>
 
-          <li className={this.props.actPage === "dash" ? "side_btn act_s_btn" : "side_btn"} onClick={this.navToDash}>
+          <li className={this.props.actPage === "dash" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("dashboard")}>
             <img src={DashBoardIcon} alt="" /> <span>DashBoard</span>
             <div className="side_pop" />
           </li>
           <li
             className={this.props.actPage === "accounting" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
-              this.navToAcc();
+              this.navTo("accounting");
             }}
           >
             <img src={AccountingIcon} alt="" />
@@ -73,7 +63,7 @@ class SideBar extends React.Component {
           <li
             className={this.props.actPage === "trans" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
-              this.navToTrans();
+              this.navTo("transactions");
             }}
           >
             <img src={TransactionsIcon} alt="" />
@@ -103,7 +93,7 @@ class SideBar extends React.Component {
               </li>
             </div>
           </li>
-          <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"} onClick={this.navToRep}>
+          <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("Reports")}>
             <img src={ReportsIcon} alt="" />
             <span>Reports</span>
             <img src="" alt="" />

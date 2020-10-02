@@ -1,4 +1,5 @@
 import React from "react";
+import {Redirect,Route} from 'react-router-dom';
 import SideBar from "containers/main/SideBar";
 import TopBar from "containers/main/TopBar";
 import AddProducts from "containers/main/AddProduct";
@@ -222,11 +223,8 @@ class App extends React.Component {
   }
 
   navTo(page) {
-    this.setState(() => {
-      return {
-        page: page
-      };
-    });
+    this.props.history.push(`/main/${page}`)
+    this.setState({page: page});
   }
 
   AddProCrossBtn = () => {
@@ -372,154 +370,132 @@ class App extends React.Component {
   }
 
   render() {
-    let currentPage = null;
+    const mainPageRoutes = [
+     { 
+       path:`${this.props.match.path}/dashboard`,
+       exact:true,
+       main: ()=> (
+             <div className="pageBody">
+               <TopBar />
+               <Clogo />
+               <Dash addAccBtn={this.AddAccCrossBtn} />
+             </div>
+       )
+     },{
+        path:'/main/accounting',
+        exact:true,
+        main: ()=> (<div className="pageBody">
+       <TopBar />
+       <Clogo />
+       <NavSec
+         AddProCrossBtn={this.AddProCrossBtn}
+         navItems={["Accounts", "Products"]}
+         getProducts={this.getProducts}
+         getAccounts={this.getAccounts}
+         setProOrAcc={this.setProOrAcc}
+         ProOrAcc={this.state.ProOrAcc}
+         AddAccCrossBtn={this.AddAccCrossBtn}
+         fi={this.fi}
+         Sorting_Pro={this.Sorting_Pro}
+       />
+   
+       <ProCon
+         products={this.state.products}
+         filter={this.filter}
+         accounts={this.state.accounts}
+         getProducts={this.getProducts}
+         getAccounts={this.getAccounts}
+         ProOrAcc={this.state.ProOrAcc}
+         setAccProfile={this.setAccProfile}
+         getspecific_acc={this.getspecific_acc}
+         isacc_pro={this.state.isacc_pro}
+         err_pro={this.state.err_pro}
+         err_acc={this.state.err_acc}
+       />
+     </div>)
+     },
+     {
+       path:'/main/transactions',
+     
+       main: ()=> (
+         <div className="pageBody">
+         <TopBar
+           margin={{
+             marginBottom: "50px"
+           }}
+         />
+   
+         {this.state.PVoJVoDN === "pv" && (
+           <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
+         )}
+         {this.state.PVoJVoDN === "jv" && (
+           <AddJovouch
+             mode={this.state.vouchMode}
+             EData={this.state.vouchEData}
+             rm={this.rmVouch}
+             jobill_num={this.state.jobill_num}
+           />
+         )}
+         {this.state.PVoJVoDN === "dn" && (
+           <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
+         )}
+         {this.state.PVoJVoDN === "cn" && (
+           <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
+         )}
+         {this.state.PVoJVoDN === "no" && (
+           <VouchCon
+             setPVoJVoDN={this.setPVoJVoDN}
+             vouchPage={this.state.vouchPage}
+             setVouchPage={this.setVouchPage}
+             specificJoVouch={this.specificJoVouch}
+             setjoBill={this.setjoBill}
+           />
+         )}
+       </div>
+       )
+     },
+     {
+       path:'/main/reports',
+       main:()=>(
+       <div className="pageBody">
+       <TopBar />
+       <Clogo />
+       <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challan Reg.", "Daily Book ", "Ledger"]} />
+       {/* <ProCon /> */}
+       </div>
+     )
+     },
+     {
+       path:'/main/agency',
+     
+       main:()=> (
+         <div className="pageBody">
+         <TopBar />
+         <Agency />
+         </div>
+       )
+     },
+     {
+       path:'/main/trash',
+     
+       main: ()=> (
+         <div className="pageBody">
+         <TopBar />
+         <Clogo />
+         <Trash
+           setPVoJVoDN={this.setPVoJVoDN}
+           vouchPage={this.state.vouchPage}
+           setVouchPage={this.setVouchPage}
+           specificJoVouch={this.specificJoVouch}
+           setjoBill={this.setjoBill}
+         />
+       </div>)
+     }
+   
+     ]
 
-    if (this.state.page === "rep") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />
-          {/* <ProCon /> */}
-        </div>
-      );
-    }
 
-    if (this.state.page === "dash") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <Dash addAccBtn={this.AddAccCrossBtn} />
-        </div>
-      );
-    }
-
-    if (this.state.page === "accounting") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <NavSec
-            AddProCrossBtn={this.AddProCrossBtn}
-            navItems={["Accounts", "Products"]}
-            getProducts={this.getProducts}
-            getAccounts={this.getAccounts}
-            setProOrAcc={this.setProOrAcc}
-            ProOrAcc={this.state.ProOrAcc}
-            AddAccCrossBtn={this.AddAccCrossBtn}
-            fi={this.fi}
-            Sorting_Pro={this.Sorting_Pro}
-          />
-
-          <ProCon
-            products={this.state.products}
-            filter={this.filter}
-            accounts={this.state.accounts}
-            getProducts={this.getProducts}
-            getAccounts={this.getAccounts}
-            ProOrAcc={this.state.ProOrAcc}
-            setAccProfile={this.setAccProfile}
-            getspecific_acc={this.getspecific_acc}
-            isacc_pro={this.state.isacc_pro}
-            err_pro={this.state.err_pro}
-            err_acc={this.state.err_acc}
-          />
-        </div>
-      );
-    }
-    if (this.state.page === "trash") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <Trash
-            setPVoJVoDN={this.setPVoJVoDN}
-            vouchPage={this.state.vouchPage}
-            setVouchPage={this.setVouchPage}
-            specificJoVouch={this.specificJoVouch}
-            setjoBill={this.setjoBill}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.specific_acc) {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Account_pro
-            account={this.state.specific_acc}
-            acc_pro_val={this.state.isacc_pro}
-            setAccProfile={this.setAccProfile}
-            backToAcc={this.backToAcc}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.page === "rep") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <DailyBook
-            account={this.state.specific_acc}
-            navTo={this.navTo}
-            getspecific_acc={this.getspecific_acc}
-            getAccounts={this.getAccounts}
-            setAccProfile={this.setAccProfile}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.page === "agency") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Agency />
-        </div>
-      );
-    }
-
-    if (this.state.page === "trans") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar
-            margin={{
-              marginBottom: "50px"
-            }}
-          />
-
-          {this.state.PVoJVoDN === "pv" && (
-            <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "jv" && (
-            <AddJovouch
-              mode={this.state.vouchMode}
-              EData={this.state.vouchEData}
-              rm={this.rmVouch}
-              jobill_num={this.state.jobill_num}
-            />
-          )}
-          {this.state.PVoJVoDN === "dn" && (
-            <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "cn" && (
-            <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "no" && (
-            <VouchCon
-              setPVoJVoDN={this.setPVoJVoDN}
-              vouchPage={this.state.vouchPage}
-              setVouchPage={this.setVouchPage}
-              specificJoVouch={this.specificJoVouch}
-              setjoBill={this.setjoBill}
-            />
-          )}
-        </div>
-      );
-    }
+   
 
     return (
       <div className="app">
@@ -536,7 +512,11 @@ class App extends React.Component {
           />
         </div>
 
-        {currentPage}
+        <Redirect from="/main" to={"/main/dashboard"}/>
+        
+        {mainPageRoutes.map(route=>(
+        <Route key={route.path} path={route.path} component={route.main}/>
+        ))}
 
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
