@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from 'components/Button'
+import { Link } from 'react-router-dom'
 
 export default class Home extends React.Component{
 
@@ -21,14 +22,13 @@ export default class Home extends React.Component{
                                 <div className = "new_user">
                                     New Users
                                 </div>
-                                <div className = "vall" onClick = {() => {
-                                    this.props.pagehandler('user_list')
-                                }}>
+                                <Link className = "vall" to = "/admin/userslist" >
                                     View All
-                                </div>
+                                </Link>
                             </div>
                         </div>
                         {this.props.users.map((e ,i) => {
+                            let url = "/admin/profile/" + e.id
                             return(
                                 i < 5 &&
                                 <div className = "user_new_ap">
@@ -47,13 +47,9 @@ export default class Home extends React.Component{
                                         </div>
                                     </div>
                                 </div>
-                                <div className = "view_btn" onClick = {async() => { 
-                                    await this.props.specificUser(e.id -1)
-                                    await this.props.pagehandler('profile')
-                                }
-                                }>
+                                <Link className = "view_btn" to = {url}>
                                     <Button type = "green" >View Profile</Button>
-                                </div>
+                                </Link>
                             </div>
                             )
                         })}

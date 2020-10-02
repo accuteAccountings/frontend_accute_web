@@ -17,6 +17,29 @@ export default class UserLists extends React.Component{
         })
     }
 
+    constructor(props){
+        super(props)
+
+        this.getUsers()
+
+        this.state = {
+            users : []
+        }
+    }
+
+    
+    getUsers = () => {
+        fetch('/api/users')
+        .then((res) => res.json())
+        .then((data) => {
+            this.setState(() => {
+            return{
+                users : data
+            }
+            })
+        })
+    }
+
     
     render(){
         return(
@@ -29,7 +52,7 @@ export default class UserLists extends React.Component{
                 </div>
                 <div className = "user_table_lap">
                     <div className = "top_vella"></div>
-                    {this.props.users.map((e) => {
+                    {this.state.users.map((e) => {
                         return(
                             <div className = "user_list_det_row">
                                 <div className = "user_div">
