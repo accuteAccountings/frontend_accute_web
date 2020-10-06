@@ -14,6 +14,7 @@ class Dash extends React.Component {
     };
   }
   render() {
+    console.log(this.props);
     let data = {
       labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
       datasets: [

@@ -1,18 +1,21 @@
 import React from "react";
+import {NavLink,withRouter} from "react-router-dom";
 import DashBoardIcon from "assets/icons/dashboard1.svg";
 import AccountingIcon from "assets/icons/money.svg";
 import TransactionsIcon from "assets/icons/transaction.svg";
 import ReportsIcon from "assets/icons/reports.svg";
 import AgencyIcon from "assets/icons/agency.svg";
 import TrashIcon from "assets/icons/trash.svg";
-import sample from "assets/icons/user.svg"
+import sample from "assets/icons/user.svg";
 
 class SideBar extends React.Component {
   
   navTo(page) {
     this.props.navTo(page);
   }
-
+  navToSubMenu(page,menu) {
+    this.props.navToSubMenu(page,menu);
+  }
   constructor(props) {
     super(props);
     this.navTo = this.navTo.bind(this);
@@ -25,15 +28,16 @@ class SideBar extends React.Component {
         <div className="side_bar_con">
           <img className="add_img_btn" src={sample} alt="" />
           
-
+          {/*user*/}
           <li className="new_btn" onClick={this.props.AddAccFromUsersCrossBtn}>
             <span>New</span> <img src="" alt="" />
           </li>
-
-          <li className={this.props.actPage === "dash" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("dashboard")}>
+          {/*dashboard*/}
+          <li className={this.props.actPage === "dashboard" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("dashboard")}>
             <img src={DashBoardIcon} alt="" /> <span>DashBoard</span>
             <div className="side_pop" />
           </li>
+          {/*accounting*/}
           <li
             className={this.props.actPage === "accounting" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
@@ -44,24 +48,23 @@ class SideBar extends React.Component {
             <span>Accounting</span>
             <img src="" alt="" />
             <div className="side_pop">
-              <li
-                onClick={() => {
-                  this.props.setProOrAcc("Accounts");
-                }}
-              >
-                Accounts
+        
+              <li onClick={()=>{this.props.history.push("/main/accounting/accounts")}}>
+                Accounts         
               </li>
+              
               <li
                 onClick={() => {
-                  this.props.setProOrAcc("Products");
+                  this.navToSubMenu("accounting","products");
                 }}
               >
-                Products
+                Products             
               </li>
             </div>
           </li>
+          {/*transactions*/}
           <li
-            className={this.props.actPage === "trans" ? "side_btn act_s_btn" : "side_btn"}
+            className={this.props.actPage === "transactions" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
               this.navTo("transactions");
             }}
@@ -93,7 +96,8 @@ class SideBar extends React.Component {
               </li>
             </div>
           </li>
-          <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("Reports")}>
+          {/*reports*/}
+          <li className={this.props.actPage === "rep" ? "side_btn act_s_btn" : "side_btn"} onClick={()=>this.navTo("reports")}>
             <img src={ReportsIcon} alt="" />
             <span>Reports</span>
             <img src="" alt="" />
@@ -104,6 +108,7 @@ class SideBar extends React.Component {
               <li>Commission</li>
             </div>
           </li>
+          {/*agency*/}
           <li
             className={this.props.actPage === "agency" ? "side_btn act_s_btn" : "side_btn"}
             onClick={() => {
@@ -119,6 +124,7 @@ class SideBar extends React.Component {
             </div>
           </li>
           <hr className="hr_line" />
+          {/*trash*/}
           <li
             className="side_btn"
             onClick={() => {
@@ -134,4 +140,4 @@ class SideBar extends React.Component {
   }
 }
 
-export default SideBar;
+export default withRouter(SideBar);

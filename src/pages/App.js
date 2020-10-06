@@ -1,20 +1,9 @@
 import React from "react";
-import {Redirect,Route} from 'react-router-dom';
+import {Switch,Route} from 'react-router-dom';
+import MainPageMenuItem from './MainPageMenuItem';
 import SideBar from "containers/main/SideBar";
-import TopBar from "containers/main/TopBar";
 import AddProducts from "containers/main/AddProduct";
 import AddAcc from "containers/main/AddAcc";
-import Clogo from "containers/main/Clogo";
-import NavSec from "containers/main/NavSec";
-import ProCon from "containers/main/ProCon";
-import AddVouch from "containers/main/AddVouch";
-import VouchCon from "containers/main/VouchCon";
-import Dash from "./Dash";
-import AddJovouch from "containers/main/AddJoVouch";
-import Account_pro from "containers/main/Account_profile";
-import DailyBook from "containers/main/DailyBook";
-import Trash from "containers/main/Trash";
-import Agency from "pages/Agency";
 import AddAccountFromUsers from "containers/main/AddAccountFromUsers";
 
 class App extends React.Component {
@@ -223,8 +212,20 @@ class App extends React.Component {
   }
 
   navTo(page) {
-    this.props.history.push(`/main/${page}`)
-    this.setState({page: page});
+  //  this.props.history.push(`/main/${page}`)
+    this.setState(() => {
+      return {
+        page: page
+      };
+    });
+  }
+  navToSubMenu(page,menu) {
+    this.props.history.push(`${this.props.location.pathname}/${menu}`)
+    this.setState(() => {
+      return {
+        page: page
+      };
+    });
   }
 
   AddProCrossBtn = () => {
@@ -343,13 +344,14 @@ class App extends React.Component {
     this.fi = this.fi.bind(this);
     this.setjoBill = this.setjoBill.bind(this);
     this.navTo = this.navTo.bind(this);
+    this.navToSubMenu = this.navToSubMenu.bind(this);
     this.Sorting_Pro = this.Sorting_Pro.bind(this);
 
     this.state = {
       AddPro: false,
       AddAcc: false,
       AddAccountFromUsers: false,
-      page: "dash",
+      page: "dashboard",
       ProOrAcc: "Accounts",
       PVoJVoDN: "no",
       products: [],
@@ -368,135 +370,7 @@ class App extends React.Component {
       err_acc: null
     };
   }
-
   render() {
-    const mainPageRoutes = [
-     { 
-       path:`${this.props.match.path}/dashboard`,
-       exact:true,
-       main: ()=> (
-             <div className="pageBody">
-               <TopBar />
-               <Clogo />
-               <Dash addAccBtn={this.AddAccCrossBtn} />
-             </div>
-       )
-     },{
-        path:'/main/accounting',
-        exact:true,
-        main: ()=> (<div className="pageBody">
-       <TopBar />
-       <Clogo />
-       <NavSec
-         AddProCrossBtn={this.AddProCrossBtn}
-         navItems={["Accounts", "Products"]}
-         getProducts={this.getProducts}
-         getAccounts={this.getAccounts}
-         setProOrAcc={this.setProOrAcc}
-         ProOrAcc={this.state.ProOrAcc}
-         AddAccCrossBtn={this.AddAccCrossBtn}
-         fi={this.fi}
-         Sorting_Pro={this.Sorting_Pro}
-       />
-   
-       <ProCon
-         products={this.state.products}
-         filter={this.filter}
-         accounts={this.state.accounts}
-         getProducts={this.getProducts}
-         getAccounts={this.getAccounts}
-         ProOrAcc={this.state.ProOrAcc}
-         setAccProfile={this.setAccProfile}
-         getspecific_acc={this.getspecific_acc}
-         isacc_pro={this.state.isacc_pro}
-         err_pro={this.state.err_pro}
-         err_acc={this.state.err_acc}
-       />
-     </div>)
-     },
-     {
-       path:'/main/transactions',
-     
-       main: ()=> (
-         <div className="pageBody">
-         <TopBar
-           margin={{
-             marginBottom: "50px"
-           }}
-         />
-   
-         {this.state.PVoJVoDN === "pv" && (
-           <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-         )}
-         {this.state.PVoJVoDN === "jv" && (
-           <AddJovouch
-             mode={this.state.vouchMode}
-             EData={this.state.vouchEData}
-             rm={this.rmVouch}
-             jobill_num={this.state.jobill_num}
-           />
-         )}
-         {this.state.PVoJVoDN === "dn" && (
-           <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-         )}
-         {this.state.PVoJVoDN === "cn" && (
-           <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-         )}
-         {this.state.PVoJVoDN === "no" && (
-           <VouchCon
-             setPVoJVoDN={this.setPVoJVoDN}
-             vouchPage={this.state.vouchPage}
-             setVouchPage={this.setVouchPage}
-             specificJoVouch={this.specificJoVouch}
-             setjoBill={this.setjoBill}
-           />
-         )}
-       </div>
-       )
-     },
-     {
-       path:'/main/reports',
-       main:()=>(
-       <div className="pageBody">
-       <TopBar />
-       <Clogo />
-       <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challan Reg.", "Daily Book ", "Ledger"]} />
-       {/* <ProCon /> */}
-       </div>
-     )
-     },
-     {
-       path:'/main/agency',
-     
-       main:()=> (
-         <div className="pageBody">
-         <TopBar />
-         <Agency />
-         </div>
-       )
-     },
-     {
-       path:'/main/trash',
-     
-       main: ()=> (
-         <div className="pageBody">
-         <TopBar />
-         <Clogo />
-         <Trash
-           setPVoJVoDN={this.setPVoJVoDN}
-           vouchPage={this.state.vouchPage}
-           setVouchPage={this.setVouchPage}
-           specificJoVouch={this.specificJoVouch}
-           setjoBill={this.setjoBill}
-         />
-       </div>)
-     }
-   
-     ]
-
-
-   
-
     return (
       <div className="app">
         <div className="side">
@@ -505,6 +379,7 @@ class App extends React.Component {
             AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn}
             setProOrAcc={this.setProOrAcc}
             navTo={this.navTo}
+            navToSubMenu={this.navToSubMenu}
             actPage={this.state.page}
             setVouchPage={this.setVouchPage}
             setAccProfile={this.setAccProfile}
@@ -512,12 +387,12 @@ class App extends React.Component {
           />
         </div>
 
-        <Redirect from="/main" to={"/main/dashboard"}/>
-        
-        {mainPageRoutes.map(route=>(
-        <Route key={route.path} path={route.path} component={route.main}/>
-        ))}
-
+        <Switch>
+        <Route exact path={this.props.match.path}>
+          <MainPageMenuItem id="dashboard"/>
+        </Route>
+        <Route path={`${this.props.match.path}/:id`} component={MainPageMenuItem}/>
+        </Switch>
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
         {this.state.AddAccountFromUsers ? (
@@ -527,5 +402,4 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;
