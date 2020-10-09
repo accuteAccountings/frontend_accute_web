@@ -1,8 +1,9 @@
 import React from 'react'
 import Invoice from './Invoice_form'
-    import ref from "assets/icons/refresh.svg";
+import ref from "assets/icons/refresh.svg";
 import trash from "assets/icons/trash.svg";
 import pencil from "assets/icons/pencil.svg";
+import Commission from  './Commission'
 
 export default class AgencyPage extends React.Component{
 
@@ -105,102 +106,13 @@ export default class AgencyPage extends React.Component{
                           />
                     </div>
                     )}
-                <div className = "active_users_inv">
-                    <div className = "upper_head_one">
-                        <div className = "upper">
-                            <div className = "hd">ACTIVE USERS</div>  
-                        </div>
-                    <div className = "lower">
-                        <div className = "id">Id.</div>
-                        <div className = "name_city">Account Name</div>
-                        <div className = "balance">Commision(with GST)</div>
-                        <div className = "balance">Commision(without GST)</div>
-                    </div>
-                    <div className = "scroller">
-                        {this.state.accounts.map((e ,i) => {
-                        return(
-                                <User_Det 
-                                id = {i + 1}
-                                acc = {e.acc_name}
-                                city = {e.address_line1}
-                                />
-                            )
-                            })}
-                    </div>
-                
-                     </div>
-                </div>
+                <Commission 
+                accounts = {this.state.accounts} />
             </div>
         )
     }
 }
 
-class  User_Det extends React.Component{
-
-    TotalGst = () => {
-        let t = 0
-        let x = 0
-        this.state.vouch.map((e) => {
-            if(e.supplier === this.props.acc && e.gst){
-                x = parseInt(e.totalAmt) - (parseInt(e.totalAmt)/(parseInt(e.gst) + 100))*100
-                t = parseInt(t) + (parseInt(x)*parseInt(e.set_commission)*0.01)
-            }
-        })
-
-        return t;
-    }
-
-    Total = () => {
-        let t = 0
-        this.state.vouch.map((e) => {
-            if(e.supplier === this.props.acc && e.gst == null){
-                t = parseInt(t) + (parseInt(e.totalAmt)*parseInt(e.set_commission)*0.01)
-            }
-        })
-
-        return t;
-    }
-
-    getVouch = async() => {
-        await fetch(`/api/vouch/specific/${this.props.acc}`)
-        .then((res) => res.json())
-        .then((data) => {
-            if(data){
-                this.setState(() => {
-                    return{
-                       vouch : data
-                    }
-                })
-            }
-        })
-
-       }
-
-       constructor(props){
-           super(props)
-
-           this.getVouch()
-
-           this.state = {
-               vouch : []
-           }
-       }
-    render(){
-    return(
-        this.TotalGst()&& this.Total() ? (
-      <div className = {parseInt(this.props.id)%2 === 0 ? 'lower_ud_even' : 'lower_ud_odd'  }>
-        <div className = "id">{this.props.id}</div>
-        <div className = "name_city">
-            <div className = "acc_name">{this.props.acc}</div>
-            <div className = "city">{this.props.city}</div>
-        </div>
-        <div className = "balance">{this.TotalGst()}</div>
-        <div className = "balance">{this.Total()}</div>
-    </div>
-        ) : ('')
-    )
-    }
-  }
 
   class InvoiceDet extends React.Component {
 
