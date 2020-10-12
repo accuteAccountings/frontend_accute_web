@@ -65,7 +65,6 @@
 
   input {
     color: $l_grey_text;
-    border: 1px solid $grey_text;
     padding: 1px 6px;
     font-size: 1rem;
     width: auto;
@@ -236,8 +235,8 @@ input::-webkit-inner-spin-button {
   }
   input {
     color: $l_grey_text;
-    border: 1px solid $grey_text;
-    padding: 1px 6px;
+    
+    padding: 6px 6px;
     font-size: 1rem;
     width: 100px;
     text-align: center;

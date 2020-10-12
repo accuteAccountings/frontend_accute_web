@@ -3,14 +3,12 @@
     display: flex;
     flex-direction: column;
     // border: solid black;
-
-
-    button{
-        width: 100px;
-        cursor: pointer;
-        margin: auto;
-        margin-bottom: 20px;
-        background-color: $pri_color;
-        color: white;
-    }
+}
+.initial-buttons{
+    width: 100px;
+    cursor: pointer;
+    margin: auto;
+    margin-bottom: 20px;
+    background-color: $pri_color;
+    color: white;
 }

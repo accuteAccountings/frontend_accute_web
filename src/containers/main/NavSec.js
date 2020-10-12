@@ -1,7 +1,18 @@
 import React from "react";
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
 import ref from "assets/icons/refresh.svg";
+import {ReactComponent as SearchLogo} from '../../assets/icons/search.svg';
 
 class NavSec extends React.Component {
+ 
   render() {
     return (
       <div className="nav_sec">
@@ -23,40 +34,44 @@ class NavSec extends React.Component {
         </div>
 
         <div className="other_det">
-          <div
-            className="add_account"
-            onClick={this.props.ProOrAcc === "Products" ? this.props.AddProCrossBtn : this.props.AddAccCrossBtn}
-          >
-            + Add {this.props.ProOrAcc === "Products" ? "Product" : "Account"}
-          </div>
 
+          <Button variant="outlined"  onClick={this.props.ProOrAcc === "Products" ? this.props.AddProCrossBtn : this.props.AddAccCrossBtn}>
+          + Add {this.props.ProOrAcc === "Products" ? "Product" : "Account"}
+          </Button>
           <img
             src={ref}
-            alt=" "
             onClick={this.props.ProOrAcc === "Products" ? this.props.getProducts : this.props.getAccounts}
+            alt=" "
           />
-
-          <input
-            type="text"
+          <TextField
             id="searchForProOrAcc"
             onChange={() => {
               this.props.fi();
             }}
-          />
-
-          <div>
-            <select
-              id="new_old_navsec"
-              defaultValue="newest"
-              onChange={() => {
-                this.props.Sorting_Pro();
-              }}
-            >
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
-            </select>
-          </div>
-        </div>
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchLogo />
+                </InputAdornment>
+                ),
+            }}
+           />
+           <FormControl>
+              <InputLabel style={{fontSize:"0.9em"}}>Sort By</InputLabel>
+              <Select
+                id="new_old_navsec"
+               
+                onChange={() => {
+                  this.props.Sorting_Pro();
+                }}
+                input={<Input />}
+              >
+                  <MenuItem value="newest">Newest First</MenuItem>
+                  <MenuItem value="oldest">Oldest First</MenuItem>
+                  
+              </Select>
+           </FormControl>
+        </div>     
       </div>
     );
   }

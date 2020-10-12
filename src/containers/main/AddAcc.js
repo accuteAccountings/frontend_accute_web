@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
 import {Button} from "@material-ui/core"
@@ -197,6 +198,7 @@ class AddAcc extends React.Component {
   }
 
   render() {
+   // const {mode} =this.state;
     return (
       <div className="add_acc">
         <div className="overlay" />
@@ -213,14 +215,14 @@ class AddAcc extends React.Component {
 
               <div className="two_items">
                 <div className="add_acc_name si">
-                  <span>Account Name</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_name"
-                    type="text"
-                    placeholder="Enter Account Name"
-                  />
+                  <TextField 
+                   className="add_acc_inp_name"
+                   label="Account Name" 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
 
                 <div className="add_acc_type si">
@@ -247,33 +249,32 @@ class AddAcc extends React.Component {
               </div>
 
               <div className="add_acc_print_name si">
-                <span>Print Name</span>
-                <br />
-
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  className="add_acc_inp_pname"
-                  placeholder="Enter Print Name"
-                  type="text"
-                />
+                <TextField 
+                   className="add_acc_inp_pname"
+                   label="Print Name" 
+                 
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
               </div>
 
               <div className="add_acc_obal si">
-                <span>Opening Balacing</span>
-                <br />
 
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  className="add_acc_inp_bal"
-                  placeholder="Enter Amount"
-                  type="text"
-                />
+                 <TextField 
+                   className="add_acc_inp_bal"
+                   label="Opening Balancing" 
+                   
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
 
                 <span className="checkboxes">
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Dr.
                 </span>
-                <span className="checkboxe">
+                <span className="checkboxes">
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Cr.
                 </span>
@@ -292,40 +293,37 @@ class AddAcc extends React.Component {
                   </select>
                 </div>
                 <div className="add_acc_gstnum si">
-                  <span>GST No.</span>
-                  <br />
-
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_gst"
-                    placeholder="Enter GST No."
-                    type="text"
-                  />
+                   <TextField 
+                   className="add_acc_inp_gst"
+                   label="GST No." 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
               </div>
 
               <div className="two_items">
                 <div className="add_acc_pan si">
-                  <span>Pan No.</span>
-                  <br />
-
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_pan"
-                    placeholder="Enter Pan No."
-                    type="text"
-                  />
+                 <TextField 
+                   className="add_acc_inp_pan"
+                   label="PAN No." 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
                 <div className="add_acc_aadhar si">
-                  <span>Aadhar No.</span>
-                  <br />
-
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_aadhar"
-                    placeholder="Enter Aadhar No."
-                    type="text"
-                  />
+                 <TextField 
+                   className="add_acc_inp_aadhar"
+                   label="Aadhar No." 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
               </div>
             </div>
@@ -342,99 +340,110 @@ class AddAcc extends React.Component {
               </h1>
 
               <div className="add_acc_add1 si">
-                <span>Address Line 1</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add1"
-                  type="text"
-                  placeholder="Address Line 1"
-                />
+                  <TextField 
+                   id="add_acc_inp_add1"
+                   label="Address Line 1" 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
               </div>
 
               <div className="add_acc_add2 si">
-                <span>Address Line 2</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add2"
-                  type="text"
-                  placeholder="Address Line 2"
-                />
+                <TextField 
+                   id="add_acc_inp_add2"
+                   label="Address Line 2" 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
               </div>
 
               <div className="two_items">
                 <div className="add_acc_state si">
-                  <span>State</span>
-                  <br />
-
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
+                  <TextField 
+                   name="Group" 
+                   id="add_acc_inp_state"
+                   label="State" 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
 
                 <div className="add_acc_city si">
-                  <span>City</span>
-                  <br />
-
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
+                  <TextField 
+                   name="Group" 
+                   id="add_acc_inp_city"
+                   label="City" 
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
               </div>
               <div className="add_acc_pincode si">
-                <span>Pincode</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  className="add_acc_inp_pincode"
-                  type="text"
-                  placeholder="Enter Pincode"
-                />
+                <TextField 
+                   id="add_acc_inp_pincode"
+                   label="Pincode" 
+                
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
               </div>
 
               <div className="two_items">
                 <div className="add_acc_mobnum si">
-                  <span>Mobile No.</span>
-                  <br />
-
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_mob"
-                    placeholder="Enter Mobile No."
-                  />
+                 <TextField 
+                   id="add_acc_inp_mob"
+                   label="Mobile No." 
+                   type="number"
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
                 <div className="add_acc_phonenum si">
-                  <span>Phone No.</span>
-                  <br />
-
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_phone"
-                    placeholder="Enter Phone No."
-                  />
+                 <TextField 
+                   id="add_acc_inp_phone"
+                   label="Phone No." 
+                   type="number"
+                   fullWidth
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
                 </div>
               </div>
 
               <div className="two_items">
                 <div className="add_acc_email si">
-                  <span>E-mail ID</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_email"
-                    type="Email"
-                    placeholder="Enter e-mail Id"
-                  />
+                 <TextField 
+                  id="add_acc_inp_email"
+                  label="E-mail ID" 
+                  type="email"
+                  fullWidth
+                  InputProps={{
+                   readOnly: this.state.mode === "view" && true,
+                 }}
+                />
                 </div>
 
                 <div className="add_acc_note si">
-                  <span>Note (If any)</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_note"
-                    type="text"
-                    placeholder="Note , if any"
-                  />
+                 <TextField 
+                  id="add_acc_inp_note"
+                  label="Note (If any)" 
+                  fullWidth
+                  InputProps={{
+                   readOnly: this.state.mode === "view" && true,
+                 }}
+                />
                 </div>
               </div>
             </div>

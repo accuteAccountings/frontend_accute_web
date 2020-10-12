@@ -1,4 +1,6 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
+import {Button} from '@material-ui/core';
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
 
@@ -113,31 +115,30 @@ class AddProducts extends React.Component {
 
           <div className="add_pro_body">
             <div className="add_pro_name">
-              <span>Product Name</span>
-              <input
-                readOnly={this.state.mode === "view" && true}
-                className="add_pro_inp_name"
-                type="text"
-                placeholder="Enter Product Name"
-              />
+                 <TextField 
+                   className="add_pro_inp_name"
+                   label="Product Name" 
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
             </div>
             <div className="add_pro_num">
-              <span>HSN No.</span>
-
-              <input
-                readOnly={this.state.mode === "view" && true}
-                className="add_pro_inp_num"
-                placeholder="Enter HSN No."
-                type="text"
-              />
+                 <TextField 
+                   className="add_pro_inp_num"
+                   label="HSN No." 
+                   InputProps={{
+                    readOnly: this.state.mode === "view" && true,
+                  }}
+                 />
             </div>
 
             <div className="two_items" id="add_pro_btns">
-              <button className="add_pro_can_btn" onClick={this.props.AddProCrossBtn}>
+              <Button className="add_pro_can_btn" onClick={this.props.AddProCrossBtn}>
                 Cancel
-              </button>
+              </Button>
 
-              <button
+              <Button
                 className="add_pro_btn"
                 onClick={this.state.loading ? null : this.state.mode === "view" ? this.EditOn : this.addProSaveBtn}
               >
@@ -147,7 +148,7 @@ class AddProducts extends React.Component {
                 ) : (
                   "Save"
                 )}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

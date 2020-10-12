@@ -1,4 +1,11 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
 import cross from "assets/icons/cancel.svg";
@@ -227,52 +234,51 @@ class Invoice extends React.Component {
               <form action="/api/vouch" id="vouch_det" method="post">
                 <div className="vouch_details">
                   <div className="vouch_si">
-                    <span>Bill Date</span>
-                    <br />
-                    <input type = "text" id = "inv_bill_date" value = {this.state.date} />
+                    <TextField 
+                     id = "inv_bill_date"
+                     label="Bill Date" 
+                     fullWidth
+                     value = {this.state.date}
+                     />
                   </div>
                   <div className="vouch_si">
-                    <span>Type</span>
-                    <br />
-                    <select name="vouch_type" disabled id="vouch_type">
-                      <option value="purchase" selected={this.props.which === "pv" ? true : false}>
-                        Purchase
-                      </option>
-                      <option value="credit" selected={this.props.which === "cn" ? true : false}>
-                        Credit
-                      </option>
-                      <option value="debit" selected={this.props.which === "dn" ? true : false}>
-                        Debit
-                      </option>
-                    </select>
+                    <FormControl variant="outlined">
+                      <InputLabel>Type</InputLabel>
+                     <Select
+                       name="vouch_type" disabled id="vouch_type"
+                       label="Type"
+                     >
+                       <MenuItem value="">
+                         <em>None</em>
+                       </MenuItem>
+                       <MenuItem value="purchase" selected={this.props.which === "pv" ? true : false} >Purchase</MenuItem>
+                       <MenuItem  value="credit" selected={this.props.which === "cn" ? true : false}>Credit</MenuItem>
+                       <MenuItem value="debit" selected={this.props.which === "dn" ? true : false}>Debit</MenuItem>
+                     </Select>
+                  </FormControl>
                   </div>
 
                   <div className="vouch_si">
-                    <span>Bill No.</span>
-                    <br />
-                    <input
-                      type="number"
-                      name="vouch_bill_no"
-                      id="inv_bill_no"
-                      value = "1"
-                    />
+                    <TextField 
+                     id = "inv_bill_no"
+                     name="vouch_bill_no"
+                     label="Bill No." 
+                     type="number"
+                     value = "1"
+                     />
                   </div>
 
 
                   <div id="gst_con" className="vouch_si">
-                    <span>GST</span>
-                    <br />
-                    <input
-                      type="number"
-                      name="vouch_gst"
-                      id="inv_gst"
-                    />
+                   <TextField 
+                     id = "inv_gst"
+                     name="vouch_gst"
+                     label="GST" 
+                     type="number"
+                     />
                   </div>
                   <div className="vouch_si vouch_customer_con">
-                    <span>Bill To</span>
-                    <br />
-
-                    <input
+                    <TextField 
                       onChange={async() => {
                         this.filterAcc("customer_list", "inv_supplier");
                    
@@ -288,7 +294,8 @@ class Invoice extends React.Component {
                       }}
                       name="customer"
                       id="inv_supplier"
-                    />
+                      label="Bill To" 
+                     />
                     <ul id="customer_list">
                       {this.state.acc.map((acc, index) => {
                         if (
@@ -317,13 +324,12 @@ class Invoice extends React.Component {
                   </div>
 
                   <div className="vouch_si">
-                    <span>Amount </span>
-                    <br />
-                    <input
-                      type="number"
-                      id = "amount_inv"
-                      value = {this.state.amount}
-                    />
+                   <TextField 
+                    type="number"
+                    id = "amount_inv"
+                    value = {this.state.amount}
+                    label="Amount"
+                     />      
                   </div>
                 </div>
 
@@ -332,42 +338,39 @@ class Invoice extends React.Component {
 
             <div className="vouch_body_middle">
               <div className="vouch_si" id="vouch_pro_con">
-                <span>Service Detail</span>
-                <br />
-                <input
-                  name="vouch_pro_item"
-                  id="inv_sdetails"
-                />               
+                  <TextField 
+                    name="vouch_pro_item"
+                    id="inv_sdetails"
+                    label="Service Detail"
+                     />                
               </div>
 
-              <div className="vouch_si">
-                <span>Sales Amount</span>
-                <br />
-                <input    
+              <div className="vouch_si" id="vouch_sales_amount">
+                <TextField 
                   type="number"
                   name="vouch_quantity"
                   id="inv_sales_amount"
                   defaultValue=""
-                />
+                  label="Sales Amount"
+                     />    
               </div>
               <div className="vouch_si" id="gst_con">
-                <span>Commission</span>
-                <br />
-                <span id="percentage">%</span>
-                <input
-                  type="number"
-                  name="vouch_dicon"
-                  id="inv_comm"
-                />
+                  <TextField 
+                   type="number"
+                   name="vouch_dicon"
+                   id="inv_comm"
+                   label="Commission"
+                    InputProps={{
+                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                   }}
+                     />   
               </div>
           
               <div className="vouch_si">
-                <button id="vouch_add_btn" onClick={() => {
+                <Button variant="outlined" id="vouch_add_btn" onClick={() => {
                     this.addInv()
                 
-                }}>
-                  Add
-                </button>
+                }}>Add</Button>
               </div>
             </div>
 
@@ -521,6 +524,20 @@ class Invoice extends React.Component {
                     <option>Cash Discount </option>
                     <option> No G.R. Less </option>
                   </select>
+                  {/* <FormControl variant="outlined">
+                      <InputLabel>Type</InputLabel>
+                     <Select
+                       id="add_dis_discount_type"
+                       label="Type"
+                     >
+                       <MenuItem value="">
+                         <em>None</em>
+                       </MenuItem>
+                       <MenuItem >Rate Discount</MenuItem>
+                       <MenuItem >Cash Discount</MenuItem>
+                       <MenuItem >No G.R. Less </MenuItem>
+                     </Select>
+                  </FormControl> */}
                 </div>
                 <input id="add_discount_input" placeholder={"Discount"} />
                 <button

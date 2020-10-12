@@ -1,4 +1,5 @@
 import React from "react";
+import AddButton from './AddButton';
 import Delete from "components/Delete";
 import ref from "assets/icons/refresh.svg";
 import trash from "assets/icons/trash.svg";
@@ -289,18 +290,11 @@ class VouchCon extends React.Component {
             </li>
           </div>
           <div className="other_det">
-            <div
-              className="add_vouch"
-              onClick={() => {
-                this.props.setPVoJVoDN(this.props.vouchPage, "add");
-              }}
-            >
-              + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
-              {this.props.vouchPage === "pv" && "Purchase Vouchers"}
-              {this.props.vouchPage === "dn" && "Debit Note"}
-              {this.props.vouchPage === "cn" && "Credit Note"}
-            </div>
-
+            <AddButton buttonClassName="add_vouch" 
+            buttonText={`${(this.props.vouchPage === "jv" && "Journal Vouchers")||(this.props.vouchPage === "pv" && "Purchase Vouchers")||(this.props.vouchPage === "dn" && "Debit Note")||(this.props.vouchPage === "cn" && "Credit Note")}`}
+            handleClick = {() => {
+              this.props.setPVoJVoDN(this.props.vouchPage, "add");
+            }}/>
             <img
               src={ref}
               alt=" "

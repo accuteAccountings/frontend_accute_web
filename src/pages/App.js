@@ -1,4 +1,6 @@
 import React from "react";
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SideBar from "containers/main/SideBar";
 import TopBar from "containers/main/TopBar";
 import AddProducts from "containers/main/AddProduct";
@@ -522,6 +524,7 @@ class App extends React.Component {
     }
 
     return (
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div className="app">
         <div className="side">
           <SideBar
@@ -544,6 +547,7 @@ class App extends React.Component {
           <AddAccountFromUsers  AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
         ) : null}
       </div>
+      </MuiThemeProvider>
     );
   }
 }

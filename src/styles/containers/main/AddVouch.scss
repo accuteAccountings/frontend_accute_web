@@ -70,7 +70,7 @@
 
   input {
     color: $l_grey_text;
-    border: 1px solid $grey_text;
+    
     padding: 1px 6px;
     font-size: 1rem;
     width: 160px;
@@ -80,7 +80,7 @@
   select {
     color: $l_grey_text;
     font-size: 1rem;
-    border: 1px solid $grey_text;
+   
     width: 90px;
     padding: 1px 6px;
     text-align: center;
@@ -139,6 +139,10 @@ input::-webkit-inner-spin-button {
   input {
     width: 60px;
   }
+
+}
+#vouch_sales_amount{
+  width:60px;
 }
 #vouch_amount {
   width: 80px;
@@ -403,7 +407,7 @@ tr:nth-child(even) {
 
   input[type="text"] {
     color: $l_grey_text;
-    border: 1px solid $grey_text;
+
     padding: 1px 6px;
     font-size: 1rem;
     width: 6rem;
@@ -485,11 +489,9 @@ tr:nth-child(even) {
 }
 .vouch_si_add_dis {
   margin-left: 20px;
-  width: 30%;
+  height:40px;
+  width: 40%;
 
-  select {
-    width: 100%;
-  }
 }
 .add_dis_btn_con {
   display: flex;

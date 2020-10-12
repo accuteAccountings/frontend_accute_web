@@ -53,18 +53,18 @@
 
   input {
     border: none;
-    border-bottom: 2px solid $l_grey_text;
+    width:280px;
     font-size: $s_p_font;
 
     text-align: center;
-    margin-left: 30px;
+
   }
 }
 
 .add_pro_btn {
-  height: 40px;
-  width: 30%;
-  margin: 0px auto;
+  height: 35px;
+  width: 25%;
+  margin: 0px 20px;
   font-size: $h_font;
   background-color: $pri_color;
   border: none;
@@ -74,9 +74,8 @@
 }
 .add_pro_can_btn {
   border-radius: 30px;
-
-  height: 40px;
-  width: 30%;
+  height: 35px;
+  width: 25%;
   margin: 0px auto;
   font-size: $h_font;
   background-color: transparent;

@@ -27,6 +27,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items:center;
 
   li {
     padding: 3px 15px;
@@ -53,7 +54,7 @@
 .other_det {
   display: flex;
   flex-direction: row;
-  // justify-content: space-around;
+  justify-content: space-evenly;
   width: 35rem;
 
   text-align: left;
@@ -66,13 +67,13 @@
     cursor: pointer;
   }
 
-  input {
+  #searchForProOrAcc {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid $grey_text;
     height: 30px;
     font-size: $s_p_font;
-    background-image: url("../../../assets/icons/search.svg");
+    
     background-size: 12%;
     background-repeat: no-repeat;
     background-position: 0%;
@@ -80,7 +81,7 @@
     cursor: pointer;
   }
 
-  input:focus {
+  #searchForProOrAcc:focus {
     border-bottom: 2px solid $pri_color;
   }
 }
@@ -115,13 +116,14 @@
     cursor: pointer;
   }
 
-  input {
+  
+   input {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid $grey_text;
     height: 30px;
     font-size: $s_p_font;
-    background-image: url("../../../assets/icons/search.svg");
+    
     background-size: 12%;
     background-repeat: no-repeat;
     background-position: 0%;

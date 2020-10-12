@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
 import cross from "assets/icons/cancel.svg";
 import Printed_joVouch from "containers/main/Printed_jovouch";
 
@@ -240,9 +241,10 @@ class AddJovouch extends React.Component {
           <form action="/api/jovouch" id="jovouch_det" method="post">
             <div className="jovouch_details">
               <div className="jovouch_si">
-                <span> Date</span>
-                <br />
-                <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" />
+                <TextField type="date" 
+                 name="jovouch_bill_date" 
+                 id="jovouch_bill_date"
+                 label="Date"/>
               </div>
               <div className="jovouch_si">
                 <span>Type</span>
@@ -280,35 +282,34 @@ class AddJovouch extends React.Component {
                           </span>
                         )}
                         {(this.state.data.length !== 0 || this.props.mode === "edit") && (
-                          <input
-                            type="text"
-                            placeholder="Bill No."
-                            onBlur={() => {
-                              setTimeout(() => {
-                                if (document.querySelector(".pro_list" + i)) {
-                                  document.querySelector(".pro_list" + i).style.display = "none";
-                                  let arr = this.state.BillArr;
-                                  arr[i] = document.querySelector(".jo_bill_no" + i).value;
-                                  if (arr[i].length === 0) {
-                                    return;
-                                  }
-                                  this.setState({ BillArr: arr });
-                                  this.updateBillAmt();
+                          <TextField
+                          type="text"
+                          label="Bill No."
+                          onBlur={() => {
+                            setTimeout(() => {
+                              if (document.querySelector(".pro_list" + i)) {
+                                document.querySelector(".pro_list" + i).style.display = "none";
+                                let arr = this.state.BillArr;
+                                arr[i] = document.querySelector(".jo_bill_no" + i).value;
+                                if (arr[i].length === 0) {
+                                  return;
                                 }
-                              }, 500);
-                            }}
-                            onChange={() => {
-                              this.bill_list_change(i);
-                            }}
-                            onFocus={() => {
-                              this.bill_list_change(i);
-                            }}
-                            id="jovouch_bill_no"
-                            className={"jo_bill_no" + i}
-                            autoComplete="off"
-                            defaultValue={e}
-                          />
-                        )}
+                                this.setState({ BillArr: arr });
+                                this.updateBillAmt();
+                              }
+                            }, 500);
+                          }}
+                          onChange={() => {
+                            this.bill_list_change(i);
+                          }}
+                          onFocus={() => {
+                            this.bill_list_change(i);
+                          }}
+                          id="jovouch_bill_no"
+                          className={"jo_bill_no" + i}
+                          autoComplete="off"
+                          defaultValue={e}/>)
+                        }
                         <div className={"bill_date bd" + i}></div>
                         <ul id="pro_list" className={"pro_list" + i} style={{ display: "none" }}>
                           {this.state.vouchData.map((pro, index) => {
@@ -360,15 +361,12 @@ class AddJovouch extends React.Component {
 
             <div className="vouch_body">
               <div className="jovouch_debit">
-                <span>Debit Account</span>
-                <br />
-                <input name="jovouch_debit_acc" id="jovouch_debit_acc" />
+                <TextField name="jovouch_debit_acc" id="jovouch_debit_acc" 
+                label="Debit Account"/>
               </div>
 
               <div className="jovouch_debit">
-                <span>Credit Account</span>
-                <br />
-                <input name="jovouch_credit_acc" id="jovouch_credit_acc" />
+                <TextField name="jovouch_credit_acc" id="jovouch_credit_acc" label="Credit Account" />
               </div>
             </div>
           </form>
@@ -407,13 +405,11 @@ class AddJovouch extends React.Component {
                   <>
                     {" "}
                     <div className="jovouch_si  ">
-                      <span>Bank Name </span>
-                      <br />
                       <div className="second_row">
-                        <input
+                        <TextField
                           autoComplete="off"
                           type="text"
-                          placeholder="Bank Name"
+                          label="Bank Name"
                           defaultValue={e.det2}
                           className="paydet2"
                           id={"payDet2" + index}
@@ -427,13 +423,11 @@ class AddJovouch extends React.Component {
                       </div>
                     </div>
                     <div className="jovouch_si  ">
-                      <span>{this.state.payArr[index].mode === "cheque" ? "Cheque No. " : "Ref No./UTR No."} </span>
-                      <br />
                       <div className="second_row">
-                        <input
+                        <TextField
                           autoComplete="off"
                           type="text"
-                          placeholder="Cheque No."
+                          label={this.state.payArr[index].mode === "cheque" ? "Cheque No. " : "Ref No./UTR No."} 
                           defaultValue={e.det}
                           className="paydet"
                           id={"payDet" + index}
@@ -449,8 +443,7 @@ class AddJovouch extends React.Component {
                   </>
                 ) : null}
                 <div className="jovouch_si jovoamt ">
-                  <span>Amount </span>
-                  <br />
+
                   {this.state.payArr.length - 1 === index ? null : (
                     <span
                       id="amt_cross_btn"
@@ -465,7 +458,7 @@ class AddJovouch extends React.Component {
                     </span>
                   )}
                   <div className="second_row">
-                    <input
+                    <TextField
                       onBlur={() => {
                         let nn;
                         if (document.getElementById("payDet" + index)) {
@@ -496,7 +489,7 @@ class AddJovouch extends React.Component {
                         this.updateAmt();
                       }}
                       type="text"
-                      placeholder="Amount"
+                      label="Amount"
                       id={"payAmt" + index}
                       className="amount"
                       defaultValue={e.amt}

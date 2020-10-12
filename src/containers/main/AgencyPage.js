@@ -1,6 +1,7 @@
 import React from 'react'
+import AddButton from './AddButton';
 import Invoice from './Invoice_form'
-    import ref from "assets/icons/refresh.svg";
+import ref from "assets/icons/refresh.svg";
 import trash from "assets/icons/trash.svg";
 import pencil from "assets/icons/pencil.svg";
 
@@ -66,14 +67,18 @@ export default class AgencyPage extends React.Component{
                                 </li>
                             </div>
                             <div className="other_det">
-                            <div
+                            {/* <div
                                 className="add_vouch"
                                 onClick={() => {
                                     this.handleForm('form')
                                 }}
                             >
                                 + Add Invoice
-                            </div>
+                            </div> */}
+                            <AddButton buttonClassName="add_vouch" handleClick={() => {
+                                    this.handleForm('form')
+                                }}
+                                buttonText="Invoice"/>
                 
                             <img
                                 src={ref}

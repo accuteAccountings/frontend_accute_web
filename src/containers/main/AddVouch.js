@@ -1,4 +1,7 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Button from '@material-ui/core/Button';
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
 import cross from "assets/icons/cancel.svg";
@@ -634,9 +637,12 @@ if (!document.getElementById("vouch_sup").value) {
               <form action="/api/vouch" id="vouch_det" method="post">
                 <div className="vouch_details">
                   <div className="vouch_si">
-                    <span>Bill Date</span>
-                    <br />
-                    <input type="date" name="vouch_bill_date" id="vouch_bill_date" />
+                    <TextField 
+                     type="date" 
+                     name="vouch_bill_date" 
+                     id="vouch_bill_date"
+                     label="Bill Date" 
+                 />
                   </div>
                   <div className="vouch_si">
                     <span>Type</span>
@@ -655,17 +661,16 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>Bill No.</span>
-                    <br />
-                    <input
-                      onBlur={() => {
-                        if (document.getElementById("vouch_bill_no").value !== "") {
-                          this.rmEnterError("vouch_bill_no");
-                        }
-                      }}
-                      type="text"
-                      name="vouch_bill_no"
-                      id="vouch_bill_no"
+                    <TextField 
+                     onBlur={() => {
+                       if (document.getElementById("vouch_bill_no").value !== "") {
+                         this.rmEnterError("vouch_bill_no");
+                       }
+                     }}
+                     type="text"
+                     name="vouch_bill_no"
+                     id="vouch_bill_no"
+                     label="Bill No." 
                     />
                     <p className="error_p" id="vouch_bill_no_error">
                       {" "}
@@ -674,16 +679,15 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>G. R. No.</span>
-                    <br />
-                    <input type="text" name="vouch_gr_no" id="vouch_gr_no" />
+                    <TextField 
+                     name="vouch_gr_no" 
+                     id="vouch_gr_no"
+                     label="G. R. No." 
+                     />
                   </div>
 
                   <div className="vouch_si vouch_transport_name_con">
-                    <span>Transport Name</span>
-                    <br />
-
-                    <input
+                    <TextField 
                       onChange={() => {
                         this.filterAcc("transport_list", "vouch_transport_name");
                       }}
@@ -698,7 +702,8 @@ if (!document.getElementById("vouch_sup").value) {
                       }}
                       name="vouch_sup"
                       id="vouch_transport_name"
-                    />
+                      label="Transport Name" 
+                     />
                     <ul id="transport_list">
                       {this.state.acc.map((acc, index) => {
                         if (acc.acc_type !== "transport") {
@@ -719,10 +724,7 @@ if (!document.getElementById("vouch_sup").value) {
                     </ul>
                   </div>
                   <div className="vouch_si vouch_sup_con">
-                    <span>Supplier/Seller</span>
-                    <br />
-
-                    <input
+                   <TextField 
                       onChange={e => {
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
@@ -740,7 +742,8 @@ if (!document.getElementById("vouch_sup").value) {
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
-                    />
+                      label="Supplier/Seller" 
+                     />
                     <ul id="sup_list">
                       {this.state.acc.map((acc, index) => {
                         if (
@@ -782,20 +785,16 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>Set Commission</span>
-                    <br />
-                    <input
+                    <TextField 
                       type="number"
                       name="vouch_comission"
                       id="vouch_comission"
                       defaultValue={this.props.mode === "edit" ? this.props.EData.det.set_commission : "1"}
+                      label="Set Commission" 
                     />
                   </div>
                   <div id="gst_con" className="vouch_si">
-                    <span>GST</span>
-                    <br />
-                    <span id="percentage_gst">%</span>
-                    <input
+                    <TextField 
                       defaultValue={this.props.mode === "edit" ? this.props.EData.det.gst : 5}
                       type="number"
                       name="vouch_gst"
@@ -807,34 +806,37 @@ if (!document.getElementById("vouch_sup").value) {
                         this.setState({ gst: document.getElementById("vouch_gst").value });
                         this.updateTotal();
                       }}
+                      label="GST" 
+                      InputProps={{
+                        startAdornment: <InputAdornment position="end">%</InputAdornment>,
+                      }}
                     />
                   </div>
                 </div>
 
                 <div className="vouch_customer">
                   <div className="vouch_si vouch_customer_con">
-                    <span>Customer/Buyer</span>
-                    <br />
-
-                    <input
-                      onChange={() => {
-                        this.filterAcc("customer_list", "vouch_customer");
-                      }}
-                      onFocus={() => {
-                        this.filterAcc("customer_list", "vouch_customer");
-                      }}
-                      autoComplete="off"
-                      onBlur={() => {
-                        if (document.getElementById("vouch_customer").value !== "") {
-                          this.rmEnterError("vouch_customer");
-                        }
-                        setTimeout(() => {
-                          document.getElementById("customer_list").style.display = "none";
-                                               }, 500);
-                      }}
-                      name="customer"
-                      id="vouch_customer"
+                    <TextField 
+                          onChange={() => {
+                            this.filterAcc("customer_list", "vouch_customer");
+                          }}
+                          onFocus={() => {
+                            this.filterAcc("customer_list", "vouch_customer");
+                          }}
+                          autoComplete="off"
+                          onBlur={() => {
+                            if (document.getElementById("vouch_customer").value !== "") {
+                              this.rmEnterError("vouch_customer");
+                            }
+                            setTimeout(() => {
+                              document.getElementById("customer_list").style.display = "none";
+                                                   }, 500);
+                          }}
+                          name="customer"
+                          id="vouch_customer"
+                          label="Customer/Buyer" 
                     />
+                    
                     <ul id="customer_list">
                       {this.state.acc.map((acc, index) => {
                         if (
@@ -863,9 +865,7 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
                   {this.state.subAgent ? (
                     <div className="vouch_si vouch_sub_agnent_con">
-                      <span>Sub Agent</span>
-                      <br />
-                      <input
+                       <TextField 
                         onChange={() => {
                           this.filterAcc("subAgnet_list", "vouch_sup_agent2");
                         }}
@@ -914,7 +914,8 @@ if (!document.getElementById("vouch_sup").value) {
                         }}
                         name="customer"
                         id="vouch_sup_agent2"
-                      />
+                          label="Sub Agent" 
+                    />
                       <ul id="subAgnet_list">
                         {this.state.acc.map((acc, index) => {
                           if (acc.acc_type !== "Sub Agent") {
@@ -955,9 +956,7 @@ if (!document.getElementById("vouch_sup").value) {
 
             <div className="vouch_body_middle">
               <div className="vouch_si" id="vouch_pro_con">
-                <span>Product / Item</span>
-                <br />
-                <input
+               <TextField 
                   name="vouch_pro_item"
                   id="vouch_pro_item"
                   onChange={this.filterPro}
@@ -971,7 +970,8 @@ if (!document.getElementById("vouch_sup").value) {
                       document.getElementById("pro_list").style.display = "none";
                     }, 500);
                   }}
-                />
+                  label="Product / Item"
+                 />
                 <ul id="pro_list">
                   {this.state.pro.map((pro, index) => {
                     console.log(pro);
@@ -992,14 +992,11 @@ if (!document.getElementById("vouch_sup").value) {
               </div>
 
               <div className="vouch_si">
-                <span>HSN No.</span>
-                <br />
-                <input type="text" name="vouch_hsn_num" id="vouch_hsn_num" />
+                <TextField type="text" name="vouch_hsn_num" id="vouch_hsn_num"
+                label="HSN No."/>
               </div>
               <div className="vouch_si">
-                <span>Quantity</span>
-                <br />
-                <input
+                <TextField
                   onFocus={e => e.target.select()}
                   onChange={e => {
                     if (e.target.value >= 0 && document.getElementById("vouch_rate").value) {
@@ -1011,57 +1008,56 @@ if (!document.getElementById("vouch_sup").value) {
                   name="vouch_quantity"
                   id="vouch_quantity"
                   defaultValue=""
-                />
+                  label="Quantity"
+                  />
               </div>
               <div className="vouch_si">
-                <span>Rate</span>
-                <br />
-                <input
-                  onFocus={e => e.target.select()}
-                  onChange={e => {
-                    if (e.target.value >= 0 && document.getElementById("vouch_quantity").value) {
-                      document.getElementById("vouch_amount").value =
-                        parseInt(e.target.value) * parseInt(document.getElementById("vouch_quantity").value);
-                    }
-                  }}
-                  type="number"
-                  name="vouch_rate"
-                  id="vouch_rate"
-                  defaultValue=""
-                />
+                <TextField 
+                    onFocus={e => e.target.select()}
+                    onChange={e => {
+                      if (e.target.value >= 0 && document.getEleme("vouch_quantity").value) {
+                        document.getElementById("vouch_amount").value =
+                          parseInt(e.target.value) * parseInt(document.getElementById("vouch_quantity").value);
+                      }
+                    }}
+                    type="number"
+                    name="vouch_rate"
+                    id="vouch_rate"
+                    defaultValue=""
+                    label="Rate"
+                    />
               </div>
               <div className="vouch_si" id="gst_con">
-                <span>Discount</span>
-                <br />
-                <span id="percentage_dis">%</span>
-                <input
-                  onBlur={() => {
-                    if (document.getElementById("vouch_dicon").value === "") {
-                      document.getElementById("vouch_dicon").value = 0;
-                    }
-                  }}
-                  type="number"
-                  name="vouch_dicon"
-                  onFocus={e => e.target.select()}
-                  id="vouch_dicon"
-                  defaultValue={0}
-                />
+                   <TextField 
+                      onBlur={() => {
+                        if (document.getElementById("vouch_dicon").value === "") {
+                          document.getElementById("vouch_dicon").value = 0;
+                        }
+                      }}
+                      type="number"
+                      name="vouch_dicon"
+                      onFocus={e => e.target.select()}
+                      id="vouch_dicon"
+                      defaultValue={0}
+                      label="Discount"
+                      InputProps={{
+                        startAdornment: <InputAdornment position="end">%</InputAdornment>,
+                      }}
+                    />
               </div>
               <div className="vouch_si">
-                <span>Amount</span>
-                <br />
-                <input
-                  onFocus={e => e.target.select()}
-                  type="number"
-                  name="vouch_amount"
-                  id="vouch_amount"
-                  defaultValue=""
-                />
+                <TextField 
+                 onFocus={e => e.target.select()}
+                 type="number"
+                 name="vouch_amount"
+                 id="vouch_amount"
+                 defaultValue=""
+                 label="Amount"/>
               </div>
               <div className="vouch_si">
-                <button id="vouch_add_btn" onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}>
+                <Button id="vouch_add_btn" onClick={this.state.editItem === -1 ? this.vochAddPro : this.editPro}>
                   {this.state.editItem === -1 ? "Add" : "Edit"}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -1317,15 +1313,13 @@ if (!document.getElementById("vouch_sup").value) {
                   </select>
                 </div>
                 <div className="vouch_si_add_dis">
-                  <span>{this.state.dicountType === "Less" ? "Amount" : "Percentage"}</span>
-                  <br />
-                  <input
+                   <TextField
                     id="add_discount_input"
-                    placeholder={this.state.dicountType === "Less" ? "Amount" : "Percentage"}
+                    label={this.state.dicountType === "Less" ? "Amount" : "Percentage"}
                     disabled={this.state.totalAmt === 0 ? true : false}
-                  />
+                   />
                 </div>
-                <button
+                <Button
                   onClick={e => {
                     let a = {
                       type: document.getElementById("add_dis_discount_type").value,
@@ -1345,31 +1339,27 @@ if (!document.getElementById("vouch_sup").value) {
                   disabled={this.state.totalAmt === 0 ? true : false}
                 >
                   Add
-                </button>
+                </Button>
               </div>
               <div className="add_freight_con">
                 <h3>Add Freight</h3>
                 <div className="add_fre_btn_con">
                   <div className="vouch_si_add_fre">
-                    <span>Remark</span>
-                    <br />
-                    <input
-                      id="add_freight_remark_input"
-                      placeholder="Freight"
-                      disabled={this.state.totalAmt === 0 ? true : false}
-                    />
+                  <TextField
+                    id="add_freight_remark_input"
+                    label="Remark"
+                    disabled={this.state.totalAmt === 0 ? true : false}
+                   />      
                   </div>
                   <div className="vouch_si_add_fre">
-                    <span>Amount</span>
-                    <br />
-                    <input
-                      id="add_freight_input"
-                      placeholder={"Amount"}
-                      disabled={this.state.totalAmt === 0 ? true : false}
-                    />
+                  <TextField
+                    id="add_freight_input"
+                    label="Amount"
+                    disabled={this.state.totalAmt === 0 ? true : false}
+                   />
                   </div>
 
-                  <button
+                  <Button
                     disabled={this.state.totalAmt === 0 ? true : false}
                     onClick={() => {
                       let a = {
@@ -1389,7 +1379,7 @@ if (!document.getElementById("vouch_sup").value) {
                     id="add_freight_addBtn"
                   >
                     Add
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

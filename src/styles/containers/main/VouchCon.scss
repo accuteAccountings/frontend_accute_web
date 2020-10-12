@@ -151,6 +151,14 @@
 #mode_selecter_pur {
   width: 7rem;
 }
+.other_det {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 35rem;
+  text-align: left;
+}
 
 .filter_vouch {
   background-color: white;
