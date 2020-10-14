@@ -1,5 +1,11 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
 import {Button} from "@material-ui/core"
@@ -226,16 +232,16 @@ class AddAcc extends React.Component {
                 </div>
 
                 <div className="add_acc_type si">
-                  <span>Account Type</span>
-                  <br />
-
-                  <select
-                    readOnly={this.state.mode === "view" && true}
-                    name="Group"
-                    className="add_acc_inp"
-                    id="add_acc_inp_group"
-                    placeholder="Select Group"
-                  >
+                  <FormControl>
+                  <InputLabel htmlFor="add_acc_inp_group">Account Type</InputLabel>
+                    <Select
+                      native
+                      className="add_acc_inp"
+                      id="add_acc_inp_group"
+                      name="Group"
+                      inputProps={{ readOnly: this.state.mode === "view" && true}}
+                    >
+                    <option aria-label="None" value="" />
                     <option value="debtors">Debtors</option>
                     <option value="creditors">Creditors</option>
                     <option value="Sub Agent">Sub Agent</option>
@@ -244,7 +250,8 @@ class AddAcc extends React.Component {
                     <option disabled value="salary">
                       Salary
                     </option>
-                  </select>
+                    </Select>
+                  </FormControl>
                 </div>
               </div>
 
@@ -269,28 +276,39 @@ class AddAcc extends React.Component {
                     readOnly: this.state.mode === "view" && true,
                   }}
                  />
-
-                <span className="checkboxes">
+{/* 
+                <span className="checkboxe">
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Dr.
                 </span>
-                <span className="checkboxes">
+                <span className="checkboxe">
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Cr.
-                </span>
+                </span> */}
+                <FormControl component="fieldset">
+                 <RadioGroup row aria-label="position" name="position" defaultValue="Dr.">
+                    <FormControlLabel value="Dr." control={<Radio color="primary" />} label="Dr." />
+                    <FormControlLabel value="Cr." control={<Radio color="primary" />} label="Cr." />
+                  </RadioGroup>
+                </FormControl>
               </div>
 
               <h1 id="reg_det_h"> Registration Details</h1>
 
               <div className="two_items">
                 <div className="add_acc_status si">
-                  <span>Status </span>
-                  <br />
-
-                  <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
+                  <FormControl>
+                  <InputLabel htmlFor="add_acc_status">Status</InputLabel>
+                    <Select
+                      native
+                      id="add_acc_status"
+                      inputProps={{ readOnly: this.state.mode === "view" && true}}
+                    >
+                    <option aria-label="None" value="" />
                     <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
-                  </select>
+                    </Select>
+                  </FormControl>
                 </div>
                 <div className="add_acc_gstnum si">
                    <TextField 

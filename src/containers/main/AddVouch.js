@@ -1,6 +1,9 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
@@ -645,7 +648,7 @@ if (!document.getElementById("vouch_sup").value) {
                  />
                   </div>
                   <div className="vouch_si">
-                    <span>Type</span>
+                    {/* <span>Type</span>
                     <br />
                     <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
@@ -657,7 +660,25 @@ if (!document.getElementById("vouch_sup").value) {
                       <option value="debit" selected={this.props.which === "dn" ? true : false}>
                         Debit
                       </option>
-                    </select>
+                    </select> */}
+                    <FormControl>
+                     <InputLabel htmlFor="vouch_type">Type</InputLabel>
+                         <Select
+                           native
+                           name="vouch_type"  
+                           id="vouch_type"
+                         >
+                         <option value="purchase" selected={this.props.which === "pv" ? true : false}>
+                             Purchase
+                           </option>
+                           <option value="credit" selected={this.props.which === "cn" ? true : false}>
+                             Credit
+                           </option>
+                           <option value="debit" selected={this.props.which === "dn" ? true : false}>
+                             Debit
+                           </option>
+                         </Select>
+                     </FormControl>
                   </div>
 
                   <div className="vouch_si">
@@ -773,7 +794,7 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>Supplier Agent</span>
+                    {/* <span>Supplier Agent</span>
                     <br />
 
                     <select name="vouch_sup_agent" id="vouch_sup_agent">
@@ -781,7 +802,19 @@ if (!document.getElementById("vouch_sup").value) {
                         {this.state.name}
                       </option>
                       <option value={null}>None</option>
-                    </select>
+                    </select>*/}
+                  <FormControl> 
+                  <InputLabel htmlFor="vouch_sup_agent">Supplier Agent</InputLabel>
+                    <Select
+                      native
+                      name="vouch_sup_agent" id="vouch_sup_agent"
+                    >
+                    <option aria-label="None" value="" />
+                    <option defaultChecked value={this.state.name}>
+                        {this.state.name}
+                    </option>
+                    </Select>
+                  </FormControl>
                   </div>
 
                   <div className="vouch_si">
@@ -1297,20 +1330,22 @@ if (!document.getElementById("vouch_sup").value) {
               <h3>Add Discount</h3>
               <div className="add_dis_btn_con">
                 <div className="vouch_si_add_dis">
-                  <span>Type</span>
-                  <br />
-                  <select
+
+                  <FormControl>
+                  <InputLabel htmlFor="add_dis_discount_type">Type</InputLabel>
+                    <Select
                     id="add_dis_discount_type"
                     disabled={this.state.totalAmt === 0 ? true : false}
                     onChange={e => {
                       this.setState({ dicountType: e.target.value });
                     }}
-                  >
-                    {" "}
-                    <option>Less </option>
-                    <option>Cash Discount </option>
-                    <option> No G.R. Less </option>
-                  </select>
+                    defaultValue="Less"
+                    >
+                    <option value="Less">Less</option>
+                    <optio value="Cash Discount">Cash Discount</optio>
+                    <option value= "No G.R. Less"> No G.R. Less</option>
+                    </Select>
+                  </FormControl>
                 </div>
                 <div className="vouch_si_add_dis">
                    <TextField

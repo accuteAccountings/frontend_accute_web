@@ -474,10 +474,12 @@ tr:nth-child(even) {
 #add_discount_input {
   width: 100%;
   margin-left: 0px;
+  padding:5px;
 }
 #add_freight_input {
   width: 100%;
   margin-left: 0px;
+  padding:5px;
 }
 .vouch_si_add_fre {
   margin-left: 20px;
@@ -509,7 +511,7 @@ tr:nth-child(even) {
 }
 #add_freight_remark_input {
   width: 100%;
-  box-sizing: border-box;
+  padding:5px;
 }
 #add_freight_addBtn {
   padding: 3px 15px;

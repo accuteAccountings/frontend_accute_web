@@ -1,5 +1,8 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import cross from "assets/icons/cancel.svg";
 import Printed_joVouch from "containers/main/Printed_jovouch";
 
@@ -247,13 +250,18 @@ class AddJovouch extends React.Component {
                  label="Date"/>
               </div>
               <div className="jovouch_si">
-                <span>Type</span>
-                <br />
-                <select name="jovouch_type" id="jovouch_type">
-                  <option value="option1">Journal</option>
-                  <option value="option1">Journal</option>
-                  <option value="option1">Journal</option>
-                </select>
+                <FormControl>
+                  <InputLabel htmlFor="jovouch_type">Type</InputLabel>
+                    <Select
+                      native
+                      name="jovouch_type" id="jovouch_type"
+                      defaultValue="option1"
+                    >
+                    <option value="option1">Journal</option>
+                    <option value="option2">Journal</option>
+                    <option value="option3">Journal</option>
+                    </Select>
+                  </FormControl>
               </div>
             </div>
 
@@ -377,12 +385,8 @@ class AddJovouch extends React.Component {
             return (
               <div className="jovouch_customer ">
                 <div className="jovouch_si ">
-                  <div className="mode_head">
-                    <span>Mode </span>
-                  </div>
-
                   <span>
-                    <select
+                    {/* <select
                       onChange={() => {
                         let a = this.state.payArr;
                         a[index].mode = document.getElementById("jovouch_mode" + index).value;
@@ -397,7 +401,27 @@ class AddJovouch extends React.Component {
                       <option selected={e.mode === "cash" ? true : false} value="cash">
                         Cash
                       </option>
-                    </select>
+                    </select> */}
+                    <FormControl>
+                       <InputLabel htmlFor={"jovouch_mode" + index}>Mode</InputLabel>
+                       <Select
+                       onChange={() => {
+                         let a = this.state.payArr;
+                         a[index].mode = document.getElementById("jovouch_mode" + index).value;
+                         this.setState({ payArr: a });
+                       }}
+                       name="jovouch_mode"
+                       id={"jovouch_mode" + index}
+                       defaultValue="cheque"
+                       >
+                        <option selected={e.mode === "cheque" ? true : false} value="cheque">
+                           Cheque
+                         </option>
+                         <option selected={e.mode === "cash" ? true : false} value="cash">
+                           Cash
+                         </option>
+                       </Select>
+                  </FormControl>
                   </span>
                 </div>
 

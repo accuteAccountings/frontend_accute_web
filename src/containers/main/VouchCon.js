@@ -1,4 +1,10 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormLabel from '@material-ui/core/FormLabel';
 import AddButton from './AddButton';
 import Delete from "components/Delete";
 import ref from "assets/icons/refresh.svg";
@@ -17,24 +23,21 @@ class VouchCon extends React.Component {
     this.setState({ delete: false });
   };
 
-  ModeHandler = async () => {
-    let newest = await document.getElementById("newest");
-    let oldest = await document.getElementById("oldest");
-    let high = await document.getElementById("high");
-    let low = await document.getElementById("low");
-    let paid = await document.getElementById("paid");
-    let unpaid = await document.getElementById("unpaid");
-
+  handleChange = (event) => {
+    this.setState({sortBy:event.target.value},()=>this.modeHandler());
+  };
+  modeHandler = async () => {   
+    const {sortBy} = this.state;
     if (this.props.vouchPage === "jv") {
-      if (oldest.checked) {
+      if (sortBy==="oldest") {
         this.updateJoVouchData("/api/jovouch?mode=oldest");
-      } else if (newest.checked) {
+      } else if (sortBy==="newest") {
         this.updateJoVouchData("/api/jovouch?mode=newest");
-      } else if (low.checked) {
+      } else if (sortBy==="low") {
         this.updateJoVouchData("/api/jovouch?dir=low");
-      } else if (high.checked) {
+      } else if (sortBy==="high") {
         this.updateJoVouchData("/api/jovouch?dir=high");
-      } else if (paid.checked) {
+      } else if (sortBy==="paid") {
         let fPro = this.state.tempJodata.filter(data => {
           if (data === "") {
             return true;
@@ -48,7 +51,7 @@ class VouchCon extends React.Component {
             JoVouchdata: fPro
           };
         });
-      } else if (unpaid.checked) {
+      } else if (sortBy==="unpaid") {
         let fPro = this.state.tempJodata.filter(data => {
           if (data === "") {
             return true;
@@ -64,15 +67,15 @@ class VouchCon extends React.Component {
         });
       }
     } else {
-      if (oldest.checked) {
+      if (sortBy==="oldest") {
         this.updateVouchData("/api/vouch?mode=oldest");
-      } else if (newest.checked) {
+      } else if (sortBy==="newest") {
         this.updateVouchData("/api/vouch?mode=newest");
-      } else if (low.checked) {
+      } else if (sortBy==="low") {
         this.updateVouchData("/api/vouch?dir=low");
-      } else if (high.checked) {
+      } else if (sortBy==="high") {
         this.updateVouchData("/api/vouch?dir=high");
-      } else if (paid.checked) {
+      } else if (sortBy==="paid") {
         let fPro = this.state.tempdata.filter(data => {
           if (data.det.status == "0") {
             return true;
@@ -84,7 +87,7 @@ class VouchCon extends React.Component {
             data: fPro
           };
         });
-      } else if (unpaid.checked) {
+      } else if (sortBy==="unpaid") {
         let fPro = this.state.tempdata.filter(data => {
           if (data === "") {
             return true;
@@ -152,6 +155,7 @@ class VouchCon extends React.Component {
     super(props);
 
     this.state = {
+      sortBy:"newest",
       addVouch: false,
       addDebit: false,
       data: [],
@@ -307,41 +311,26 @@ class VouchCon extends React.Component {
           <h2 className="filter_acc_h">Show Only</h2>
           <hr />
           <div className="search_line">
-            <input
+            <TextField
               type="search"
               id="searc_vouchers"
-              placeholder="Search"
+              label="Search"
               onChange={() => {
                 this.Filter_Search();
               }}
             />
           </div>
-          <ul>
-            <li>
-              <input name="filter" value="newest" id="newest" onClick={this.ModeHandler} type="radio" />
-              Newest First
-            </li>
-            <li>
-              <input id="oldest" name="filter" value="oldest" type="radio" onChange={this.ModeHandler} />
-              Oldest First
-            </li>
-            <li>
-              <input id="high" type="radio" name="filter" value="high" onClick={this.ModeHandler} />
-              Amount(High to low)
-            </li>
-            <li>
-              <input id="low" type="radio" name="filter" value="low" onClick={this.ModeHandler} />
-              Amount(low to high)
-            </li>
-            <li>
-              <input id="paid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
-              Paid
-            </li>
-            <li>
-              <input id="unpaid" type="radio" name="filter" value="bank" onClick={this.ModeHandler} />
-              Unpaid
-            </li>
-          </ul>
+          <FormControl component="fieldset">
+
+            <RadioGroup aria-label="search-type" name="search-type" value={this.state.sortBy} onChange={this.handleChange}>
+              <FormControlLabel value="newest" control={<Radio />} label="Newest First" />
+              <FormControlLabel value="oldest" control={<Radio />} label="Oldest First" />
+              <FormControlLabel value="high" control={<Radio />} label="Amount(High to low)" />
+              <FormControlLabel value="low" control={<Radio />} label="Amount(low to high)" />
+              <FormControlLabel value="paid" control={<Radio />} label="Paid" />
+              <FormControlLabel value="unpaid" control={<Radio />} label="Unpaid" />    
+            </RadioGroup>
+          </FormControl>
         </div>
 
         <div className="pro_compo_con">

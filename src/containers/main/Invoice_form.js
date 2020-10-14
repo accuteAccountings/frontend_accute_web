@@ -242,19 +242,17 @@ class Invoice extends React.Component {
                      />
                   </div>
                   <div className="vouch_si">
-                    <FormControl variant="outlined">
-                      <InputLabel>Type</InputLabel>
-                     <Select
-                       name="vouch_type" disabled id="vouch_type"
-                       label="Type"
-                     >
-                       <MenuItem value="">
-                         <em>None</em>
-                       </MenuItem>
-                       <MenuItem value="purchase" selected={this.props.which === "pv" ? true : false} >Purchase</MenuItem>
-                       <MenuItem  value="credit" selected={this.props.which === "cn" ? true : false}>Credit</MenuItem>
-                       <MenuItem value="debit" selected={this.props.which === "dn" ? true : false}>Debit</MenuItem>
-                     </Select>
+                  <FormControl>
+                  <InputLabel htmlFor="vouch_type">Type</InputLabel>
+                    <Select
+                      native
+                      name="vouch_type" disabled id="vouch_type"
+                    >
+                    <option aria-label="None" value="" />
+                    <option value="purchase" selected={this.props.which === "pv" ? true : false} >Purchase</option>
+                    <option  value="credit" selected={this.props.which === "cn" ? true : false}>Credit</option>
+                    <option value="debit" selected={this.props.which === "dn" ? true : false}>Debit</option>
+                    </Select>
                   </FormControl>
                   </div>
 
@@ -516,31 +514,23 @@ class Invoice extends React.Component {
             <div className="add_discount_con">
               <div className="add_dis_btn_con">
                 <div className="vouch_si_add_dis">
-                  <span>Type</span>
-                  <br />
-                  <select id="add_dis_discount_type">
-                    {" "}
-                    <option>Rate Discount </option>
-                    <option>Cash Discount </option>
-                    <option> No G.R. Less </option>
-                  </select>
-                  {/* <FormControl variant="outlined">
-                      <InputLabel>Type</InputLabel>
-                     <Select
-                       id="add_dis_discount_type"
-                       label="Type"
-                     >
-                       <MenuItem value="">
-                         <em>None</em>
-                       </MenuItem>
-                       <MenuItem >Rate Discount</MenuItem>
-                       <MenuItem >Cash Discount</MenuItem>
-                       <MenuItem >No G.R. Less </MenuItem>
-                     </Select>
-                  </FormControl> */}
+
+                  <FormControl>
+                  <InputLabel htmlFor="add_dis_discount_type">Type</InputLabel>
+                    <Select
+                      native
+                      name="add_dis_discount_type" id="add_dis_discount_type"
+                      defaultValue=" "
+                    >
+                    <option aria-label="None" value=" " />
+                    <option value="Rate Discount">Rate Discount</option>
+                    <option value="Cash Discount">Cash Discount</option>
+                    <option value="No G.R. Less">No G.R. Less</option>
+                    </Select>
+                  </FormControl>
                 </div>
                 <input id="add_discount_input" placeholder={"Discount"} />
-                <button
+                <Button
                   onClick={e => {
                     let a = {
                       type: document.getElementById("add_dis_discount_type").value,
@@ -556,7 +546,7 @@ class Invoice extends React.Component {
                   id="add_freight_addBtn"
                 >
                   Add
-                </button>
+                </Button>
               </div>
               <table className="vouch_num_items">
                 {this.state.discontArr.map(ele => {
@@ -579,7 +569,7 @@ class Invoice extends React.Component {
                 <div className="vouch_si_add_fre">
                   <input id="add_freight_input" placeholder="Freight" />
                   <input id="add_freight_remark_input" placeholder="Remarks" />
-                  <button
+                  <Button
                     onClick={() => {
                       let a = {
                         remark: document.getElementById("add_freight_remark_input").value,
@@ -595,7 +585,7 @@ class Invoice extends React.Component {
                     id="add_freight_addBtn"
                   >
                     Add
-                  </button>
+                  </Button>
                 </div>
               </div>
               <table className="vouch_num_items">
