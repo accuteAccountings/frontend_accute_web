@@ -3,6 +3,9 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import lod from "assets/icons/refresh.svg";
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux';
+import {CreateUser , login , setislog} from '../../redux'
 
 class LoginReg extends Component {
   login = () => {
@@ -17,9 +20,6 @@ class LoginReg extends Component {
     document.getElementById("email").value = "";
     document.getElementById("pass").value = "";
 
-    this.setState(() => {
-      return { islog: false };
-    });
   };
 
   responseFacebook = response => {
@@ -33,7 +33,7 @@ class LoginReg extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         accessToken: response.accessToken,
-        pic: response.picture.data.url
+        pic: response.picture.data.url0
       })
     })
       .catch(error => {
@@ -52,48 +52,27 @@ class LoginReg extends Component {
         }
       });
   };
-  sendLogData() {
-    this.setState(() => {
-      return { loading: true };
-    });
+  async sendLogData() {
+    
     let email = document.getElementById("email").value;
     let pass = document.getElementById("pass").value;
 
-    fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: pass })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.username) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.showError();
-          this.setState(() => {
-            return {
-              loading: false,
-              errormsg: "Incorrect Username or Password"
-            };
-          });
+    let data = {
+      email : email,
+      password : pass
+    }
+
+     await this.props.login(data)
+        if (this.props.loggedin) {
+          window.location.href = "/main"
         }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            loading: false,
-            errormsg: "Connection Error"
-          };
-        });
-        this.showError();
-      });
+        if(this.props.errormsg){
+          this.showError();
+        }
   }
 
-  sendRegData() {
-    this.setState(() => {
-      return { loading: true };
-    });
-
+  async sendRegData() {
+  
     let email = document.getElementById("email").value;
     let pass = document.getElementById("reg_pass").value;
     let name = document.getElementById("full_name").value;
@@ -101,94 +80,29 @@ class LoginReg extends Component {
     let c_code = document.getElementById("c_code").value;
     let mob_num = document.getElementById("mob_num").value;
 
-    if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
-      this.setState(() => {
-        return {
-          errormsg: "Please Enter A Valid Email Address"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-
-      return;
+    let data = {
+      user: {
+        company_name: com_name,
+        email: email,
+        password: pass,
+        phone_num: mob_num,
+        c_code: c_code,
+        full_name: name
+      }
     }
 
-    if (pass.length < 8) {
-      this.setState(() => {
-        return {
-          errormsg: "Password Should Be Greater Than 8 letter"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-      return;
-    }
+    await this.props.CreateUser(data)
 
-    fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: {
-          company_name: com_name,
-          email: email,
-          password: pass,
-          phone_num: mob_num,
-          c_code: c_code,
-          full_name: name
-        }
-      })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.user.token) {
-          this.setlog();
-
+        if (this.props.token) {
           this.showsuc();
           pass = "";
 
-          this.setState(() => {
-            return {
-              islog: true,
-              loading: false
-            };
-          });
-        } else if (parJson.error) {
-          this.setState(() => {
-            return {
-              errormsg: parJson.error
-            };
-          });
+        } 
+         if (this.props.errormsg) {
           this.showError();
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return { errormsg: "Connection Error" };
-        });
-        this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
-      });
+        }    
   }
 
-  setreg() {
-    this.setState(() => {
-      return { loc: "reg" };
-    });
-  }
-  setlog() {
-    this.setState(() => {
-      return { loc: "log" };
-    });
-  }
 
   responseGoogleError = response => {
     console.log(response);
@@ -267,12 +181,9 @@ class LoginReg extends Component {
   constructor(props) {
     super(props);
 
-    this.setreg = this.setreg.bind(this);
-    this.setlog = this.setlog.bind(this);
     this.sendLogData = this.sendLogData.bind(this);
     this.sendRegData = this.sendRegData.bind(this);
     this.state = {
-      loc: "log",
       loading: false,
       islog: true,
       error: false,
@@ -305,7 +216,7 @@ class LoginReg extends Component {
                       <i class="fa fa-info-circle" />
                     </div>
 
-                    <b class="alert-info">{this.state.errormsg} </b>
+                    <b class="alert-info">{this.props.errormsg}</b>
                   </div>
                 </div>
               )}{" "}
@@ -320,13 +231,17 @@ class LoginReg extends Component {
                   </div>
                 </div>
               )}{" "}
-              {this.state.islog ? (
+              {this.props.islog ? (
                 <div className="login_cont">
                   <div className="login_cont_head">
                     <h2>Login</h2>
                     <span>
                       New User?{" "}
-                      <a id="register_btn_s" onClick={this.reg}>
+                      <a id="register_btn_s" onClick={ () => {
+                        this.reg()
+                        this.props.setislog()
+                      }
+                        }>
                         Sign-In
                       </a>{" "}
                       Instead
@@ -360,7 +275,10 @@ class LoginReg extends Component {
                     <h2>Sign In</h2>
                     <span>
                       Registered User?{" "}
-                      <a id="register_btn_s" onClick={this.login}>
+                      <a id="register_btn_s" onClick={() => {
+                        this.login()
+                        this.props.setislog()
+                      }}>
                         Login{" "}
                       </a>
                       Instead
@@ -413,7 +331,7 @@ class LoginReg extends Component {
                   </a>
 
                   <button className="loginBtn btnbtn" onClick={this.sendRegData}>
-                    {this.state.loading ? <img className="loadingsvg" src={lod} /> : "Register"}
+                    {this.props.loading ? <img className="loadingsvg" src={lod} /> : "Register"}
                   </button>
                 </div>
               )}
@@ -458,4 +376,23 @@ class LoginReg extends Component {
   }
 }
 
-export default LoginReg;
+const mapStateToProps = state => {
+  return{
+     loading : state.register.loading,
+     islog : state.register.islog,
+     errormsg : state.errormsg.errormsg,
+     token : state.register.token,
+     loggedin : state.login.loggedin,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      CreateUser : bindActionCreators(CreateUser , dispatch),
+      login : bindActionCreators(login , dispatch),
+      setislog : bindActionCreators(setislog , dispatch)
+    };
+}
+
+
+export default connect(mapStateToProps , mapDispatchToProps)(LoginReg)
