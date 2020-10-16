@@ -1,0 +1,145 @@
+.commission_div{
+    background-color: white;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgb(172, 172, 172);
+
+    .sub_header_comm{
+        width: 100%;
+        padding: 10px;
+
+        .checkboxes_entries{
+            width: 27%;
+            margin-left: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+
+            input{
+                cursor: pointer;
+            }
+            label{
+                margin-left: 2px;
+            }
+        }
+    }
+}
+
+.upper_comm_header{
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid rgb(172, 172, 172);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .heading_name{
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: $pri_color;
+    }
+
+    .fileter_options{
+        width: 25%;
+        // border: solid black;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        color: $d_pri_color;
+        font-weight: 600;
+
+        input{
+            outline-color: transparent;
+            cursor: pointer;
+        }
+    }
+}
+
+.active_users_inv{
+    width: 80%;
+    padding: 0 5px;
+    margin-left: auto;
+    margin-right: auto;
+    // border: solid black;
+    background-color: white;
+    // border: 1px solid rgb(172, 172, 172);
+
+
+    .upper_head_one{
+        width: 100%;
+
+        .upper{
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color : grey;
+        }
+
+        .lower{
+            display: flex;
+            flex-direction: row;
+            font-size: 1.1rem;
+            // border: solid black;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+
+            .id{
+                width: 5%;
+            }
+            .name_city{
+                width: 23%;
+                // border: solid black;
+            }
+            .balance{
+                width: 16%;
+                // border: solid black;
+            }
+
+            .comm_per{
+                width: 12%;
+                // border: solid black;
+            }
+
+            .actions{
+                width: 12%;
+                // border: solid black;
+            }
+        }
+
+        .lower_value_list{
+            display: flex;
+            flex-direction: row;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgb(238, 237, 237);
+            margin-bottom: 10px;
+            text-align: center;
+
+            .id{
+                width: 5%;
+            }
+            .name_city{
+                width: 23%;
+                // border: solid black;
+            }
+            .balance{
+                width: 16%;
+                // border: solid black;
+            }
+
+            .comm_per{
+                width: 12%;
+                // border: solid black;
+            }
+
+            .actions{
+                width: 12%;
+                // border: solid black;
+            }
+        }
+
+        
+    }
+  }
