@@ -1,2 +1,2 @@
-export * from './login_regis/actions/register';
-export * from './login_regis/actions/login'
+export * from './login_reg/actions/register';
+export * from './login_reg/actions/login'

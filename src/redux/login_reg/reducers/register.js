@@ -1,6 +1,6 @@
 import {
     FETCH_SIGNUP_BEGIN , FETCH_SIGNUP_SUCCESS
-    ,FETCH_SIGNUP_FAILS , SET_ISLOG} from '../../types'
+    ,FETCH_SIGNUP_FAILS , SET_ISLOG} from '../types'
     
     const initialState = {
         loading : false,

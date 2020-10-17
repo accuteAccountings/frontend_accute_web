@@ -4,22 +4,21 @@ import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import lod from "assets/icons/refresh.svg";
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux';
-import {CreateUser , login , setislog} from '../../redux'
+import { signInStart,signUpStart, googleSignInStart,facebookSignInStart } from '../../redux/login_reg/login_reg.actions';
+
 
 class LoginReg extends Component {
-  login = () => {
+
+  log = () => {
     document.getElementById("full_name").value = "";
     document.getElementById("com_name").value = "";
 
-    this.setState(() => {
-      return { islog: true };
-    });
+    this.setState({isLog: true });
   };
   reg = () => {
     document.getElementById("email").value = "";
     document.getElementById("pass").value = "";
-
+    this.setState({ isLog: false });
   };
 
   responseFacebook = response => {
@@ -61,14 +60,19 @@ class LoginReg extends Component {
       email : email,
       password : pass
     }
+     //calling the signIn start action
+     this.setState({loading:true})
+     await this.props.signInStart(data);
 
-     await this.props.login(data)
-        if (this.props.loggedin) {
+        if(this.props.currentUser) {
+          this.setState({loading:false})
           window.location.href = "/main"
         }
         if(this.props.errormsg){
+          this.setState({loading:false})
           this.showError();
         }
+        
   }
 
   async sendRegData() {
@@ -91,16 +95,21 @@ class LoginReg extends Component {
       }
     }
 
-    await this.props.CreateUser(data)
-
-        if (this.props.token) {
-          this.showsuc();
-          pass = "";
-
-        } 
-         if (this.props.errormsg) {
-          this.showError();
-        }    
+        await this.props.signUpStart(data)
+        console.log(this.props.currentUser)
+        // if (this.props.currentUser.token) {
+        //   this.showsuc();
+        //   pass = "";
+        //   this.setState({
+        //       islog: true,
+        //       loading: false
+        //     });
+  
+        // } 
+        //  if (this.props.errormsg) {
+        //   this.showError();
+        //   this.setState({ loading: false });
+        // }    
   }
 
 
@@ -145,9 +154,7 @@ class LoginReg extends Component {
           };
         });
         this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
+        this.setState({ loading: false });
       });
   };
 
@@ -185,9 +192,7 @@ class LoginReg extends Component {
     this.sendRegData = this.sendRegData.bind(this);
     this.state = {
       loading: false,
-      islog: true,
-      error: false,
-      errormsg: "",
+      isLog:true,
       google: true,
       facebook: true,
       suc: false
@@ -231,18 +236,14 @@ class LoginReg extends Component {
                   </div>
                 </div>
               )}{" "}
-              {this.props.islog ? (
+              {this.state.isLog ? (
                 <div className="login_cont">
                   <div className="login_cont_head">
                     <h2>Login</h2>
                     <span>
                       New User?{" "}
-                      <a id="register_btn_s" onClick={ () => {
-                        this.reg()
-                        this.props.setislog()
-                      }
-                        }>
-                        Sign-In
+                      <a id="register_btn_s" onClick={this.reg}>
+                        Sign-Up
                       </a>{" "}
                       Instead
                     </span>
@@ -262,7 +263,7 @@ class LoginReg extends Component {
 
                   <a className="forget_pass" href="#">
                     {" "}
-                    forget password?
+                    forgot password?
                   </a>
 
                   <button className="loginBtn btnbtn" onClick={this.sendLogData}>
@@ -272,13 +273,10 @@ class LoginReg extends Component {
               ) : (
                 <div className="login_cont">
                   <div className="login_cont_head">
-                    <h2>Sign In</h2>
+                    <h2>Sign Up</h2>
                     <span>
                       Registered User?{" "}
-                      <a id="register_btn_s" onClick={() => {
-                        this.login()
-                        this.props.setislog()
-                      }}>
+                      <a id="register_btn_s" onClick={this.log}>
                         Login{" "}
                       </a>
                       Instead
@@ -376,21 +374,23 @@ class LoginReg extends Component {
   }
 }
 
+// loading : state.register.loading,
+// islog : state.register.islog,
+// errormsg : state.errormsg.errormsg,
+// token : state.register.token,
+// user : state.login.loggedin,
 const mapStateToProps = state => {
   return{
-     loading : state.register.loading,
-     islog : state.register.islog,
-     errormsg : state.errormsg.errormsg,
-     token : state.register.token,
-     loggedin : state.login.loggedin,
+     currentUser: state.loginReg.user,
+     errormsg: state.loginReg.error,
+     loading : state.loginReg.loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      CreateUser : bindActionCreators(CreateUser , dispatch),
-      login : bindActionCreators(login , dispatch),
-      setislog : bindActionCreators(setislog , dispatch)
+      signInStart: (data)=> dispatch(signInStart(data)),
+      signUpStart: (data)=> dispatch(signUpStart(data))
     };
 }
 
