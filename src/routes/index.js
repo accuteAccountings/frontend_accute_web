@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "pages/Home";
-import Test from "pages/App";
+import Agency from "pages/Agency/index.jsx";
 import Home_Page from 'pages/admin/Home';
 import UserLists from 'containers/admin/user_list'
 import Profile from 'pages/admin/Profile'
@@ -12,7 +12,7 @@ export default function Routes() {
       <Switch>
         <Redirect exact from="/" to="/home" />
         <Route path="/home" component={Home} />
-        <Route path="/main" component={Test} />
+        <Route path="/agency" component={Agency} />
         <div className="App">
           <div className="left_border"></div>
           <div className="inner_home_body">
