@@ -26,7 +26,7 @@ export default function Routes() {
           <Route path="/agency/reports" component={()=>(<NavSec  navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />)} />
           <Route path="/agency/accountings" component={Accountings}/>
           <Route path="/agency/trash" component={Trash}/>
-          <Route path="/agency/transcations" component={Transactions}/>
+          <Route path="/agency/transactions" component={Transactions}/>
         </div>
        </div>
       </Switch>
