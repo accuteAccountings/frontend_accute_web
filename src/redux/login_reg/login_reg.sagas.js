@@ -2,24 +2,27 @@ import {takeLatest, put, call, all} from 'redux-saga/effects';
 import LoginRegActionTypes from './login_reg.types';
 
 import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,signOutFailure} from './login_reg.actions';
-
+    
     ///sign up
-    function signUpApi(data){    
+    function signUpApi(payload){   
+     //   console.log("the user object is ",data) 
         return fetch('/api/register' , {
             method : "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         }).then(res=>res.json())
-        .then(json=>json)
+        .then(user=>user)
         .catch(error=> error);
+  
     }
 
-    export function* signUp(data){
+    export function* signUp({payload}){
         try{
-            const res = yield call(signUpApi,data);
-            yield put(signUpSuccess(res.data.user))
+            const user = yield call(signUpApi,payload);
+           // yield console.log(user)
+            yield put(signUpSuccess(user))
         }catch(error ){
             yield put(signUpFailure(error))
          }
@@ -36,35 +39,99 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
     
     // }
     
-    //sign in
-    function signInApi(data){
+    //sign-in sagas
+    function signInApi(payload){
+        console.log(payload)
         return fetch('/api/login' , {
             method : "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(payload)
         }).then(res => res.json())
-        .then(data => data)
-        .catch(err => err)
+        .then(parJson => {
+            return parJson;
+        })
+        .catch(error => error)
     }
-    export function* onSignInStart(){
-        yield takeLatest(LoginRegActionTypes.SIGN_IN_START,signIn)
-    }
-    export function* signIn(data){
+
+    export function* signIn({payload}){
         try{
-          const userData = yield call(signInApi,data);
-          if(userData.error){
-              throw userData.error
+          const loggedInData = yield call(signInApi,payload);
+          if(loggedInData.error){ 
+            console.log(loggedInData);
+            throw new Error(loggedInData.error);
+          }else{ 
+              yield put(signInSuccess(loggedInData.user))
           }
-         
-          yield put(signInSuccess(userData))
         }catch(error){
             yield put(signInFailure(error))
         }
         
     }
+    // watcher saga
+    export function* onSignInStart(){
+        yield takeLatest(LoginRegActionTypes.SIGN_IN_START,signIn)
+    }
+    //google sign-in sagas
+    function googleSignInApi({tokenId}){
+        console.log(tokenId);
+        return  fetch("/api/register/google", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tokenId: tokenId })
+          })
+            .then(res => res.json())
+            .then(parJson => parJson)
+            .catch(error => error);
+    }
+    function* googleSignIn({payload}){
+        try{
+        const loggedInData= yield call(googleSignInApi,payload);
+        if(loggedInData.error){ 
+            console.log(loggedInData);
+            throw new Error(loggedInData.error);
+          }else{ 
+              yield put(signInSuccess(loggedInData.email))
+          }
+        }catch(error){
+            yield put(signInFailure(new Error('Unable to login with Google')))
+        }
+    }
+    function* onGoogleSignInStart(){
+        yield call(LoginRegActionTypes.GOOGLE_SIGN_IN_START,googleSignIn)
+    }
 
+    // facebook sign-in sagas
+    function facebookSignInApi(payload){
+        return  fetch("/api/register/facebook", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ accessToken: payload.accessToken,
+                pic: payload.picture.data.url0
+              })
+          })
+            .then(res => res.json())
+            .then(parJson => parJson)
+            .catch(error => error);
+    }
+    function* facebookSignIn({payload}){
+        try{
+        const loggedInData= yield call(facebookSignInApi,payload);
+        if(loggedInData.error){ 
+            console.log(loggedInData);
+            throw new Error(loggedInData.error);
+          }else{ 
+              yield put(signInSuccess(loggedInData.user))
+          }
+        }catch(error){
+            yield put(signInFailure(error))
+        }
+    }
+    function* onFacebookSignInStart(){
+        yield call(LoginRegActionTypes.FACEBOOK_SIGN_IN_START,facebookSignIn)
+    }
+   
 export function* loginRegSagas(){
-    yield all([call(onSignInStart)])
+    yield all([call(onSignInStart), call(onSignUpStart),call(onGoogleSignInStart), call(onFacebookSignInStart)])
 }

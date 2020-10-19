@@ -23,34 +23,18 @@ class LoginReg extends Component {
 
   responseFacebook = response => {
     if (!response.accessToken) {
-      this.setState(() => {
-        return { facebook: false };
-      });
+      this.setState({ facebook: false });
     }
-    fetch("/api/register/facebook", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        accessToken: response.accessToken,
-        pic: response.picture.data.url0
-      })
-    })
-      .catch(error => {
-        this.setState(() => {
-          return { facebook: false };
-        });
-      })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { facebook: false };
-          });
-        }
-      });
+    this.props.facebookSignInStart(response)
+
+    if(this.props.currentUser.email){
+      window.location.href = "/main";
+      this.setState({loading:false});
+    }else{
+    this.setState({facebook: false,loading:false});
+    this.showError();
   };
+}
   async sendLogData() {
     
     let email = document.getElementById("email").value;
@@ -64,19 +48,19 @@ class LoginReg extends Component {
      this.setState({loading:true})
      await this.props.signInStart(data);
 
-        if(this.props.currentUser) {
-          this.setState({loading:false})
-          window.location.href = "/main"
-        }
-        if(this.props.errormsg){
-          this.setState({loading:false})
-          this.showError();
-        }
+     if(this.props.currentUser) {
+       this.setState({loading:false})
+       window.location.href = "/main"
+     }
+     if(this.props.errormsg){
+       this.setState({loading:false})
+       this.showError();
+     }
         
   }
 
   async sendRegData() {
-  
+    this.setState({loading: true});
     let email = document.getElementById("email").value;
     let pass = document.getElementById("reg_pass").value;
     let name = document.getElementById("full_name").value;
@@ -96,29 +80,27 @@ class LoginReg extends Component {
     }
 
         await this.props.signUpStart(data)
-        console.log(this.props.currentUser)
-        // if (this.props.currentUser.token) {
-        //   this.showsuc();
-        //   pass = "";
-        //   this.setState({
-        //       islog: true,
-        //       loading: false
-        //     });
+        //console.log(this.props.currentUser)
+        if (this.props.currentUser.token) {
+          this.showsuc();
+          pass = "";
+          this.setState({
+              islog: true,
+              loading: false
+            });
   
-        // } 
-        //  if (this.props.errormsg) {
-        //   this.showError();
-        //   this.setState({ loading: false });
-        // }    
+        } 
+         if (this.props.errormsg) {
+          this.showError();
+          this.setState({ loading: false });
+        }    
   }
 
 
   responseGoogleError = response => {
     console.log(response);
 
-    this.setState(() => {
-      return { google: false };
-    });
+    this.setState({ google: false });
 
     // this.setState(() => {
     // 	return { errormsg: 'Unable to login with Google' };
@@ -131,36 +113,21 @@ class LoginReg extends Component {
   };
 
   responseGoogle = response => {
-    fetch("/api/register/google", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tokenId: response.tokenId })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            google: false,
-            errormsg: "Error Login with Google"
-          };
-        });
-        this.showError();
-        this.setState({ loading: false });
-      });
+
+    this.props.googleSignInStart(response)
+    
+    if(this.props.currentUser.email){
+      window.location.href = "/main";
+      this.setState({loading:false});
+    }else{
+    this.setState({google: false,loading:false});
+    this.showError();
+    }
   };
 
   rmError = () => {
     this.setState(() => {
-      return { error: false };
+      return { errorMsg: "" };
     });
   };
   rmsuc = () => {
@@ -171,7 +138,7 @@ class LoginReg extends Component {
 
   showError = () => {
     this.setState(() => {
-      return { error: true };
+      return { errorMsg: "" };
     });
     setTimeout(this.rmError, 3000);
   };
@@ -214,25 +181,25 @@ class LoginReg extends Component {
             <div className="or_login">Or</div>
 
             <div className="login_body_left">
-              {this.state.error && (
-                <div class="alert alert-danger">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
+              {this.state.errorMsg && (
+                <div className="alert alert-danger">
+                  <div className="alert-container">
+                    <div className="alert-icon">
+                      <i className="fa fa-info-circle" />
                     </div>
 
-                    <b class="alert-info">{this.props.errormsg}</b>
+                    <b className="alert-info">{this.props.errormsg}</b>
                   </div>
                 </div>
               )}{" "}
               {this.state.suc && (
-                <div class="alert alert-success">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
+                <div className="alert alert-success">
+                  <div className="alert-container">
+                    <div className="alert-icon">
+                      <i className="fa fa-info-circle" />
                     </div>
 
-                    <b class="alert-info">Registration Complete </b>
+                    <b className="alert-info">Registration Complete </b>
                   </div>
                 </div>
               )}{" "}
@@ -383,14 +350,15 @@ const mapStateToProps = state => {
   return{
      currentUser: state.loginReg.user,
      errormsg: state.loginReg.error,
-     loading : state.loginReg.loading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
       signInStart: (data)=> dispatch(signInStart(data)),
-      signUpStart: (data)=> dispatch(signUpStart(data))
+      signUpStart: (data)=> dispatch(signUpStart(data)),
+      googleSignInStart: (data) => dispatch(googleSignInStart(data)),
+      facebookSignInStart: (data) => dispatch(facebookSignInStart(data)),
     };
 }
 
