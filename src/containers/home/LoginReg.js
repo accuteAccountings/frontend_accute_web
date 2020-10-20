@@ -3,62 +3,44 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import lod from "assets/icons/refresh.svg";
+import {connect} from 'react-redux'
+import { signInStart,signUpStart, googleSignInStart,facebookSignInStart } from '../../redux/login_reg/login_reg.actions';
+
 
 class LoginReg extends Component {
-  login = () => {
+
+  log = () => {
     document.getElementById("full_name").value = "";
     document.getElementById("com_name").value = "";
 
-    this.setState(() => {
-      return { islog: true };
-    });
+    this.setState({isLog: true });
   };
   reg = () => {
     document.getElementById("email").value = "";
     document.getElementById("pass").value = "";
-
-    this.setState(() => {
-      return { islog: false };
-    });
+    this.setState({ isLog: false });
   };
 
   responseFacebook = response => {
     if (!response.accessToken) {
-      this.setState(() => {
-        return { facebook: false };
-      });
+      this.setState({ facebook: false });
     }
-    fetch("/api/register/facebook", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        accessToken: response.accessToken,
-        pic: response.picture.data.url
-      })
-    })
-      .catch(error => {
-        this.setState(() => {
-          return { facebook: false };
-        });
-      })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { facebook: false };
-          });
-        }
-      });
+    this.props.facebookSignInStart(response)
+
+    if(this.props.currentUser.email){
+      window.location.href = "/main";
+      this.setState({loading:false});
+    }else{
+    this.setState({facebook: false,loading:false});
+    this.showError();
   };
-  sendLogData() {
-    this.setState(() => {
-      return { loading: true };
-    });
+}
+  async sendLogData() {
+    
     let email = document.getElementById("email").value;
     let pass = document.getElementById("pass").value;
 
+<<<<<<< HEAD
     fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,13 +69,29 @@ class LoginReg extends Component {
         });
         this.showError();
       });
+=======
+    let data = {
+      email : email,
+      password : pass
+    }
+     //calling the signIn start action
+     this.setState({loading:true})
+     await this.props.signInStart(data);
+
+     if(this.props.currentUser) {
+       this.setState({loading:false})
+       window.location.href = "/main"
+     }
+     if(this.props.errormsg){
+       this.setState({loading:false})
+       this.showError();
+     }
+        
+>>>>>>> origin/Redux_Implementation
   }
 
-  sendRegData() {
-    this.setState(() => {
-      return { loading: true };
-    });
-
+  async sendRegData() {
+    this.setState({loading: true});
     let email = document.getElementById("email").value;
     let pass = document.getElementById("reg_pass").value;
     let name = document.getElementById("full_name").value;
@@ -101,101 +99,39 @@ class LoginReg extends Component {
     let c_code = document.getElementById("c_code").value;
     let mob_num = document.getElementById("mob_num").value;
 
-    if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
-      this.setState(() => {
-        return {
-          errormsg: "Please Enter A Valid Email Address"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-
-      return;
+    let data = {
+      user: {
+        company_name: com_name,
+        email: email,
+        password: pass,
+        phone_num: mob_num,
+        c_code: c_code,
+        full_name: name
+      }
     }
 
-    if (pass.length < 8) {
-      this.setState(() => {
-        return {
-          errormsg: "Password Should Be Greater Than 8 letter"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-      return;
-    }
-
-    fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: {
-          company_name: com_name,
-          email: email,
-          password: pass,
-          phone_num: mob_num,
-          c_code: c_code,
-          full_name: name
-        }
-      })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.user.token) {
-          this.setlog();
-
+        await this.props.signUpStart(data)
+        //console.log(this.props.currentUser)
+        if (this.props.currentUser.token) {
           this.showsuc();
           pass = "";
-
-          this.setState(() => {
-            return {
+          this.setState({
               islog: true,
               loading: false
-            };
-          });
-        } else if (parJson.error) {
-          this.setState(() => {
-            return {
-              errormsg: parJson.error
-            };
-          });
+            });
+  
+        } 
+         if (this.props.errormsg) {
           this.showError();
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return { errormsg: "Connection Error" };
-        });
-        this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
-      });
+          this.setState({ loading: false });
+        }    
   }
 
-  setreg() {
-    this.setState(() => {
-      return { loc: "reg" };
-    });
-  }
-  setlog() {
-    this.setState(() => {
-      return { loc: "log" };
-    });
-  }
 
   responseGoogleError = response => {
     console.log(response);
 
-    this.setState(() => {
-      return { google: false };
-    });
+    this.setState({ google: false });
 
     // this.setState(() => {
     // 	return { errormsg: 'Unable to login with Google' };
@@ -208,38 +144,21 @@ class LoginReg extends Component {
   };
 
   responseGoogle = response => {
-    fetch("/api/register/google", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tokenId: response.tokenId })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            google: false,
-            errormsg: "Error Login with Google"
-          };
-        });
-        this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
-      });
+
+    this.props.googleSignInStart(response)
+    
+    if(this.props.currentUser.email){
+      window.location.href = "/main";
+      this.setState({loading:false});
+    }else{
+    this.setState({google: false,loading:false});
+    this.showError();
+    }
   };
 
   rmError = () => {
     this.setState(() => {
-      return { error: false };
+      return { errorMsg: "" };
     });
   };
   rmsuc = () => {
@@ -250,7 +169,7 @@ class LoginReg extends Component {
 
   showError = () => {
     this.setState(() => {
-      return { error: true };
+      return { errorMsg: "" };
     });
     setTimeout(this.rmError, 3000);
   };
@@ -267,16 +186,11 @@ class LoginReg extends Component {
   constructor(props) {
     super(props);
 
-    this.setreg = this.setreg.bind(this);
-    this.setlog = this.setlog.bind(this);
     this.sendLogData = this.sendLogData.bind(this);
     this.sendRegData = this.sendRegData.bind(this);
     this.state = {
-      loc: "log",
       loading: false,
-      islog: true,
-      error: false,
-      errormsg: "",
+      isLog:true,
       google: true,
       facebook: true,
       suc: false
@@ -298,36 +212,36 @@ class LoginReg extends Component {
             <div className="or_login">Or</div>
 
             <div className="login_body_left">
-              {this.state.error && (
-                <div class="alert alert-danger">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
+              {this.state.errorMsg && (
+                <div className="alert alert-danger">
+                  <div className="alert-container">
+                    <div className="alert-icon">
+                      <i className="fa fa-info-circle" />
                     </div>
 
-                    <b class="alert-info">{this.state.errormsg} </b>
+                    <b className="alert-info">{this.props.errormsg}</b>
                   </div>
                 </div>
               )}{" "}
               {this.state.suc && (
-                <div class="alert alert-success">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
+                <div className="alert alert-success">
+                  <div className="alert-container">
+                    <div className="alert-icon">
+                      <i className="fa fa-info-circle" />
                     </div>
 
-                    <b class="alert-info">Registration Complete </b>
+                    <b className="alert-info">Registration Complete </b>
                   </div>
                 </div>
               )}{" "}
-              {this.state.islog ? (
+              {this.state.isLog ? (
                 <div className="login_cont">
                   <div className="login_cont_head">
                     <h2>Login</h2>
                     <span>
                       New User?{" "}
                       <a id="register_btn_s" onClick={this.reg}>
-                        Sign-In
+                        Sign-Up
                       </a>{" "}
                       Instead
                     </span>
@@ -347,7 +261,7 @@ class LoginReg extends Component {
 
                   <a className="forget_pass" href="#">
                     {" "}
-                    forget password?
+                    forgot password?
                   </a>
 
                   <button className="loginBtn btnbtn" onClick={this.sendLogData}>
@@ -357,10 +271,10 @@ class LoginReg extends Component {
               ) : (
                 <div className="login_cont">
                   <div className="login_cont_head">
-                    <h2>Sign In</h2>
+                    <h2>Sign Up</h2>
                     <span>
                       Registered User?{" "}
-                      <a id="register_btn_s" onClick={this.login}>
+                      <a id="register_btn_s" onClick={this.log}>
                         Login{" "}
                       </a>
                       Instead
@@ -413,7 +327,7 @@ class LoginReg extends Component {
                   </a>
 
                   <button className="loginBtn btnbtn" onClick={this.sendRegData}>
-                    {this.state.loading ? <img className="loadingsvg" src={lod} /> : "Register"}
+                    {this.props.loading ? <img className="loadingsvg" src={lod} /> : "Register"}
                   </button>
                 </div>
               )}
@@ -458,4 +372,26 @@ class LoginReg extends Component {
   }
 }
 
-export default LoginReg;
+// loading : state.register.loading,
+// islog : state.register.islog,
+// errormsg : state.errormsg.errormsg,
+// token : state.register.token,
+// user : state.login.loggedin,
+const mapStateToProps = state => {
+  return{
+     currentUser: state.loginReg.user,
+     errormsg: state.loginReg.error,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      signInStart: (data)=> dispatch(signInStart(data)),
+      signUpStart: (data)=> dispatch(signUpStart(data)),
+      googleSignInStart: (data) => dispatch(googleSignInStart(data)),
+      facebookSignInStart: (data) => dispatch(facebookSignInStart(data)),
+    };
+}
+
+
+export default connect(mapStateToProps , mapDispatchToProps)(LoginReg)
