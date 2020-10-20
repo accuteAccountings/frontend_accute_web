@@ -2,8 +2,8 @@ import React from "react";
 import user from "assets/icons/user.svg";
 import pencil from "assets/icons/pencil.svg";
 import back from "assets/icons/camera-back.svg";
-import Ledger from "containers/main/Ledger_Account";
-import Report_pro from "containers/main/Report_Acc_pro";
+import Ledger from "containers/agency/Ledger_Account";
+import Report_pro from "containers/agency/Report_Acc_pro";
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {

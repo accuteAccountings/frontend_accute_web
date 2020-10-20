@@ -1,20 +1,20 @@
 import React from "react";
-import SideBar from "containers/main/SideBar";
-import TopBar from "containers/main/TopBar";
-import AddProducts from "containers/main/AddProduct";
-import AddAcc from "containers/main/AddAcc";
-import Clogo from "containers/main/Clogo";
-import NavSec from "containers/main/NavSec";
-import ProCon from "containers/main/ProCon";
-import AddVouch from "containers/main/AddVouch";
-import VouchCon from "containers/main/VouchCon";
+import SideBar from "containers/agency/SideBar";
+import TopBar from "containers/agency/TopBar";
+import AddProducts from "containers/agency/AddProduct";
+import AddAcc from "containers/agency/AddAcc";
+import Clogo from "containers/agency/Clogo";
+import NavSec from "containers/agency/NavSec";
+import ProCon from "containers/agency/ProCon";
+import AddVouch from "containers/agency/AddVouch";
+import VouchCon from "containers/agency/VouchCon";
 import Dash from "./Dash";
-import AddJovouch from "containers/main/AddJoVouch";
-import Account_pro from "containers/main/Account_profile";
-import DailyBook from "containers/main/DailyBook";
-import Trash from "containers/main/Trash";
+import AddJovouch from "containers/agency/AddJoVouch";
+import Account_pro from "containers/agency/Account_profile";
+import DailyBook from "containers/agency/DailyBook";
+import Trash from "containers/agency/Trash";
 import Agency from "pages/Agency";
-import AddAccountFromUsers from "containers/main/AddAccountFromUsers";
+import AddAccountFromUsers from "containers/agency/AddAccountFromUsers";
 
 export default class Accountings extends React.Component {
   Sorting_Pro = async () => {
@@ -372,6 +372,17 @@ export default class Accountings extends React.Component {
   }
 
   render() {
+    if (this.state.page === "rep") {
+      return (
+          <DailyBook
+            account={this.state.specific_acc}
+            navTo={this.navTo}
+            getspecific_acc={this.getspecific_acc}
+            getAccounts={this.getAccounts}
+            setAccProfile={this.setAccProfile}
+          />
+      );
+    }
     return (
 <>
           <NavSec
@@ -394,11 +405,17 @@ export default class Accountings extends React.Component {
             getAccounts={this.getAccounts}
             ProOrAcc={this.state.ProOrAcc}
             setAccProfile={this.setAccProfile}
+            navTo={this.navTo}
             getspecific_acc={this.getspecific_acc}
             isacc_pro={this.state.isacc_pro}
             err_pro={this.state.err_pro}
             err_acc={this.state.err_acc}
           />
+        {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
+        {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
+        {this.state.AddAccountFromUsers ? (
+          <AddAccountFromUsers  AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
+        ) : null}
 </>
 
     );

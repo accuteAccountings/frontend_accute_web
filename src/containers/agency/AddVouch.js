@@ -49,7 +49,7 @@ class AddVouch extends React.Component {
         document.querySelector("#vouch_sup_agent2").defaultValue = d.supplier_agent2;
       }, 500);
     }
-    document.querySelector("#vouch_gst").defaultValue = parseInt(d.gst);
+    document.querySelector("#vouch_gst").defaultValue = parseFloat(d.gst);
     let arr = [];
     let i = this.props.EData.product;
 
@@ -91,29 +91,30 @@ class AddVouch extends React.Component {
   updateTotal = () => {
     let total = 0;
     let g_amount = 0;
-    let gst = parseInt(document.getElementById("vouch_gst").value);
+    let gst = parseFloat(document.getElementById("vouch_gst").value);
     let disAmt = 0;
     this.state.items.map(e => {
-      g_amount = parseInt(g_amount) + parseInt(e.g_amount);
-      disAmt = parseInt(disAmt) + parseInt(e.g_amount) - parseInt(e.amount);
-      total = parseInt(total) + parseInt(e.amount);
+      g_amount = parseFloat(g_amount) + parseFloat(e.g_amount);
+      disAmt = parseFloat(disAmt) + parseFloat(e.g_amount) - parseFloat(e.amount);
+      total = parseFloat(total) + parseFloat(e.amount);
     });
     let FTotal = total;
+
     this.state.discontArr.map(ele => {
       if (ele.type === "Less") {
-        FTotal = parseInt(FTotal) - parseInt(ele.value);
+        FTotal = parseFloat(FTotal) - parseFloat(ele.value);
       }
       if (ele.type !== "Less") {
-        let a = parseInt(total) * (parseInt(ele.value) / 100);
-        ele.amt = parseInt(a);
-        FTotal = parseInt(FTotal) - parseInt(a);
+        let a = parseFloat(FTotal) * (parseFloat(ele.value) / 100);
+        ele.amt = parseFloat(a);
+        FTotal = parseFloat(FTotal) - parseFloat(a);
       }
     });
     this.state.freightArr.map(ele => {
-      FTotal = parseInt(FTotal) + parseInt(ele.value);
+      FTotal = parseFloat(FTotal) + parseFloat(ele.value);
     });
-    let gstAmt = (parseInt(FTotal) * parseInt(gst)) / 100;
-    FTotal = parseInt(FTotal) + gstAmt;
+    let gstAmt = (parseFloat(FTotal) * parseFloat(gst)) / 100;
+    FTotal = parseFloat(FTotal) + gstAmt;
     this.setState({ totalAmt: total, grossAmt: g_amount, disAmt: disAmt, mainAmnt: FTotal, gstAmt: gstAmt });
   };
 
@@ -267,8 +268,8 @@ this.CreateNewTransport()
     let hsn_num = document.getElementById("vouch_hsn_num").value;
     document.getElementById("vouch_hsn_num").value = "";
 
-    let dicon = parseInt(vouch_dicon) / 100;
-    let v_amount = parseInt(amount);
+    let dicon = parseFloat(vouch_dicon) / 100;
+    let v_amount = parseFloat(amount);
     let g_amount = v_amount;
     v_amount = v_amount - v_amount * dicon;
     let item = {
@@ -347,9 +348,9 @@ this.CreateNewTransport()
         return;
       }
     }
-    let dicon = parseInt(vouch_dicon) / 100;
-    let v_amount = parseInt(amt);
-    let g_amt = parseInt(v_amount);
+    let dicon = parseFloat(vouch_dicon) / 100;
+    let v_amount = parseFloat(amt);
+    let g_amt = parseFloat(v_amount);
     v_amount = v_amount - v_amount * dicon;
     v_amount = v_amount.toFixed(2);
     let arr = this.state.items;
@@ -1004,7 +1005,7 @@ if (!document.getElementById("vouch_sup").value) {
                   onChange={e => {
                     if (e.target.value >= 0 && document.getElementById("vouch_rate").value) {
                       document.getElementById("vouch_amount").value =
-                        parseInt(e.target.value) * parseInt(document.getElementById("vouch_rate").value);
+                        parseFloat(e.target.value) * parseFloat(document.getElementById("vouch_rate").value);
                     }
                   }}
                   type="number"
@@ -1021,7 +1022,7 @@ if (!document.getElementById("vouch_sup").value) {
                   onChange={e => {
                     if (e.target.value >= 0 && document.getElementById("vouch_quantity").value) {
                       document.getElementById("vouch_amount").value =
-                        parseInt(e.target.value) * parseInt(document.getElementById("vouch_quantity").value);
+                        parseFloat(e.target.value) * parseFloat(document.getElementById("vouch_quantity").value);
                     }
                   }}
                   type="number"

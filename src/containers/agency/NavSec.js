@@ -25,6 +25,7 @@ class NavSec extends React.Component {
         <div className="other_det">
           <div
             className="add_account"
+            onClick={this.props.ProOrAcc === "Products" ?this.props.AddProCrossBtn: this.props.AddAccCrossBtn}
           >
             + Add {this.props.ProOrAcc === "Products" ? "Product" : "Account"}
           </div>

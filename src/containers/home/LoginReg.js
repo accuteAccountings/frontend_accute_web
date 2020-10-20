@@ -67,7 +67,7 @@ class LoginReg extends Component {
       .then(res => res.json())
       .then(parJson => {
         if (parJson.username) {
-          window.location.href = "/main";
+          window.location.href = "/agency";
         } else if (parJson.error) {
           this.showError();
           this.setState(() => {

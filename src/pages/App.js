@@ -1,20 +1,20 @@
 import React from "react";
-import SideBar from "containers/main/SideBar";
-import TopBar from "containers/main/TopBar";
-import AddProducts from "containers/main/AddProduct";
-import AddAcc from "containers/main/AddAcc";
-import Clogo from "containers/main/Clogo";
-import NavSec from "containers/main/NavSec";
-import ProCon from "containers/main/ProCon";
-import AddVouch from "containers/main/AddVouch";
-import VouchCon from "containers/main/VouchCon";
+import SideBar from "containers/agency/SideBar";
+import TopBar from "containers/agency/TopBar";
+import AddProducts from "containers/agency/AddProduct";
+import AddAcc from "containers/agency/AddAcc";
+import Clogo from "containers/agency/Clogo";
+import NavSec from "containers/agency/NavSec";
+import ProCon from "containers/agency/ProCon";
+import AddVouch from "containers/agency/AddVouch";
+import VouchCon from "containers/agency/VouchCon";
 import Dash from "./Dash";
-import AddJovouch from "containers/main/AddJoVouch";
-import Account_pro from "containers/main/Account_profile";
-import DailyBook from "containers/main/DailyBook";
-import Trash from "containers/main/Trash";
+import AddJovouch from "containers/agency/AddJoVouch";
+import Account_pro from "containers/agency/Account_profile";
+import DailyBook from "containers/agency/DailyBook";
+import Trash from "containers/agency/Trash";
 import Agency from "pages/Agency";
-import AddAccountFromUsers from "containers/main/AddAccountFromUsers";
+import AddAccountFromUsers from "containers/agency/AddAccountFromUsers";
 
 class App extends React.Component {
   Sorting_Pro = async () => {
