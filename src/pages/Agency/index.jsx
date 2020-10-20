@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "./Dash"
-import Clogo from "containers/main/Clogo"
-import TopBar from "containers/main/TopBar"
-import SideBar from 'containers/main/SideBar'
+import Clogo from "containers/agency/Clogo"
+import TopBar from "containers/agency/TopBar"
+import SideBar from 'containers/agency/SideBar'
 import Agency from "./Agency"
-import NavSec from "containers/main/NavSec"
+import NavSec from "containers/agency/NavSec"
 import Accountings from './Accountings.jsx'
 import Trash from './Trash.jsx'
 import Transactions from './Transactions.jsx'

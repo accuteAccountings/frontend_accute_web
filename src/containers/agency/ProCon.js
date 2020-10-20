@@ -1,6 +1,6 @@
 import React from "react";
-import AddAcc from "containers/main/AddAcc";
-import AddProducts from "containers/main/AddProduct";
+import AddAcc from "containers/agency/AddAcc";
+import AddProducts from "containers/agency/AddProduct";
 import Delete from "components/Delete";
 import pencil from "assets/icons/pencil.svg";
 import trash from "assets/icons/trash.svg";
@@ -191,7 +191,7 @@ class ProCon extends React.Component {
                 return (
                   <div className="det_acc_div">
                     <DetCont
-                      acc_name={account.acc_name}
+                      acc_name={account.acc_real_name}
                       type={account.acc_type}
                       print_name={account.print_name}
                       adress={account.address_line1}
@@ -222,6 +222,7 @@ class DetCont extends React.Component {
           className="det_cont_left"
           onClick={() => {
             this.props.getspecific_acc(this.props.i - 1);
+
           }}
         >
           <div className="acc_name">

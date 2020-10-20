@@ -22,9 +22,6 @@ export default function Routes() {
               <Route path="/admin/profile/:id" component={Profile} exact = {true}/>
           </div>
         </div>
-        
-
-        
       </Switch>
     </BrowserRouter>
   );
