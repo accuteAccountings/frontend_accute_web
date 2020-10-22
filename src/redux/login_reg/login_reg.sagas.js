@@ -1,7 +1,7 @@
 import {takeLatest, put, call, all} from 'redux-saga/effects';
 import LoginRegActionTypes from './login_reg.types';
 
-import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,signOutFailure} from './login_reg.actions';
+import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,signOutFailure, resetErrorMessage} from './login_reg.actions';
     
     ///sign up
     function signUpApi(payload){   
@@ -57,6 +57,7 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
 
     export function* signIn({payload}){
         try{
+           // yield put(resetErrorMessage());
           const loggedInData = yield call(signInApi,payload);
           if(loggedInData.error){ 
             throw new Error(loggedInData.error);     

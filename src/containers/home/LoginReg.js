@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
@@ -37,7 +37,8 @@ class LoginReg extends Component {
       com_name:"",
       c_code:"+91",
       reg_email:"",
-      reg_pass:""
+      reg_pass:"",
+      snackbarOpen:false
     };
   }
   handleOnChange = e => {
@@ -55,32 +56,39 @@ class LoginReg extends Component {
       }
      this.setState({loading:true})
      this.props.signInStart(data);
-     if(this.state.currentUser) {
-      this.setState({loading:false})
-      window.location.href = "/main"
-    }
-    if(this.state.errormsg){
-      console.log("error",this.state.errormsg)
-      this.setState({loading:false})
-      alert(this.state.errormsg)
-    }
+    //  if(this.state.currentUser) {
+    //   this.setState({loading:false})
+    //   window.location.href = "/main"
+    // }
+    // if(this.state.errormsg){
+    //   console.log("error",this.state.errormsg)
+    //   this.setState({loading:false})
+    //   alert(this.state.errormsg)
+    // }
    }
-   componentDidMount=()=>{
-    
-   }
+
    handleRegisterSubmit = e =>{
     this.setState({loading:true})
     setTimeout(()=>{console.log(this.state.email, this.state.password); this.setState({loading:false})},5000)
    }
+   handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({snackbarOpen:false});
+  };
    resetStates= ()=>{
-    this.setState({ ...this.state,
-     full_name:"",
-     email:"",
-     password:"",
-     com_name:"",
-     c_code:"+91",
-     reg_email:"",
-     reg_pass:""});
+     setTimeout(()=>{this.setState({ ...this.state,
+      errormsg:"",
+      full_name:"",
+      email:"",
+      password:"",
+      com_name:"",
+      c_code:"+91",
+      reg_email:"",
+      reg_pass:""});
+      this.props.resetErrorMessage();
+    },3000)
    }
   // shouldComponentUpdate(nextProps, nextState){
   // let shouldUpdate=true;
@@ -92,15 +100,20 @@ class LoginReg extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUser !== nextProps.currentUser ) {
         this.setState({
-            users: nextProps.currentUser,
+            currentUser: nextProps.currentUser,
+            loading:false
         });
     }
     if (this.props.errormsg !== nextProps.errormsg ) {
       this.setState({
         errormsg: nextProps.errormsg,
-      });
+        loading:false,
+        snackbarOpen:true
+      },()=>this.resetStates());
+      
   }
 }
+
   render() {
     
     return (
@@ -112,7 +125,24 @@ class LoginReg extends Component {
             <h1>Accute Accountings</h1>
             <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
           </div>
-
+          {/* {
+            (this.state.errormsg!==null)?console.log(this.state.errormsg):console.log(this.state.errormsg)
+          } */}
+         {this.state.errormsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+          anchorOrigin={{  vertical: 'top',
+          horizontal: 'center'}}>
+                <Alert onClose={this.handleClose} severity="error">
+                   {this.state.errormsg}
+                </Alert>
+          </Snackbar>):null 
+          }
+          {/* { this.state.currentUser.accessToken?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} anchorOrigin={{  vertical: 'top',
+          horizontal: 'center'}}>
+                <Alert onClose={this.handleClose} severity="success">
+                   Registration complete
+                </Alert>
+          </Snackbar>):null 
+          } */}
           <div className="login_body">
             <div className="or_login">Or</div>
 
@@ -141,7 +171,6 @@ class LoginReg extends Component {
                       name="email"
                       value={this.state.email}
                       onChange={this.handleOnChange}
-                      autoComplete
                       />
                    
                     <TextField
