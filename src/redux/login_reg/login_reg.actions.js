@@ -35,7 +35,11 @@ import LoginRegActionTypes from './login_reg.types';
             type: LoginRegActionTypes.GOOGLE_SIGN_IN_START,
             payload:response
     })
-    export const facebookSignInStart = () =>({
-            type: LoginRegActionTypes.FACEBOOK_SIGN_IN_START
+    export const resetErrorMessage = ()=>({
+            type: LoginRegActionTypes.RESET_ERROR_MESSAGE
+    })
+    export const facebookSignInStart = response =>({
+            type: LoginRegActionTypes.FACEBOOK_SIGN_IN_START,
+            payload:response
     })
 

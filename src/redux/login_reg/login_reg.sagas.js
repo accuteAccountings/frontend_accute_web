@@ -59,10 +59,9 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
         try{
           const loggedInData = yield call(signInApi,payload);
           if(loggedInData.error){ 
-            console.log(loggedInData);
-            throw new Error(loggedInData.error);
+            throw new Error(loggedInData.error);     
           }else{ 
-              yield put(signInSuccess(loggedInData.user))
+              yield put(signInSuccess(loggedInData.username))
           }
         }catch(error){
             yield put(signInFailure(error))
@@ -133,5 +132,5 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
     }
    
 export function* loginRegSagas(){
-    yield all([call(onSignInStart), call(onSignUpStart),call(onGoogleSignInStart), call(onFacebookSignInStart)])
+    yield all([call(onSignInStart),call(onSignUpStart)])
 }

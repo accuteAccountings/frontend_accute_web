@@ -28,6 +28,11 @@ const loginRegReducer = (state=INITITAL_STATE,action)=>{
                 ...state,
                 error:action.payload
             }
+        case LoginRegActionTypes.RESET_ERROR_MESSAGE:
+            return {
+                ...state,
+                error:null
+            }
         default:
             return state;
         }
