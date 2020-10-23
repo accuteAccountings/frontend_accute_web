@@ -9,7 +9,9 @@ import {selectCurrentUser,selectError} from '../../redux/login_reg/login_reg.sel
 import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
 
 
-class LoginReg extends Component {
+///this is standby repo code for api calls
+
+class LoginReg1 extends Component {
 
   log = () => {
     document.getElementById("full_name").value = "";
@@ -368,4 +370,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps , mapDispatchToProps)(LoginReg)
+export default connect(mapStateToProps , mapDispatchToProps)(LoginReg1)

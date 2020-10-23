@@ -2,23 +2,30 @@ import LoginRegActionTypes from './login_reg.types';
 
 const INITITAL_STATE = {
     currentUser:null,
-    error:null
+    errorMsg:null,
+    successMsg:null
 }
 
 const loginRegReducer = (state=INITITAL_STATE,action)=>{
 
     switch(action.type){
+        case LoginRegActionTypes.SIGN_UP_SUCCESS:
+            return {
+                ...state,
+                successMsg:"Registration Successful",
+                errorMsg:null
+            }
         case LoginRegActionTypes.SIGN_IN_SUCCESS:
             return {
                 ...state,
                 currentUser:action.payload,
-                error:null
+                errorMsg:null
             }
         case LoginRegActionTypes.SIGN_OUT_SUCCESS:
             return {
                 ...state,
                 currentUser:null,
-                error:null
+                errorMsg:null
             }
             
         case LoginRegActionTypes.SIGN_IN_FAILURE:
@@ -26,12 +33,12 @@ const loginRegReducer = (state=INITITAL_STATE,action)=>{
         case LoginRegActionTypes.SIGN_UP_FAILURE:
             return {
                 ...state,
-                error:action.payload
+                errorMsg:action.payload
             }
         case LoginRegActionTypes.RESET_ERROR_MESSAGE:
             return {
                 ...state,
-                error:null
+                errorMsg:null
             }
         default:
             return state;

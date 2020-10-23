@@ -24,7 +24,7 @@ class LoginReg extends Component {
 
     this.state = {
       currentUser:this.props.currentUser,
-      errormsg:this.props.errormsg,
+      errorMsg:this.props.errorMsg,
       loading: false,
       isLog:true,
       google: true,
@@ -38,7 +38,8 @@ class LoginReg extends Component {
       c_code:"+91",
       reg_email:"",
       reg_pass:"",
-      snackbarOpen:false
+      mob_num:"",
+      snackbarOpen:false,
     };
   }
   handleOnChange = e => {
@@ -47,6 +48,7 @@ class LoginReg extends Component {
      [name]: value
     });
    };
+   // for login api call
    handleLoginSubmit = e => {
      e.preventDefault();
      const {email,password}= this.state;
@@ -56,34 +58,58 @@ class LoginReg extends Component {
       }
      this.setState({loading:true})
      this.props.signInStart(data);
-    //  if(this.state.currentUser) {
-    //   this.setState({loading:false})
-    //   window.location.href = "/main"
-    // }
-    // if(this.state.errormsg){
-    //   console.log("error",this.state.errormsg)
-    //   this.setState({loading:false})
-    //   alert(this.state.errormsg)
-    // }
    }
 
-   handleRegisterSubmit = e =>{
+   // for google signin api call
+  responseGoogle = response => {    
     this.setState({loading:true})
-    setTimeout(()=>{console.log(this.state.email, this.state.password); this.setState({loading:false})},5000)
+    this.props.googleSignInStart(response)
+  };
+
+   // for facebook signin api call
+  responseFacebook = response => {
+    if (!response.accessToken) {
+      this.setState({ facebook: false });
+    }
+    this.setState({loading:true})
+    this.props.facebookSignInStart(response);
+  }
+
+   // for registration api call
+   handleRegisterSubmit = e =>{
+     e.preventDefault();
+     const {reg_email,reg_pass,full_name,com_name,c_code,mob_num}=this.state;
+     let data = {
+      user: {
+        company_name: com_name,
+        email: reg_email,
+        password: reg_pass,
+        phone_num: mob_num,
+        c_code: c_code,
+        full_name: full_name
+      }
+    }
+    this.setState({loading:true})
+    this.props.signUpStart(data)
    }
+
+   // closing the snackbar
    handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     this.setState({snackbarOpen:false});
   };
+ // resetting the states for next attempt
    resetStates= ()=>{
      setTimeout(()=>{this.setState({ ...this.state,
-      errormsg:"",
+      errorMsg:"",
+      successMsg:"",
       full_name:"",
       email:"",
       password:"",
       com_name:"",
+      mob_num:"",
       c_code:"+91",
       reg_email:"",
       reg_pass:""});
@@ -97,6 +123,7 @@ class LoginReg extends Component {
   // }
   // return shouldUpdate;
   // }
+  //only receive the props when different from previous value
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUser !== nextProps.currentUser ) {
         this.setState({
@@ -104,13 +131,20 @@ class LoginReg extends Component {
             loading:false
         });
     }
-    if (this.props.errormsg !== nextProps.errormsg ) {
+    if (this.props.errorMsg !== nextProps.errorNsg ) {
       this.setState({
-        errormsg: nextProps.errormsg,
+        errorMsg: nextProps.errorMsg,
         loading:false,
         snackbarOpen:true
       },()=>this.resetStates());
-      
+
+      if (this.props.successMsg !== nextProps.successMsg ) {
+        this.setState({
+          successMsg: nextProps.successMsg,
+          loading:false,
+          isLog:true
+        });
+    }
   }
 }
 
@@ -125,24 +159,22 @@ class LoginReg extends Component {
             <h1>Accute Accountings</h1>
             <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
           </div>
-          {/* {
-            (this.state.errormsg!==null)?console.log(this.state.errormsg):console.log(this.state.errormsg)
-          } */}
-         {this.state.errormsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+         {this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
           anchorOrigin={{  vertical: 'top',
           horizontal: 'center'}}>
-                <Alert onClose={this.handleClose} severity="error">
-                   {this.state.errormsg}
+                <Alert  severity="error">
+                   {this.state.errorMsg}
+                </Alert>
+          </Snackbar>):null 
+          }      
+           { this.state.successMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} anchorOrigin={{  vertical: 'top',
+          horizontal: 'center'}}>
+                <Alert onClose={this.handleClose} severity="success">
+                    {this.state.successMsg}
                 </Alert>
           </Snackbar>):null 
           }
-          {/* { this.state.currentUser.accessToken?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} anchorOrigin={{  vertical: 'top',
-          horizontal: 'center'}}>
-                <Alert onClose={this.handleClose} severity="success">
-                   Registration complete
-                </Alert>
-          </Snackbar>):null 
-          } */}
+   
           <div className="login_body">
             <div className="or_login">Or</div>
 
@@ -203,7 +235,7 @@ class LoginReg extends Component {
                     <h2>Sign Up</h2>
                     <span>
                       Registered User?{" "}
-                      <a id="register_btn_s" onClick={()=>this.setState({full_name:"",reg_email:"",reg_password:"",mob_num:"",com_name:"",isLog:true})}>
+                      <a id="register_btn_s" onClick={()=>this.setState({full_name:"",reg_email:"",reg_pass:"",mob_num:"",com_name:"",isLog:true})}>
                        Log-In{" "}
                       </a>
                       Instead
@@ -302,7 +334,7 @@ class LoginReg extends Component {
                   </button>
                 )}
                 onSuccess={this.responseGoogle}
-                onFailure={this.responseGoogleError}
+                onFailure={()=>this.setState({google:false})}
                 cookiePolicy={"single_host_origin"}
               />
               <FacebookLogin
@@ -334,7 +366,8 @@ class LoginReg extends Component {
 // user : state.login.loggedin,
 const mapStateToProps = state=>({
      currentUser: state.loginReg.currentUser,
-     errormsg: state.loginReg.error,
+     errorMsg: state.loginReg.errorMsg,
+     successMsg: state.loginReg.successMsg
   
 })
 

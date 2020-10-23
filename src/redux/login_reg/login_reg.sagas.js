@@ -22,7 +22,7 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
         try{
             const user = yield call(signUpApi,payload);
            // yield console.log(user)
-            yield put(signUpSuccess(user))
+             yield put(signUpSuccess())
         }catch(error ){
             yield put(signUpFailure(error))
          }

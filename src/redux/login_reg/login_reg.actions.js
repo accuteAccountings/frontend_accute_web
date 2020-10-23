@@ -20,9 +20,8 @@ import LoginRegActionTypes from './login_reg.types';
             type : LoginRegActionTypes.SIGN_UP_START,
             payload: userData
     })  
-    export const signUpSuccess = user => ({
+    export const signUpSuccess = () => ({
             type : LoginRegActionTypes.SIGN_UP_SUCCESS,
-            payload : user
     })   
     export const signUpFailure = error => ({
             type : LoginRegActionTypes.SIGN_UP_FAILURE,
