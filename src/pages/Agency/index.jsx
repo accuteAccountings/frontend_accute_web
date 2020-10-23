@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "./Dash"
+import UserProfile from "containers/agency/UserProfile"
 import Clogo from "containers/agency/Clogo"
 import TopBar from "containers/agency/TopBar"
 import SideBar from 'containers/agency/SideBar'
@@ -27,6 +28,7 @@ export default function Routes() {
           <Route path="/agency/accountings" component={Accountings}/>
           <Route path="/agency/trash" component={Trash}/>
           <Route path="/agency/transactions" component={Transactions}/>
+          <Route path="/agency/my-profile" component={UserProfile}/>
         </div>
        </div>
       </Switch>
