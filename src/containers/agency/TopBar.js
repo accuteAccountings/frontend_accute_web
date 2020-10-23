@@ -3,6 +3,7 @@ import MenuBtn from "assets/icons/menu.svg";
 // import help from './../img/info.svg'
 // import settings from './../img/settings.svg'
 import arrow from "assets/icons/multimedia.svg";
+import {Link } from "react-router-dom"
 
 class TopBar extends React.Component {
   logout() {
@@ -78,7 +79,9 @@ class TopBar extends React.Component {
           </span>{" "}
           <div className="profile_drop_down">
             <div>
+              <Link to="/agency/my-profile">
               <li>User Profile</li>
+                </Link>
               <li>Company Profile</li>
               <li>Subscriptions & Billings</li>
               <li>Manage Users</li>
