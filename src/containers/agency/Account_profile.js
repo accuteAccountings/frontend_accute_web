@@ -4,15 +4,16 @@ import pencil from "assets/icons/pencil.svg";
 import back from "assets/icons/camera-back.svg";
 import Ledger from "containers/agency/Ledger_Account";
 import Report_pro from "containers/agency/Report_Acc_pro";
+import {Link} from 'react-router-dom'
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {
     let t = 0;
 
     this.state.bal.map(e => {
-      if (e.supplier === this.props.account.acc_name) {
+      if (e.supplier === this.state.account.acc_name) {
         t = parseInt(t) + parseInt(e.totalAmt);
-      } else if (e.debit_acc === this.props.account.acc_name) {
+      } else if (e.debit_acc === this.state.account.acc_name) {
         t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
       }
     });
@@ -24,9 +25,9 @@ export default class Account_pro extends React.Component {
     let t = 0;
 
     this.state.bal.map(e => {
-      if (e.customer === this.props.account.acc_name) {
+      if (e.customer === this.state.account.acc_name) {
         t = parseInt(t) + parseInt(e.totalAmt);
-      } else if (e.credit_acc === this.props.account.acc_name) {
+      } else if (e.credit_acc === this.state.account.acc_name) {
         t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
       }
     });
@@ -42,7 +43,7 @@ export default class Account_pro extends React.Component {
     if (!start_date && !end_date && mode.value) {
       let sdate = "2020-03-01";
       let edate = "2021-04-01";
-      await fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
+      await fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -59,7 +60,7 @@ export default class Account_pro extends React.Component {
 
     if (start_date && end_date) {
       await fetch(
-        `/api/vouch/specific/${this.props.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
+        `/api/vouch/specific/${this.state.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
       )
         .then(res => res.json())
         .then(data => {
@@ -75,6 +76,14 @@ export default class Account_pro extends React.Component {
     }
   };
 
+  acc_pro_val = (ans) => {
+    this.setState(() => {
+      return {
+        val : ans
+      }
+    })
+  }
+
   clearall = () => {
     document.getElementById("ledger_date_start").value = null;
     document.getElementById("ledger_date_end").value = null;
@@ -84,7 +93,7 @@ export default class Account_pro extends React.Component {
 
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
-    fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
+    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -141,15 +150,15 @@ export default class Account_pro extends React.Component {
     });
   };
 
-  constructor(props) {
-    super(props);
-
+  recent_entry = () => {
+    
     let date = new Date();
     let year = date.getFullYear();
 
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
-    fetch(`/api/vouch/specific/${this.props.account.acc_name}?sdate=${sdate}&edate=${edate}`)
+    
+    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -162,38 +171,61 @@ export default class Account_pro extends React.Component {
           });
         }
       });
+  }
+
+  constructor(props) {
+    super(props);
 
     this.state = {
       details: [],
       filter: null,
       bal: [],
-      temp_det2: []
+      temp_det2: [],
+      account : null,
+      val : "acc_det"
     };
   }
+
+   componentDidMount(){
+
+    const { id } = this.props.match.params;
+    
+    fetch(`/api/accounts/specific?id=${id}`)
+    .then(res => res.json())
+    .then((data) => {
+      this.setState(() => {
+        return{ 
+          account : data
+        }
+      })
+      this.recent_entry()
+    })
+  
+   }
 
   render() {
     return (
       <div>
         <div className="acc_highest">
           <div className="acc_pro_location">
-            <span>
-              <img src={back} onClick={() => this.props.backToAcc()} />
-            </span>
+            <Link to = "/agency/accountings">
+              <img src={back}/>
+            </Link>
             accounting / accounts / account profile
           </div>
         </div>
-
+        {this.state.account && 
         <div className="acc_pro_body">
           <div className="acc_pro_sbar">
             <div className="acc_pro_img">
               <img alt=" " src={user} id="acc_pro_img_id" />
             </div>
-            <div className="acc_pro_name">{this.props.account.acc_name}</div>
+            <div className="acc_pro_name">{this.state.account.acc_real_name}</div> 
             <div className="sbar_list" id="sbar_list">
               <div
                 className={this.props.acc_pro_val === "acc_det" ? "acc_det" : "sbar_list_value"}
                 onClick={() => {
-                  this.props.setAccProfile("acc_det");
+                  this.acc_pro_val("acc_det");
                 }}
               >
                 Account Details
@@ -201,7 +233,7 @@ export default class Account_pro extends React.Component {
               <div
                 className={this.props.acc_pro_val === "ledger" ? "acc_det" : "sbar_list_value"}
                 onClick={() => {
-                  this.props.setAccProfile("ledger");
+                  this.acc_pro_val("ledger");
                 }}
                 id="ledger"
               >
@@ -209,7 +241,7 @@ export default class Account_pro extends React.Component {
               </div>
               <div
                 className={this.props.acc_pro_val === "reports" ? "acc_det" : "sbar_list_value"}
-                onClick={() => this.props.setAccProfile("reports")}
+                onClick={() => this.acc_pro_val("reports")}
                 id="reports"
               >
                 Reports
@@ -217,14 +249,14 @@ export default class Account_pro extends React.Component {
             </div>
           </div>
 
-          {this.props.acc_pro_val === "acc_det" && (
+          {this.state.val === "acc_det" && (
             <div className="acc_pro_right">
               <div className="acc_pro_right_upper">
                 <div className="acc_pro_right_name">
-                  {this.props.account.acc_name}
-                  <span className="acc_pro_right_pname">({this.props.account.print_name})</span>
+                  {this.state.account.acc_real_name}
+                  <span className="acc_pro_right_pname">({this.state.account.print_name})</span>
                 </div>
-                <div className="acc_pro_right_add">{this.props.account.address_line1}</div>
+                <div className="acc_pro_right_add">{this.state.account.address_line1}</div>
               </div>
               <div className="acc_pro_right_lower">
                 <div className="acc_pro_right_heading">
@@ -238,12 +270,12 @@ export default class Account_pro extends React.Component {
                     <span>Phone</span>
                     <br />
                     <span className="acc_pro_details_value">
-                      {this.props.account.mob_num}
+                      {this.state.account.mob_num}
 
                       <span className="acc_pro_details_bvalue">(Mobile)</span>
                     </span>
                     <span className="acc_pro_details_value">
-                      {this.props.account.phone_num}
+                      {this.state.account.phone_num}
 
                       <span className="acc_pro_details_bvalue">(Office)</span>
                     </span>
@@ -251,23 +283,23 @@ export default class Account_pro extends React.Component {
                   <div className="acc_pro_detail_heading">
                     <span>Email</span>
                     <br />
-                    <span className="acc_pro_details_value">{this.props.account.emailId}</span>
+                    <span className="acc_pro_details_value">{this.state.account.emailId}</span>
                   </div>
                   <div className="acc_pro_detail_last">
                     <div className="acc_pro_detail_heading">
                       Pan No.
                       <br />
-                      <span className="acc_pro_details_value">{this.props.account.pan_num}</span>
+                      <span className="acc_pro_details_value">{this.state.account.pan_num}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
                       GST No.
                       <br />
-                      <span className="acc_pro_details_value">{this.props.account.gst_num}</span>
+                      <span className="acc_pro_details_value">{this.state.account.gst_num}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
                       Adhaar No.
                       <br />
-                      <span className="acc_pro_details_value">{this.props.account.aadhar_num}</span>
+                      <span className="acc_pro_details_value">{this.state.account.aadhar_num}</span>
                     </div>
                   </div>
                 </div>
@@ -300,9 +332,9 @@ export default class Account_pro extends React.Component {
             </div>
           )}
 
-          {this.props.acc_pro_val === "ledger" && (
+          {this.state.val === "ledger" && (
             <Ledger
-              account={this.props.account}
+              account={this.state.account}
               getDet={this.getDet}
               clearall={this.clearall}
               details={this.state.details}
@@ -316,8 +348,9 @@ export default class Account_pro extends React.Component {
             />
           )}
 
-          {this.props.acc_pro_val === "reports" && <Report_pro acc_name={this.props.account.acc_name} />}
+          {this.state.val === "reports" && <Report_pro acc_name={this.state.account.acc_name} />}
         </div>
+  }
       </div>
     );
   }

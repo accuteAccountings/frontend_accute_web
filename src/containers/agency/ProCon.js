@@ -221,8 +221,7 @@ class DetCont extends React.Component {
         <div
           className="det_cont_left"
           onClick={() => {
-            this.props.getspecific_acc(this.props.i - 1);
-
+            window.location.href = `/agency/acc-profile/${this.props.id}`
           }}
         >
           <div className="acc_name">

@@ -10,6 +10,7 @@ import NavSec from "containers/agency/NavSec"
 import Accountings from './Accountings.jsx'
 import Trash from './Trash.jsx'
 import Transactions from './Transactions.jsx'
+import Account_pro from 'containers/agency/Account_profile'
 
 export default function Routes() {
   return (
@@ -29,6 +30,7 @@ export default function Routes() {
           <Route path="/agency/trash" component={Trash}/>
           <Route path="/agency/transactions" component={Transactions}/>
           <Route path="/agency/my-profile" component={UserProfile}/>
+          <Route path="/agency/acc-profile/:id" component={Account_pro} exact = {true}/>
         </div>
        </div>
       </Switch>
