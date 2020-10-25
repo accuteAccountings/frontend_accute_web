@@ -12,14 +12,6 @@ a{
 
 }
 
-input:focus,
-select:focus {
-  outline: solid 2px $pri_color !important;
-  border: none !important;
-}
-button:focus {
-  box-shadow: 0px 0px 10px #aaaaaa;
-}
 button:active {
   background-color: grey;
 }
@@ -98,12 +90,6 @@ body {
 }
 *::-webkit-scrollbar {
   display: none;
-}
-input:focus,
-select:focus,
-textarea:focus {
-  outline: 3px solid #29a8ab !important;
-  border-color: #ffffff;
 }
 // Alerts
 
