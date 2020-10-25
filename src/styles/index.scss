@@ -20,39 +20,39 @@
 @import "./containers/home/ContactUs";
 
 //main
-@import "./containers/main/SideBar.scss";
-@import "./containers/main/TopBar.scss";
-@import "./containers/main/AddProducts.scss";
+@import "./containers/agency/SideBar.scss";
+@import "./containers/agency/TopBar.scss";
+@import "./containers/agency/AddProducts.scss";
 .add_acc {
-  @import "./containers/main/AddAcc.scss";
+  @import "./containers/agency/AddAcc.scss";
 }
-@import "./containers/main/Clogo.scss";
-@import "./containers/main/NavSec.scss";
+@import "./containers/agency/Clogo.scss";
+@import "./containers/agency/NavSec.scss";
 
 .pro_compo {
-  @import "./containers/main/ProCon.scss";
-  @import "./containers/main/VouchCon.scss";
+  @import "./containers/agency/ProCon.scss";
+  @import "./containers/agency/VouchCon.scss";
 
 }
-@import "./containers/main/Account_pro";
-@import "./containers/main//DailyBook";
-@import "./containers/main/Dash.scss";
-@import "./containers/main/AddVouch.scss";
-@import "./containers/main/AddJoVouch.scss";
-@import "./containers/main//Ledger.scss";
-@import "./containers/main//Report_pro";
-@import "./containers/main/TaskManager";
-@import "./containers/main/Agency.scss";
+@import "./containers/agency/Account_pro";
+@import "./containers/agency//DailyBook";
+@import "./containers/agency/Dash.scss";
+@import "./containers/agency/AddVouch.scss";
+@import "./containers/agency/AddJoVouch.scss";
+@import "./containers/agency//Ledger.scss";
+@import "./containers/agency//Report_pro";
+@import "./containers/agency/TaskManager";
+@import "./containers/agency/Agency.scss";
 
-// @import "./containers/main/AddAccountFromUsers.scss";
-@import "./components/main/Delete.scss";
-@import "./containers/main/Printed_Invoice.scss";
-@import "./containers/main/Inventory.scss";
-@import "./containers/main/Invoice.scss";
-@import "./containers/main/AgencyPage";
+// @import "./containers/agency/AddAccountFromUsers.scss";
+@import "./components/agency/Delete.scss";
+@import "./containers/agency/Printed_Invoice.scss";
+@import "./containers/agency/Inventory.scss";
+@import "./containers/agency/Invoice.scss";
+@import "./containers/agency/AgencyPage";
 @import './components/admin/Button.scss';
 @import './containers/admin/App.scss';
 @import './containers/admin/home.scss';
 @import './containers/admin/Profile.scss';
 @import './containers/admin/user_lists.scss';
-@import './containers/main/Commission.scss';
+@import './containers/agency/Commission.scss';

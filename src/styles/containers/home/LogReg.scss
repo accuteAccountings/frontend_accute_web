@@ -97,14 +97,16 @@ button:focus {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   margin: 0px;
+
+
 }
 
 @keyframes rotate {
   from {
-    transform: rotateZ(0deg);
+    transform:translateY(2px) rotateZ(0deg);
   }
   to {
-    transform: rotateZ(-360deg);
+    transform: translateY(2px) rotateZ(360deg);
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import TaskManager from 'containers/main/TaskManager'
-import AgencyPage from 'containers/main/AgencyPage';
-import Inventory from 'containers/main/Inventory'
+import TaskManager from 'containers/agency/TaskManager'
+import AgencyPage from 'containers/agency/AgencyPage';
+import Inventory from 'containers/agency/Inventory'
 
 export default class Agency extends React.Component{
 

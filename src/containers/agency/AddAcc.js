@@ -13,7 +13,7 @@ class AddAcc extends React.Component {
   };
 
   setValue = () => {
-    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_name;
+    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_real_name;
 
     document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
 
@@ -55,7 +55,7 @@ class AddAcc extends React.Component {
       };
     });
 
-    let acc_name = document.querySelector(".add_acc_inp_name").value;
+    let acc_real_name = document.querySelector(".add_acc_inp_name").value;
 
     let print_name = document.querySelector(".add_acc_inp_pname").value;
 
@@ -90,7 +90,7 @@ class AddAcc extends React.Component {
     let bal = document.querySelector(".add_acc_inp_bal").value;
 
     let data = {
-      acc_name,
+      acc_real_name,
       print_name,
       acc_type,
       status,

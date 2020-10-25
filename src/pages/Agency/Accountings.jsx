@@ -16,7 +16,7 @@ import Trash from "containers/agency/Trash";
 import Agency from "pages/Agency";
 import AddAccountFromUsers from "containers/agency/AddAccountFromUsers";
 
-class App extends React.Component {
+export default class Accountings extends React.Component {
   Sorting_Pro = async () => {
     let mode = await document.getElementById("new_old_navsec");
 
@@ -372,34 +372,19 @@ class App extends React.Component {
   }
 
   render() {
-    let currentPage = null;
-
     if (this.state.page === "rep") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <NavSec AddProCrossBtn={this.AddProCrossBtn} navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />
-          {/* <ProCon /> */}
-        </div>
+      return (
+          <DailyBook
+            account={this.state.specific_acc}
+            navTo={this.navTo}
+            getspecific_acc={this.getspecific_acc}
+            getAccounts={this.getAccounts}
+            setAccProfile={this.setAccProfile}
+          />
       );
     }
-
-    if (this.state.page === "dash") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <Dash addAccBtn={this.AddAccCrossBtn} />
-        </div>
-      );
-    }
-
-    if (this.state.page === "accounting") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
+    return (
+<>
           <NavSec
             AddProCrossBtn={this.AddProCrossBtn}
             navItems={["Accounts", "Products"]}
@@ -420,132 +405,20 @@ class App extends React.Component {
             getAccounts={this.getAccounts}
             ProOrAcc={this.state.ProOrAcc}
             setAccProfile={this.setAccProfile}
+            navTo={this.navTo}
             getspecific_acc={this.getspecific_acc}
             isacc_pro={this.state.isacc_pro}
             err_pro={this.state.err_pro}
             err_acc={this.state.err_acc}
           />
-        </div>
-      );
-    }
-    if (this.state.page === "trash") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Clogo />
-          <Trash
-            setPVoJVoDN={this.setPVoJVoDN}
-            vouchPage={this.state.vouchPage}
-            setVouchPage={this.setVouchPage}
-            specificJoVouch={this.specificJoVouch}
-            setjoBill={this.setjoBill}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.specific_acc) {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Account_pro
-            account={this.state.specific_acc}
-            acc_pro_val={this.state.isacc_pro}
-            setAccProfile={this.setAccProfile}
-            backToAcc={this.backToAcc}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.page === "rep") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <DailyBook
-            account={this.state.specific_acc}
-            navTo={this.navTo}
-            getspecific_acc={this.getspecific_acc}
-            getAccounts={this.getAccounts}
-            setAccProfile={this.setAccProfile}
-          />
-        </div>
-      );
-    }
-
-    if (this.state.page === "agency") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar />
-          <Agency />
-        </div>
-      );
-    }
-
-    if (this.state.page === "trans") {
-      currentPage = (
-        <div className="pageBody">
-          <TopBar
-            margin={{
-              marginBottom: "50px"
-            }}
-          />
-
-          {this.state.PVoJVoDN === "pv" && (
-            <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "jv" && (
-            <AddJovouch
-              mode={this.state.vouchMode}
-              EData={this.state.vouchEData}
-              rm={this.rmVouch}
-              jobill_num={this.state.jobill_num}
-            />
-          )}
-          {this.state.PVoJVoDN === "dn" && (
-            <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "cn" && (
-            <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
-          )}
-          {this.state.PVoJVoDN === "no" && (
-            <VouchCon
-              setPVoJVoDN={this.setPVoJVoDN}
-              vouchPage={this.state.vouchPage}
-              setVouchPage={this.setVouchPage}
-              specificJoVouch={this.specificJoVouch}
-              setjoBill={this.setjoBill}
-            />
-          )}
-        </div>
-      );
-    }
-
-    return (
-      <div className="app">
-        <div className="side">
-          <SideBar
-            AddAccCrossBtn={this.AddAccCrossBtn}
-            AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn}
-            setProOrAcc={this.setProOrAcc}
-            navTo={this.navTo}
-            actPage={this.state.page}
-            setVouchPage={this.setVouchPage}
-            setAccProfile={this.setAccProfile}
-            backToAcc={this.backToAcc}
-          />
-        </div>
-
-        {currentPage}
-
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
         {this.state.AddAccountFromUsers ? (
           <AddAccountFromUsers  AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
         ) : null}
-      </div>
+</>
+
     );
   }
 }
 
-export default App;

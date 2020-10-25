@@ -90,6 +90,7 @@ class LoginReg extends Component {
     if (!response.accessToken) {
       this.setState({ facebook: false,loading:false });
     }
+
     this.setState({loading:true})
     this.props.facebookSignInStart(response);
   }
