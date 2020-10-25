@@ -1,289 +1,180 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import { Redirect } from 'react-router-dom';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import {createStructuredSelector} from 'reselect';
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
-import lod from "assets/icons/refreshWhite.svg";
+import lod from "assets/icons/refresh.svg";
+import {selectCurrentUser,selectError} from '../../redux/login_reg/login_reg.selectors';
+import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+
 
 class LoginReg extends Component {
-  login = () => {
-    document.getElementById("full_name").value = "";
-    document.getElementById("com_name").value = "";
 
-    this.setState(() => {
-      return { islog: true };
-    });
-  };
-  reg = () => {
-    document.getElementById("email").value = "";
-    document.getElementById("pass").value = "";
-
-    this.setState(() => {
-      return { islog: false };
-    });
-  };
-
-  responseFacebook = response => {
-    if (!response.accessToken) {
-      this.setState(() => {
-        return { facebook: false };
-      });
-    }
-    fetch("/api/register/facebook", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        accessToken: response.accessToken,
-        pic: response.picture.data.url
-      })
-    })
-      .catch(error => {
-        this.setState(() => {
-          return { facebook: false };
-        });
-      })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { facebook: false };
-          });
-        }
-      });
-  };
-  sendLogData() {
-    this.setState(() => {
-      return { loading: true };
-    });
-    let email = document.getElementById("email").value;
-    let pass = document.getElementById("pass").value;
-
-    fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, password: pass })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.user) {
-          window.location.href = "/agency";
-        } else if (parJson.error) {
-          this.showError();
-          this.setState(() => {
-            return {
-              loading: false,
-              errormsg: "Incorrect Username or Password"
-            };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            loading: false,
-            errormsg: "Connection Error"
-          };
-        });
-        this.showError();
-      });
-  }
-
-  sendRegData() {
-    this.setState(() => {
-      return { loading: true };
-    });
-
-    let email = document.getElementById("email").value;
-    let pass = document.getElementById("reg_pass").value;
-    let name = document.getElementById("full_name").value;
-    let com_name = document.getElementById("com_name").value;
-    let c_code = document.getElementById("c_code").value;
-    let mob_num = document.getElementById("mob_num").value;
-
-    if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
-      this.setState(() => {
-        return {
-          errormsg: "Please Enter A Valid Email Address"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-
-      return;
-    }
-
-    if (pass.length < 8) {
-      this.setState(() => {
-        return {
-          errormsg: "Password Should Be Greater Than 8 letter"
-        };
-      });
-      this.showError();
-      this.setState(() => {
-        return { loading: false };
-      });
-      return;
-    }
-
-    fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: {
-          company_name: com_name,
-          email: email,
-          password: pass,
-          phone_num: mob_num,
-          c_code: c_code,
-          full_name: name
-        }
-      })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.user.token) {
-          this.setlog();
-
-          this.showsuc();
-          pass = "";
-
-          this.setState(() => {
-            return {
-              islog: true,
-              loading: false
-            };
-          });
-        } else if (parJson.error) {
-          this.setState(() => {
-            return {
-              errormsg: parJson.error
-            };
-          });
-          this.showError();
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return { errormsg: "Connection Error" };
-        });
-        this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
-      });
-  }
-
-  setreg() {
-    this.setState(() => {
-      return { loc: "reg" };
-    });
-  }
-  setlog() {
-    this.setState(() => {
-      return { loc: "log" };
-    });
-  }
-
-  responseGoogleError = response => {
-    console.log(response);
-
-    this.setState(() => {
-      return { google: false };
-    });
-
-    // this.setState(() => {
-    // 	return { errormsg: 'Unable to login with Google' };
-    // });
-
-    // this.showError();
-
-    // alert('Unable to login with Google Please try again with different
-    // method');
-  };
-
-  responseGoogle = response => {
-    fetch("/api/register/google", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tokenId: response.tokenId })
-    })
-      .then(res => res.json())
-      .then(parJson => {
-        if (parJson.email) {
-          window.location.href = "/main";
-        } else if (parJson.error) {
-          this.setState(() => {
-            return { loading: false };
-          });
-        }
-      })
-      .catch(error => {
-        this.setState(() => {
-          return {
-            google: false,
-            errormsg: "Error Login with Google"
-          };
-        });
-        this.showError();
-        this.setState(() => {
-          return { loading: false };
-        });
-      });
-  };
-
-  rmError = () => {
-    this.setState(() => {
-      return { error: false };
-    });
-  };
-  rmsuc = () => {
-    this.setState(() => {
-      return { suc: false };
-    });
-  };
-
-  showError = () => {
-    this.setState(() => {
-      return { error: true };
-    });
-    setTimeout(this.rmError, 3000);
-  };
-
-  showsuc = () => {
-    this.setState(() => {
-      return {
-        suc: true
-      };
-    });
-
-    setTimeout(this.rmsuc, 3000);
-  };
   constructor(props) {
     super(props);
 
-    this.setreg = this.setreg.bind(this);
-    this.setlog = this.setlog.bind(this);
-    this.sendLogData = this.sendLogData.bind(this);
-    this.sendRegData = this.sendRegData.bind(this);
     this.state = {
-      loc: "log",
+      currentUser:this.props.currentUser,
+      errorMsg:this.props.errorMsg,
       loading: false,
-      islog: true,
-      error: false,
-      errormsg: "",
+      isLog:true,
       google: true,
       facebook: true,
-      suc: false
+      error:false,
+      suc: false,
+      full_name:"",
+      email:"",
+      password:"",
+      com_name:"",
+      c_code:"+91",
+      reg_email:"",
+      reg_pass:"",
+      mob_num:"",
+      snackbarOpen:false,
+      formErrors:""
     };
   }
+  handleOnChange = e => {
+    const {target: { value, name }} = e;
+    this.setState({
+     [name]: value
+    });
+   };
+   
+   //validation code for registration form
+   validate=()=>{
+     let checks={...this.state.formErrors};
+     const {full_name,reg_email,reg_pass,mob_num,com_name}=this.state
+     checks.full_name= full_name?"":"this field is required";
+     checks.reg_email= (/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i).test(reg_email)?"": "Email is not valid";
+     checks.com_name= com_name.length!==0?"":"this field is required";
+     checks.mob_num=mob_num.length>9?"":"Minimum 10 numbers required";
+     checks.reg_pass = reg_pass.length>8?"":"minimum length of 8 characters required";
+     
+     this.setState({
+       formErrors:{...checks}
+     })
+     return Object.values(checks).every(x => x =="")
+   }
+
+   // for login api call
+   handleLoginSubmit = e => {
+     e.preventDefault();
+     const {email,password}= this.state;
+     let data= {
+        email, 
+        password
+      }
+     this.setState({loading:true})
+     this.props.signInStart(data);
+   }
+
+   // for google signin api call
+  responseGoogle = response => {    
+    this.setState({loading:true})
+    this.props.googleSignInStart(response)
+  };
+
+   // for facebook signin api call
+  responseFacebook = response => {
+    if (!response.accessToken) {
+      this.setState({ facebook: false,loading:false });
+    }
+
+    this.setState({loading:true})
+    this.props.facebookSignInStart(response);
+  }
+
+   // for registration api call
+   handleRegisterSubmit = e =>{
+     e.preventDefault();
+     const {reg_email,reg_pass,full_name,com_name,c_code,mob_num}=this.state;
+     let data = {
+      user: {
+        company_name: com_name,
+        email: reg_email,
+        password: reg_pass,
+        phone_num: mob_num,
+        c_code: c_code,
+        full_name: full_name
+      }
+    }
+    if(this.validate()){
+    this.setState({loading:true})
+    this.props.signUpStart(data)
+    }else{
+      alert("Errors on form page");
+    }
+   }
+
+   // closing the snackbar
+   handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({snackbarOpen:false});
+  };
+ // resetting the states for next attempt
+   resetStates= ()=>{
+     setTimeout(()=>{this.setState({ ...this.state,
+      curentUser:"",
+      errorMsg:"",
+      successMsg:"",
+      full_name:"",
+      email:"",
+      password:"",
+      com_name:"",
+      mob_num:"",
+      c_code:"+91",
+      reg_email:"",
+      reg_pass:""});
+      this.props.resetErrorMessage();
+    },3000)
+   }
+  // shouldComponentUpdate(nextProps, nextState){
+  // let shouldUpdate=true;
+  // if((nextProps.errorMsg===this.props.errorMsg )){
+  //   shouldUpdate=false
+  // }
+  // return shouldUpdate;
+  // }
+  //only receive the props when different from previous value
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentUser !== nextProps.currentUser ) {
+        this.setState({
+            currentUser: nextProps.currentUser,
+            loading:false
+        });
+    }
+    if (this.props.errorMsg !== nextProps.errorNsg ) {
+      this.setState({
+        errorMsg: nextProps.errorMsg,
+        loading:false,
+        snackbarOpen:true
+      },()=>this.resetStates());
+
+      if (this.props.successMsg !== nextProps.successMsg ) {
+        this.setState({
+          successMsg: nextProps.successMsg,
+          loading:false,
+          isLog:true
+        });
+    }
+  }
+}
 
   render() {
+    
     return (
       <div className="log_reg">
         <div className="overlay_home" onClick={this.props.remLogReg} />
@@ -293,128 +184,166 @@ class LoginReg extends Component {
             <h1>Accute Accountings</h1>
             <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
           </div>
-
+         {this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+          anchorOrigin={{  vertical: 'top',
+          horizontal: 'center'}}>
+                <Alert  severity="error">
+                   {this.state.errorMsg}
+                </Alert>
+          </Snackbar>):null 
+          }      
+           { this.state.successMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} anchorOrigin={{  vertical: 'top',
+          horizontal: 'center'}}>
+                <Alert severity="success">
+                    {this.state.successMsg}
+                </Alert>
+          </Snackbar>):null 
+          }
+          {//on successful login redirect to main
+           this.state.currentUser?(<Redirect to="/main"/>):null 
+          }
+   
           <div className="login_body">
             <div className="or_login">Or</div>
 
             <div className="login_body_left">
-              {this.state.error && (
-                <div class="alert alert-danger">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
-                    </div>
-
-                    <b class="alert-info">{this.state.errormsg} </b>
-                  </div>
-                </div>
-              )}{" "}
-              {this.state.suc && (
-                <div class="alert alert-success">
-                  <div class="alert-container">
-                    <div class="alert-icon">
-                      <i class="fa fa-info-circle" />
-                    </div>
-
-                    <b class="alert-info">Registration Complete </b>
-                  </div>
-                </div>
-              )}{" "}
-              {this.state.islog ? (
-                <div className="login_cont">
+              {this.state.isLog ? (
+                <div className="login_cont" id="log_in_content">
                   <div className="login_cont_head">
                     <h2>Login</h2>
                     <span>
                       New User?{" "}
-                      <a id="register_btn_s" onClick={this.reg}>
-                        Sign-In
+                      <a id="register_btn_s" onClick={()=>this.setState({email:"",password:"",isLog:false})}>
+                        Sign-Up
                       </a>{" "}
                       Instead
                     </span>
                   </div>
+                 { this.state.loading? (
+                  <LinearProgress color="secondary" />):null}
+                  <form onSubmit={this.handleLoginSubmit}>
+                    <TextField  margin="normal"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Enter User Id / E-mail"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.handleOnChange}
+                      />
+                   
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      value={this.state.password}
+                      onChange={this.handleOnChange}
+                    />
+                 
+                    <br/>
+                    <a className="forget_pass" href="#">
+                     {" "}
+                     forgot password?
+                    </a>
 
-                  <div className="margin">
-                    <label htmlFor="username">User Id / E - mail</label>
-                    <br />
-                    <input id="email" autoComplete="email" type="text" placeholder="Enter User Id / E-mail" />
-                  </div>
-                  <div className="margin">
-                    <label htmlFor="password">Password</label>
-                    <br />
-
-                    <input id="pass" type="password" placeholder="*******" />
-                  </div>
-
-                  <a className="forget_pass" href="#">
-                    {" "}
-                    forget password?
-                  </a>
-
-                  <button className="loginBtn btnbtn" onClick={this.sendLogData}>
-                    {this.state.loading ? <img className="loadingsvg" src={lod} /> : "Login"}
-                  </button>
+                    <button type="submit" className="loginBtn btnbtn">
+                     Login
+                    </button>
+                  </form>
                 </div>
               ) : (
-                <div className="login_cont">
+                <div className="login_cont" id="sign_up_content">
                   <div className="login_cont_head">
-                    <h2>Sign In</h2>
+                    <h2>Sign Up</h2>
                     <span>
                       Registered User?{" "}
-                      <a id="register_btn_s" onClick={this.login}>
-                        Login{" "}
+                      <a id="register_btn_s" onClick={()=>this.setState({full_name:"",reg_email:"",reg_pass:"",mob_num:"",com_name:"",isLog:true})}>
+                       Log-In{" "}
                       </a>
                       Instead
                     </span>
                   </div>
-
-                  <div className="margin">
-                    <label htmlFor="full_name">Full Name</label>
-                    <br />
-                    <input id="full_name" type="text" autoComplete="off" placeholder="Enter Full Name" />
-                  </div>
-                  <div className="margin">
-                    <label htmlFor="com_name">Company Name</label>
-                    <br />
-                    <input
+                  { this.state.loading? (
+                  <LinearProgress color="secondary" />):null}
+                  <form onSubmit={this.handleRegisterSubmit}>
+                  <TextField margin="normal"  
+                      variant="outlined"                    
+                      fullWidth
+                      id="full_name"
+                      label="Full Name"
+                      name="full_name"
+                      value={this.state.full_name}
+                      onChange={this.handleOnChange}
+                      {...(this.state.formErrors.full_name &&{error:true,helperText:this.state.formErrors.full_name})}
+                      />
+                   <TextField margin="normal"  
+                      variant="outlined"                     
+                      fullWidth
                       id="com_name"
-                      type="text"
-                      name="company name"
-                      autoComplete="organization"
-                      placeholder="Enter Your Company Name"
-                    />
-                  </div>
-                  <div className="margin">
-                    <label htmlFor="mob_num">Mobile Number</label>
-                    <br />
-                    <div className="mob_num_inp">
-                      <select name="c_code" id="c_code" autoComplete="country-code">
+                      label="Company Name"
+                      name="com_name"
+                      value={this.state.com_name}
+                      onChange={this.handleOnChange}
+                      {...(this.state.formErrors.com_name &&{error:true,helperText:this.state.formErrors.com_name})}
+                      />
+                   <div id="phone_num_input">
+                     <div>
+                     <select name="c_code" defaultValue={this.state.c_code} id="c_code" autoComplete="country-code">
                         <option value="+91">+91 </option>
                         <option value="+1">+1</option>
                         <option value="+12">+12 </option>
                         <option value="+55">+55</option>
                       </select>
-                      <input id="mob_num" type="tel" autoComplete="tel" placeholder="Enter Mobile No." />
-                    </div>
+                      </div>
+                      <TextField margin="normal"                      
+                      variant="outlined"                            
+                      id="mob_num"
+                      label="Mobile No."
+                      name="mob_num"
+                      value={this.state.mob_num}
+                      onChange={this.handleOnChange}
+                      {...(this.state.formErrors.mob_num &&{error:true,helperText:this.state.formErrors.mob_num})}
+                      /> 
+                    
                   </div>
-                  <div className="margin">
-                    <label htmlFor="email">E - mail</label>
-                    <br />
-                    <input id="email" type="email" autoComplete="email" name="email" placeholder="Enter E-mail" />
-                  </div>
-                  <div className="margin">
-                    <label htmlFor="password">Password</label>
-                    <br />
-
-                    <input id="reg_pass" type="password" placeholder="*******" />
-                  </div>
-
+                  <TextField margin="normal"  
+                      variant="outlined"                     
+                      fullWidth
+                      id="email"
+                      label="Enter User Id / E-mail"
+                      name="reg_email"
+                      value={this.state.reg_email}
+                      onChange={this.handleOnChange}
+                      {...(this.state.formErrors.reg_email &&{error:true,helperText:this.state.formErrors.reg_email})}
+                      />
+                   
+                    <TextField margin="normal"
+                      variant="outlined"                   
+                      fullWidth
+                      name="reg_pass"
+                      label="Password"
+                      type="password"
+                      id="reg_pass"
+                      value={this.state.reg_pass}
+                      onChange={this.handleOnChange}
+                      {...(this.state.formErrors.reg_pass &&{error:true,helperText:this.state.formErrors.reg_pass})}
+                    />
+                 
+                  <div>
                   <a className="forget_pass" href="#">
                     forget password ?{" "}
                   </a>
-
-                  <button className="loginBtn btnbtn" onClick={this.sendRegData}>
-                    {this.state.loading ? <img className="loadingsvg" src={lod} /> : "Register"}
+                  </div>
+                  <button type="submit" className="loginBtn btnbtn">
+                   Register
                   </button>
+                  </form>
                 </div>
               )}
             </div>
@@ -433,7 +362,7 @@ class LoginReg extends Component {
                   </button>
                 )}
                 onSuccess={this.responseGoogle}
-                onFailure={this.responseGoogleError}
+                onFailure={()=>this.setState({google:false,loading:false})}
                 cookiePolicy={"single_host_origin"}
               />
               <FacebookLogin
@@ -458,4 +387,27 @@ class LoginReg extends Component {
   }
 }
 
-export default LoginReg;
+// loading : state.register.loading,
+// islog : state.register.islog,
+// errormsg : state.errormsg.errormsg,
+// token : state.register.token,
+// user : state.login.loggedin,
+const mapStateToProps = state=>({
+     currentUser: state.loginReg.currentUser,
+     errorMsg: state.loginReg.errorMsg,
+     successMsg: state.loginReg.successMsg
+  
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+      signInStart: (data)=> dispatch(signInStart(data)),
+      signUpStart: (data)=> dispatch(signUpStart(data)),
+      googleSignInStart: (data) => dispatch(googleSignInStart(data)),
+      facebookSignInStart: (data) => dispatch(facebookSignInStart(data)),
+      resetErrorMessage: ()=> dispatch(resetErrorMessage())
+    };
+}
+
+
+export default connect(mapStateToProps , mapDispatchToProps)(LoginReg)

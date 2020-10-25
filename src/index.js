@@ -1,10 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {Provider} from 'react-redux';
 import * as serviceWorker from "./serviceWorker";
+import {PersistGate} from 'redux-persist/integration/react'
 import "styles/index.scss";
 import Routes from "./routes";
+import {store , persistor} from './redux/store'
 
-ReactDOM.render(<Routes />, document.getElementById("root"));
+ReactDOM.render(
+    <Provider store = {store}>
+        <Routes />
+    </Provider>,
+    document.getElementById('root')
+  );
 
 serviceWorker.unregister();
 // window.onbeforeunload = function(e) {
