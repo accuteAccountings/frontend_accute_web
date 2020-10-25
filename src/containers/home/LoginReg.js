@@ -200,7 +200,7 @@ class LoginReg extends Component {
           </Snackbar>):null 
           }
           {//on successful login redirect to main
-           this.state.currentUser?(<Redirect to="/main"/>):null 
+           this.state.currentUser?(<Redirect to="/agency"/>):null 
           }
    
           <div className="login_body">

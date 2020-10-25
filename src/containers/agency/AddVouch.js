@@ -395,7 +395,7 @@ this.CreateNewTransport()
       if (temp.length === 0) {
         return true;
       }
-      if (e.acc_name.toLowerCase().indexOf(temp) !== -1) {
+      if (e.acc_real_name.toLowerCase().indexOf(temp) !== -1) {
         return true;
       } else return false;
     });
@@ -460,13 +460,13 @@ if (!document.getElementById("vouch_sup").value) {
                             return;
                           }
                           let data = {
-                            acc_name: document.getElementById("vouch_sup").value,
+                            acc_real_name: document.getElementById("vouch_sup").value,
                             acc_type: "debtors"
                           };
                           let exist = false;
                           this.state.accounts.map(e => {
                             if (
-                              e.acc_name === data.acc_name &&
+                              e.acc_real_name === data.acc_name &&
                               (e.acc_type === "creditors" || e.acc_type === "debtors")
                             ) {
                               exist = true;
@@ -495,13 +495,13 @@ if (!document.getElementById("vouch_sup").value) {
                             return;
                           }
                           let data = {
-                            acc_name: document.getElementById("vouch_transport_name").value,
+                            acc_real_name: document.getElementById("vouch_transport_name").value,
                             acc_type: "transport"
                           };
 
                           let exist = false;
                           this.state.accounts.map(e => {
-                            if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                            if (e.acc_real_name === data.acc_name && e.acc_type === data.acc_type) {
                               exist = true;
                             }
                           });
@@ -530,14 +530,14 @@ if (!document.getElementById("vouch_sup").value) {
                           }
 
                           let data = {
-                            acc_name: document.getElementById("vouch_customer").value,
+                            acc_real_name: document.getElementById("vouch_customer").value,
                             acc_type: "debtors"
                           };
 
                           let exist = false;
                           this.state.accounts.map(e => {
                             if (
-                              e.acc_name === data.acc_name &&
+                              e.acc_real_name === data.acc_name &&
                               (e.acc_type === "creditors" || e.acc_type === "debtors")
                             ) {
                               exist = true;
@@ -710,10 +710,10 @@ if (!document.getElementById("vouch_sup").value) {
                             key={index}
                             onClick={() => {
                               document.getElementById("pro_list").style.display = "none";
-                              document.getElementById("vouch_transport_name").value = acc.acc_name;
+                              document.getElementById("vouch_transport_name").value = acc.acc_real_name;
                             }}
                           >
-                            {acc.acc_name}
+                            {acc.acc_real_name}
                           </li>
                         );
                       })}
@@ -746,7 +746,7 @@ if (!document.getElementById("vouch_sup").value) {
                       {this.state.acc.map((acc, index) => {
                         if (
                           (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
-                          document.getElementById("vouch_customer").value === acc.acc_name
+                          document.getElementById("vouch_customer").value === acc.acc_real_name
                         ) {
                           return;
                         }
@@ -755,10 +755,10 @@ if (!document.getElementById("vouch_sup").value) {
                             key={index}
                             onClick={() => {
                               document.getElementById("sup_list").style.display = "none";
-                              document.getElementById("vouch_sup").value = acc.acc_name;
+                              document.getElementById("vouch_sup").value = acc.acc_real_name;
                             }}
                           >
-                            {acc.acc_name}
+                            {acc.acc_real_name}
                           </li>
                         );
                       })}
@@ -840,7 +840,7 @@ if (!document.getElementById("vouch_sup").value) {
                       {this.state.acc.map((acc, index) => {
                         if (
                           (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
-                          acc.acc_name === document.getElementById("vouch_sup").value
+                          acc.acc_real_name === document.getElementById("vouch_sup").value
                         ) {
                           return;
                         }
@@ -849,10 +849,10 @@ if (!document.getElementById("vouch_sup").value) {
                             key={index}
                             onClick={() => {
                               document.getElementById("customer_list").style.display = "none";
-                              document.getElementById("vouch_customer").value = acc.acc_name;
+                              document.getElementById("vouch_customer").value = acc.acc_real_name;
                             }}
                           >
-                            {acc.acc_name}
+                            {acc.acc_real_name}
                           </li>
                         );
                       })}
@@ -884,13 +884,13 @@ if (!document.getElementById("vouch_sup").value) {
                               return;
                             } else {
                               let data = {
-                                acc_name: document.getElementById("vouch_sup_agent2").value,
+                                acc_real_name: document.getElementById("vouch_sup_agent2").value,
                                 acc_type: "Sub Agent"
                               };
 
                               let exist = false;
                               this.state.accounts.map(e => {
-                                if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
+                                if (e.acc_real_name === data.acc_name && e.acc_type === data.acc_type) {
                                   exist = true;
                                 }
                               });
@@ -926,10 +926,10 @@ if (!document.getElementById("vouch_sup").value) {
                               key={index}
                               onClick={() => {
                                 document.getElementById("subAgnet_list").style.display = "none";
-                                document.getElementById("vouch_sup_agent2").value = acc.acc_name;
+                                document.getElementById("vouch_sup_agent2").value = acc.acc_real_name;
                               }}
                             >
-                              {acc.acc_name}
+                              {acc.acc_real_name}
                             </li>
                           );
                         })}
