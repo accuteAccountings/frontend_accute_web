@@ -62,7 +62,8 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
           if(loggedInData.error){ 
             throw new Error(loggedInData.error);     
           }else{ 
-              yield put(signInSuccess(loggedInData.username))
+              console.log(loggedInData)
+              yield put(signInSuccess(loggedInData.user));
           }
         }catch(error){
             yield put(signInFailure(error))

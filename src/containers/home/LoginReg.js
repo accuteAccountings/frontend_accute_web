@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import { Redirect } from 'react-router-dom';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
@@ -40,6 +41,7 @@ class LoginReg extends Component {
       reg_pass:"",
       mob_num:"",
       snackbarOpen:false,
+      formErrors:""
     };
   }
   handleOnChange = e => {
@@ -48,6 +50,23 @@ class LoginReg extends Component {
      [name]: value
     });
    };
+   
+   //validation code for registration form
+   validate=()=>{
+     let checks={...this.state.formErrors};
+     const {full_name,reg_email,reg_pass,mob_num,com_name}=this.state
+     checks.full_name= full_name?"":"this field is required";
+     checks.reg_email= (/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i).test(reg_email)?"": "Email is not valid";
+     checks.com_name= com_name.length!==0?"":"this field is required";
+     checks.mob_num=mob_num.length>9?"":"Minimum 10 numbers required";
+     checks.reg_pass = reg_pass.length>8?"":"minimum length of 8 characters required";
+     
+     this.setState({
+       formErrors:{...checks}
+     })
+     return Object.values(checks).every(x => x =="")
+   }
+
    // for login api call
    handleLoginSubmit = e => {
      e.preventDefault();
@@ -69,7 +88,7 @@ class LoginReg extends Component {
    // for facebook signin api call
   responseFacebook = response => {
     if (!response.accessToken) {
-      this.setState({ facebook: false });
+      this.setState({ facebook: false,loading:false });
     }
     this.setState({loading:true})
     this.props.facebookSignInStart(response);
@@ -89,8 +108,12 @@ class LoginReg extends Component {
         full_name: full_name
       }
     }
+    if(this.validate()){
     this.setState({loading:true})
     this.props.signUpStart(data)
+    }else{
+      alert("Errors on form page");
+    }
    }
 
    // closing the snackbar
@@ -103,6 +126,7 @@ class LoginReg extends Component {
  // resetting the states for next attempt
    resetStates= ()=>{
      setTimeout(()=>{this.setState({ ...this.state,
+      curentUser:"",
       errorMsg:"",
       successMsg:"",
       full_name:"",
@@ -169,10 +193,13 @@ class LoginReg extends Component {
           }      
            { this.state.successMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} anchorOrigin={{  vertical: 'top',
           horizontal: 'center'}}>
-                <Alert onClose={this.handleClose} severity="success">
+                <Alert severity="success">
                     {this.state.successMsg}
                 </Alert>
           </Snackbar>):null 
+          }
+          {//on successful login redirect to main
+           this.state.currentUser?(<Redirect to="/main"/>):null 
           }
    
           <div className="login_body">
@@ -245,24 +272,24 @@ class LoginReg extends Component {
                   <LinearProgress color="secondary" />):null}
                   <form onSubmit={this.handleRegisterSubmit}>
                   <TextField margin="normal"  
-                      variant="outlined"
-                      required
+                      variant="outlined"                    
                       fullWidth
                       id="full_name"
                       label="Full Name"
                       name="full_name"
                       value={this.state.full_name}
                       onChange={this.handleOnChange}
+                      {...(this.state.formErrors.full_name &&{error:true,helperText:this.state.formErrors.full_name})}
                       />
                    <TextField margin="normal"  
-                      variant="outlined"
-                      required
+                      variant="outlined"                     
                       fullWidth
                       id="com_name"
                       label="Company Name"
                       name="com_name"
                       value={this.state.com_name}
                       onChange={this.handleOnChange}
+                      {...(this.state.formErrors.com_name &&{error:true,helperText:this.state.formErrors.com_name})}
                       />
                    <div id="phone_num_input">
                      <div>
@@ -274,30 +301,29 @@ class LoginReg extends Component {
                       </select>
                       </div>
                       <TextField margin="normal"                      
-                      variant="outlined"
-                      required       
+                      variant="outlined"                            
                       id="mob_num"
                       label="Mobile No."
                       name="mob_num"
                       value={this.state.mob_num}
                       onChange={this.handleOnChange}
+                      {...(this.state.formErrors.mob_num &&{error:true,helperText:this.state.formErrors.mob_num})}
                       /> 
                     
                   </div>
                   <TextField margin="normal"  
-                      variant="outlined"
-                      required
+                      variant="outlined"                     
                       fullWidth
                       id="email"
                       label="Enter User Id / E-mail"
                       name="reg_email"
                       value={this.state.reg_email}
                       onChange={this.handleOnChange}
+                      {...(this.state.formErrors.reg_email &&{error:true,helperText:this.state.formErrors.reg_email})}
                       />
                    
                     <TextField margin="normal"
-                      variant="outlined"
-                      required
+                      variant="outlined"                   
                       fullWidth
                       name="reg_pass"
                       label="Password"
@@ -305,6 +331,7 @@ class LoginReg extends Component {
                       id="reg_pass"
                       value={this.state.reg_pass}
                       onChange={this.handleOnChange}
+                      {...(this.state.formErrors.reg_pass &&{error:true,helperText:this.state.formErrors.reg_pass})}
                     />
                  
                   <div>
@@ -334,7 +361,7 @@ class LoginReg extends Component {
                   </button>
                 )}
                 onSuccess={this.responseGoogle}
-                onFailure={()=>this.setState({google:false})}
+                onFailure={()=>this.setState({google:false,loading:false})}
                 cookiePolicy={"single_host_origin"}
               />
               <FacebookLogin
