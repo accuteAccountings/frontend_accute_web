@@ -1,11 +1,17 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import SampleUserPic from "assets/icons/user.svg"
 import Button from "components/Button";
 import {getData} from "helper/Fetch"
 
 export default function UserProfile() {
 
-console.log(getData("/api/profile/details"))
+const [UserDetails , setUserDetails] = useState(false)
+
+useEffect(()=>{
+
+})
+
+
 
     return (
       <div className="profile_con">

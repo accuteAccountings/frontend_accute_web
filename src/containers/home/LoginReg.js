@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
-import lod from "assets/icons/refresh.svg";
+import lod from "assets/icons/refreshWhite.svg";
 
 class LoginReg extends Component {
   login = () => {
@@ -66,7 +66,7 @@ class LoginReg extends Component {
     })
       .then(res => res.json())
       .then(parJson => {
-        if (parJson.username) {
+        if (parJson.user) {
           window.location.href = "/agency";
         } else if (parJson.error) {
           this.showError();
