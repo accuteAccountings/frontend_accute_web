@@ -3,19 +3,31 @@ import SampleUserPic from "assets/icons/user.svg"
 import Button from "components/Button";
 import {getData} from "helper/Fetch"
 
-export default function UserProfile() {
 
-const [UserDetails , setUserDetails] = useState(false)
+export default class UserProfile extends React.Component {
 
-useEffect(()=>{
-
-})
+constructor(props){
 
 
+super(props)
+this.state = {
+userDetails:null}
+this.getD()
 
+
+}
+
+getD = async ()=>{
+const Data = await  getData("/api/profile/details")
+this.setState({userDetails:Data})
+
+
+}
+
+render(){
     return (
       <div className="profile_con">
-        {true && 
+        {this.state.userDetails && 
         <div className="profile_details_con">
           <img
             className="profile_img"
@@ -26,8 +38,8 @@ useEffect(()=>{
             <div className="top_details_con">
               <div className="top_details_left_con">
                 <div>
-                  <span className="account_name">{"TUshar"}</span>
-                  <span className="account_id">{"#f4tr34"}</span>
+                  <span className="account_name">{this.state.userDetails.full_name}</span>
+                  <span className="account_id">{"#"+this.state.userDetails.id }</span>
                 </div>
                 <div>
                   <span className="account_company"></span>
@@ -36,45 +48,46 @@ useEffect(()=>{
               <div className="top_details_right_con">
                 <div>
                   <label>Member Since : </label>
-                  {"sadfads"}
+                  {this.state.userDetails.createdAt.slice(0,10)}
                 </div>
-                <div>{"fasdf"}</div>
+                <div></div>
               </div>
             </div>
             <div className="mid_details_con">
               <div>
                 <span>
-                  <label>Age : </label> 56
+                  <label>Age : </label> {this.state.userDetails.age}
                 </span>
                 <span>
-                  <label>Gender : </label> Male
-                </span>
-              </div>
-              <div>
-                <span>
-                  <label>Address : </label> {"fasdf"}
+                  <label>Gender : </label> {this.state.userDetails.gender}
                 </span>
               </div>
               <div>
                 <span>
-                  <label>Mobile : </label> {"usraedf"}
-                </span>
-                <span>
-                  <label>Email : </label> {"Users"}
+                  <label>Address : </label> {this.state.userDetails.address}
                 </span>
               </div>
               <div>
                 <span>
-                  <label>GST No. : </label> VHDAOCI94324234
+                  <label>Mobile : </label> {this.state.userDetails.phone_num}
+                </span>
+                <span>
+                  <label>Email : </label> {this.state.userDetails.email}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <label>GST No. : </label> {this.state.userDetails.gst_num}
                 </span>
               </div>
             </div>
             <div className="bottom_details_con">
-              <Button type="blue">Active</Button>
-              <Button type="green">Send Message</Button>
+                <Button onClick={()=>{alert(this.state.userDetails)}} type="blue">Edit Details</Button>
+              <Button type="green">Settings</Button>
             </div>
           </div>
         </div> }
       </div>
     );
   }
+          }
