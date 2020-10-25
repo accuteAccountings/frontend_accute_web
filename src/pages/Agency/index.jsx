@@ -10,6 +10,8 @@ import NavSec from "containers/agency/NavSec"
 import Accountings from './Accountings.jsx'
 import Trash from './Trash.jsx'
 import Transactions from './Transactions.jsx'
+import Account_pro from 'containers/agency/Account_profile'
+import DailyBook from 'containers/agency/DailyBook'
 
 export default function Routes() {
   return (
@@ -24,11 +26,13 @@ export default function Routes() {
           <TopBar />
           <Route path="/agency/dashboard" component={Dashboard}/>
           <Route path="/agency/agency" component={Agency}/>
-          <Route path="/agency/reports" component={()=>(<NavSec  navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />)} />
+          {/* <Route path="/agency/reports" component={()=>(<NavSec  navItems={["Challen Reg.", "Daily Book ", "Ledger"]} />)} /> */}
           <Route path="/agency/accountings" component={Accountings}/>
           <Route path="/agency/trash" component={Trash}/>
           <Route path="/agency/transactions" component={Transactions}/>
           <Route path="/agency/my-profile" component={UserProfile}/>
+          <Route path="/agency/acc-profile/:id" component={Account_pro} exact = {true}/>
+          <Route path="/agency/reports" component={DailyBook} exact = {true}/>
         </div>
        </div>
       </Switch>

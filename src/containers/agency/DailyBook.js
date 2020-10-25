@@ -227,13 +227,23 @@ number_payments = () => {
         return t;
 }
 
+getAccounts = () => {
+  fetch("/api/accounts?mode=newest", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    }
+  })
+}
+
   constructor(props) {
     super(props);
 
     this.getSales()
     this.getPayment()
     this.Account_data()
-    this.props.getAccounts()
+    this.getAccounts()
 
     fetch('/api/accounts').then((res) => res.json())
     .then((data) => {

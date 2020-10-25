@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'components/Button'
 
+
 class Commission extends React.Component{
 
     state = {
