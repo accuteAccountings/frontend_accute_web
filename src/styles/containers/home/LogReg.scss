@@ -18,7 +18,8 @@
   top: 50vh;
   transform: translate(-50%, -50%);
   height:auto;
-  overflow:scroll;
+  overflow-y:scroll;
+  padding-right:20px;
   max-height: 100vh;
   width: 800px;
   background: white 0% 0% no-repeat padding-box;
@@ -166,10 +167,11 @@ button:focus {
   }
 
   #c_code {
-    height:60px;
+    height:47px;
     width: 70px;
     margin-top:9px;
     border: solid 1px grey;
+    border-radius:5px;
     background-color:white;
     margin-right: 3px;
   }
