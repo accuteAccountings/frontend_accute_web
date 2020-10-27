@@ -169,14 +169,7 @@ class LoginReg extends Component {
     
     return (
       <div className="log_reg">
-        <div className="overlay_home" onClick={this.props.remLogReg} />
-
-        <div className="logReg">
-          <div className="login_head">
-            <h1>Accute Accountings</h1>
-            <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
-          </div>
-         {this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+{this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
           anchorOrigin={{  vertical: 'top',
           horizontal: 'center'}}>
                 <Alert  severity="error">
@@ -191,7 +184,15 @@ class LoginReg extends Component {
                 </Alert>
           </Snackbar>):null 
           }
-          {//on successful login redirect to main
+
+        <div className="overlay_home" onClick={this.props.remLogReg} />
+
+        <div className="logReg">
+          <div className="login_head">
+            <h1>Accute Accountings</h1>
+            <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
+          </div>
+                   {//on successful login redirect to main
            this.state.currentUser?(<Redirect to="/agency"/>):null 
           }
    
@@ -302,6 +303,7 @@ class LoginReg extends Component {
                       </div>
                       <TextField margin="normal"                      
                       variant="outlined"                            
+                      fullWidth
                       id="mob_num"
                       label="Mobile No."
                       name="mob_num"
