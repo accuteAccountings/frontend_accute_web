@@ -1204,27 +1204,27 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Gross Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.grossAmt}</strong>
+                  <strong>₹{this.state.grossAmt.toFixed(2)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Discount :</td>
                 <td className="bold">
                   <strong>
-                    {"-"}₹{this.state.disAmt}
+                    {"-"}₹{this.state.disAmt.toFixed(2)}
                   </strong>
                 </td>
               </tr>
               <tr>
                 <td> GST ({this.state.gst}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gstAmt}</strong>
+                  <strong>₹{this.state.gstAmt.toFixed(2)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{this.state.totalAmt}</strong>
+                  <strong> ₹{this.state.totalAmt.toFixed(2)}</strong>
                 </td>
               </tr>
               {this.state.discontArr.map((ele, i) => {
@@ -1246,14 +1246,14 @@ if (!document.getElementById("vouch_sup").value) {
                       >
                         +
                       </span>
-                      {ele.type} {ele.type !== "Less" && ` (${ele.value}%)`}
+                      {ele.type} {ele.type !== "Less" && ` (${parseInt(ele.value)}%)`}
                     </td>
                     <td className="bold">
                       <strong>
                         {"-"}
                         {"₹"}
-                        {ele.type !== "Less" && ele.amt}
-                        {ele.type === "Less" && ele.value}
+                        {ele.type !== "Less" && parseFloat(ele.amt).toFixed(2)}
+                        {ele.type === "Less" && parseFloat(ele.value).toFixed(2)}
                       </strong>
                     </td>
                   </tr>
@@ -1294,7 +1294,7 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Total Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.mainAmnt}</strong>
+                  <strong>₹{this.state.mainAmnt.toFixed(2)}</strong>
                 </td>
               </tr>
             </table>
@@ -1330,7 +1330,7 @@ if (!document.getElementById("vouch_sup").value) {
                   onClick={e => {
                     let a = {
                       type: document.getElementById("add_dis_discount_type").value,
-                      value: document.getElementById("add_discount_input").value
+                      value: parseFloat(document.getElementById("add_discount_input").value).toFixed(2)
                     };
                     if (a.value === "") {
                       return;
@@ -1375,7 +1375,7 @@ if (!document.getElementById("vouch_sup").value) {
                     onClick={() => {
                       let a = {
                         remark: document.getElementById("add_freight_remark_input").value,
-                        value: document.getElementById("add_freight_input").value
+                        value:parseFloat(document.getElementById("add_freight_input").value).toFixed(2)
                       };
                       if (a.value === "") {
                         return;
