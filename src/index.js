@@ -6,7 +6,7 @@ import {PersistGate} from 'redux-persist/integration/react'
 import "styles/index.scss";
 import Routes from "./routes";
 import {store , persistor} from './redux/store'
-//test
+//test2
 ReactDOM.render(
     <Provider store = {store}>
         <Routes />
