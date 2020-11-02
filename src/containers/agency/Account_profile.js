@@ -325,7 +325,7 @@ export default class Account_pro extends React.Component {
                     <div className="acc_pro_detail_heading">
                       Bank Name, Branch
                       <br />
-                      <span className="acc_pro_details_value">{`${this.state.account.Bank_Name}, ${this.state.account.Bank_Branch}`}</span>
+                      <span className="acc_pro_details_value">{this.state.account.Bank_Name?(`${this.state.account.Bank_Name}, ${this.state.account.Bank_Branch}`):""}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
                       IIFC Code
