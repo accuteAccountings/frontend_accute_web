@@ -5,18 +5,10 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { Redirect } from 'react-router-dom';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import {createStructuredSelector} from 'reselect';
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
-import lod from "assets/icons/refresh.svg";
-import {selectCurrentUser,selectError} from '../../redux/login_reg/login_reg.selectors';
 import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
-
 
 class LoginReg extends Component {
 
@@ -56,17 +48,19 @@ class LoginReg extends Component {
      let checks={...this.state.formErrors};
      const {full_name,reg_email,reg_pass,mob_num,com_name}=this.state
      checks.full_name= full_name?"":"this field is required";
-     checks.reg_email= (/^w+[+.w-]*@([w-]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i).test(reg_email)?"": "Email is not valid";
+     checks.reg_email= (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i).test(reg_email)?"": "email is not valid";
      checks.com_name= com_name.length!==0?"":"this field is required";
-     checks.mob_num=mob_num.length>9?"":"Minimum 10 numbers required";
-     checks.reg_pass = reg_pass.length>8?"":"minimum length of 8 characters required";
+     checks.mob_num=mob_num.length>9?"":"minimum 10 digits required";
+     checks.reg_pass = reg_pass.length>=8?"":"minimum length of 8 characters required";
      
      this.setState({
        formErrors:{...checks}
      })
      return Object.values(checks).every(x => x =="")
    }
-
+   resetFormErrors = () => {
+  setTimeout(()=>this.setState({formErrors:{}}),5000);
+  }
    // for login api call
    handleLoginSubmit = e => {
      e.preventDefault();
@@ -112,8 +106,6 @@ class LoginReg extends Component {
     if(this.validate()){
     this.setState({loading:true})
     this.props.signUpStart(data)
-    }else{
-      alert("Errors on form page");
     }
    }
 
@@ -177,14 +169,7 @@ class LoginReg extends Component {
     
     return (
       <div className="log_reg">
-        <div className="overlay_home" onClick={this.props.remLogReg} />
-
-        <div className="logReg">
-          <div className="login_head">
-            <h1>Accute Accountings</h1>
-            <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
-          </div>
-         {this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+{this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
           anchorOrigin={{  vertical: 'top',
           horizontal: 'center'}}>
                 <Alert  severity="error">
@@ -199,7 +184,15 @@ class LoginReg extends Component {
                 </Alert>
           </Snackbar>):null 
           }
-          {//on successful login redirect to main
+
+        <div className="overlay_home" onClick={this.props.remLogReg} />
+
+        <div className="logReg">
+          <div className="login_head">
+            <h1>Accute Accountings</h1>
+            <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
+          </div>
+                   {//on successful login redirect to main
            this.state.currentUser?(<Redirect to="/agency"/>):null 
           }
    
@@ -231,8 +224,9 @@ class LoginReg extends Component {
                       name="email"
                       value={this.state.email}
                       onChange={this.handleOnChange}
+                      size="small"
                       />
-                   
+                   <div className="margin"></div>
                     <TextField
                       variant="outlined"
                       margin="normal"
@@ -244,6 +238,7 @@ class LoginReg extends Component {
                       id="password"
                       value={this.state.password}
                       onChange={this.handleOnChange}
+                      size="small"
                     />
                  
                     <br/>
@@ -251,10 +246,11 @@ class LoginReg extends Component {
                      {" "}
                      forgot password?
                     </a>
-
+                    <div className="margin"></div>   
                     <button type="submit" className="loginBtn btnbtn">
                      Login
                     </button>
+                    <div className="margin"></div>
                   </form>
                 </div>
               ) : (
@@ -281,7 +277,9 @@ class LoginReg extends Component {
                       value={this.state.full_name}
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.full_name &&{error:true,helperText:this.state.formErrors.full_name})}
+                        size="small"
                       />
+                      <div className="margin"></div>
                    <TextField margin="normal"  
                       variant="outlined"                     
                       fullWidth
@@ -291,7 +289,9 @@ class LoginReg extends Component {
                       value={this.state.com_name}
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.com_name &&{error:true,helperText:this.state.formErrors.com_name})}
+                        size="small"
                       />
+                    <div className="margin"></div>
                    <div id="phone_num_input">
                      <div>
                      <select name="c_code" defaultValue={this.state.c_code} id="c_code" autoComplete="country-code">
@@ -303,15 +303,18 @@ class LoginReg extends Component {
                       </div>
                       <TextField margin="normal"                      
                       variant="outlined"                            
+                      fullWidth
                       id="mob_num"
                       label="Mobile No."
                       name="mob_num"
                       value={this.state.mob_num}
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.mob_num &&{error:true,helperText:this.state.formErrors.mob_num})}
+                        size="small"
                       /> 
                     
                   </div>
+                  <div className="margin"></div>
                   <TextField margin="normal"  
                       variant="outlined"                     
                       fullWidth
@@ -321,8 +324,9 @@ class LoginReg extends Component {
                       value={this.state.reg_email}
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.reg_email &&{error:true,helperText:this.state.formErrors.reg_email})}
+                        size="small"
                       />
-                   
+                      <div className="margin"></div>
                     <TextField margin="normal"
                       variant="outlined"                   
                       fullWidth
@@ -333,16 +337,20 @@ class LoginReg extends Component {
                       value={this.state.reg_pass}
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.reg_pass &&{error:true,helperText:this.state.formErrors.reg_pass})}
+                      size="small"
                     />
                  
                   <div>
+                  <div className="margin"></div>
                   <a className="forget_pass" href="#">
-                    forget password ?{" "}
+                    forgot password ?{" "}
                   </a>
                   </div>
+                  <div className="margin"></div>
                   <button type="submit" className="loginBtn btnbtn">
                    Register
                   </button>
+                  <div className="margin"></div>
                   </form>
                 </div>
               )}
@@ -411,3 +419,6 @@ const mapDispatchToProps = dispatch => {
 
 
 export default connect(mapStateToProps , mapDispatchToProps)(LoginReg)
+
+
+

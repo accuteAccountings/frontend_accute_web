@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Button({ type, children }) {
+export default function Button({ type, children,onHandleClick }) {
   return (
     <button
       className={
@@ -8,6 +8,7 @@ export default function Button({ type, children }) {
         (type === "red" && "red_btn btn") ||
         (type === "blue" && "blue_btn btn")
       }
+      onClick={onHandleClick}
     >
       {children}
     </button>
