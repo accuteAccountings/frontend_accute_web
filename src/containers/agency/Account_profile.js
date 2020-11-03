@@ -4,7 +4,9 @@ import pencil from "assets/icons/pencil.svg";
 import back from "assets/icons/camera-back.svg";
 import Ledger from "containers/agency/Ledger_Account";
 import Report_pro from "containers/agency/Report_Acc_pro";
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import Popup from '../../components/Popup';
+import AccountProfileEditForm from "./AccountProfileEditForm";
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {
@@ -172,7 +174,9 @@ export default class Account_pro extends React.Component {
         }
       });
   }
-
+  setOpenEditModal=(open) => {
+    this.setState({openEditModal:open})
+  }
   constructor(props) {
     super(props);
 
@@ -182,10 +186,14 @@ export default class Account_pro extends React.Component {
       bal: [],
       temp_det2: [],
       account : null,
-      val : "acc_det"
+      val : "acc_det",
+      openEditModal:false
     };
   }
-
+  // reset account info on update
+  resetProfileOnUpdate=(savedAccount)=>{
+    this.setState({account:savedAccount,openEditModal:false})
+  }
    componentDidMount(){
 
     const { id } = this.props.match.params;
@@ -261,10 +269,13 @@ export default class Account_pro extends React.Component {
               <div className="acc_pro_right_lower">
                 <div className="acc_pro_right_heading">
                   <div>BASIC DETAILS</div>
-                  <div className="acc_pro_right_edit">
+                  <div className="acc_pro_right_edit" onClick={()=>this.setOpenEditModal(true)}>
                     <img src={pencil} />
                   </div>
                 </div>
+                <Popup  openPopup={this.state.openEditModal} title="Edit Account Details" setOpenEditModal={this.setOpenEditModal}>
+                  <AccountProfileEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} account={this.state.account}/>
+                </Popup>
                 <div className="acc_pro_right_details">
                   <div className="acc_pro_detail_heading">
                     <span>Phone</span>
@@ -297,7 +308,7 @@ export default class Account_pro extends React.Component {
                       <span className="acc_pro_details_value">{this.state.account.gst_num}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
-                      Adhaar No.
+                      Aadhar No.
                       <br />
                       <span className="acc_pro_details_value">{this.state.account.aadhar_num}</span>
                     </div>
@@ -309,22 +320,22 @@ export default class Account_pro extends React.Component {
                     <div className="acc_pro_detail_heading">
                       Account No.
                       <br />
-                      <span className="acc_pro_details_value" />
+                      <span className="acc_pro_details_value">{this.state.account.Bank_Acc_Num}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
-                      Bank Name , Branch
+                      Bank Name, Branch
                       <br />
-                      <span className="acc_pro_details_value">State Bnak of India , karnal haryana</span>
+                      <span className="acc_pro_details_value">{this.state.account.Bank_Name?(`${this.state.account.Bank_Name}, ${this.state.account.Bank_Branch}`):""}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
                       IIFC Code
                       <br />
-                      <span className="acc_pro_details_value">BTVPN9211R</span>
+                      <span className="acc_pro_details_value">{this.state.account.IIFC_Code}</span>
                     </div>
                     <div className="acc_pro_detail_heading">
                       Remarks
                       <br />
-                      <span className="acc_pro_details_value">BTVPN9211R</span>
+                      <span className="acc_pro_details_value">{this.state.account.Remarks}</span>
                     </div>
                   </div>
                 </div>
