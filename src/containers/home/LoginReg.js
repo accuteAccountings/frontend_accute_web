@@ -4,11 +4,17 @@ import TextField from '@material-ui/core/TextField';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import { Redirect } from 'react-router-dom';
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+
 
 class LoginReg extends Component {
 
@@ -28,7 +34,7 @@ class LoginReg extends Component {
       email:"",
       password:"",
       com_name:"",
-      c_code:"+91",
+      c_code:"",
       reg_email:"",
       reg_pass:"",
       mob_num:"",
@@ -119,12 +125,10 @@ class LoginReg extends Component {
  // resetting the states for next attempt
    resetStates= ()=>{
      setTimeout(()=>{this.setState({ ...this.state,
-      curentUser:"",
+      curentUser:"",    
       errorMsg:"",
       successMsg:"",
       full_name:"",
-      email:"",
-      password:"",
       com_name:"",
       mob_num:"",
       c_code:"+91",
@@ -143,17 +147,42 @@ class LoginReg extends Component {
   //only receive the props when different from previous value
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUser !== nextProps.currentUser ) {
-        this.setState({
-            currentUser: nextProps.currentUser,
-            loading:false
-        });
-    }
-    if (this.props.errorMsg !== nextProps.errorNsg ) {
       this.setState({
-        errorMsg: nextProps.errorMsg,
-        loading:false,
-        snackbarOpen:true
-      },()=>this.resetStates());
+          currentUser: nextProps.currentUser,
+          loading:false
+      });
+  }
+    if (this.props.errorMsg !== nextProps.errorMsg ) {
+      if(nextProps.errorMsg!==null){
+        if(nextProps.errorMsg.localeCompare("username not found")===0){
+          console.log("username-password reset",nextProps.errorMsg)
+          this.setState({  errorMsg: nextProps.errorMsg,
+            loading:false,
+            snackbarOpen:true,email:"",password:""},()=>setTimeout(()=>this.props.resetErrorMessage(),3000))
+        }
+        if(nextProps.errorMsg.localeCompare("Password is incorrect")===0){
+          console.log("password reset",nextProps.errorMsg)
+          this.setState({  errorMsg: nextProps.errorMsg,
+            loading:false,
+            snackbarOpen:true,password:""},()=>setTimeout(()=>this.props.resetErrorMessage(),3000))
+         }
+      }
+      else{
+        this.setState({
+          errorMsg: nextProps.errorMsg,
+          loading:false,
+          snackbarOpen:true
+        },()=>this.resetStates());
+      }
+    }
+    // if (this.props.errorMsg !== nextProps.errorMsg) {        
+    //      this.setState({
+    //         errorMsg: nextProps.errorMsg,
+    //         loading:false,
+    //         snackbarOpen:true
+    //       },()=>this.resetStates());
+    // }
+
 
       if (this.props.successMsg !== nextProps.successMsg ) {
         this.setState({
@@ -163,13 +192,15 @@ class LoginReg extends Component {
         });
     }
   }
-}
+
+
 
   render() {
     
     return (
       <div className="log_reg">
-{this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
+    
+      {this.state.errorMsg?(<Snackbar open={this.state.snackbarOpen} autoHideDuration={3000} onClose={this.handleClose} 
           anchorOrigin={{  vertical: 'top',
           horizontal: 'center'}}>
                 <Alert  severity="error">
@@ -192,7 +223,7 @@ class LoginReg extends Component {
             <h1>Accute Accountings</h1>
             <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
           </div>
-                   {//on successful login redirect to main
+           {//on successful login redirect to main
            this.state.currentUser?(<Redirect to="/agency"/>):null 
           }
    
@@ -292,15 +323,32 @@ class LoginReg extends Component {
                         size="small"
                       />
                     <div className="margin"></div>
-                   <div id="phone_num_input">
+                   <div style={{display:"flex"}}>
                      <div>
-                     <select name="c_code" defaultValue={this.state.c_code} id="c_code" autoComplete="country-code">
+                     <select name="c_code" defaultValue={this.state.c_code} id="c_code" autoComplete="country-code" onChange={this.handleOnChange}>
                         <option value="+91">+91 </option>
                         <option value="+1">+1</option>
                         <option value="+12">+12 </option>
                         <option value="+55">+55</option>
                       </select>
                       </div>
+                      {/* <FormControl variant="outlined" style={{width:"50%", margin:"8px 5px 0 0"}}>
+                        <InputLabel>Code</InputLabel>
+                        <Select
+                          name="c_code"
+                          value={this.state.c_code}
+                          onChange={this.handleOnChange}
+                          label="Code"
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value={"+91"}>+91</MenuItem>
+                          <MenuItem value={"+1"}>+1</MenuItem>
+                          <MenuItem value={"+12"}>+12</MenuItem>
+                          <MenuItem value={"+55"}>+55</MenuItem>
+                        </Select>
+                      </FormControl> */}
                       <TextField margin="normal"                      
                       variant="outlined"                            
                       fullWidth

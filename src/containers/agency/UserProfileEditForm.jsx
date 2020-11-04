@@ -143,7 +143,8 @@ class UserProfileEditForm extends React.Component{
                 label="Edit Address"
                 name="address"
                 size="small"
-                value={address}   
+                value={address} 
+                onChange={this.handleOnChange}  
                 />
  
               <div style={{display:"flex",justifyContent:"space-between"}}>
