@@ -307,11 +307,27 @@ button:focus {
   }
   .forget_pass {
     font-size: 0.8rem;
+    color:#2699fb;
     float: right;
     align-self: center;
     margin-left: -240px;
     margin-top: 10px;
+    &:hover { 
+      cursor: pointer;
+      color:#2071db;
+     }
   }
+  
+  .re_login{
+    font-size: 1rem;
+    color:#2699fb;
+    margin-top: 5px;
+    &:hover { 
+      cursor: pointer;
+      color:#2071db;
+     }
+  }
+  
 
   button {
     margin-top: 30px;

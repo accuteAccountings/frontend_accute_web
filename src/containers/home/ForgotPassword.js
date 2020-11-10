@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -159,16 +160,17 @@ const ForgotPassword = (props)=> {
                       onChange={e=>setUserOtp(e.target.value)}
                       size="small"
                       />
-                      <div>An otp is sent at tour email . <a href = "#" onClick = {this.SendMail} >Resend</a></div>
+                      <div>An otp is sent at tour email . <p className="forget_pass" onClick = {this.SendMail} >Resend</p></div>
                       <button type="submit">Submit</button>
                       </form>
             )):(
               verified?(
               <div>
-                Password Reset Successful!
-                <a href= "#" onClick = {props.forgotReset}>
-                  Login
-                </a>
+                 <p>Password Reset Successful! 
+                 <span className="re_login" onClick={props.forgotReset}>
+                 &nbsp;Try Logging in
+                </span>
+                </p>
               </div>
 
               ):(
