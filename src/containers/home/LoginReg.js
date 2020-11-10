@@ -9,6 +9,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+import ForgotPassword from "./ForgotPassword";
 
 class LoginReg extends Component {
 
@@ -33,7 +34,8 @@ class LoginReg extends Component {
       reg_pass:"",
       mob_num:"",
       snackbarOpen:false,
-      formErrors:""
+      formErrors:"",
+      forgot:false
     };
   }
   handleOnChange = e => {
@@ -159,7 +161,8 @@ class LoginReg extends Component {
         this.setState({
           successMsg: nextProps.successMsg,
           loading:false,
-          isLog:true
+          isLog:true,
+          snackbarOpen:true
         });
     }
   }
@@ -201,6 +204,7 @@ class LoginReg extends Component {
 
             <div className="login_body_left">
               {this.state.isLog ? (
+                this.state.forgot?(<ForgotPassword forgotReset={()=>this.setState({forgot:false})} />):(
                 <div className="login_cont" id="log_in_content">
                   <div className="login_cont_head">
                     <h2>Login</h2>
@@ -242,17 +246,17 @@ class LoginReg extends Component {
                     />
                  
                     <br/>
-                    <a className="forget_pass" href="#">
+                    <p className="forget_pass" onClick={()=>this.setState({forgot:true})}>
                      {" "}
                      forgot password?
-                    </a>
+                    </p>
                     <div className="margin"></div>   
                     <button type="submit" className="loginBtn btnbtn">
                      Login
                     </button>
                     <div className="margin"></div>
                   </form>
-                </div>
+                </div>)
               ) : (
                 <div className="login_cont" id="sign_up_content">
                   <div className="login_cont_head">
