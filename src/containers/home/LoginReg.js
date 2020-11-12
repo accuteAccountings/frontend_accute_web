@@ -65,7 +65,8 @@ class LoginReg extends Component {
   }
    // for login api call
    handleLoginSubmit = e => {
-     e.preventDefault();
+    //  e.preventDefault();
+    
      const {email,password}= this.state;
      let data= {
         email, 
@@ -93,7 +94,6 @@ class LoginReg extends Component {
 
    // for registration api call
    handleRegisterSubmit = e =>{
-     e.preventDefault();
      const {reg_email,reg_pass,full_name,com_name,c_code,mob_num}=this.state;
      let data = {
       user: {
@@ -168,6 +168,14 @@ class LoginReg extends Component {
   }
 }
 
+handleEnter = (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    this.handleLoginSubmit()
+  }
+}
+
+
   render() {
     
     return (
@@ -218,7 +226,10 @@ class LoginReg extends Component {
                   </div>
                  { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={this.handleLoginSubmit}>
+                  <form onSubmit={(e) => {
+                    e.preventDefault()
+                    this.handleLoginSubmit()
+                  }}>
                     <TextField  margin="normal"
                       variant="outlined"
                       required
@@ -228,8 +239,11 @@ class LoginReg extends Component {
                       name="email"
                       value={this.state.email}
                       onChange={this.handleOnChange}
+                      autoComplete ="new-password"
+                      onKeyDown = {this.handleEnter}
                       size="small"
                       />
+
                    <div className="margin"></div>
                     <TextField
                       variant="outlined"
@@ -243,6 +257,8 @@ class LoginReg extends Component {
                       value={this.state.password}
                       onChange={this.handleOnChange}
                       size="small"
+                      onKeyDown = {this.handleEnter}
+          
                     />
                  
                     <br/>
@@ -251,7 +267,7 @@ class LoginReg extends Component {
                      forgot password?
                     </p>
                     <div className="margin"></div>   
-                    <button type="submit" className="loginBtn btnbtn">
+                    <button type="submit" className="loginBtn btnbtn" >
                      Login
                     </button>
                     <div className="margin"></div>
@@ -271,7 +287,10 @@ class LoginReg extends Component {
                   </div>
                   { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={this.handleRegisterSubmit}>
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleRegisterSubmit()
+                  }}>
                   <TextField margin="normal"  
                       variant="outlined"                    
                       fullWidth
@@ -342,6 +361,12 @@ class LoginReg extends Component {
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.reg_pass &&{error:true,helperText:this.state.formErrors.reg_pass})}
                       size="small"
+                      onKeyDown = {(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          this.handleRegisterSubmit()
+                        }
+                      }}
                     />
                  
                   <div>

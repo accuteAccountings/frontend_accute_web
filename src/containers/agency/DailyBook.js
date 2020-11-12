@@ -363,7 +363,7 @@ getAccounts = () => {
                   return(
                     <User_Det 
                     id = {i + 1}
-                    acc = {e.acc_name}
+                    acc = {e.acc_real_name}
                     city = {e.address_line1}
                     payment = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
                     balance = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
@@ -461,7 +461,7 @@ const User_Det = (props) => {
       await props.setAccProfile('ledger')
       await props.navTo('accounting')
       
-    }}><span>Open Ledge</span></div>
+    }}><span>Open Ledger</span></div>
   </div>
   )
 }
