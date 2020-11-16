@@ -9,6 +9,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
 import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+import ForgotPassword from "./ForgotPassword";
 
 class LoginReg extends Component {
 
@@ -33,7 +34,8 @@ class LoginReg extends Component {
       reg_pass:"",
       mob_num:"",
       snackbarOpen:false,
-      formErrors:""
+      formErrors:"",
+      forgot:false
     };
   }
   handleOnChange = e => {
@@ -63,7 +65,8 @@ class LoginReg extends Component {
   }
    // for login api call
    handleLoginSubmit = e => {
-     e.preventDefault();
+    //  e.preventDefault();
+    
      const {email,password}= this.state;
      let data= {
         email, 
@@ -91,7 +94,6 @@ class LoginReg extends Component {
 
    // for registration api call
    handleRegisterSubmit = e =>{
-     e.preventDefault();
      const {reg_email,reg_pass,full_name,com_name,c_code,mob_num}=this.state;
      let data = {
       user: {
@@ -159,11 +161,20 @@ class LoginReg extends Component {
         this.setState({
           successMsg: nextProps.successMsg,
           loading:false,
-          isLog:true
+          isLog:true,
+          snackbarOpen:true
         });
     }
   }
 }
+
+handleEnter = (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    this.handleLoginSubmit()
+  }
+}
+
 
   render() {
     
@@ -201,6 +212,7 @@ class LoginReg extends Component {
 
             <div className="login_body_left">
               {this.state.isLog ? (
+                this.state.forgot?(<ForgotPassword forgotReset={()=>this.setState({forgot:false})} />):(
                 <div className="login_cont" id="log_in_content">
                   <div className="login_cont_head">
                     <h2>Login</h2>
@@ -214,7 +226,10 @@ class LoginReg extends Component {
                   </div>
                  { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={this.handleLoginSubmit}>
+                  <form onSubmit={(e) => {
+                    e.preventDefault()
+                    this.handleLoginSubmit()
+                  }}>
                     <TextField  margin="normal"
                       variant="outlined"
                       required
@@ -224,8 +239,11 @@ class LoginReg extends Component {
                       name="email"
                       value={this.state.email}
                       onChange={this.handleOnChange}
+                      autoComplete ="new-password"
+                      onKeyDown = {this.handleEnter}
                       size="small"
                       />
+
                    <div className="margin"></div>
                     <TextField
                       variant="outlined"
@@ -239,20 +257,22 @@ class LoginReg extends Component {
                       value={this.state.password}
                       onChange={this.handleOnChange}
                       size="small"
+                      onKeyDown = {this.handleEnter}
+          
                     />
                  
                     <br/>
-                    <a className="forget_pass" href="#">
+                    <p className="forget_pass" onClick={()=>this.setState({forgot:true})}>
                      {" "}
                      forgot password?
-                    </a>
+                    </p>
                     <div className="margin"></div>   
-                    <button type="submit" className="loginBtn btnbtn">
+                    <button type="submit" className="loginBtn btnbtn" >
                      Login
                     </button>
                     <div className="margin"></div>
                   </form>
-                </div>
+                </div>)
               ) : (
                 <div className="login_cont" id="sign_up_content">
                   <div className="login_cont_head">
@@ -267,7 +287,10 @@ class LoginReg extends Component {
                   </div>
                   { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={this.handleRegisterSubmit}>
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleRegisterSubmit()
+                  }}>
                   <TextField margin="normal"  
                       variant="outlined"                    
                       fullWidth
@@ -338,6 +361,12 @@ class LoginReg extends Component {
                       onChange={this.handleOnChange}
                       {...(this.state.formErrors.reg_pass &&{error:true,helperText:this.state.formErrors.reg_pass})}
                       size="small"
+                      onKeyDown = {(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          this.handleRegisterSubmit()
+                        }
+                      }}
                     />
                  
                   <div>
