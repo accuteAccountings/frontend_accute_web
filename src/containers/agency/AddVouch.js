@@ -1,4 +1,9 @@
 import React from "react";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from "@material-ui/core/styles";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
 import cross from "assets/icons/cancel.svg";
@@ -21,7 +26,19 @@ async function postData(url = "", data, m) {
   });
   return response.json(); // parses JSON response into native JavaScript objects
 }
-
+const styles = theme => ({
+  select: {
+      height:"30px",  
+      '&:before': {
+        borderRadius:"none",
+        borderColor: '#000000',
+    },
+    '&:hover:not(.Mui-disabled):before': {
+      borderRadius:"none",
+        borderColor: '#000000',
+    }
+  }
+});
 class AddVouch extends React.Component {
   enterError = id => {
     document.getElementById(id).style.borderColor = "red";
@@ -585,7 +602,8 @@ if (!document.getElementById("vouch_sup").value) {
       discontArr: [],
       dicountType: "Less",
       mainAmnt: 0,
-      freightArr: []
+      freightArr: [],
+      which:"pv"
     };
     this.getProducts();
     this.getAccounts();
@@ -642,7 +660,7 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className="vouch_si">
                     <span>Type</span>
                     <br />
-                    <select name="vouch_type" disabled id="vouch_type">
+                    {/* <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
                         Purchase
                       </option>
@@ -652,7 +670,25 @@ if (!document.getElementById("vouch_sup").value) {
                       <option value="debit" selected={this.props.which === "dn" ? true : false}>
                         Debit
                       </option>
-                    </select>
+                    </select> */}
+                   <FormControl >
+                     <Select
+                      className={this.props.classes.select}
+                      name="vouch_type"
+                      variant="outlined"
+                      id="vouch_type"
+                      value={this.state.which}
+                      onChange={e => {
+                        this.setState({ which: e.target.value },()=>{console.log(this.state.which)});
+                      }}
+                      autoWidth
+                    >
+                      <MenuItem value="pv">Purchase</MenuItem>
+                      <MenuItem value="cn">Credit</MenuItem>
+                      <MenuItem value="dn">Debit</MenuItem>
+                    </Select>
+
+                  </FormControl>
                   </div>
 
                   <div className="vouch_si">
@@ -774,12 +810,28 @@ if (!document.getElementById("vouch_sup").value) {
                     <span>Supplier Agent</span>
                     <br />
 
-                    <select name="vouch_sup_agent" id="vouch_sup_agent">
+                    {/* <select name="vouch_sup_agent" id="vouch_sup_agent">
                       <option defaultChecked value={this.state.name}>
                         {this.state.name}
                       </option>
                       <option value={null}>None</option>
-                    </select>
+                    </select> */}
+                    <FormControl >
+                     <Select
+                      className={this.props.classes.select}
+                      name="vouch_sup_agent"
+                      variant="outlined"
+                      id="vouch_sup_agent"
+                      defaultValue={this.state.name}
+                      onChange={e => {
+                        this.setState({ name: e.target.value });
+                      }}
+                      autoWidth
+                      
+                    >
+                      <MenuItem value={"null"}>None</MenuItem>
+                    </Select>
+                    </FormControl>
                   </div>
 
                   <div className="vouch_si">
@@ -1204,27 +1256,27 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Gross Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.grossAmt.toFixed(2)}</strong>
+                  <strong>₹{this.state.grossAmt}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Discount :</td>
                 <td className="bold">
                   <strong>
-                    {"-"}₹{this.state.disAmt.toFixed(2)}
+                    {"-"}₹{this.state.disAmt}
                   </strong>
                 </td>
               </tr>
               <tr>
                 <td> GST ({this.state.gst}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gstAmt.toFixed(2)}</strong>
+                  <strong>₹{this.state.gstAmt}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{this.state.totalAmt.toFixed(2)}</strong>
+                  <strong> ₹{this.state.totalAmt}</strong>
                 </td>
               </tr>
               {this.state.discontArr.map((ele, i) => {
@@ -1246,14 +1298,14 @@ if (!document.getElementById("vouch_sup").value) {
                       >
                         +
                       </span>
-                      {ele.type} {ele.type !== "Less" && ` (${parseInt(ele.value)}%)`}
+                      {ele.type} {ele.type !== "Less" && ` (${ele.value}%)`}
                     </td>
                     <td className="bold">
                       <strong>
                         {"-"}
                         {"₹"}
-                        {ele.type !== "Less" && parseFloat(ele.amt).toFixed(2)}
-                        {ele.type === "Less" && parseFloat(ele.value).toFixed(2)}
+                        {ele.type !== "Less" && ele.amt}
+                        {ele.type === "Less" && ele.value}
                       </strong>
                     </td>
                   </tr>
@@ -1294,7 +1346,7 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Total Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.mainAmnt.toFixed(2)}</strong>
+                  <strong>₹{this.state.mainAmnt}</strong>
                 </td>
               </tr>
             </table>
@@ -1304,7 +1356,7 @@ if (!document.getElementById("vouch_sup").value) {
                 <div className="vouch_si_add_dis">
                   <span>Type</span>
                   <br />
-                  <select
+                  {/* <select
                     id="add_dis_discount_type"
                     disabled={this.state.totalAmt === 0 ? true : false}
                     onChange={e => {
@@ -1315,7 +1367,29 @@ if (!document.getElementById("vouch_sup").value) {
                     <option>Less </option>
                     <option>Cash Discount </option>
                     <option> No G.R. Less </option>
-                  </select>
+                  </select> */}
+                 <FormControl >
+    
+                    <Select
+                      variant="outlined"
+                      id="add_dis_discount_type"
+                      disabled={this.state.totalAmt === 0 ? true : false}
+                      value={this.state.discountType}
+                      onChange={e => {
+                        this.setState({ dicountType: e.target.value });
+                      }}
+                      autoWidth
+                      style={{height:"35px",width:"70px"}}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"less"}>Less</MenuItem>
+                      <MenuItem value={"cash_discount"}>Cash Discount</MenuItem>
+                      <MenuItem value={"no_gr_less"}>No G.R. Less</MenuItem>
+                    </Select>
+
+                  </FormControl>
                 </div>
                 <div className="vouch_si_add_dis">
                   <span>{this.state.dicountType === "Less" ? "Amount" : "Percentage"}</span>
@@ -1330,7 +1404,7 @@ if (!document.getElementById("vouch_sup").value) {
                   onClick={e => {
                     let a = {
                       type: document.getElementById("add_dis_discount_type").value,
-                      value: parseFloat(document.getElementById("add_discount_input").value).toFixed(2)
+                      value: document.getElementById("add_discount_input").value
                     };
                     if (a.value === "") {
                       return;
@@ -1375,7 +1449,7 @@ if (!document.getElementById("vouch_sup").value) {
                     onClick={() => {
                       let a = {
                         remark: document.getElementById("add_freight_remark_input").value,
-                        value:parseFloat(document.getElementById("add_freight_input").value).toFixed(2)
+                        value: document.getElementById("add_freight_input").value
                       };
                       if (a.value === "") {
                         return;
@@ -1401,4 +1475,4 @@ if (!document.getElementById("vouch_sup").value) {
   }
 }
 
-export default AddVouch;
+export default withStyles(styles)(AddVouch);

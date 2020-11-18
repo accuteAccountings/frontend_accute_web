@@ -1,8 +1,26 @@
 import React from "react";
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from "@material-ui/core/styles";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
-import {Button} from "@material-ui/core"
+import {Button} from "@material-ui/core";
 
+
+const styles = theme => ({
+  select: {
+      height:"30px",  
+      '&:before': {
+        borderRadius:"none",
+        borderColor: '#000000',
+    },
+    '&:hover:not(.Mui-disabled):before': {
+      borderRadius:"none",
+        borderColor: '#000000',
+    }
+  }
+});
 class AddAcc extends React.Component {
   EditOn = () => {
     this.setState(() => {
@@ -227,7 +245,7 @@ class AddAcc extends React.Component {
                   <span>Account Type</span>
                   <br />
 
-                  <select
+                  {/* <select
                     readOnly={this.state.mode === "view" && true}
                     name="Group"
                     className="add_acc_inp"
@@ -242,7 +260,28 @@ class AddAcc extends React.Component {
                     <option disabled value="salary">
                       Salary
                     </option>
-                  </select>
+                  </select> */}
+                  <FormControl >
+    
+                   <Select
+                     variant="outlined"
+                     name="Group"
+                     id="add_acc_inp_group"
+                     disabled={this.state.mode === "view" && true}
+                     autoWidth
+                     style={{height:"35px"}}
+                   >
+                    <MenuItem value="debtors">Debtors</MenuItem>
+                    <MenuItem value="creditors">Creditors</MenuItem>
+                    <MenuItem value="Sub Agent">Sub Agent</MenuItem>
+                    <MenuItem value="transport">Transport</MenuItem>
+                    <MenuItem value="bank">Bank</MenuItem>
+                    <MenuItem disabled value="salary">
+                      Salary
+                    </MenuItem>
+                   </Select>
+               
+                  </FormControl>
                 </div>
               </div>
 
@@ -285,11 +324,29 @@ class AddAcc extends React.Component {
                 <div className="add_acc_status si">
                   <span>Status </span>
                   <br />
-
+{/* 
                   <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
                     <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
-                  </select>
+                  </select> */}
+                  <FormControl >
+    
+                   <Select
+
+                     variant="outlined"
+                     id="add_acc_status"
+                     disabled={this.state.mode === "view" && true}
+                     value={this.state.discountType}
+                     onChange={e => {
+                       this.setState({ dicountType: e.target.value });
+                     }}
+                     
+                   >
+                     <MenuItem value="regular registered">Regular Registered</MenuItem>
+                     <MenuItem value="unregistered">Unregistered</MenuItem>
+                   </Select>
+               
+                  </FormControl>
                 </div>
                 <div className="add_acc_gstnum si">
                   <span>GST No.</span>
@@ -468,4 +525,4 @@ AddAcc.defaultProps = {
   mode: "add"
 };
 
-export default AddAcc;
+export default withStyles(styles)(AddAcc);

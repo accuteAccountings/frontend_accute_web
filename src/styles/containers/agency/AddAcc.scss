@@ -307,3 +307,10 @@ input[type="radio"] {
   margin-left: 20px;
   cursor: pointer;
 }
+.MuiOutlinedInput-root {
+  height:27px;
+  width:180px;
+  position: relative;
+  border: 1px solid #1f1f10 !important;  
+  border-radius: 5px !important;
+}

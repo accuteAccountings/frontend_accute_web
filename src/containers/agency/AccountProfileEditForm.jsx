@@ -16,8 +16,8 @@ class AccountProfileEditForm extends React.Component{
             acc_real_name:"",
             print_name:"",
             address_line1:"",
-            mob_num:"",
-            phone_num:"",
+            mob_num:[],
+            phone_num:[],
             emailId:"",
             pan_num:"",
             gst_num:"",
@@ -30,6 +30,8 @@ class AccountProfileEditForm extends React.Component{
             loading:false,
             errorMsg:"",
             snackbarOpen:false,
+            addMobNumInput:false,
+            addPhoneNumInput: false
         }
     }
     /*
@@ -87,6 +89,7 @@ class AccountProfileEditForm extends React.Component{
         .catch(error => error)
 
     }
+
 // closing the snackbar
    handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -102,6 +105,10 @@ class AccountProfileEditForm extends React.Component{
         })
     }
 
+  // adding more mobile numbers
+  handleAddMobNum=()=>{
+      this.setState({})
+  }
   //on form submit ie save changes button click
     handleSaveChanges= async (e)=>{
       
@@ -212,28 +219,46 @@ class AccountProfileEditForm extends React.Component{
                 />
             
             <div style={{display:"flex", flexDirection:"column"}}>
-                <div style={{display:"flex"}}>
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                style={{marginRight:"5px"}}
-                id="mob_num"
-                label="Mobile Number"
-                name="mob_num"
-                size="small"
-                value={mob_num}
-                onChange={this.handleOnChange}
-                />
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="phone_num"
-                label="Phone Number"
-                name="phone_num"
-                size="small"
-                value={phone_num}
-                onChange={this.handleOnChange}
-                />
+                <div style={{display:"flex", justifyContent:"space-between"}}>
+                    <div style={{display:"flex", flexDirection:"column"}}>
+                       <TextField margin="normal"  
+                       variant="outlined"                    
+                       fullWidth
+                       style={{marginRight:"5px"}}
+                       id="mob_num"
+                       label="Mobile Number"
+                       name="mob_num"
+                       size="small"
+                       value={mob_num}
+                       onChange={this.handleOnChange}
+                       />
+                      {this.state.addMobNumInput?(
+                      <TextField margin="normal"  
+                       variant="outlined"                    
+                       fullWidth
+                       style={{marginRight:"5px"}}
+                       id="mob_num"
+                       label="Mobile Number"
+                       name="mob_num"
+                       size="small"
+                       value={mob_num}
+                       onChange={this.handleOnChange}
+                       />):null}
+                       <Button variant="outlined" color="primary" style={{textTransform:"none"}} onClick={()=>this.setState({addMobNumInput:true})}>+ Add Number</Button>
+                    </div>
+                    <div style={{display:"flex", flexDirection:"column"}} >
+                       <TextField margin="normal"  
+                       variant="outlined"                    
+                       fullWidth
+                       id="phone_num"
+                       label="Phone Number"
+                       name="phone_num"
+                       size="small"
+                       value={phone_num}
+                       onChange={this.handleOnChange}
+                       />
+                      <Button variant="outlined" color="primary" style={{textTransform:"none"}}>+ Add Number</Button>
+                    </div>
                 </div>
                 <TextField margin="normal"  
                 variant="outlined"                    

@@ -1,4 +1,8 @@
 import React from "react";
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from "@material-ui/core/styles";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import cross from "assets/icons/cancel.svg";
 import Printed_joVouch from "containers/agency/Printed_jovouch";
 
@@ -72,7 +76,6 @@ class AddJovouch extends React.Component {
 
   bill_list_change = i => {
     let arr = [];
-
     document.querySelector(".pro_list" + i).style.display = "block";
     const bill = document.querySelector(".jo_bill_no" + i).value;
     console.log(bill.length);
@@ -247,11 +250,24 @@ class AddJovouch extends React.Component {
               <div className="jovouch_si">
                 <span>Type</span>
                 <br />
-                <select name="jovouch_type" id="jovouch_type">
+                {/* <select name="jovouch_type" id="jovouch_type">
                   <option value="option1">Journal</option>
                   <option value="option1">Journal</option>
                   <option value="option1">Journal</option>
-                </select>
+                </select> */}
+                <FormControl >
+                     <Select
+                       variant="outlined"
+                       id="jovouch_type"
+                       name="jovouch_type"
+                       autoWidth
+                     >
+                         <MenuItem value="option1">Journal</MenuItem>
+                         <MenuItem value="option1">Journal</MenuItem>
+                         <MenuItem value="option1">Journal</MenuItem>
+                     </Select>
+
+                 </FormControl>
               </div>
             </div>
 
@@ -383,7 +399,7 @@ class AddJovouch extends React.Component {
                     <span>Mode </span>
                   </div>
 
-                  <span>
+                  {/* <span>
                     <select
                       onChange={() => {
                         let a = this.state.payArr;
@@ -400,7 +416,25 @@ class AddJovouch extends React.Component {
                         Cash
                       </option>
                     </select>
-                  </span>
+                  </span> */}
+                    <FormControl >
+                     <Select
+                       variant="outlined"
+                       id={"jovouch_mode" + index}
+                       name="jovouch_mode"
+                       autoWidth
+                       onChange={() => {
+                        let a = this.state.payArr;
+                        a[index].mode = document.getElementById("jovouch_mode" + index).value;
+                        this.setState({ payArr: a });
+                      }}
+                     >
+                         <MenuItem value="cheque">Cheque</MenuItem>
+                         <MenuItem value="cash">Cash</MenuItem>
+                         <MenuItem value="option1">Journal</MenuItem>
+                     </Select>
+
+                 </FormControl>
                 </div>
 
                 {this.state.payArr[index].mode === "cheque" ? (

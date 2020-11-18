@@ -214,7 +214,7 @@ class LoginReg extends Component {
                   </div>
                  { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={this.handleLoginSubmit}>
+                  <form onSubmit={this.handleLoginSubmit} noValidate>
                     <TextField  margin="normal"
                       variant="outlined"
                       required
