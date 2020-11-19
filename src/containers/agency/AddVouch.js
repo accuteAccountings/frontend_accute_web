@@ -613,7 +613,7 @@ if (!document.getElementById("vouch_sup").value) {
       <div className="add_vouch_con">
         <div className="add_pro_head">
           <h1>
-            {this.props.which === "pv" && "Add Purchase Vouch"}
+            {this.props.which === "pv" && "Add Sales Vouch"}
             {this.props.which === "dn" && "Add Debit Note"}
             {this.props.which === "cn" && "Add Credit Note"}
           </h1>
@@ -646,7 +646,7 @@ if (!document.getElementById("vouch_sup").value) {
                     <br />
                     <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
-                        Purchase
+                        Sales
                       </option>
                       <option value="credit" selected={this.props.which === "cn" ? true : false}>
                         Credit
