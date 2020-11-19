@@ -1,6 +1,7 @@
 import React from "react";
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
+import ref from "assets/icons/refresh.svg";
 import cross from "assets/icons/cancel.svg";
 
 async function postData(url = "", data, m) {
@@ -618,6 +619,7 @@ if (!document.getElementById("vouch_sup").value) {
           </h1>
 
           <div className="add_vouch_right_btns">
+            <img src = {ref} alt = " "/>
             <p
               onClick={() => {
                 this.addVouch();
@@ -675,11 +677,15 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>G. R. No.</span>
+                    <span>L. R. No.</span>
                     <br />
                     <input type="text" name="vouch_gr_no" id="vouch_gr_no" />
                   </div>
-
+                  <div className = "vouch_si" >
+                    <span>L. R. Date</span>
+                      <br />
+                    <input type = "date" />
+                  </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
                     <br />
