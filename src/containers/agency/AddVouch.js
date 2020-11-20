@@ -33,6 +33,24 @@ class AddVouch extends React.Component {
     document.getElementById(id + "_error").style.display = "none";
   };
 
+  clearData = () => {
+    // document.querySelector("#vouch_bill_date").value = null;
+    // document.querySelector("#vouch_type").value = null;
+    document.querySelector("#vouch_bill_no").value = null;
+    document.querySelector("#vouch_gr_no").value = null;
+    document.querySelector("#vouch_transport_name").value = null;
+    document.querySelector("#vouch_sup").value = null;
+    document.querySelector("#vouch_lr_date").value = null;
+    document.querySelector("#vouch_comission").value = null;
+    document.querySelector("#vouch_customer").value = null;
+    document.querySelector("#vouch_pro_item").value = null;
+    document.querySelector("#vouch_hsn_num").value = null;
+    document.querySelector("#vouch_quantity").value = "";
+    document.querySelector("#vouch_dicon").value = 0;
+    document.querySelector("#vouch_rate").value = "";
+    document.querySelector("#vouch_amount").value = "";
+  }
+
   setData = () => {
     let d = this.props.EData.det;
     document.querySelector("#vouch_bill_date").defaultValue = d.bill_date;
@@ -619,7 +637,7 @@ if (!document.getElementById("vouch_sup").value) {
           </h1>
 
           <div className="add_vouch_right_btns">
-            <img src = {ref} alt = " "/>
+            <img src = {ref} alt = " " onClick = {this.clearData}/>
             <p
               onClick={() => {
                 this.addVouch();
@@ -684,7 +702,7 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className = "vouch_si" >
                     <span>L. R. Date</span>
                       <br />
-                    <input type = "date" />
+                    <input type = "date" id = "vouch_lr_date" />
                   </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
