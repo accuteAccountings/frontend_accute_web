@@ -62,7 +62,7 @@
   // border: 1px solid black;
 
   h1 {
-    margin: 0px 0px;
+    margin: 20px 0px;
     font-size: $s_h_font;
     border-bottom: 1px solid $pri_color;
     color: $grey_text;
@@ -191,6 +191,7 @@ select {
   margin: 10px 0px;
 }
 
+
 .two_items {
   display: flex;
   flex-direction: row;
@@ -314,3 +315,9 @@ input[type="radio"] {
   border: 1px solid #1f1f10 !important;  
   border-radius: 5px !important;
 }
+.checked_sb span{
+  margin:0px;
+ }
+.checked_non_gst span{
+margin:0px;
+ }
