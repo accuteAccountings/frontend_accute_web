@@ -264,6 +264,7 @@ class AddAcc extends React.Component {
                   <FormControl >
     
                    <Select
+                    className="add_acc_mui"
                      variant="outlined"
                      name="Group"
                      id="add_acc_inp_group"
@@ -332,7 +333,7 @@ class AddAcc extends React.Component {
                   <FormControl >
     
                    <Select
-
+                     className="add_acc_mui"
                      variant="outlined"
                      id="add_acc_status"
                      disabled={this.state.mode === "view" && true}

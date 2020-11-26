@@ -673,7 +673,7 @@ if (!document.getElementById("vouch_sup").value) {
                     </select> */}
                    <FormControl >
                      <Select
-                      className={this.props.classes.select}
+                      className={`${this.props.classes.select} add_vouch_mui`}
                       name="vouch_type"
                       variant="outlined"
                       id="vouch_type"
@@ -818,7 +818,7 @@ if (!document.getElementById("vouch_sup").value) {
                     </select> */}
                     <FormControl >
                      <Select
-                      className={this.props.classes.select}
+                      className={`${this.props.classes.select} add_vouch_mui`}
                       name="vouch_sup_agent"
                       variant="outlined"
                       id="vouch_sup_agent"
@@ -1371,6 +1371,7 @@ if (!document.getElementById("vouch_sup").value) {
                  <FormControl >
     
                     <Select
+                    className="add_vouch_mui"
                       variant="outlined"
                       id="add_dis_discount_type"
                       disabled={this.state.totalAmt === 0 ? true : false}

@@ -257,6 +257,7 @@ class AddJovouch extends React.Component {
                 </select> */}
                 <FormControl >
                      <Select
+                     className="add_jo_vouch"
                        variant="outlined"
                        id="jovouch_type"
                        name="jovouch_type"
@@ -419,6 +420,7 @@ class AddJovouch extends React.Component {
                   </span> */}
                     <FormControl >
                      <Select
+                     className="add_jo_vouch"
                        variant="outlined"
                        id={"jovouch_mode" + index}
                        name="jovouch_mode"

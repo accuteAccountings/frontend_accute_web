@@ -7,6 +7,7 @@ import Report_pro from "containers/agency/Report_Acc_pro";
 import {Link} from 'react-router-dom';
 import Popup from '../../components/Popup';
 import AccountProfileEditForm from "./AccountProfileEditForm";
+import BankingDetailsEditForm from './BankingDetailsEditForm';
 
 export default class Account_pro extends React.Component {
   totalDebit = () => {
@@ -174,8 +175,8 @@ export default class Account_pro extends React.Component {
         }
       });
   }
-  setOpenEditModal=(open) => {
-    this.setState({openEditModal:open})
+  setOpenEditModal=(type,open) => {
+    type==="basic"?this.setState({openBasicEditModal:open}):this.setState({openBankingEditModal:open})
   }
   constructor(props) {
     super(props);
@@ -187,12 +188,13 @@ export default class Account_pro extends React.Component {
       temp_det2: [],
       account : null,
       val : "acc_det",
-      openEditModal:false
+      openBasicEditModal:false,
+      openBankingEditModal:false
     };
   }
   // reset account info on update
   resetProfileOnUpdate=(savedAccount)=>{
-    this.setState({account:savedAccount,openEditModal:false})
+    this.setState({account:savedAccount,openBasicEditModal:false})
   }
    componentDidMount(){
 
@@ -269,11 +271,11 @@ export default class Account_pro extends React.Component {
               <div className="acc_pro_right_lower">
                 <div className="acc_pro_right_heading">
                   <div>BASIC DETAILS</div>
-                  <div className="acc_pro_right_edit" onClick={()=>this.setOpenEditModal(true)}>
+                  <div className="acc_pro_right_edit" onClick={()=>this.setOpenEditModal("basic",true)}>
                     <img src={pencil} />
                   </div>
                 </div>
-                <Popup  openPopup={this.state.openEditModal} title="Edit Account Details" setOpenEditModal={this.setOpenEditModal}>
+                <Popup  type="basic"  openPopup={this.state.openBasicEditModal} title="Edit Account Details" setOpenEditModal={this.setOpenEditModal}>
                   <AccountProfileEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} account={this.state.account}/>
                 </Popup>
                 <div className="acc_pro_right_details">
@@ -315,7 +317,16 @@ export default class Account_pro extends React.Component {
                   </div>
                 </div>
                 <div>
+                <div style={{display: "flex",justifyContent:"space-between"}}>
                   <div className="right_lower_heading">BANKING DETAILS</div>
+                  <div className="acc_pro_right_edit" onClick={()=>this.setOpenEditModal("banking",true)} style={{margin:"10px 10px 0 0", cursor:"pointer" }}>
+                    <img src={pencil} style={{height:"20px", width:"20px"}} />
+                  </div>
+                </div>
+                
+                <Popup  type="banking" openPopup={this.state.openBankingEditModal} title="Edit Banking Details" setOpenEditModal={this.setOpenEditModal}>
+                  <BankingDetailsEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} Bank_Details={this.state.account}/>
+                </Popup>
                   <div className="acc_pro_detail_last_lowr">
                     <div className="acc_pro_detail_heading">
                       Account No.
