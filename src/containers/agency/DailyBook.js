@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState , useEffect} from 'react'
 import Chart from 'react-apexcharts'
 import product from 'assets/icons/product.svg'
 import rich from 'assets/icons/rich.svg'
@@ -348,14 +348,14 @@ getAccounts = () => {
             <div className = "lower_db">
               <div className = "table">
                 <div className = "upper">
-                  <div className = "hd">ACTIVE USERS</div>  
+                  <div className = "hd">Pending Payments</div>  
                 </div>
                 <div className = "lower">
                   <div className = "id">Id.</div>
                   <div className = "name_city">Account Name</div>
                   <div className = "status">Payment Status</div>
                   <div className = "balance">Balance</div>
-                  <div className = "action">Actions</div>
+                  {/* <div className = "action">Actions</div> */}
                 </div>
                 <div className = "scroller">
                 {this.state.accounts.map((e ,i) => {
@@ -445,6 +445,20 @@ const Det_bar = (props) => {
 } 
 
 const User_Det = (props) => {
+  const [total_bal , setTotal_bal] = useState(0)
+
+  useEffect(() => {
+    fetch(`/api/ledger_balance/total?supplier=${props.acc}`)
+    .then(res => res.json())
+    .then((data) => {
+      if(data.error){
+        alert(data.error)
+      }
+      else{
+        setTotal_bal(data.balance)
+      }
+    })
+  } , [])
   return(
     <div className = {parseInt(props.id)%2 === 0 ? 'lower_ud_even' : 'lower_ud_odd'  }>
     <div className = "id">{props.id}</div>
@@ -453,15 +467,15 @@ const User_Det = (props) => {
       <div className = "city">{props.city}</div>
     </div>
     <div className = {props.payment == 0 ? 'completed' : 'status'}><span>{props.payment == 0 ? 'Completed' : 'Pending'}</span></div>
-    <div className = "balance">{parseInt(props.balance) > 0 ? <span>{props.balance} {' '} Cr</span> :
-    <span>{ parseInt(props.balance) < 0 ? (<span> {parseInt(props.balance)*(-1)} {' '} Dr</span>) : '0'}</span>
+    <div className = "balance">{parseInt(total_bal) > 0 ? <span>{total_bal} {' '} Cr</span> :
+    <span>{ parseInt(total_bal) < 0 ? (<span> {parseInt(total_bal)*(-1)} {' '} Dr</span>) : '0'}</span>
   }</div>
-    <div className = "action" onClick = {async() => {
+    {/* <div className = "action" onClick = {async() => {
       await props.getspecific_acc(props.len - props.i)
       await props.setAccProfile('ledger')
       await props.navTo('accounting')
       
-    }}><span>Open Ledger</span></div>
+    }}><span>Open Ledger</span></div> */}
   </div>
   )
 }
