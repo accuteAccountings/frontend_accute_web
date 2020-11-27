@@ -3,6 +3,7 @@ import React from "react";
   import cross from "assets/icons/cancel.svg";
   import search from "assets/icons/search.svg";
 
+
 export default class Ledger extends React.Component {
   handleModal = () => {
     this.setState(prevState => {
@@ -42,10 +43,47 @@ export default class Ledger extends React.Component {
     return t;
   };
 
+  TotalDebit = () => {
+    fetch(`/api/ledger_balance/debited?supplier=${this.props.account.acc_real_name}`)
+    .then(res => res.json())
+    .then((data) => {
+      if(data.error){
+        alert(data.error)
+      }else{
+        this.setState(() => {
+          return{
+            debit : data.balance
+          }
+        })
+      }
+    })
+  }
+
+  TotalCredit = () => {
+    fetch(`/api/ledger_balance/credited?supplier=${this.props.account.acc_real_name}`)
+    .then(res => res.json())
+    .then((data) => {
+      if(data.error){
+        alert(data.error)
+      }else{
+        this.setState(() => {
+          return{
+            credit : data.balance
+          }
+        })
+      }
+    })
+  }
+
   constructor(props) {
     super(props);
+
+    this.TotalCredit()
+    this.TotalDebit()
     this.state = {
-      open: false
+      open: false,
+      debit: 0,
+      credit : 0
     };
   }
   render() {
@@ -105,17 +143,17 @@ export default class Ledger extends React.Component {
             <div className="ledger_upp_right_div">
               <div className="ledger_upp_right">
                 <span className="upp_head">Debit : </span>
-                {this.props.totalDebit()}
+                {this.state.debit}
               </div>
               <div className="ledger_upp_right">
                 <span className="upp_head">Credit : </span>
-                {this.props.totalCredit()}
+                {this.state.credit}
               </div>
               <div className="leger_upp_right">
                 <span className="upp_head">Balance : </span>
-                {parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) < 0
-                  ? parseInt(this.props.totalCredit()) - parseInt(this.props.totalDebit()) + " (Cr.)"
-                  : parseInt(this.props.totalDebit()) - parseInt(this.props.totalCredit()) + " (Dr.)"}
+                {parseInt(this.state.debit - parseInt(this.state.credit)) < 0
+                  ? parseInt(this.state.credit) - parseInt(this.state.debit) + " (Cr.)"
+                  : parseInt(this.state.debit) - parseInt(this.state.credit) + " (Dr.)"}
               </div>
             </div>
           </div>
