@@ -1,4 +1,7 @@
 import React from "react";
+  import Modal from "react-modal";
+  import cross from "assets/icons/cancel.svg";
+  import search from "assets/icons/search.svg";
 
 
 export default class Ledger extends React.Component {

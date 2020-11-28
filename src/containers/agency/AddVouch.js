@@ -1,6 +1,7 @@
 import React from "react";
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
+import ref from "assets/icons/refresh.svg";
 import cross from "assets/icons/cancel.svg";
 
 async function postData(url = "", data, m) {
@@ -31,6 +32,24 @@ class AddVouch extends React.Component {
     document.getElementById(id).style.borderColor = "#505050";
     document.getElementById(id + "_error").style.display = "none";
   };
+
+  clearData = () => {
+    // document.querySelector("#vouch_bill_date").value = null;
+    // document.querySelector("#vouch_type").value = null;
+    document.querySelector("#vouch_bill_no").value = null;
+    document.querySelector("#vouch_gr_no").value = null;
+    document.querySelector("#vouch_transport_name").value = null;
+    document.querySelector("#vouch_sup").value = null;
+    document.querySelector("#vouch_lr_date").value = null;
+    document.querySelector("#vouch_comission").value = null;
+    document.querySelector("#vouch_customer").value = null;
+    document.querySelector("#vouch_pro_item").value = null;
+    document.querySelector("#vouch_hsn_num").value = null;
+    document.querySelector("#vouch_quantity").value = "";
+    document.querySelector("#vouch_dicon").value = 0;
+    document.querySelector("#vouch_rate").value = "";
+    document.querySelector("#vouch_amount").value = "";
+  }
 
   setData = () => {
     let d = this.props.EData.det;
@@ -612,12 +631,13 @@ if (!document.getElementById("vouch_sup").value) {
       <div className="add_vouch_con">
         <div className="add_pro_head">
           <h1>
-            {this.props.which === "pv" && "Add Purchase Vouch"}
+            {this.props.which === "pv" && "Add Sales Vouch"}
             {this.props.which === "dn" && "Add Debit Note"}
             {this.props.which === "cn" && "Add Credit Note"}
           </h1>
 
           <div className="add_vouch_right_btns">
+            <img src = {ref} alt = " " onClick = {this.clearData}/>
             <p
               onClick={() => {
                 this.addVouch();
@@ -644,7 +664,7 @@ if (!document.getElementById("vouch_sup").value) {
                     <br />
                     <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
-                        Purchase
+                        Sales
                       </option>
                       <option value="credit" selected={this.props.which === "cn" ? true : false}>
                         Credit
@@ -675,11 +695,15 @@ if (!document.getElementById("vouch_sup").value) {
                   </div>
 
                   <div className="vouch_si">
-                    <span>G. R. No.</span>
+                    <span>L. R. No.</span>
                     <br />
                     <input type="text" name="vouch_gr_no" id="vouch_gr_no" />
                   </div>
-
+                  <div className = "vouch_si" >
+                    <span>L. R. Date</span>
+                      <br />
+                    <input type = "date" id = "vouch_lr_date" />
+                  </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
                     <br />
