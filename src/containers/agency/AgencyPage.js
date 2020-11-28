@@ -55,57 +55,6 @@ export default class AgencyPage extends React.Component{
     render(){
         return(
             <div className  = "agency_page">
-
-                {this.state.mode === 'list' ? (
-                    <div className = "inv_list">
-                        <div className="nav_sec_inv">
-                            <div className="nav_items_inv">
-                                <li
-                                    className= "black" 
-                                >
-                                    Invoices
-                                </li>
-                            </div>
-                            <div className="other_det">
-                            <div
-                                className="add_vouch"
-                                onClick={() => {
-                                    this.handleForm('form')
-                                }}
-                            >
-                                + Add Invoice
-                            </div>
-                
-                            <img
-                                src={ref}
-                                alt=" "
-                                onClick={() => {
-                                }}
-                            />
-                    
-                        </div>
-                    </div>
-                    <div className = "inv_cont">
-                        {this.state.Invoices.map((e) => {
-                            return(
-                                <InvoiceDet 
-                                 id = {e.id}
-                                 supplier = {e.supplier}
-                                 date = {e.date}
-                                />
-                            )
-                        })}
-                    </div>
-                  </div>
-
-                ) : (
-                     <div className = "invoice_form">
-                        <Invoice 
-                         handleForm = {this.handleForm}
-                         getInvoices = {this.getInvoices}
-                          />
-                    </div>
-                    )}
                 <Commission 
                 accounts = {this.state.accounts} />
             </div>

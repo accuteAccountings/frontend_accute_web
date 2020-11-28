@@ -363,6 +363,7 @@ getAccounts = () => {
                   return(
                     <User_Det 
                     id = {i + 1}
+                      acc_id={e.id}
                     acc = {e.acc_real_name}
                     city = {e.address_line1}
                     payment = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
@@ -463,7 +464,7 @@ const User_Det = (props) => {
     <div className = {parseInt(props.id)%2 === 0 ? 'lower_ud_even' : 'lower_ud_odd'  }>
     <div className = "id">{props.id}</div>
     <div className = "name_city">
-      <div className = "acc_name">{props.acc}</div>
+      <a className = "acc_name" href={"/agency/acc-profile/" + props.acc_id}>{props.acc}</a>
       <div className = "city">{props.city}</div>
     </div>
     <div className = {props.payment == 0 ? 'completed' : 'status'}><span>{props.payment == 0 ? 'Completed' : 'Pending'}</span></div>
