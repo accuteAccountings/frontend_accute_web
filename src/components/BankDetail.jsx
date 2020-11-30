@@ -10,14 +10,14 @@ class BankDetail extends React.Component {
            Bank_Name:"",
            Bank_Branch:"",
            IIFC_Code:"",
-           Remarks:""
+           Remarks:"", 
+           id:""
         }
     }
-    componentDidMount(){
-       if(this.props.BankDetail){
-        const {Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks} = this.props.BankDetail
-        this.setState({Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks})
-       }
+    componentDidMount(){     
+       console.log(this.props.bankDetail)
+        const {Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks,id} = this.props.bankDetail
+        this.setState({Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks,id})
     }
     handleOnChange= e =>{
        const {name, value} = e.target;
@@ -26,11 +26,12 @@ class BankDetail extends React.Component {
        },()=> this.props.handleDetailsChange(this.state))
     }
     render(){
-       const {addBankAccount, removeBankAccount, bankDetail, handleDetailsChange} = this.props
+
+       const {addBankAccount, removeBankAccount, bankDetail, i} = this.props;
       const {id,Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks} = this.state;
     return (
-           
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+           <div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
               <div>
                  <TextField margin="normal"  
                     variant="outlined"                    
@@ -88,11 +89,15 @@ class BankDetail extends React.Component {
                     onChange={this.handleOnChange}
                     />
                   </div>
+                  
                  </div>
+                 
                  <div style={{width:"20%",marginLeft:"10px", marginTop:"7px"}}>
-                    {this.props.index===0?(<Button variant="outlined" color="primary"  style={{height:"168px", width:"100px"}} onClick={()=>addBankAccount()}>+</Button>):(<Button variant="outlined" color="secondary"  style={{height:"168px", width:"100px"}} onClick={()=>removeBankAccount(bankDetail)}>-</Button>)}
+                    {this.props.index===0?(<Button variant="outlined" color="primary"  style={{height:"40px", marginTop:"8px",width:"100px"}} onClick={()=>addBankAccount()}>Add</Button>):(<Button variant="outlined" color="secondary"  style={{height:"40px", marginTop:"8px", width:"100px"}} onClick={()=>removeBankAccount(bankDetail)}>Remove</Button>)}
                  </div>
-
+                 
+             </div>
+             <hr/>
              </div>
      )
     }

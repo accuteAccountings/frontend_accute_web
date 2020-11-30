@@ -332,7 +332,7 @@ class AddAcc extends React.Component {
 
               <div style={{display:"flex",justifyContent:"space-between", alignItems:"center"}}>
                 <div><h1 id="reg_det_h"> Registration Details</h1></div>
-                <div>
+                <div className="checked_sb_container">
                   <FormControlLabel
                    control={
                      <Switch
@@ -442,7 +442,7 @@ class AddAcc extends React.Component {
                 
               </h2>
              {this.state.addressSelection===0? (<>
-              <div style={{display:"flex"}}>
+              <div className="checked_sb_container" style={{display:"flex"}}>
               <FormControlLabel
                    control={
                      <Switch

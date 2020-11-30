@@ -9,22 +9,36 @@ class BankingDetailsEditForm extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            Bank_Details:[],
+            Bank_Details:[
+                {
+                id:Math.random(),
+                Bank_Acc_Num:"",
+                Bank_Name:"",
+                Bank_Branch:"",
+                IIFC_Code:"",
+                Remarks:"",
+            }],
             loading:false,
             errorMsg:"",
             snackbarOpen:false,
         }
     }
     componentDidMount(){    
+         this.setState({
+             Bank_Details:[...JSON.parse(this.props.account.Bank_Details).map(({ Bank_Acc_Num,
+             Bank_Name,
+             Bank_Branch,
+             IIFC_Code,
+             Remarks})=>({
+                 id:Math.random(),
+                 Bank_Acc_Num,
+                 Bank_Name,
+                 Bank_Branch,
+                 IIFC_Code,
+                 Remarks
+             }))]
+         },()=>console.log(this.state))
 
-    //const { Bank_Details } = this.props.account;
-       this.setState({
-          Bank_Details:[{id:Math.random(),Bank_Acc_Num:"",
-          Bank_Name:"Sbi",
-          Bank_Branch:"Sunabeda",
-          IIFC_Code:"sbin1304",
-          Remarks:"my sbi account"}]
-       })
    } 
    
    saveUpdatedData =  updatedData => {
@@ -74,10 +88,13 @@ class BankingDetailsEditForm extends React.Component {
        }))
  } 
   handleDetailsChange = (account) => {
-    
+    console.log(this.state)
+    console.log(account);
+
        this.setState(prevState=>{
            const updatedDetails = prevState.Bank_Details.map(ele=>{
                if(ele.id===account.id){
+                   console.log("matching!")
                    ele={...ele,...account}
                    return ele;
                }
@@ -94,15 +111,18 @@ class BankingDetailsEditForm extends React.Component {
      //if(this.validate())
      const {Bank_Details} = this.state;
      const updatedData={
-      Bank_Details
+      Bank_Details: JSON.stringify(Bank_Details)
      }
-
+     console.log(updatedData)
+     debugger
      try {
          this.setState({loading:true})
          const savedData= await this.saveUpdatedData(updatedData)
          if(savedData){
+             console.log(savedData)
            this.setState({loading:false},()=>this.props.resetProfileOnUpdate(savedData))}
      } catch (error) {
+            console.log(error)
          this.setState({loading:false,errorMsg:error},()=>this.props.setOpenEditModal(false))
      }
      
@@ -122,11 +142,11 @@ class BankingDetailsEditForm extends React.Component {
             </Snackbar>):null} 
             <form onSubmit={this.handleSaveChanges}>
               <div style={{display:"flex",flexDirection:"column"}}>
-                  {Bank_Details.map((bankDetail, i)=>(
-                   <>
-                   <BankDetail key={bankDetail.id} index={i} bankDetail={bankDetail} addBankAccount={this.addBankAccount} removeBankAccount={this.removeBankAccount} handleDetailsChange={this.handleDetailsChange}/>
-                   {i!==Bank_Details.length-1?<hr style={{height:"1px",width:"100%"}}/> : null}
-                   </>
+                  {Bank_Details.map((Bank_Detail, i)=>(
+                   
+                   <BankDetail key={Bank_Detail.id} index={i} bankDetail={Bank_Detail} addBankAccount={this.addBankAccount} removeBankAccount={this.removeBankAccount} handleDetailsChange={this.handleDetailsChange}/>
+                   
+                   
                   ))}
 
  

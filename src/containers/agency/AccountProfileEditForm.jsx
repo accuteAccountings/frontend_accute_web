@@ -48,12 +48,16 @@ class AccountProfileEditForm extends React.Component{
             gst_num,
             aadhar_num,
             } = this.props.account;
+
+            let mobArr = mob_num.split(',').map(e=>({id:`mob-${Math.random()}`,number:e}));
+            let phoneArr = phone_num.split(',').map(e=>({id:`phone-${Math.random()}`,number:e}));
+
         this.setState({
             acc_real_name,
             print_name,
             address_line1,
-            mob_num:[{id:Math.random(),number:mob_num}],
-            phone_num:[{id:Math.random(),number:phone_num}],
+            mob_num:[...mobArr],
+            phone_num:[...phoneArr],
             emailId,
             pan_num,
             gst_num,
@@ -62,6 +66,7 @@ class AccountProfileEditForm extends React.Component{
     } 
     
     saveUpdatedData =  updatedData => {
+     console.log(updatedData);
           return fetch(`/api/accounts/edit?id=${this.props.account.id}` , {
             method : "PUT",
             headers: {
@@ -97,11 +102,11 @@ class AccountProfileEditForm extends React.Component{
   
     if(type==="mob_num"){
         this.setState(prevState=>({
-            mob_num:[...prevState.mob_num,{id:Math.random(),number:""}]
+            mob_num:[...prevState.mob_num,{id:`mob-${Math.random()}`,number:""}]
         }))
     }else{
         this.setState(prevState=>({
-            phone_num:[...prevState.phone_num,{id:Math.random(),number:""}]
+            phone_num:[...prevState.phone_num,{id:`phone-${Math.random()}`,number:""}]
         }))
     }
   }
@@ -129,7 +134,8 @@ class AccountProfileEditForm extends React.Component{
             })
             return {mob_num:[...newNumAddedList]}
         })
-    }else{
+    }
+  
         this.setState(prevState=>{
             const newNumAddedList = prevState.phone_num.map(ele=>{
                 if(ele.id===num.id){
@@ -140,7 +146,7 @@ class AccountProfileEditForm extends React.Component{
             })
             return {phone_num:[...newNumAddedList]}
         })
-    }
+    
    }
   //on form submit ie save changes button click
     handleSaveChanges= async (e)=>{
@@ -162,8 +168,8 @@ class AccountProfileEditForm extends React.Component{
         acc_real_name,
         print_name,
         address_line1,
-        mob_num,
-        phone_num,
+        mob_num:mob_num.map(ele=>ele["number"]).join(","),
+        phone_num:phone_num.map(ele=>ele["number"]).join(","),
         emailId,
         pan_num,
         gst_num,

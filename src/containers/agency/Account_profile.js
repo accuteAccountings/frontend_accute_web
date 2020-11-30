@@ -1,6 +1,8 @@
 import React from "react";
 import user from "assets/icons/user.svg";
 import pencil from "assets/icons/pencil.svg";
+import piggy_bank from "assets/icons/piggy_bank.svg";
+import resume from "assets/icons/resume.svg";
 import back from "assets/icons/camera-back.svg";
 import Ledger from "containers/agency/Ledger_Account";
 import Report_pro from "containers/agency/Report_Acc_pro";
@@ -194,12 +196,11 @@ export default class Account_pro extends React.Component {
   }
   // reset account info on update
   resetProfileOnUpdate=(savedAccount)=>{
-    this.setState({account:savedAccount,openBasicEditModal:false})
+    console.log(savedAccount)
+    this.setState({account:savedAccount,openBasicEditModal:false, openBankingEditModal:false})
   }
    componentDidMount(){
-
-    const { id } = this.props.match.params;
-    
+    const { id } = this.props.match.params;   
     fetch(`/api/accounts/specific?id=${id}`)
     .then(res => res.json())
     .then((data) => {
@@ -213,7 +214,7 @@ export default class Account_pro extends React.Component {
   
    }
 
-  render() {
+  render() {  
     return (
       <div>
         <div className="acc_highest">
@@ -279,7 +280,9 @@ export default class Account_pro extends React.Component {
                   <AccountProfileEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} account={this.state.account}/>
                 </Popup>
                 <div className="acc_pro_right_details">
-                  <div className="acc_pro_detail_heading">
+                  {this.state.account.mob_num||this.state.account.phone_num||this.state.account.pan_num||this.state.account.gst_num||this.state.account.aadhar_num?(<>
+                   {this.state.account.mob_num || this.state.account.phone_num?(
+                   <div className="acc_pro_detail_heading">
                     <span>Phone</span>
                     <br />
                     <span className="acc_pro_details_value">
@@ -292,29 +295,34 @@ export default class Account_pro extends React.Component {
 
                       <span className="acc_pro_details_bvalue">(Office)</span>
                     </span>
-                  </div>
-                  <div className="acc_pro_detail_heading">
+                  </div>):null}
+                  {this.state.account.emailId?(<div className="acc_pro_detail_heading">
                     <span>Email</span>
                     <br />
                     <span className="acc_pro_details_value">{this.state.account.emailId}</span>
-                  </div>
+                  </div>):null}
                   <div className="acc_pro_detail_last">
+                  {this.state.account.pan_num?(
                     <div className="acc_pro_detail_heading">
                       Pan No.
                       <br />
                       <span className="acc_pro_details_value">{this.state.account.pan_num}</span>
-                    </div>
-                    <div className="acc_pro_detail_heading">
+                    </div>):null}
+                    {this.state.account.gst_num?(<div className="acc_pro_detail_heading">
                       GST No.
                       <br />
                       <span className="acc_pro_details_value">{this.state.account.gst_num}</span>
-                    </div>
-                    <div className="acc_pro_detail_heading">
+                    </div>):null}
+                    {this.state.account.aadhar_num?(<div className="acc_pro_detail_heading">
                       Aadhar No.
                       <br />
                       <span className="acc_pro_details_value">{this.state.account.aadhar_num}</span>
+                    </div>):null}
                     </div>
-                  </div>
+                 </>):(<div style={{display:"flex", justifyContent:"center"}} >
+                    <img src={resume} style={{height:"50px", width:"50px", cursor:"pointer"}} onClick={()=>this.setOpenEditModal("basic",true)}/>
+                    </div>)}
+                  
                 </div>
                 <div>
                 <div style={{display: "flex",justifyContent:"space-between"}}>
@@ -325,30 +333,44 @@ export default class Account_pro extends React.Component {
                 </div>
                 
                 <Popup  type="banking" openPopup={this.state.openBankingEditModal} title="Edit Banking Details" setOpenEditModal={this.setOpenEditModal}>
-                  <BankingDetailsEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} Bank_Details={this.state.account}/>
+                  <BankingDetailsEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} account={this.state.account}/>
                 </Popup>
-                  <div className="acc_pro_detail_last_lowr">
-                    <div className="acc_pro_detail_heading">
-                      Account No.
-                      <br />
-                      <span className="acc_pro_details_value">{this.state.account.Bank_Acc_Num}</span>
-                    </div>
-                    <div className="acc_pro_detail_heading">
-                      Bank Name, Branch
-                      <br />
-                      <span className="acc_pro_details_value">{this.state.account.Bank_Name?(`${this.state.account.Bank_Name}, ${this.state.account.Bank_Branch}`):""}</span>
-                    </div>
-                    <div className="acc_pro_detail_heading">
-                      IIFC Code
-                      <br />
-                      <span className="acc_pro_details_value">{this.state.account.IIFC_Code}</span>
-                    </div>
-                    <div className="acc_pro_detail_heading">
-                      Remarks
-                      <br />
-                      <span className="acc_pro_details_value">{this.state.account.Remarks}</span>
-                    </div>
-                  </div>
+                  
+                    {this.state.account.Bank_Details?(
+                     
+                      JSON.parse(this.state.account.Bank_Details).map(detail=>{
+                       return (<>
+                       <div key={Math.random()} className="acc_pro_detail_last_lowr"> 
+                      {detail.Bank_Acc_Num?(<div className="acc_pro_detail_heading" style={{gridColumn: "1/2"}}>
+                        Account No.
+                        <br />
+                      <span className="acc_pro_details_value">{detail.Bank_Acc_Num}</span>
+                        </div>):null}
+                      {detail.Bank_Name?(
+                       <div className="acc_pro_detail_heading" style={{gridColumn: "2/3"}}>
+                       Bank Name, Branch
+                       <br />
+                       <span className="acc_pro_details_value">{detail.Bank_Name?(`${detail.Bank_Name}, ${detail.Bank_Branch}`):""}</span>
+                       </div>):null}
+                      {detail.IIFC_Code?(<div className="acc_pro_detail_heading" style={{gridColumn: "1/2"}}>
+                       IIFC Code
+                       <br />
+                       <span className="acc_pro_details_value">{detail.IIFC_Code}</span>
+                       </div>):null}
+                       {detail.Remarks?(<div className="acc_pro_detail_heading" style={{gridColumn: "2/3"}}>
+                       Remarks
+                       <br />
+                       <span className="acc_pro_details_value">{detail.Remarks}</span>
+                       </div>):null}
+                       </div>
+                       <hr/>
+                       </>)})
+                       
+                     ):(<div style={{display:"flex", justifyContent:"center"}} >
+                    <img src={piggy_bank} style={{height:"50px", width:"50px", cursor:"pointer"}} onClick={()=>this.setOpenEditModal("banking",true)}/>
+                    </div>)} 
+                    
+                  
                 </div>
               </div>
             </div>
