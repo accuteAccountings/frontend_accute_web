@@ -74,13 +74,18 @@ class BankingDetailsEditForm extends React.Component {
 
  // adding more mobile numbers
  addBankAccount=()=>{
-       this.setState(prevState=>({
+       this.setState(prevState=>{
+        if(prevState.Bank_Details.length<3){
+        return {
            Bank_Details:[...prevState.Bank_Details,{id:Math.random(),Bank_Acc_Num:"",
            Bank_Name:"",
            Bank_Branch:"",
            IIFC_Code:"",
            Remarks:""}]
-       }))
+       }
+      }
+      return;
+    })
  }
  removeBankAccount= (account) =>{
        this.setState(prevState=>({

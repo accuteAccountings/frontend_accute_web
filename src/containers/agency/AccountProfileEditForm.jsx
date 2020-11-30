@@ -101,13 +101,20 @@ class AccountProfileEditForm extends React.Component{
   addNum=(type,num)=>{
   
     if(type==="mob_num"){
-        this.setState(prevState=>({
-            mob_num:[...prevState.mob_num,{id:`mob-${Math.random()}`,number:""}]
-        }))
+        this.setState(prevState=>{
+            if(prevState.mob_num.length<3){
+            return {mob_num:[...prevState.mob_num,{id:`mob-${Math.random()}`,number:""}]}
+            }
+            
+         return
+        })
     }else{
-        this.setState(prevState=>({
-            phone_num:[...prevState.phone_num,{id:`phone-${Math.random()}`,number:""}]
-        }))
+        this.setState(prevState=>{
+            if(prevState.phone_num.length<3){
+            return { phone_num:[...prevState.phone_num,{id:`phone-${Math.random()}`,number:""}]}
+            }
+            return
+        })
     }
   }
   removeNum= (type,num) =>{
