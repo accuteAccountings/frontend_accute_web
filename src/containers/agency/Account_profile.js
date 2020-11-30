@@ -283,21 +283,23 @@ export default class Account_pro extends React.Component {
                   {this.state.account.mob_num||this.state.account.phone_num||this.state.account.pan_num||this.state.account.gst_num||this.state.account.aadhar_num?(<>
                    {this.state.account.mob_num || this.state.account.phone_num?(
                    <div className="acc_pro_detail_heading">
-                    <span>Phone</span>
+                     <div>
+                    <span style={{fontFamily:"Arial, Helvetica, sans-serif"}}>Phone</span>
                     <br />
-                    <span className="acc_pro_details_value">
-                      {this.state.account.mob_num}
-
-                      <span className="acc_pro_details_bvalue">(Mobile)</span>
+                    <span className="acc_pro_details_value">                   
+                      {this.state.account.mob_num}<span className="acc_pro_details_bvalue">(Mobile)</span>   
                     </span>
+                    </div>
+                    <div>
                     <span className="acc_pro_details_value">
                       {this.state.account.phone_num}
 
                       <span className="acc_pro_details_bvalue">(Office)</span>
                     </span>
+                    </div>
                   </div>):null}
                   {this.state.account.emailId?(<div className="acc_pro_detail_heading">
-                    <span>Email</span>
+                    <span style={{fontFamily:"Arial, Helvetica, sans-serif"}}>Email</span>
                     <br />
                     <span className="acc_pro_details_value">{this.state.account.emailId}</span>
                   </div>):null}
@@ -339,18 +341,18 @@ export default class Account_pro extends React.Component {
                     {this.state.account.Bank_Details?(
                      
                       JSON.parse(this.state.account.Bank_Details).map(detail=>{
-                       return (<>
+                       return (<div style={{borderTop:"1px solid #767676"}}>
                        <div key={Math.random()} className="acc_pro_detail_last_lowr"> 
                       {detail.Bank_Acc_Num?(<div className="acc_pro_detail_heading" style={{gridColumn: "1/2"}}>
                         Account No.
                         <br />
                       <span className="acc_pro_details_value">{detail.Bank_Acc_Num}</span>
                         </div>):null}
-                      {detail.Bank_Name?(
+                      {detail.Bank_Name&&detail.Bank_Branch?(
                        <div className="acc_pro_detail_heading" style={{gridColumn: "2/3"}}>
                        Bank Name, Branch
                        <br />
-                       <span className="acc_pro_details_value">{detail.Bank_Name?(`${detail.Bank_Name}, ${detail.Bank_Branch}`):""}</span>
+                       <span className="acc_pro_details_value">{detail.Bank_Name&&detail.Bank_Branch?(`${detail.Bank_Name}, ${detail.Bank_Branch}`):""}</span>
                        </div>):null}
                       {detail.IIFC_Code?(<div className="acc_pro_detail_heading" style={{gridColumn: "1/2"}}>
                        IIFC Code
@@ -363,8 +365,8 @@ export default class Account_pro extends React.Component {
                        <span className="acc_pro_details_value">{detail.Remarks}</span>
                        </div>):null}
                        </div>
-                       <hr/>
-                       </>)})
+                       
+                       </div>)})
                        
                      ):(<div style={{display:"flex", justifyContent:"center"}} >
                     <img src={piggy_bank} style={{height:"50px", width:"50px", cursor:"pointer"}} onClick={()=>this.setOpenEditModal("banking",true)}/>

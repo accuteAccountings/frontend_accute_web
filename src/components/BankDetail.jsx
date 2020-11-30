@@ -31,7 +31,7 @@ class BankDetail extends React.Component {
       const {id,Bank_Acc_Num,Bank_Branch,Bank_Name,IIFC_Code,Remarks} = this.state;
     return (
            <div>
-            <div style={{display:"flex",justifyContent:"space-between"}}>
+            <div style={{display:"flex",justifyContent:"space-between", borderBottom:"1px solid #767676"}}>
               <div>
                  <TextField margin="normal"  
                     variant="outlined"                    
@@ -97,7 +97,7 @@ class BankDetail extends React.Component {
                  </div>
                  
              </div>
-             <hr/>
+             
              </div>
      )
     }
