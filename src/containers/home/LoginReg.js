@@ -35,7 +35,9 @@ class LoginReg extends Component {
       mob_num:"",
       snackbarOpen:false,
       formErrors:"",
-      forgot:false
+      forgot:false,
+      companyLogin:false,
+      company_username:""
     };
   }
   handleOnChange = e => {
@@ -120,6 +122,21 @@ class LoginReg extends Component {
   };
  // resetting the states for next attempt
    resetStates= ()=>{
+     if(this.state.errorMsg==="Password is incorrect"){
+       console.log("got here")
+      setTimeout(()=>{this.setState({ ...this.state,
+        curentUser:"",
+        successMsg:"",
+        full_name:"",
+        errorMsg:"",
+        password:"",
+        com_name:"",
+        mob_num:"",
+        c_code:"+91",
+        reg_email:"",
+        reg_pass:""})},2000)
+        return;
+     }
      setTimeout(()=>{this.setState({ ...this.state,
       curentUser:"",
       errorMsg:"",
@@ -131,9 +148,7 @@ class LoginReg extends Component {
       mob_num:"",
       c_code:"+91",
       reg_email:"",
-      reg_pass:""});
-      this.props.resetErrorMessage();
-    },3000)
+      reg_pass:""})},2000)
    }
   // shouldComponentUpdate(nextProps, nextState){
   // let shouldUpdate=true;
@@ -167,7 +182,9 @@ class LoginReg extends Component {
     }
   }
 }
-
+componentWillUnmount(){
+  this.props.resetErrorMessage()
+}
 handleEnter = (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
@@ -207,6 +224,7 @@ handleEnter = (e) => {
            this.state.currentUser?(<Redirect to="/agency"/>):null 
           }
    
+          {!this.state.companyLogin?(
           <div className="login_body">
             <div className="or_login">Or</div>
 
@@ -223,7 +241,9 @@ handleEnter = (e) => {
                       </a>{" "}
                       Instead
                     </span>
+                    
                   </div>
+                  <div style={{fontFamily:"Arial, Helvetica, sans-serif",fontSize:"0.8rem"}} onClick={()=>this.setState({companyLogin:true})}> or use <span style={{color:"#2699fb", cursor:"pointer"}} >company login</span></div>
                  { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
                   <form onSubmit={(e) => {
@@ -239,7 +259,7 @@ handleEnter = (e) => {
                       name="email"
                       value={this.state.email}
                       onChange={this.handleOnChange}
-                      autoComplete ="new-password"
+                      type="email"
                       onKeyDown = {this.handleEnter}
                       size="small"
                       />
@@ -370,11 +390,14 @@ handleEnter = (e) => {
                     />
                  
                   <div>
+                 
                   <div className="margin"></div>
+                  
                   <a className="forget_pass" href="#">
                     forgot password ?{" "}
                   </a>
                   </div>
+                  
                   <div className="margin"></div>
                   <button type="submit" className="loginBtn btnbtn">
                    Register
@@ -417,8 +440,73 @@ handleEnter = (e) => {
                 callback={this.responseFacebook}
               />
             </div>
+            </div>):(<div style={{width:"50%",display:"flex", justifyContent:"center", paddingBottom:"50px"}}>
+            <div className="login_cont" id="log_in_content">
+                  <div className="login_cont_head">
+                    <h2>Company Login</h2>
+                  </div>
+                  <div style={{fontFamily:"Arial, Helvetica, sans-serif",fontSize:"0.8rem"}} onClick={()=>this.setState({companyLogin:false})}> or use <span style={{color:"#2699fb", cursor:"pointer"}} >email login</span></div>
+                 { this.state.loading? (
+                  <LinearProgress color="secondary" />):null}
+                  <form onSubmit={(e) => {
+                    e.preventDefault()
+                    this.handleLoginSubmit()
+                  }}>
+                    <TextField  margin="normal"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="company_username"
+                      label="Enter Company Username"
+                      name="company_username"
+                      value={this.state.company_username}
+                      onChange={this.handleOnChange}                     
+                      onKeyDown = {this.handleEnter}
+                      size="small"
+                      />
+                  <TextField  margin="normal"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Enter User Id / E-mail"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.handleOnChange}
+                      onKeyDown = {this.handleEnter}
+                      size="small"
+                      />
+                  
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      value={this.state.password}
+                      onChange={this.handleOnChange}
+                      size="small"
+                      onKeyDown = {this.handleEnter}
+          
+                    />
+                 
+                 <div className="margin"></div>
+                    <p className="forget_pass" onClick={()=>this.setState({forgot:true})}>
+                     {" "}
+                     forgot password?
+                    </p>
+                    <div className="margin"></div>   
+                    <button type="submit" className="loginBtn btnbtn" >
+                     Login
+                    </button>
+                    <div className="margin"></div>
+                  </form>
+                </div>
+                </div>)}
           </div>
-        </div>
       </div>
     );
   }
