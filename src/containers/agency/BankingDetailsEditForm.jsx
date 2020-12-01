@@ -37,7 +37,7 @@ class BankingDetailsEditForm extends React.Component {
                  IIFC_Code,
                  Remarks
              }))]
-         },()=>console.log(this.state))
+         })
 
    } 
    
@@ -50,7 +50,6 @@ class BankingDetailsEditForm extends React.Component {
            body: JSON.stringify(updatedData)
        }).then(res => res.json())
        .then(parJson => {
-           console.log(parJson)
            return parJson;
        })
        .catch(error => error)
@@ -118,18 +117,15 @@ class BankingDetailsEditForm extends React.Component {
      const updatedData={
       Bank_Details: JSON.stringify(Bank_Details)
      }
-     console.log(updatedData)
-     debugger
+
      try {
          this.setState({loading:true})
          const savedData= await this.saveUpdatedData(updatedData)
          if(savedData){
-             console.log(savedData)
            this.setState({loading:false},()=>this.props.resetProfileOnUpdate(savedData))}
-     } catch (error) {
-            console.log(error)
-         this.setState({loading:false,errorMsg:error},()=>this.props.setOpenEditModal(false))
-     }
+        } catch (error) {
+         this.setState({loading:false,errorMsg:error},()=>setTimeout(()=>this.props.setOpenEditModal('banking',false),2000))
+        }
      
    }
    render(){

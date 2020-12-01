@@ -189,7 +189,7 @@ class AccountProfileEditForm extends React.Component{
           if(savedData){
             this.setState({loading:false},()=>this.props.resetProfileOnUpdate(savedData))}
       } catch (error) {
-          this.setState({loading:false,errorMsg:error},()=>this.props.setOpenEditModal("basic",false))
+          this.setState({loading:false,errorMsg:error},()=>setTimeout(()=>this.props.setOpenEditModal("basic",false),2000))
       }
       
     }
