@@ -12,33 +12,6 @@ import AccountProfileEditForm from "./AccountProfileEditForm";
 import BankingDetailsEditForm from './BankingDetailsEditForm';
 
 export default class Account_pro extends React.Component {
-  totalDebit = () => {
-    let t = 0;
-
-    this.state.bal.map(e => {
-      if (e.supplier === this.state.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      } else if (e.debit_acc === this.state.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-    return t;
-  };
-
-  totalCredit = () => {
-    let t = 0;
-
-    this.state.bal.map(e => {
-      if (e.customer === this.state.account.acc_name) {
-        t = parseInt(t) + parseInt(e.totalAmt);
-      } else if (e.credit_acc === this.state.account.acc_name) {
-        t = parseInt(t) + parseInt(e.amount) - parseInt(e.balance);
-      }
-    });
-
-    return t;
-  };
 
   getDet = async () => {
     let start_date = await document.getElementById("ledger_date_start").value;
@@ -48,7 +21,7 @@ export default class Account_pro extends React.Component {
     if (!start_date && !end_date && mode.value) {
       let sdate = "2020-03-01";
       let edate = "2021-04-01";
-      await fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
+      await fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -65,7 +38,7 @@ export default class Account_pro extends React.Component {
 
     if (start_date && end_date) {
       await fetch(
-        `/api/vouch/specific/${this.state.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
+        `/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
       )
         .then(res => res.json())
         .then(data => {
@@ -98,7 +71,7 @@ export default class Account_pro extends React.Component {
 
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
-    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
+    fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -163,7 +136,7 @@ export default class Account_pro extends React.Component {
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
     
-    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
+    fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -384,12 +357,8 @@ export default class Account_pro extends React.Component {
               getDet={this.getDet}
               clearall={this.clearall}
               details={this.state.details}
-              det2={this.state.det2}
               handleradio={this.handleradio}
               handleSearch={this.handleSearch}
-              det3={this.state.det3}
-              totalDebit={this.totalDebit}
-              totalCredit={this.totalCredit}
               filter_al={this.filter_al}
             />
           )}

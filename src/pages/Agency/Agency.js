@@ -23,12 +23,6 @@ export default class Agency extends React.Component{
     render(){
     return(
         <div className = "agency">
-            <button onClick = {() => {
-                this.handleMode('invoice')
-            }}>Invoice</button>
-            <button onClick = {() => {
-                this.handleMode('task')
-            }}>Task Mangaer</button>
 
             {this.state.mode == 'invoice' && (
                 <AgencyPage />
