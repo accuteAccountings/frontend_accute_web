@@ -226,10 +226,7 @@ handleEnter = (e) => {
                   </div>
                  { this.state.loading? (
                   <LinearProgress color="secondary" />):null}
-                  <form onSubmit={(e) => {
-                    e.preventDefault()
-                    this.handleLoginSubmit()
-                  }}>
+                  <form onSubmit={this.handleLoginSubmit} noValidate>
                     <TextField  margin="normal"
                       variant="outlined"
                       required

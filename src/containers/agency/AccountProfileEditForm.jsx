@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import MobNumList from '../../components/MobNumList';
 import {putData} from '../../helper/Fetch';
 import { findByLabelText } from '@testing-library/react';
 
@@ -16,20 +17,17 @@ class AccountProfileEditForm extends React.Component{
             acc_real_name:"",
             print_name:"",
             address_line1:"",
-            mob_num:"",
-            phone_num:"",
+            mob_num:[],
+            phone_num:[],
             emailId:"",
             pan_num:"",
             gst_num:"",
             aadhar_num:"",
-            Bank_Acc_Num:"",
-            Bank_Name:"",
-            Bank_Branch:"",
-            IIFC_Code:"",
-            Remarks:"",
             loading:false,
             errorMsg:"",
             snackbarOpen:false,
+            addMobNumInput:false,
+            addPhoneNumInput: false
         }
     }
     /*
@@ -49,30 +47,26 @@ class AccountProfileEditForm extends React.Component{
             pan_num,
             gst_num,
             aadhar_num,
-            Bank_Acc_Num,
-            Bank_Name,
-            Bank_Branch,
-            IIFC_Code,
-            Remarks} = this.props.account;
+            } = this.props.account;
+
+            let mobArr = mob_num.split(',').map(e=>({id:`mob-${Math.random()}`,number:e}));
+            let phoneArr = phone_num.split(',').map(e=>({id:`phone-${Math.random()}`,number:e}));
+
         this.setState({
             acc_real_name,
             print_name,
             address_line1,
-            mob_num,
-            phone_num,
+            mob_num:[...mobArr],
+            phone_num:[...phoneArr],
             emailId,
             pan_num,
             gst_num,
             aadhar_num,
-            Bank_Acc_Num,
-            Bank_Name,
-            Bank_Branch,
-            IIFC_Code,
-            Remarks
         })
     } 
     
     saveUpdatedData =  updatedData => {
+     console.log(updatedData);
           return fetch(`/api/accounts/edit?id=${this.props.account.id}` , {
             method : "PUT",
             headers: {
@@ -87,6 +81,7 @@ class AccountProfileEditForm extends React.Component{
         .catch(error => error)
 
     }
+
 // closing the snackbar
    handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -102,6 +97,64 @@ class AccountProfileEditForm extends React.Component{
         })
     }
 
+  // adding more mobile numbers
+  addNum=(type,num)=>{
+  
+    if(type==="mob_num"){
+        this.setState(prevState=>{
+            if(prevState.mob_num.length<3){
+            return {mob_num:[...prevState.mob_num,{id:`mob-${Math.random()}`,number:""}]}
+            }
+            
+         return
+        })
+    }else{
+        this.setState(prevState=>{
+            if(prevState.phone_num.length<3){
+            return { phone_num:[...prevState.phone_num,{id:`phone-${Math.random()}`,number:""}]}
+            }
+            return
+        })
+    }
+  }
+  removeNum= (type,num) =>{
+      if(type==="mob_num"){
+        this.setState(prevState=>({
+            mob_num:prevState.mob_num.filter(ele=>ele.id!==num.id)
+        }))
+      }else{
+        this.setState(prevState=>({
+            phone_num:prevState.phone_num.filter(ele=>ele.id!==num.id)
+        }))
+      }
+  } 
+   handleNumChange = (type, num, event) => {
+    const newNumber = event.target.value;
+    if(type="mob_num"){
+        this.setState(prevState=>{
+            const newNumAddedList = prevState.mob_num.map(ele=>{
+                if(ele.id===num.id){
+                    ele.number = newNumber;
+                    return ele;
+                }
+                return ele;
+            })
+            return {mob_num:[...newNumAddedList]}
+        })
+    }
+  
+        this.setState(prevState=>{
+            const newNumAddedList = prevState.phone_num.map(ele=>{
+                if(ele.id===num.id){
+                    ele.number = newNumber;
+                    return ele;
+                }
+                return ele;
+            })
+            return {phone_num:[...newNumAddedList]}
+        })
+    
+   }
   //on form submit ie save changes button click
     handleSaveChanges= async (e)=>{
       
@@ -116,26 +169,18 @@ class AccountProfileEditForm extends React.Component{
         pan_num,
         gst_num,
         aadhar_num,
-        Bank_Acc_Num,
-        Bank_Name,
-        Bank_Branch,
-        IIFC_Code,
-        Remarks} = this.state;
+ 
+    } = this.state;
       const updatedData={
         acc_real_name,
         print_name,
         address_line1,
-        mob_num,
-        phone_num,
+        mob_num:mob_num.map(ele=>ele["number"]).join(","),
+        phone_num:phone_num.map(ele=>ele["number"]).join(","),
         emailId,
         pan_num,
         gst_num,
         aadhar_num,
-        Bank_Acc_Num,
-        Bank_Name,
-        Bank_Branch,
-        IIFC_Code,
-        Remarks
       }
  
       try {
@@ -144,7 +189,7 @@ class AccountProfileEditForm extends React.Component{
           if(savedData){
             this.setState({loading:false},()=>this.props.resetProfileOnUpdate(savedData))}
       } catch (error) {
-          this.setState({loading:false,errorMsg:error},()=>this.props.setOpenEditModal(false))
+          this.setState({loading:false,errorMsg:error},()=>setTimeout(()=>this.props.setOpenEditModal("basic",false),2000))
       }
       
     }
@@ -158,11 +203,6 @@ class AccountProfileEditForm extends React.Component{
             pan_num,
             gst_num,
             aadhar_num,
-            Bank_Acc_Num,
-            Bank_Name,
-            Bank_Branch,
-            IIFC_Code,
-            Remarks
            } = this.state;
         return (
         <div style={{display:"flex", flexDirection:"column",padding:"5px"}}>
@@ -213,27 +253,75 @@ class AccountProfileEditForm extends React.Component{
             
             <div style={{display:"flex", flexDirection:"column"}}>
                 <div style={{display:"flex"}}>
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                style={{marginRight:"5px"}}
-                id="mob_num"
-                label="Mobile Number"
-                name="mob_num"
-                size="small"
-                value={mob_num}
-                onChange={this.handleOnChange}
-                />
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="phone_num"
-                label="Phone Number"
-                name="phone_num"
-                size="small"
-                value={phone_num}
-                onChange={this.handleOnChange}
-                />
+                    
+                        {/* <MobNumList mobNumList={mob_num} addMobNum={this.addMobNum} removeMobNum={this.removeMobNum} handleChange={this.handleMobNumChange}/> */}
+
+                      {/* {this.state.addMobNumInput?(
+                      <TextField margin="normal"  
+                       variant="outlined"                    
+                       fullWidth
+                       style={{marginRight:"5px"}}
+                       id="mob_num"
+                       label="Mobile Number"
+                       name="mob_num"
+                       size="small"
+                       value={mob_num}
+                       onChange={this.handleOnChange}
+                       />):null} */}
+                       {/* <Button variant="outlined" color="primary" style={{textTransform:"none"}} onClick={addMobNum}>+</Button> */}
+                       <div style={{display:"flex", flexDirection:"column", width:"48%",marginRight:"3px"}}>
+                        {mob_num.map((num,index)=>(
+                            <div key={num.id} style={{display:"flex", width:"90%"}} >
+                                    <TextField margin="normal"  
+                                      variant="outlined"  
+                                      fullwidth                  
+                                      style={{marginRight:"5px"}}
+                                      id="mob_num"
+                                      label="Mobile Number"
+                                      name="mob_num"
+                                      size="small"
+                                      value={num.number}
+                                      onChange={e=>this.handleNumChange("mob_num",num,e)}
+                                      />
+                                      <div style={{width:"20%",marginTop:"18px"}} >
+                                      {index===0?(<Button variant="outlined" color="primary" style={{textTransform:"none"}} onClick={()=>this.addNum("mob_num",num)}>+</Button>):(<Button variant="outlined" color="secondary" style={{textTransform:"none"}} onClick={()=>this.removeNum("mob_num",num)}>-</Button>) }
+                                      </div>
+                            </div>
+                        ))}   
+                       </div>
+                    {/* <div style={{display:"flex", flexDirection:"column"}} >
+                       <TextField margin="normal"  
+                       variant="outlined"                    
+                       fullWidth
+                       id="phone_num"
+                       label="Phone Number"
+                       name="phone_num"
+                       size="small"
+                       value={phone_num}
+                       onChange={this.handleOnChange}
+                       />
+                      <Button variant="outlined" color="primary" style={{textTransform:"none"}} onClick={this.addPhoneNum}>+ Add Number</Button>
+                    </div> */}
+                      <div style={{display:"flex", flexDirection:"column",width:"48%"}}>
+                        {phone_num.map((num,index)=>(
+                            <div key={num.id} style={{display:"flex",width:"90%"}}>
+                                    <TextField margin="normal"  
+                                    fullwidth 
+                                      variant="outlined"                    
+                                      id="phone_num"
+                                      style={{marginRight:"5px"}}
+                                      label="Phone Number"
+                                      name="phone_num"
+                                      size="small"
+                                      value={num.number}
+                                      onChange={e=>this.handleNumChange("phone_num",num,e)}
+                                      />
+                                      <div style={{width:"20px",marginTop:"18px"}} >
+                                      {index===0?(<Button variant="outlined" color="primary" style={{textTransform:"none"}} onClick={()=>this.addNum("phone_num",num)}>+</Button>):(<Button variant="outlined" color="secondary" style={{textTransform:"none"}} onClick={()=>this.removeNum("phone_num",num)}>-</Button>) }
+                                      </div>
+                            </div>
+                        ))} 
+                        </div>
                 </div>
                 <TextField margin="normal"  
                 variant="outlined"                    
@@ -282,68 +370,13 @@ class AccountProfileEditForm extends React.Component{
                 onChange={this.handleOnChange}
                 />
                 </div>
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="Bank_Acc_Num"
-                label="Account Number"
-                name="Bank_Acc_Num"
-                size="small"
-                value={Bank_Acc_Num}
-                onChange={this.handleOnChange}
-                />
-                <div style={{display:"flex"}}>
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                style={{marginRight:"5px"}}
-                id="Bank_Name"
-                label="Bank Name"
-                name="Bank_Name"
-                size="small"
-                value={Bank_Name}
-                onChange={this.handleOnChange}
-                />
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="Bank_Branch"
-                label="Bank Branch"
-                name="Bank_Branch"
-                size="small"
-                value={Bank_Branch}
-                onChange={this.handleOnChange}
-                />
-                </div>
-                <div style={{display:"flex"}}>
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                style={{marginRight:"5px"}}
-                id="IIFC_Code"
-                label="IIFC Code"
-                name="IIFC_Code"
-                size="small"
-                value={IIFC_Code}
-                onChange={this.handleOnChange}
-                />
-                <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="Remarks"
-                label="Remarks"
-                name="Remarks"
-                size="small"
-                value={Remarks}
-                onChange={this.handleOnChange}
-                />
-                </div>
+                
             </div>
             <div className="buttonGroup"style={{margin:"10px 0", display:"flex", justifyContent:"space-between"}}>
                 <Button variant="outlined" type="submit" color="primary">
                  Save Changes
                 </Button>
-                <Button variant="outlined" type="button"   color="secondary" onClick={()=>this.props.setOpenEditModal(false)}>Cancel</Button>
+                <Button variant="outlined" type="button"   color="secondary" onClick={()=>this.props.setOpenEditModal("basic",false)}>Cancel</Button>
             </div>
   
             </form>

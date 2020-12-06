@@ -4,6 +4,11 @@ import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import {putData} from '../../helper/Fetch';
 
 class UserProfileEditForm extends React.Component{
@@ -38,19 +43,19 @@ class UserProfileEditForm extends React.Component{
         })
     } 
     saveUpdatedData =  updatedData => {
-   
-        return fetch(`/api/users/edit` , {
-            method : "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(updatedData)
-        }).then(res =>res.json())
-        .then(parJson => {
-            console.log(parJson)
-            return parJson;
-        })
-        .catch(error => error)
+   console.log(updatedData)
+        // return fetch(`/api/users/edit` , {
+        //     method : "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(updatedData)
+        // }).then(res =>res.json())
+        // .then(parJson => {
+        //     console.log(parJson)
+        //     return parJson;
+        // })
+        // .catch(error => error)
 
     }
        // closing the snackbar
@@ -111,31 +116,44 @@ class UserProfileEditForm extends React.Component{
                 onChange={this.handleOnChange}
                 
                 />
-            <div style={{display:"flex"}}>
-            <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                fullWidth
-                style={{marginRight:"5px"}} 
-                id="age"
-                label="Edit Age"
-                name="age"
-                size="small"
-                value={age}
-                onChange={this.handleOnChange}            
-                 />
-             <TextField margin="normal"  
-                variant="outlined"                    
-                fullWidth
-                id="gender"
-                label="Edit Gender"
-                name="gender"
-                size="small"
-                value={gender}
-                onChange={this.handleOnChange}             
-                />
-              
-            </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+            <div style={{width:"50%",marginLeft:"5px"}}>
+             <TextField
+             margin="normal"  
+             variant="outlined"                    
+             fullWidth
+             style={{marginRight:"5px"}} 
+             id="age"
+             label="Edit Date of Birth"
+             name="age"
+             size="small"
+             type="date"
+             defaultValue="2017-05-24"
+             InputLabelProps={{
+                  shrink: true,
+                }}
+             />
+        </div><div style={{width:"50%"}}>
+              <FormControl variant="outlined">
+                <Select 
+                  labelId="demo-simple-select-placeholder-label-label"  
+                  autoWidth          
+                  id="gender"
+                  name="gender"
+                  value={gender}
+                  onChange={this.handleOnChange}
+                  style={{height:"40px", width:"220px", marginLeft:"5px",marginTop:"15px", color:"#000000"}}
+                >
+                  <MenuItem value="" disabled>
+                    <em>Gender</em>
+                  </MenuItem>
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl> 
+              </div>
+              </div>
             <TextField margin="normal"  
                 variant="outlined"                    
                 fullWidth

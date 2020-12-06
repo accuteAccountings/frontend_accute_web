@@ -1,8 +1,33 @@
 import React from "react";
+import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from "@material-ui/core/styles";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import {Button} from "@material-ui/core";
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from "@material-ui/core/Paper";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
-import {Button} from "@material-ui/core"
 
+
+
+const styles = theme => ({
+  select: {
+      height:"30px",  
+      '&:before': {
+        borderRadius:"none",
+        borderColor: '#000000',
+    },
+    '&:hover:not(.Mui-disabled):before': {
+      borderRadius:"none",
+        borderColor: '#000000',
+    }
+  }
+});
 class AddAcc extends React.Component {
   EditOn = () => {
     this.setState(() => {
@@ -25,7 +50,7 @@ class AddAcc extends React.Component {
 
     document.querySelector(".add_acc_inp_pan").value = this.props.data.pan_num;
 
-    document.querySelector(".add_acc_inp_aadhar").value = this.props.data.pan_num;
+    //document.querySelector(".add_acc_inp_aadhar").value = this.props.data.pan_num;
 
     document.querySelector("#add_acc_inp_add1").value = this.props.data.address_line1;
 
@@ -67,7 +92,7 @@ class AddAcc extends React.Component {
 
     let pan_num = document.querySelector(".add_acc_inp_pan").value;
 
-    let aadhar_num = document.querySelector(".add_acc_inp_aadhar").value;
+   // let aadhar_num = document.querySelector(".add_acc_inp_aadhar").value;
 
     let address_line1 = document.querySelector("#add_acc_inp_add1").value;
 
@@ -96,7 +121,6 @@ class AddAcc extends React.Component {
       status,
       gst_num,
       pan_num,
-      aadhar_num,
       address_line1,
       address_line2,
       state,
@@ -174,7 +198,9 @@ class AddAcc extends React.Component {
       };
     });
   }
-
+  handleChange = (event, newValue) => {
+    this.setState({addressSelection:newValue});
+  };
   constructor(props) {
     super(props);
 
@@ -186,7 +212,10 @@ class AddAcc extends React.Component {
     this.state = {
       bil_add: true,
       loading: false,
-      mode: this.props.mode
+      mode: this.props.mode,
+      checkedSB:false,
+      addressSelection:0,
+      checkedNonGst:false
     };
   }
 
@@ -227,7 +256,7 @@ class AddAcc extends React.Component {
                   <span>Account Type</span>
                   <br />
 
-                  <select
+                  {/* <select
                     readOnly={this.state.mode === "view" && true}
                     name="Group"
                     className="add_acc_inp"
@@ -242,7 +271,29 @@ class AddAcc extends React.Component {
                     <option disabled value="salary">
                       Salary
                     </option>
-                  </select>
+                  </select> */}
+                  <FormControl >
+    
+                   <Select
+                    className="add_acc_mui"
+                     variant="outlined"
+                     name="Group"
+                     id="add_acc_inp_group"
+                     disabled={this.state.mode === "view" && true}
+                     autoWidth
+                     style={{height:"35px"}}
+                   >
+                    <MenuItem value="trader">Trader</MenuItem>
+                    <MenuItem value="manu">Manu.</MenuItem>
+                    <MenuItem value="Sub Agent">Sub Agent</MenuItem>
+                    <MenuItem value="transport">Transport</MenuItem>
+                    <MenuItem value="bank">Bank</MenuItem>
+                    <MenuItem disabled value="salary">
+                      Salary
+                    </MenuItem>
+                   </Select>
+               
+                  </FormControl>
                 </div>
               </div>
 
@@ -279,17 +330,52 @@ class AddAcc extends React.Component {
                 </span>
               </div>
 
-              <h1 id="reg_det_h"> Registration Details</h1>
+              <div style={{display:"flex",justifyContent:"space-between", alignItems:"center"}}>
+                <div><h1 id="reg_det_h"> Registration Details</h1></div>
+                <div className="checked_sb_container">
+                  <FormControlLabel
+                   control={
+                     <Switch
+                       className="checked_non_gst"
+                       checked={this.state.checkedNonGst}
+                       onChange={()=>this.setState(prevState=>{
+                         return {checkedNonGst: !prevState.checkedNonGst}
+                       })}
+                       name="checkedNonGst"
+                       color="primary"
+                     />
+                   }
+                   label="non gst account"
+                 /></div>
+              </div>
 
               <div className="two_items">
                 <div className="add_acc_status si">
                   <span>Status </span>
                   <br />
-
+{/* 
                   <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
                     <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
-                  </select>
+                  </select> */}
+                  <FormControl >
+    
+                   <Select
+                     className="add_acc_mui"
+                     variant="outlined"
+                     id="add_acc_status"
+                     disabled={this.state.checkedNonGst}
+                     value={this.state.discountType}
+                     onChange={e => {
+                       this.setState({ dicountType: e.target.value });
+                     }}
+                     
+                   >
+                     <MenuItem value="regular registered">Regular Registered</MenuItem>
+                     <MenuItem value="unregistered">Unregistered</MenuItem>
+                   </Select>
+               
+                  </FormControl>
                 </div>
                 <div className="add_acc_gstnum si">
                   <span>GST No.</span>
@@ -300,6 +386,7 @@ class AddAcc extends React.Component {
                     className="add_acc_inp_gst"
                     placeholder="Enter GST No."
                     type="text"
+                    disabled={this.state.checkedNonGst}
                   />
                 </div>
               </div>
@@ -314,9 +401,10 @@ class AddAcc extends React.Component {
                     className="add_acc_inp_pan"
                     placeholder="Enter Pan No."
                     type="text"
+                    disabled={this.state.checkedNonGst}
                   />
                 </div>
-                <div className="add_acc_aadhar si">
+                {/* <div className="add_acc_aadhar si">
                   <span>Aadhar No.</span>
                   <br />
 
@@ -325,22 +413,51 @@ class AddAcc extends React.Component {
                     className="add_acc_inp_aadhar"
                     placeholder="Enter Aadhar No."
                     type="text"
+                    disabled={this.state.checkedNonGst}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 
             <div className="add_acc_body_right ">
-              <h1>
-                <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: "black" } : null}>
+              <h2 style={{margin:"0px",height:"48px", borderBottom:"1px solid #344f6b" }}>
+                {/* <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: "black" } : null}>
                   Billing Address
                 </span>
 
                 <span onClick={this.shipAdd} id="shipping_add" style={this.state.bil_add ? null : { color: "black" }}>
                   Shipping Address
-                </span>
-              </h1>
-
+                </span> */}
+               
+                <Tabs
+                  variant="fullWidth"
+                  indicatorColor="primary"
+                  textColor="primary"
+                  onChange={this.handleChange}
+                  value={this.state.addressSelection}
+                >
+                  <Tab label="Billing Address" style={{color:"#000000"}}/>
+                  <Tab label="Shipping Address" style={this.state.checkedSB?{color:"gray"}:{color:"#000000"}} disabled={this.state.checkedSB}/>
+                </Tabs>
+                
+              </h2>
+             {this.state.addressSelection===0? (<>
+              <div className="checked_sb_container" style={{display:"flex"}}>
+              <FormControlLabel
+                   control={
+                     <Switch
+                     className="checked_sb"
+                       checked={this.state.checkedSB}
+                       onChange={()=>this.setState(prevState=>{
+                         return {checkedSB: !prevState.checkedSB}
+                       })}
+                       name="checkedSB"
+                       color="primary"
+                     />
+                   }
+                   label="check if Shipping and Billing address are same"
+                 />
+              </div>
               <div className="add_acc_add1 si">
                 <span>Address Line 1</span>
                 <br />
@@ -435,8 +552,105 @@ class AddAcc extends React.Component {
                     type="text"
                     placeholder="Note , if any"
                   />
+                </div></div>
+                </>):(<>
+                <div className="add_acc_add1 si">
+                <span>Address Line 1</span>
+                <br />
+                <input
+                  readOnly={this.state.mode === "view" && true}
+                  id="add_acc_inp_add1"
+                  type="text"
+                  placeholder="Address Line 1"
+                />
+              </div>
+
+              <div className="add_acc_add2 si">
+                <span>Address Line 2</span>
+                <br />
+                <input
+                  readOnly={this.state.mode === "view" && true}
+                  id="add_acc_inp_add2"
+                  type="text"
+                  placeholder="Address Line 2"
+                />
+              </div>
+
+              <div className="two_items">
+                <div className="add_acc_state si">
+                  <span>State</span>
+                  <br />
+
+                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
+                </div>
+
+                <div className="add_acc_city si">
+                  <span>City</span>
+                  <br />
+
+                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
                 </div>
               </div>
+              <div className="add_acc_pincode si">
+                <span>Pincode</span>
+                <br />
+                <input
+                  readOnly={this.state.mode === "view" && true}
+                  className="add_acc_inp_pincode"
+                  type="text"
+                  placeholder="Enter Pincode"
+                />
+              </div>
+
+              <div className="two_items">
+                <div className="add_acc_mobnum si">
+                  <span>Mobile No.</span>
+                  <br />
+
+                  <input
+                    readOnly={this.state.mode === "view" && true}
+                    type="Number"
+                    id="add_acc_inp_mob"
+                    placeholder="Enter Mobile No."
+                  />
+                </div>
+                <div className="add_acc_phonenum si">
+                  <span>Phone No.</span>
+                  <br />
+
+                  <input
+                    readOnly={this.state.mode === "view" && true}
+                    type="Number"
+                    id="add_acc_inp_phone"
+                    placeholder="Enter Phone No."
+                  />
+                </div>
+              </div>
+
+              <div className="two_items">
+                <div className="add_acc_email si">
+                  <span>E-mail ID</span>
+                  <br />
+                  <input
+                    readOnly={this.state.mode === "view" && true}
+                    className="add_acc_inp_email"
+                    type="Email"
+                    placeholder="Enter e-mail Id"
+                  />
+                </div>
+
+                <div className="add_acc_note si">
+                  <span>Note (If any)</span>
+                  <br />
+                  <input
+                    readOnly={this.state.mode === "view" && true}
+                    className="add_acc_inp_note"
+                    type="text"
+                    placeholder="Note , if any"
+                  />
+                </div></div>
+                </>)}
+              
             </div>
           </div>
 
@@ -468,4 +682,4 @@ AddAcc.defaultProps = {
   mode: "add"
 };
 
-export default AddAcc;
+export default withStyles(styles)(AddAcc);

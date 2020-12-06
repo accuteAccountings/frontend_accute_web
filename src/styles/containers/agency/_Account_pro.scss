@@ -90,7 +90,7 @@
 }
 .acc_pro_right_lower {
   width: 50rem;
-  height: 26rem;
+  height: auto;
   background-color: white;
   box-shadow: 1px 1px 4px rgb(68, 68, 68);
 }
@@ -141,6 +141,7 @@
   font-size: 1.2rem;
   margin-bottom: 1.2rem;
   font-weight: 545;
+  min-width: 50%;
 }
 .acc_pro_details_value {
   font-size: 1.1rem;
@@ -170,9 +171,8 @@
   font-weight: 600;
 }
 .acc_pro_detail_last_lowr {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: inline-grid;
+  grid-template-columns: auto auto;
   width: 100%;
   padding: 10px;
 }

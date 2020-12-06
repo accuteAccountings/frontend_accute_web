@@ -543,3 +543,9 @@ tr:nth-child(even) {
   cursor: pointer;
   display: block;
 }
+
+.add_vouch_mui.MuiOutlinedInput-root {
+  position: relative;
+  border: 1px solid #1f1f10 !important;  
+  border-radius: 0px !important;
+}
