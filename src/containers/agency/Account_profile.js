@@ -161,7 +161,7 @@ export default class Account_pro extends React.Component {
       filter: null,
       bal: [],
       temp_det2: [],
-      account : null,
+      account : {},
       val : "acc_det",
       openBasicEditModal:false,
       openBankingEditModal:false
@@ -172,20 +172,19 @@ export default class Account_pro extends React.Component {
     console.log(savedAccount)
     this.setState({account:savedAccount,openBasicEditModal:false, openBankingEditModal:false})
   }
-   componentDidMount(){
+  componentDidMount(props){
     const { id } = this.props.match.params;   
     fetch(`/api/accounts/specific?id=${id}`)
     .then(res => res.json())
     .then((data) => {
-      this.setState(() => {
-        return{ 
-          account : data
-        }
-      })
-      this.recent_entry()
+this.setState({account:data.id})
+    })
+    .catch((err)=>{
+    alert("error")
+    console.log(err)
     })
   
-   }
+  }
 
   render() {  
     return (
