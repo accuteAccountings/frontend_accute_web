@@ -49,8 +49,10 @@ class AccountProfileEditForm extends React.Component{
             aadhar_num,
             } = this.props.account;
 
-            let mobArr = mob_num.split(',').map(e=>({id:`mob-${Math.random()}`,number:e}));
-            let phoneArr = phone_num.split(',').map(e=>({id:`phone-${Math.random()}`,number:e}));
+// let mobArr = mob_num.split(',').map(e=>({id:`mob-${Math.random()}`,number:e}));
+//           let phoneArr = phone_num.split(',').map(e=>({id:`phone-${Math.random()}`,number:e}));
+let mobArr=[1]
+let phoneArr=[1]
 
         this.setState({
             acc_real_name,
