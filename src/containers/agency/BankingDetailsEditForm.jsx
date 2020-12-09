@@ -24,6 +24,7 @@ class BankingDetailsEditForm extends React.Component {
         }
     }
     componentDidMount(){    
+        if(this.props.account.Bank_Details&& this.props.account.Bank_Details!==" "){
          this.setState({
              Bank_Details:[...JSON.parse(this.props.account.Bank_Details).map(({ Bank_Acc_Num,
              Bank_Name,
@@ -38,7 +39,9 @@ class BankingDetailsEditForm extends React.Component {
                  Remarks
              }))]
          })
-
+        }else{
+            console.log("Bank_Details",this.props.account.Bank_Details)
+        }
    } 
    
    saveUpdatedData =  updatedData => {
@@ -129,6 +132,7 @@ class BankingDetailsEditForm extends React.Component {
      
    }
    render(){
+    
     const {Bank_Details} = this.state;
     return (
         <div style={{display:"flex", flexDirection:"column",padding:"5px"}}>
@@ -148,7 +152,7 @@ class BankingDetailsEditForm extends React.Component {
                    <BankDetail key={Bank_Detail.id} index={i} bankDetail={Bank_Detail} addBankAccount={this.addBankAccount} removeBankAccount={this.removeBankAccount} handleDetailsChange={this.handleDetailsChange}/>
                    
                    
-                  ))}
+                  ))} 
 
  
                  <div className="buttonGroup"style={{margin:"10px 0", display:"flex", justifyContent:"space-between"}}>
