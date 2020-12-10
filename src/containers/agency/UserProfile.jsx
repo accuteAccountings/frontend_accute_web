@@ -95,7 +95,7 @@ render(){
                 <Button type="green">Settings</Button>
             </div>
             <Popup openPopup={this.state.openEditModal} title="Edit Profile Details" setOpenEditModal={this.setOpenEditModal}>
-              <UserProfileEditForm setOpenEditModal={this.setOpenEditModal} userDetails={this.state.userDetails} resetProfileOnUpdate={this.resetProfileOnUpdate} accountId={this.props.match.params.id}/>
+              <UserProfileEditForm setOpenEditModal={this.setOpenEditModal} userDetails={this.state.userDetails} resetProfileOnUpdate={this.resetProfileOnUpdate} />
             </Popup>
           </div>
         </div> }

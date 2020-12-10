@@ -204,7 +204,7 @@ handleEnter = (e) => {
             <img className="gotohomebtn" onClick={this.props.gotohome} src={cross} alt="" />
           </div>
                    {//on successful login redirect to main
-           this.state.currentUser?(<Redirect to="/agency"/>):null 
+           this.state.currentUser?(<Redirect to="/control-panel"/>):null 
           }
    
           <div className="login_body">

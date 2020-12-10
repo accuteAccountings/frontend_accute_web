@@ -1,109 +1,68 @@
-import React from "react";
-import add_acc_big from "assets/icons/add_acc.svg";
-// import add_agents from '../img/add_agents.svg'
-import add_rep from "assets/icons/add_rep.svg";
-// import add_trans from '../img/add_trans.svg'
-import { Bar, Line, Pie } from "react-chartjs-2";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
+import UserProfile from '../../containers/agency/UserProfile';
 
-class Dash extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      data: 10
-    };
+const useStyles = makeStyles({
+  products_container:{
+      fontFamily:"Arial, Helvetica, sans-serif",
+      width:"90%",
+      margin:"30px 20px",
+  },
+  product_container:{
+      display:"flex",
+      justifyContent:"space-between",
+      alignItems:"center",
+      padding:"20px",
+  },
+  product_heading:{
+    fontSize:"1.3rem",
+    color:"#344f6b",
+  },
+  redirect_button:{
+    borderRadius:"40px",
+    borderColor:"green",
+    color:"green",
+  },
+  divider:{
+    backgroundColor:"grey",
+    height:"1px",
+    width:"100%"
   }
-  render() {
-    let data = {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [12, 19, 15, 25, this.state.data, 10],
-          backgroundColor: [
-            "#29A8AB",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "#29A8AB",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)"
-          ],
-          borderWidth: 1
-        }
-      ]
-    };
-    // ,    options: {
-    //         scales: {
-    //             yAxes: [{
-    //                 ticks: {
-    //                     beginAtZero: true
-    //                 }
-    //             }]
-    //         }
-    //     }
+})
+function Dash(props) {
+  const classes = useStyles();
 
-    return (
-      <div className="Dash">
-        <div className="dash_con">
-          <div className="empty_con ">
-            <div onClick={this.props.addAccBtn} className="add_acc_big empty_box empty_box1">
-              <img src={add_acc_big} alt="" />
-              <h1>Add Accounts</h1>
-            </div>
-            <div className="add_trans_big empty_box empty_box1">
-              <img src={add_rep} alt="" />
-              <h1>Add Transactions</h1>
-            </div>
-          </div>
+  return (
+    <div>
+        
+        <UserProfile/>
 
-          <div className="empty_con_text">
-            <p>
-              Nothing Here to show,
-              <br /> Start by adding accounts and much more.
-            </p>
-          </div>
-
-          <div className="empty_con ">
-            <div className="empty_box empty_box2">
-              <img src={add_rep} alt="" />
-              <h1>Add Reports</h1>
-            </div>
-            <div className="empty_box empty_box2">
-              <img src={add_rep} alt="" />
-              <h1>Add Agents</h1>
-            </div>
-          </div>
+        <div className={classes.products_container}>
+           <h3 style={{fontFamily:"Arial, Helvetica, sans-serif"}}>Active Products</h3>
+           <Paper elevation="3">
+             <div>
+               <div className={classes.product_container}>
+                <p className={classes.product_heading}>Agency (code - 01A)</p>
+                <div><Link to="/agency">
+                  <Button variant="outlined" size="small"  className={classes.redirect_button} >Go to</Button></Link></div>              
+               </div>
+               <div className={classes.divider}></div>
+               <div className={classes.product_container}>
+                <p className={classes.product_heading}>Trading (code - 02T)</p>
+                <Button variant="outlined" size="small" className={classes.redirect_button} onClick={()=>alert("trading feature in development")}>Go to</Button>
+               </div>
+             </div>
+           </Paper>
         </div>
-        <div className="charts">
-          <div className="chart">
-            <div className="chart_con">
-              {" "}
-              <Bar data={data} options={{ maintainAspectRatio: false }} />
-            </div>
-          </div>
-          <div className="chart">
-            <div className="chart_con">
-              <Line data={data} options={{ maintainAspectRatio: false }} />
-            </div>
-          </div>
-          <div className="chart">
-            <div className="chart_con">
-              {" "}
-              <Pie data={data} options={{ maintainAspectRatio: false }} />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        
+      
+    </div>
+  )
 }
 
-export default Dash;
+export default Dash
+
