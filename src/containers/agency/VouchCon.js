@@ -354,7 +354,7 @@ class VouchCon extends React.Component {
           <div className="pro_con_vouch">
             {this.props.vouchPage === "pv" && (
               <div className="vouchCon">
-                {this.state.err_vouch ? (
+                {false ? (
                   <div className="wrong_alert">Something Went Wrong....</div>
                 ) : (
                   this.state.data.map((e, i) => {
