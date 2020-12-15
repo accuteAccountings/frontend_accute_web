@@ -177,11 +177,7 @@ export default class Account_pro extends React.Component {
     fetch(`/api/accounts/specific?id=${id}`)
     .then(res => res.json())
     .then((data) => {
-this.setState({account:data.id})
-    })
-    .catch((err)=>{
-    alert("error")
-    console.log(err)
+      this.setState({account : {...data}},()=>this.recent_entry()) 
     })
   
   }
@@ -234,13 +230,13 @@ this.setState({account:data.id})
 
           {this.state.val === "acc_det" && (
             <div className="acc_pro_right">
-              <div className="acc_pro_right_upper">
+              {this.state.account.acc_real_name?(<div className="acc_pro_right_upper">
                 <div className="acc_pro_right_name">
                   {this.state.account.acc_real_name}
-                  <span className="acc_pro_right_pname">({this.state.account.print_name})</span>
+                  {this.state.account.print_name?(<span className="acc_pro_right_pname">({this.state.account.print_name})</span>):null}
                 </div>
                 <div className="acc_pro_right_add">{this.state.account.address_line1}</div>
-              </div>
+              </div>):null}
               <div className="acc_pro_right_lower">
                 <div className="acc_pro_right_heading">
                   <div>BASIC DETAILS</div>
@@ -294,7 +290,7 @@ this.setState({account:data.id})
                     </div>):null}
                     </div>
                  </>):(<div style={{display:"flex", justifyContent:"center"}} >
-                    <img src={resume} style={{height:"50px", width:"50px", cursor:"pointer"}} onClick={()=>this.setOpenEditModal("basic",true)}/>
+                    <img src={resume} style={{height:"50px", width:"50px", cursor:"pointer",margin:"50px 20px"}} onClick={()=>this.setOpenEditModal("basic",true)}/>
                     </div>)}
                   
                 </div>
@@ -310,7 +306,7 @@ this.setState({account:data.id})
                   <BankingDetailsEditForm setOpenEditModal={this.setOpenEditModal} resetProfileOnUpdate={this.resetProfileOnUpdate} account={this.state.account}/>
                 </Popup>
                   
-                    {this.state.account.Bank_Details?(
+                    {this.state.account.Bank_Details && this.state.account.Bank_Details!==" " ?(
                      
                       JSON.parse(this.state.account.Bank_Details).map(detail=>{
                        return (<div style={{borderTop:"1px solid #767676"}}>
@@ -341,7 +337,7 @@ this.setState({account:data.id})
                        </div>)})
                        
                      ):(<div style={{display:"flex", justifyContent:"center"}} >
-                    <img src={piggy_bank} style={{height:"50px", width:"50px", cursor:"pointer"}} onClick={()=>this.setOpenEditModal("banking",true)}/>
+                    <img src={piggy_bank} style={{height:"50px", width:"50px", cursor:"pointer",margin:"50px 20px"}} onClick={()=>this.setOpenEditModal("banking",true)}/>
                     </div>)} 
                     
                   
