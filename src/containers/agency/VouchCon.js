@@ -358,9 +358,9 @@ class VouchCon extends React.Component {
                   <div className="wrong_alert">Something Went Wrong....</div>
                 ) : (
                   this.state.data.map((e, i) => {
-                    if (!(e.det.type === "purchase")) {
-                      return;
-                    }
+                    //if (!(e.det.type === "purchase")) {
+                    // return;
+                    // }
                     if (e.det.IsDeleted) {
                       return;
                     }

@@ -502,7 +502,7 @@ if (!document.getElementById("vouch_sup").value) {
                           let exist = false;
                           this.state.accounts.map(e => {
                             if (
-                              e.acc_real_name === data.acc_name &&
+                              e.acc_real_name === data.acc_real_name &&
                               (e.acc_type === "creditors" || e.acc_type === "debtors")
                             ) {
                               exist = true;
@@ -537,7 +537,7 @@ if (!document.getElementById("vouch_sup").value) {
 
                           let exist = false;
                           this.state.accounts.map(e => {
-                            if (e.acc_real_name === data.acc_name && e.acc_type === data.acc_type) {
+                            if (e.acc_real_name === data.acc_real_name && e.acc_type === data.acc_type) {
                               exist = true;
                             }
                           });
@@ -573,7 +573,7 @@ if (!document.getElementById("vouch_sup").value) {
                           let exist = false;
                           this.state.accounts.map(e => {
                             if (
-                              e.acc_real_name === data.acc_name &&
+                              e.acc_real_name === data.acc_real_name &&
                               (e.acc_type === "creditors" || e.acc_type === "debtors")
                             ) {
                               exist = true;
