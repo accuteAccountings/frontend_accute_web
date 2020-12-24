@@ -38,6 +38,7 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
     // export function* signInAfterSignUp({payload:{user}}){
     
     // }
+
     
     //sign-in sagas
     function signInApi(payload){
@@ -74,6 +75,47 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
     export function* onSignInStart(){
         yield takeLatest(LoginRegActionTypes.SIGN_IN_START,signIn)
     }
+
+    //sign-out sagas
+    function signOutApi(){
+        console.log("step2")
+        return fetch('/api/login' , {
+            method : "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => {
+            console.log("step3")
+            if (!res.ok) {
+                throw new Error("HTTP status " + res.status);
+            }
+            return {successMsg:"signout successful!!"}
+        })
+        .catch(error => error)
+    }
+
+    export function* signOut(){
+        try{
+           // yield put(resetErrorMessage());
+          const loggedOutData = yield call(signOutApi);
+          if(loggedOutData.error){ 
+            throw new Error(loggedOutData.error);     
+          }else{ 
+            console.log("step4")
+              yield put(signOutSuccess(loggedOutData.successMsg));
+          }
+        }catch(error){
+            yield put(signOutFailure(error))
+        }
+        
+    }
+    // watcher saga
+    export function* onSignOutStart(){
+        console.log("step1")
+        yield takeLatest(LoginRegActionTypes.SIGN_OUT_START,signOut)
+    }
+
+
     //google sign-in sagas
     function googleSignInApi({tokenId}){
         console.log(tokenId);

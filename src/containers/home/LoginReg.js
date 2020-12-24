@@ -65,7 +65,7 @@ class LoginReg extends Component {
   }
    // for login api call
    handleLoginSubmit = e => {
-    //  e.preventDefault();
+     e.preventDefault();
     
      const {email,password}= this.state;
      let data= {
@@ -145,33 +145,56 @@ class LoginReg extends Component {
   //only receive the props when different from previous value
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUser !== nextProps.currentUser ) {
-        this.setState({
-            currentUser: nextProps.currentUser,
-            loading:false
-        });
-    }
-    if (this.props.errorMsg !== nextProps.errorNsg ) {
       this.setState({
-        errorMsg: nextProps.errorMsg,
-        loading:false,
-        snackbarOpen:true
-      },()=>this.resetStates());
+          currentUser: nextProps.currentUser,
+          loading:false
+      });
+  }
+    if (this.props.errorMsg !== nextProps.errorMsg ) {
+      if(nextProps.errorMsg!==null){
+        if(nextProps.errorMsg.localeCompare("username not found")===0){
+          console.log("username-password reset",nextProps.errorMsg)
+          this.setState({  errorMsg: nextProps.errorMsg,
+            loading:false,
+            snackbarOpen:true,email:"",password:""},()=>setTimeout(()=>this.props.resetErrorMessage(),1000))
+        }
+        if(nextProps.errorMsg.localeCompare("Password is incorrect")===0){
+          console.log("password reset",nextProps.errorMsg)
+          this.setState({  errorMsg: nextProps.errorMsg,
+            loading:false,
+            snackbarOpen:true,password:""})
+         }
+      }
+      else{
+        this.setState({
+          errorMsg: nextProps.errorMsg,
+          loading:false,
+          snackbarOpen:true
+        },()=>this.resetStates());
+      }
+    }
+    // if (this.props.errorMsg !== nextProps.errorMsg) {        
+    //      this.setState({
+    //         errorMsg: nextProps.errorMsg,
+    //         loading:false,
+    //         snackbarOpen:true
+    //       },()=>this.resetStates());
+    // }
+
 
       if (this.props.successMsg !== nextProps.successMsg ) {
         this.setState({
           successMsg: nextProps.successMsg,
           loading:false,
-          isLog:true,
-          snackbarOpen:true
+          isLog:true
         });
     }
-  }
 }
 
 handleEnter = (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
-    this.handleLoginSubmit()
+    this.handleLoginSubmit(e)
   }
 }
 

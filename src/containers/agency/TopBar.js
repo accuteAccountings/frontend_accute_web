@@ -1,4 +1,6 @@
 import React from "react";
+import {connect} from 'react-redux';
+import { signOutStart,resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
 import MenuBtn from "assets/icons/menu.svg";
 // import help from './../img/info.svg'
 // import settings from './../img/settings.svg'
@@ -6,18 +8,18 @@ import arrow from "assets/icons/multimedia.svg";
 import {Link } from "react-router-dom"
 
 class TopBar extends React.Component {
-  logout() {
-    fetch("/api/login", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(() => {
-        window.location.href = "/home";
-      })
-      .catch(error => {
-        alert(error);
-      });
-  }
+  // logout() {
+  //   fetch("/api/login", {
+  //     method: "DELETE",
+  //     headers: { "Content-Type": "application/json" }
+  //   })
+  //     .then(() => {
+  //       window.location.href = "/home";
+  //     })
+  //     .catch(error => {
+  //       alert(error);
+  //     });
+  // }
   getName() {
     fetch("/api/profile/name", {
       method: "get",
@@ -54,12 +56,38 @@ class TopBar extends React.Component {
     //     ison = true;
     //   }
     // });
+ 
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    if (this.props.errorMsg !== nextProps.errorMsg ) {
+      this.setState({
+        errorMsg: nextProps.errorMsg,
+      },()=>{
+        alert(this.state.errorMsg);
+      });
+
+  }
+  // if (this.props.successMsg !== nextProps.successMsg ) {
+  //   this.setState({
+  //     name:"",
+  //     errorMsg:""
+  //   },()=>{
+  //     this.resetPage() 
+
+  //   });
+// }
+
+}
+componentWillMount(){
+  this.props.resetErrorMessage();
+}
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: "",
+      errorMsg:"",
     };
     this.getName();
   }
@@ -90,7 +118,7 @@ class TopBar extends React.Component {
               <li>Support</li>
               <li>Settings</li>
               <li>Privacy Policy</li>
-              <li onClick={this.logout}>Sign Out</li>
+              <li onClick={this.props.signOutStart()}>Sign Out</li>
             </div>
           </div>
         </li>
@@ -106,4 +134,15 @@ TopBar.defaultProps = {
   margin: "5px"
 };
 
-export default TopBar;
+const mapStateToProps= state => ({
+   errorMsg:state.loginReg.errorMsg,
+   successMsg:state.loginReg.successMsg,
+})
+const mapDispatchToProps = dispatch => {
+  return {
+      signOutStart: ()=> dispatch(signOutStart()),
+      resetErrorMessage: ()=> dispatch(resetErrorMessage())
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopBar);

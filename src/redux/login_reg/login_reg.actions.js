@@ -16,6 +16,20 @@ import LoginRegActionTypes from './login_reg.types';
             type : LoginRegActionTypes.SIGN_IN_FAILURE,
             payload : error.message
     })
+    export const signOutStart = () => ({
+        type : LoginRegActionTypes.SIGN_OUT_START,
+       
+   })
+   export const signOutSuccess = successMsg => ({
+           type : LoginRegActionTypes.SIGN_OUT_SUCCESS,
+           payload:successMsg
+
+   })
+   export const signOutFailure = error => ({
+           type : LoginRegActionTypes.SIGN_OUT_FAILURE,
+           payload : error.message
+   })
+ 
     export const signUpStart = userData => ({
             type : LoginRegActionTypes.SIGN_UP_START,
             payload: userData
