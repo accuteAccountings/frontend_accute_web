@@ -25,7 +25,8 @@ const loginRegReducer = (state=INITITAL_STATE,action)=>{
             return {
                 ...state,
                 currentUser:null,
-                errorMsg:null
+                errorMsg:null,
+                successMsg:action.payload,
             }
             
         case LoginRegActionTypes.SIGN_IN_FAILURE:

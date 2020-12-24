@@ -134,7 +134,7 @@ class AddJovouch extends React.Component {
   };
   addjovouch = async () => {
     let bill_date = document.querySelector("#jovouch_bill_date").value;
-    let type = document.querySelector("#jovouch_type").value;
+    let type = this.state.jovouch_type;
     let debit_acc = document.querySelector("#jovouch_debit_acc").value;
     let credit_acc = document.querySelector("#jovouch_credit_acc").value;
     let amount = document.querySelector("#jovouch_amount").value;
@@ -186,7 +186,7 @@ class AddJovouch extends React.Component {
       vouchData: [],
       data: [],
       editItem: 0,
-
+      jovouvh_type:"",
       CBill: [],
       BillArr: [""],
       billAmt: 0,
@@ -202,6 +202,9 @@ class AddJovouch extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      jovouch_type:"jv"
+    })
     let field = document.getElementById("jovouch_bill_date");
     let date = new Date();
     field.value =
@@ -261,11 +264,12 @@ class AddJovouch extends React.Component {
                        variant="outlined"
                        id="jovouch_type"
                        name="jovouch_type"
+                       onChange={e=>this.setState({jovouch_type:e.target.value})}
                        autoWidth
                      >
-                         <MenuItem value="option1">Journal</MenuItem>
-                         <MenuItem value="option1">Journal</MenuItem>
-                         <MenuItem value="option1">Journal</MenuItem>
+                         <MenuItem value="jv">Journal</MenuItem>
+                         {/* <MenuItem value="option1">Journal</MenuItem>
+                         <MenuItem value="option1">Journal</MenuItem> */}
                      </Select>
 
                  </FormControl>

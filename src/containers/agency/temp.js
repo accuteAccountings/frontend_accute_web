@@ -7,7 +7,6 @@ import Printed_Invoice from './Printed_invoice'
 
 
 class VouchCon extends React.Component {
-
   deleteIt = url => {
     this.setState({ delete: true, deleteUrl: url });
   };
@@ -167,7 +166,9 @@ class VouchCon extends React.Component {
       err_debit: false,
       err_credit: false
     };
+    this.updateVouchData("/api/vouch?mode=newest");
 
+    this.updateJoVouchData("/api/jovouch?mode=newest");
   }
   updateVouchData = url => {
     fetch(url)
@@ -184,26 +185,6 @@ class VouchCon extends React.Component {
         this.setState(() => {
           return {
             err_vouch: true
-          };
-        });
-      });
-  };
-
-  updateJoVouchData = url => {
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState(() => {
-          return {
-            JoVouchdata: data,
-            tempJodata: data
-          };
-        });
-      })
-      .catch(err => {
-        this.setState(() => {
-          return {
-            err_jovouch: true
           };
         });
       });
@@ -244,11 +225,27 @@ class VouchCon extends React.Component {
         });
       });
   };
-  componentDidMount(){
-    this.updateVouchData("/api/vouch?mode=newest");
 
-    this.updateJoVouchData("/api/jovouch?mode=newest");
-  }
+  updateJoVouchData = url => {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.setState(() => {
+          return {
+            JoVouchdata: data,
+            tempJodata: data
+          };
+        });
+      })
+      .catch(err => {
+        this.setState(() => {
+          return {
+            err_jovouch: true
+          };
+        });
+      });
+  };
+
   render() {
     return (
       <div className="pro_compo">
@@ -357,9 +354,11 @@ class VouchCon extends React.Component {
           <div className="pro_con_vouch">
             {this.props.vouchPage === "pv" && (
               <div className="vouchCon">
-                {this.state.data? (
+                {false ? (
+                  <div className="wrong_alert">Something Went Wrong....</div>
+                ) : (
                   this.state.data.map((e, i) => {
-                    if (e.det.type !== "pv") {
+                    if (!(e.det.type === "purchase")) {
                       return;
                     }
                     if (e.det.IsDeleted) {
@@ -382,8 +381,6 @@ class VouchCon extends React.Component {
                       />
                     );
                   })
-                ):(
-                  <div className="wrong_alert">Something Went Wrong....</div>
                 )}
               </div>
             )}
@@ -394,7 +391,7 @@ class VouchCon extends React.Component {
               ) : (
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
-                    if (e.det.type === "dn") {
+                    if (e.det.type === "debit") {
                       if (e.det.IsDeleted) {
                         return;
                       }
@@ -425,7 +422,7 @@ class VouchCon extends React.Component {
               ) : (
                 <div className="vouchCon">
                   {this.state.data.map((e, i) => {
-                    if (e.det.type === "cn") {
+                    if (e.det.type === "credit") {
                       if (e.det.IsDeleted) {
                         return;
                       }
@@ -493,50 +490,50 @@ class DetCont extends React.Component {
   render() {
     return (
       <div className={this.props.deleted ? " det_cont_vouch   vouch_del" : "det_cont_vouch"}>
-      <div className="det_cont_left vouc_det_left">
-        <div className="acc_name_vouch">
-          <span className="acc_id_vouch">{this.props.i}. </span>
-          {this.props.supplier}
-          <span className="vouch_to">to</span>
-          <span className="vouch_costumer_name">{this.props.costumer}</span>
-          {this.props.deleted && <span id="delete_msg">This will be permanently deleted in 10 days</span>}
-        </div>
-        <div className="vouch_bill_detail">
-          <div className="acc_adress">
-            <span className="acc_adress_head vouch_amount">Amount :</span> {this.props.amt}
+        <div className="det_cont_left vouc_det_left">
+          <div className="acc_name_vouch">
+            <span className="acc_id_vouch">{this.props.i}. </span>
+            {this.props.supplier}
+            <span className="vouch_to">TO</span>
+            <span className="vouch_costumer_name">{this.props.costumer}</span>
+            {this.props.deleted && <span id="delete_msg">This will be permanently deleted in 10 days</span>}
           </div>
-          <div className="acc_adress">
-            <span className="acc_adress_head">Bill No :</span> {this.props.bill_num}
+          <div className="vouch_bill_detail">
+            <div className="acc_adress">
+              <span className="acc_adress_head vouch_amount">Amount :</span> {this.props.amt}
+            </div>
+            <div className="acc_adress">
+              <span className="acc_adress_head">Biil No :</span> {this.props.bill_num}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="det_cont_right_vouch vouch_right">
-        <div className=" vouch_status">
-          <span className="acc_right_vouch">Status:</span>{" "}
-          {this.props.status === "0" ? <span style={{ color: "green" }}>Paid</span> : "UnPaid"}
+        <div className="det_cont_right_vouch vouch_right">
+          <div className=" vouch_status">
+            <span className="acc_right_vouch">Status:</span>{" "}
+            {this.props.status === "0" ? <span style={{ color: "green" }}>Paid</span> : "UnPaid"}
+          </div>
+          <div className="vouch_date">
+            <span className="acc_right_vouch"> Date:</span> {this.props.date}
+          </div>
         </div>
-        <div className="vouch_date">
-          <span className="acc_right_vouch"> Date:</span> {this.props.date}
-        </div>
-      </div>
 
-      <div className="det_cont_icons">
-        <div
-          onClick={() => {
-            this.props.editF(this.props.which, "edit", this.props.EData);
-          }}
-        >
-          <img src={pencil} alt=" " />
-        </div>
-        <div
-          onClick={() => {
-            this.props.deleteIt("/api/vouch/" + this.props.id);
-          }}
-        >
-          <img src={trash} alt=" " />
+        <div className="det_cont_icons">
+          <div
+            onClick={() => {
+              this.props.editF(this.props.which, "edit", this.props.EData);
+            }}
+          >
+            <img src={pencil} alt=" " />
+          </div>
+          <div
+            onClick={() => {
+              this.props.deleteIt("/api/vouch/" + this.props.id);
+            }}
+          >
+            <img src={trash} alt=" " />
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 }
@@ -552,7 +549,7 @@ class JoVouchDet extends React.Component {
           </div>
           <div className="acc_name_jovouch jovouch_det">
             <span>{this.props.seller} </span>
-            <span className="vouch_to">to</span>
+            <span className="vouch_to">TO</span>
             <span className="vouch_costumer_name">{this.props.cust}</span>
           </div>
         </div>
