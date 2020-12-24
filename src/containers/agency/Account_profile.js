@@ -172,7 +172,7 @@ export default class Account_pro extends React.Component {
     console.log(savedAccount)
     this.setState({account:savedAccount,openBasicEditModal:false, openBankingEditModal:false})
   }
-  componentDidMount(props){
+  componentDidMount(){
     const { id } = this.props.match.params;   
     fetch(`/api/accounts/specific?id=${id}`)
     .then(res => res.json())

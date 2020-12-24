@@ -362,6 +362,7 @@ class VouchCon extends React.Component {
                     if (e.det.type !== "pv") {
                       return;
                     }
+
                     if (e.det.IsDeleted) {
                       return;
                     }
