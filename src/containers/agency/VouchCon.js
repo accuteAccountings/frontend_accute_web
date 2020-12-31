@@ -272,7 +272,7 @@ class VouchCon extends React.Component {
                 this.props.setVouchPage("jv");
               }}
             >
-              Journal Vouchers
+            Payment Vouchers
             </li>
             <li
               className={this.props.vouchPage === "dn" ? "black" : "grey"}
@@ -298,7 +298,7 @@ class VouchCon extends React.Component {
                 this.props.setPVoJVoDN(this.props.vouchPage, "add");
               }}
             >
-              + Add {this.props.vouchPage === "jv" && "Journal Vouchers"}
+              + Add {this.props.vouchPage === "jv" && "Payment Vouchers"}
               {this.props.vouchPage === "pv" && "Sales Vouchers"}
               {this.props.vouchPage === "dn" && "Debit Note"}
               {this.props.vouchPage === "cn" && "Credit Note"}

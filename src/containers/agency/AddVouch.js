@@ -1,5 +1,4 @@
 import React from "react";
-import InputLabel from '@material-ui/core/InputLabel';
 import compose from 'recompose/compose';
 import {connect} from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -475,11 +474,7 @@ this.CreateNewTransport()
       .then(res => res.json())
       .then(data => {
         if (data.accounts) {
-          this.setState(() => {
-            return {
-              accounts: data.accounts
-            };
-          });
+          this.setState({accounts: data.accounts});
         }
       })
       .catch(err => {
@@ -627,6 +622,8 @@ if (!document.getElementById("vouch_sup").value) {
       dicountType: "less",
       mainAmnt: 0,
       freightArr: [],
+      l_r_date:"",
+      bill_date:"",
     };
     
   }
@@ -635,14 +632,14 @@ if (!document.getElementById("vouch_sup").value) {
 
     this.getProducts();
     this.getAccounts();
-    this.setState({voucher_type:this.props.which})
+    this.setState({voucher_type:this.props.which,vouch_sup_agent:this.props.currentUser.full_name})
     if (this.props.mode === "edit") {
       this.setState({ subAgent: true });
     }
     this.getName();
-    let today = new Date();
-
-    document.getElementById("vouch_bill_date").valueAsDate = today;
+    let today = new Date().toLocaleDateString();
+    this.setState({bill_date:today,l_r_date:today})
+    
     document.getElementById("pro_list").style.display = "none";
     if (this.props.mode === "edit") {
       this.setData();
@@ -682,7 +679,8 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className="vouch_si">
                     <span>Bill Date</span>
                     <br />
-                    <input type="date" name="vouch_bill_date" id="vouch_bill_date" />
+                    <input type="date" name="bill_date" id="vouch_bill_date" value={this.state.bill_date} onChange={e=>this.setState({bill_date:e.target.value,l_r_date:e.target.value},()=>console.log("change done here"))}/>
+                   
                   </div>
                   <div className="vouch_si">
                     <span>Type</span>
@@ -745,7 +743,7 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className = "vouch_si" >
                     <span>L. R. Date</span>
                       <br />
-                    <input type = "date" id = "vouch_lr_date" />
+                    <input type = "date" id = "vouch_lr_date" value={this.state.l_r_date} onChange={e=>this.setState({l_r_date:e.target.value})} />
                   </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
@@ -857,9 +855,9 @@ if (!document.getElementById("vouch_sup").value) {
                         this.setState({ name: e.target.value });
                       }}
                       autoWidth
-                      
+                      value={this.state.vouch_sup_agent}
                     >
-                      <MenuItem value="">None</MenuItem>
+                      <MenuItem value={this.state.vouch_sup_agent}>{this.state.vouch_sup_agent}</MenuItem>
                       {/* <MenuItem value={this.state.name}>{this.state.name}</MenuItem> */}
                     </Select>
                     </FormControl>

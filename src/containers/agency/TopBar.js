@@ -80,9 +80,10 @@ class TopBar extends React.Component {
 // }
 
 }
-componentWillMount(){
+componentWillUnmount(){
   this.props.resetErrorMessage();
 }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -92,6 +93,7 @@ componentWillMount(){
     this.getName();
   }
   render() {
+   
     let margin = {
       marginBottom: "50px"
     };
@@ -101,7 +103,7 @@ componentWillMount(){
         <img className="menu_btn" src={MenuBtn} alt="" />
 
         <li className="top_btns profile_btn">
-          Hello , {this.state.name}{" "}
+          Hello, {this.state.name}{" "}
           <span>
             <img id="arrow" src={arrow} alt="?" />
           </span>{" "}
@@ -118,7 +120,7 @@ componentWillMount(){
               <li>Support</li>
               <li>Settings</li>
               <li>Privacy Policy</li>
-              <li onClick={this.props.signOutStart()}>Sign Out</li>
+              <li onClick={()=>this.props.signOutStart()}>Sign Out</li>
             </div>
           </div>
         </li>
@@ -137,6 +139,7 @@ TopBar.defaultProps = {
 const mapStateToProps= state => ({
    errorMsg:state.loginReg.errorMsg,
    successMsg:state.loginReg.successMsg,
+   currentUser:state.loginReg.currentUser
 })
 const mapDispatchToProps = dispatch => {
   return {

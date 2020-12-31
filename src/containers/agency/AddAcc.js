@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import {Button} from "@material-ui/core";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
@@ -42,7 +42,7 @@ class AddAcc extends React.Component {
 
     document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
 
-    document.querySelector("#add_acc_inp_group").value = this.props.data.acc_type;
+    
 
     document.querySelector("#add_acc_status").value = this.props.data.status;
 
@@ -70,10 +70,12 @@ class AddAcc extends React.Component {
 
     document.querySelector(".add_acc_inp_note").value = this.props.data.notes;
 
-    document.querySelector(".add_acc_inp_bal").value = this.props.bal;
+   
+    this.setState({acc_type:this.props.data.acc_type, bal: this.props.data.bal})
   };
 
   addAccount() {
+    if(this.validate()){
     this.setState(() => {
       return {
         loading: true
@@ -84,7 +86,7 @@ class AddAcc extends React.Component {
 
     let print_name = document.querySelector(".add_acc_inp_pname").value;
 
-    let acc_type = document.querySelector("#add_acc_inp_group").value;
+    let acc_type = this.state.acc_type;
 
     let status = document.querySelector("#add_acc_status").value;
 
@@ -112,8 +114,16 @@ class AddAcc extends React.Component {
 
     let notes = document.querySelector(".add_acc_inp_note").value;
 
-    let bal = document.querySelector(".add_acc_inp_bal").value;
-
+    let bal = this.state.bal;
+    // if(!acc_type){
+    //   alert("add an account type")
+    //   this.setState({loading:false},()=>{return;})
+      
+    // }
+    // if(!bal){
+    //   alert("add opening balance")
+    //   this.setState({loading:false},()=>{return;})
+    // }
     let data = {
       acc_real_name,
       print_name,
@@ -182,6 +192,7 @@ class AddAcc extends React.Component {
           };
         });
       });
+    }
   }
 
   shipAdd() {
@@ -201,6 +212,16 @@ class AddAcc extends React.Component {
   handleChange = (event, newValue) => {
     this.setState({addressSelection:newValue});
   };
+
+  validate = () => {
+    let temp = {};
+    temp.acc_type= this.state.acc_type.length!==0?"":"This field is required"
+    temp.bal = this.state.bal?"":"This field is required"
+
+    this.setState({errors:{...temp}})
+
+    return Object.values(temp).every(x=>x=="")
+  } 
   constructor(props) {
     super(props);
 
@@ -215,7 +236,10 @@ class AddAcc extends React.Component {
       mode: this.props.mode,
       checkedSB:false,
       addressSelection:0,
-      checkedNonGst:false
+      checkedNonGst:false,
+      acc_type:"",
+      bal:"",
+      errors:""
     };
   }
 
@@ -281,7 +305,9 @@ class AddAcc extends React.Component {
                      id="add_acc_inp_group"
                      disabled={this.state.mode === "view" && true}
                      autoWidth
-                     style={{height:"35px"}}
+                     style={{height:"33px"}}
+                     value={this.state.acc_type}
+                     onChange={e=>this.setState({acc_type:e.target.value})}
                    >
                     <MenuItem value="trader">Trader</MenuItem>
                     <MenuItem value="manu">Manu.</MenuItem>
@@ -294,6 +320,8 @@ class AddAcc extends React.Component {
                    </Select>
                
                   </FormControl>
+                  <br/>
+                  {this.state.errors.acc_type?<span style={{color:"red"}}>{` *${this.state.errors.acc_type}`}</span>:""}
                 </div>
               </div>
 
@@ -310,7 +338,7 @@ class AddAcc extends React.Component {
               </div>
 
               <div className="add_acc_obal si">
-                <span>Opening Balacing</span>
+                <span>Opening Balance</span>{this.state.errors.bal?<span style={{color:"red"}}>{` *${this.state.errors.bal}`}</span>:""}
                 <br />
 
                 <input
@@ -318,8 +346,10 @@ class AddAcc extends React.Component {
                   className="add_acc_inp_bal"
                   placeholder="Enter Amount"
                   type="text"
+                  required
+                  value={this.state.bal}
+                  onChange={e=>this.setState({bal:e.target.value})}
                 />
-
                 <span className="checkboxes">
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Dr.
