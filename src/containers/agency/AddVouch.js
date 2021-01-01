@@ -810,7 +810,7 @@ if (!document.getElementById("vouch_sup").value) {
                     <ul id="sup_list">
                       {this.state.acc.map((acc, index) => {
                         if (
-                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
+                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors")||
                           document.getElementById("vouch_customer").value === acc.acc_real_name
                         ) {
                           return;

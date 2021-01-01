@@ -309,9 +309,9 @@ class AddAcc extends React.Component {
                      value={this.state.acc_type}
                      onChange={e=>this.setState({acc_type:e.target.value})}
                    >
-                    <MenuItem value="trader">Trader</MenuItem>
-                    <MenuItem value="manu">Manu.</MenuItem>
-                    <MenuItem value="Sub Agent">Sub Agent</MenuItem>
+                    <MenuItem value="debtors">Trader</MenuItem>
+                    <MenuItem value="creditors">Manu.</MenuItem>
+                    <MenuItem value="sub-agent">Sub Agent</MenuItem>
                     <MenuItem value="transport">Transport</MenuItem>
                     <MenuItem value="bank">Bank</MenuItem>
                     <MenuItem disabled value="salary">
