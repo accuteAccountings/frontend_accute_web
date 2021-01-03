@@ -51,6 +51,9 @@ import LoginRegActionTypes from './login_reg.types';
     export const resetErrorMessage = ()=>({
             type: LoginRegActionTypes.RESET_ERROR_MESSAGE
     })
+    export const resetAll = ()=>({
+        type: LoginRegActionTypes.RESET_ALL
+    })
     export const facebookSignInStart = response =>({
             type: LoginRegActionTypes.FACEBOOK_SIGN_IN_START,
             payload:response

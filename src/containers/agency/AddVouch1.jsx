@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from "@material-ui/core/styles";
@@ -23,42 +24,44 @@ const styles = theme => ({
     }
   });
 
-class AddVouch extends React.Component {
+class AddVouch1 extends React.Component {
+  constructor(props){
+    super(props);
+    
+    this.state= {
+        products: [],
+        accounts: [],
+        subAgent: false,
+        items: [],
+        bill_date:"",
+        vouch_type:"",
+        bill_num:"",
+        g_r_num:"",
+        transport_name:"",
+        supplier:"",
+        supplier_agent:"",
+        supplier_agent2:"",
+        gst:5,
+        set_commission:"",
+        customer:"",
+        name: null,
+        editItem: -1,
+        totalAmt:0,
+        grossAmt: 0,
+        disAmt: 0,
+        pro: [],
+        acc: [],
+        discountArr:[],
+        dicountType: "Less",
+        freightArr:[],
+
+
+
+    }
+}
 render() {
 
-    constructor(props){
-        super(props)
-        this.state= {
-            products: [],
-            accounts: [],
-            subAgent: false,
-            items: [],
-            bill_date:"",
-            vouch_type:"",
-            bill_num:"",
-            g_r_num:"",
-            transport_name:"",
-            supplier:"",
-            supplier_agent:"",
-            supplier_agent2:"",
-            gst:5,
-            set_commission:"",
-            customer:"",
-            name: null,
-            editItem: -1,
-            totalAmt:0,
-            grossAmt: 0,
-            disAmt: 0,
-            pro: [],
-            acc: [],
-            discountArr:[],
-            dicountType: "Less",
-            freightArr:[],
-
-
-
-        }
-    }
+ 
     return (
       <div className="add_vouch_con">
         <div className="add_pro_head">
@@ -89,7 +92,8 @@ render() {
                   <div className="vouch_si">
                     <span>Bill Date</span>
                     <br />
-                    <input type="date" name="bill_date" id="vouch_bill_date" />
+                    {/* <input type="date" name="bill_date" id="vouch_bill_date" /> */}
+                    <TextField type="date" size="small" name="bill_date" id="vouch_bill_date"  variant="outlined" />
                   </div>
                   <div className="vouch_si">
                     <span>Type</span>
@@ -914,4 +918,4 @@ render() {
   }
 }
 
-export default withStyles(styles)(AddVouch);
+export default withStyles(styles)(AddVouch1);

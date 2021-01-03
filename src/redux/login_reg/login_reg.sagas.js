@@ -78,26 +78,46 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
 
     //sign-out sagas
     function signOutApi(){
-        console.log("step2")
-        return fetch('/api/login' , {
-            method : "DELETE",
-            headers: {
+        return fetch('/api/login/logout',{
+            method:"GET",
+            headers:{
                 "Content-Type": "application/json"
             }
-        }).then(res => {
-            console.log("step3")
-            if (!res.ok) {
-                throw new Error("HTTP status " + res.status);
-            }
-            return {successMsg:"signout successful!!"}
+        })
+       .then(res => {
+            console.log("step3",res,res.ok)
+            // if (!res.ok) {
+            //     throw new Error("HTTP status " + res.status);
+            // }
+            return res.json()
         })
         .catch(error => error)
+      
+        // return fetch('/api/login' , {
+        //     method : "DELETE",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        // })
+        // .then(res => {
+        //     console.log("step3",res,res.ok)
+        //     // if (!res.ok) {
+        //     //     throw new Error("HTTP status " + res.status);
+        //     // }
+        //     return res.json()
+        // })
+        // .catch(error => error)
     }
 
     export function* signOut(){
-        try{
+       try{
+        console.log("step 2");
+        // yield call(signOutApi);
+        // yield put(signOutSuccess("signout successful!!"));
            // yield put(resetErrorMessage());
-          const loggedOutData = yield call(signOutApi);
+        //    yield put(signOutSuccess("signout successful!!"));
+           const loggedOutData = yield call(signOutApi);
+           console.log(loggedOutData)
           if(loggedOutData.error){ 
             throw new Error(loggedOutData.error);     
           }else{ 
@@ -176,5 +196,5 @@ import {signUpSuccess,signUpFailure,signInSuccess,signInFailure,signOutSuccess,s
     }
    
 export function* loginRegSagas(){
-    yield all([call(onSignInStart),call(onSignUpStart)])
+    yield all([call(onSignInStart),call(onSignUpStart),call(onSignOutStart)])
 }

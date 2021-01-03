@@ -240,22 +240,6 @@ getAccounts = () => {
   constructor(props) {
     super(props);
 
-    this.getSales()
-    this.getPayment()
-    this.Account_data()
-    this.getAccounts()
-
-    fetch('/api/accounts').then((res) => res.json())
-    .then((data) => {
-      if(data){
-        this.setState(() => {
-          return{
-            accounts : data.accounts
-          }
-        })
-      }
-    })
-
       this.state = {
         options: {
           chart: {
@@ -284,7 +268,23 @@ getAccounts = () => {
 
 
     }
+componentDidMount(){
+  this.getSales()
+  this.getPayment()
+  this.Account_data()
+  this.getAccounts()
 
+  fetch('/api/accounts').then((res) => res.json())
+  .then((data) => {
+    if(data){
+      this.setState(() => {
+        return{
+          accounts : data.accounts
+        }
+      })
+    }
+  })
+}
     render(){
  
         return(
@@ -460,7 +460,8 @@ const User_Det = (props) => {
       }
     })
   } , [])
-  return(
+  return(<>
+    { parseInt(total_bal) > 0 ?(
     <div className = {parseInt(props.id)%2 === 0 ? 'lower_ud_even' : 'lower_ud_odd'  }>
     <div className = "id">{props.id}</div>
     <div className = "name_city">
@@ -468,15 +469,14 @@ const User_Det = (props) => {
       <div className = "city">{props.city}</div>
     </div>
     <div className = {props.payment == 0 ? 'completed' : 'status'}><span>{props.payment == 0 ? 'Completed' : 'Pending'}</span></div>
-    <div className = "balance">{parseInt(total_bal) > 0 ? <span>{total_bal} {' '} Cr</span> :
-    <span>{ parseInt(total_bal) < 0 ? (<span> {parseInt(total_bal)*(-1)} {' '} Dr</span>) : '0'}</span>
-  }</div>
+    <div className = "balance"><span>{total_bal} {' '} Cr</span></div>
     {/* <div className = "action" onClick = {async() => {
       await props.getspecific_acc(props.len - props.i)
       await props.setAccProfile('ledger')
       await props.navTo('accounting')
       
     }}><span>Open Ledger</span></div> */}
-  </div>
+  </div>):""}
+  </>
   )
 }

@@ -25,29 +25,31 @@ async function postData(url = "", data, m) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-class AddJovouch extends React.Component {
+class AddJovouch1 extends React.Component {
   setData = () => {
     let d = this.props.EData;
 
-    document.querySelector("#jovouch_bill_date").value = d.bill_date;
-    document.querySelector("#jovouch_debit_acc").defaultValue = d.debit_acc;
-    document.querySelector("#jovouch_credit_acc").defaultValue = d.credit_acc;
-    let arr = [];
-    d.payArr.map(e => {
-      let a = JSON.parse(e);
-      if (a.mode === " cheque") {
-        a.mode = "cheque";
-      }
-      if (a.mode === " cash") {
-        a.mode = "cash";
-      }
-      arr.push(a);
-    });
-    this.setState({ BillArr: d.billArr, payArr: arr });
-    setTimeout(() => {
-      this.updateBillAmt();
-      this.updateAmt();
-    }, 1000);
+    
+    //let arr = [];
+    // d.payArr.map(e => {
+    //   let a = JSON.parse(e);
+    //   if (a.mode === " cheque") {
+    //     a.mode = "cheque";
+    //   }
+    //   if (a.mode === " cash") {
+    //     a.mode = "cash";
+    //   }
+    //   arr.push(a);
+    // });
+    this.setState({ 
+        jovouch_bill_date: d.bill_date,
+        jovouch_debit_acc:d.debit_acc,
+        jovouch_credit_acc:d.credit_acc,
+        BillArr: [...d.billArr],
+        payArr: [...d.payArr] },()=>{
+            this.updateBillAmt();
+            this.updateAmt();
+        });
   };
 
   updateBillAmt = () => {
@@ -59,9 +61,7 @@ class AddJovouch extends React.Component {
         }
       }
     }
-    this.setState({
-      billAmt: billAmt
-    });
+    this.setState({billAmt});
   };
 
   updateAmt = () => {
@@ -133,12 +133,13 @@ class AddJovouch extends React.Component {
     }
   };
   addjovouch = async () => {
-    let bill_date = document.querySelector("#jovouch_bill_date").value;
+
+    let bill_date = this.state.jovouch_bill_date;
     let type = this.state.jovouch_type;
-    let debit_acc = document.querySelector("#jovouch_debit_acc").value;
-    let credit_acc = document.querySelector("#jovouch_credit_acc").value;
-    let amount = document.querySelector("#jovouch_amount").value;
-    let balance = document.querySelector("#jovouch_balance").value;
+    let debit_acc = this.state.jovouch_debit_acc;
+    let credit_acc = this.state.jovouch_credit_acc;
+    let amount = this.state.jovouch_amount;
+    let balance = this.state.jovouch_balance;
 
     let Vdata = {
       bill_date,
@@ -166,19 +167,14 @@ class AddJovouch extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        this.setState(() => {
-          return {
-            data: data
-          };
-        });
-        this.updateBillAmt();
+        this.setState({data},()=>this.updateBillAmt());
       });
   };
 
 
   constructor(props) {
     super(props);
-    this.updateVouchData();
+   
     this.state = {
       products: [],
       amt: 0,
@@ -187,7 +183,10 @@ class AddJovouch extends React.Component {
       vouchData: [],
       data: [],
       editItem: 0,
-      jovouvh_type:"",
+      jovouch_type:"jv",
+      jovouch_bill_date:"",
+      jovouch_debit_acc:"",
+      jovouch_credit_acc:"",
       CBill: [],
       BillArr: [""],
       billAmt: 0,
@@ -201,23 +200,20 @@ class AddJovouch extends React.Component {
       ]
     };
   }
-
   componentDidMount() {
-    this.setState({
-      jovouch_type:"jv"
-    })
-    let field = document.getElementById("jovouch_bill_date");
+    this.updateVouchData();
     let date = new Date();
-    field.value =
-      date.getFullYear().toString() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, 0) +
-      "-" +
-      date.getDate().toString().padStart(2, 0);
+    let dateValue = new Date().toLocaleDateString('en-CA');
+      this.setState({
+        jovouch_type:"jv",
+        jovouch_bill_date: dateValue
+      })
+      
     if (this.props.mode === "edit") {
       this.setData();
     }
   }
+
 
   render() {
     return (
@@ -249,7 +245,7 @@ class AddJovouch extends React.Component {
               <div className="jovouch_si">
                 <span> Date</span>
                 <br />
-                <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" />
+                <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" value={this.state.jovouch_bill_date} onChange={e=>this.setState({jovouch_bill_date:e.target.value})}/>
               </div>
               <div className="jovouch_si">
                 <span>Type</span>
@@ -267,6 +263,7 @@ class AddJovouch extends React.Component {
                        name="jovouch_type"
                        onChange={e=>this.setState({jovouch_type:e.target.value})}
                        autoWidth
+                       value={this.state.jovouch_type}
                      >
                          <MenuItem value="jv">Journal</MenuItem>
                          {/* <MenuItem value="option1">Journal</MenuItem>
@@ -290,9 +287,10 @@ class AddJovouch extends React.Component {
                             id="bill_cross_btn"
                             onClick={() => {
                               let arr = this.state.BillArr;
-                              arr.splice(i, 1);
-                              this.setState({ BillArr: arr });
-                              this.updateBillAmt();
+                              this.setState({ BillArr: [...arr.filter((ele,index)=>{
+                                  return index!==i
+                              })] },()=>this.updateBillAmt());
+                              
                               this.state.BillArr.map((a, ii) => {
                                 document.querySelector(".jo_bill_no" + ii).value = a;
                               });
@@ -319,12 +317,8 @@ class AddJovouch extends React.Component {
                                 }
                               }, 500);
                             }}
-                            onChange={() => {
-                              this.bill_list_change(i);
-                            }}
-                            onFocus={() => {
-                              this.bill_list_change(i);
-                            }}
+                            onChange={() => this.bill_list_change(i)}
+                            onFocus={() => this.bill_list_change(i)}
                             id="jovouch_bill_no"
                             className={"jo_bill_no" + i}
                             autoComplete="off"
@@ -399,7 +393,7 @@ class AddJovouch extends React.Component {
         <div className="jovouch_payment_det ">
           {this.state.payArr.map((e, index) => {
             return (
-              <div className="jovouch_customer">
+              <div className="jovouch_customer ">
                 <div className="jovouch_si ">
                   <div className="mode_head">
                     <span>Mode </span>
@@ -431,16 +425,12 @@ class AddJovouch extends React.Component {
                        name="jovouch_mode"
                        autoWidth
                        onChange={e => {
-                        let a = this.state.payArr.map((ele,i)=>{
-                            if(i===index){
-                              return {...ele,mode:e.target.value}
-                            }
+                        this.setState({ payArr: [...this.state.payArr.map((ele,i)=>{
+                            if(i===index) return {...ele,mode:e.target.value}
                             return ele
-                        });
-                        this.setState({ payArr: [...a] });
+                        })]} );
                       }}
                       value={this.state.payArr[index].mode}
-                    
                      >
                          <MenuItem value="cheque">Cheque</MenuItem>
                          <MenuItem value="cash">Cash</MenuItem>
@@ -461,14 +451,30 @@ class AddJovouch extends React.Component {
                           autoComplete="off"
                           type="text"
                           placeholder="Bank Name"
-                          defaultValue={e.det2}
+                          value={e.det2}
                           className="paydet2"
                           id={"payDet2" + index}
-                          onBlur={() => {
-                            let arr = this.state.payArr;
-                            if (arr[index]) {
-                              arr[index].det2 = document.getElementById("payDet2" + index).value;
-                            }
+                        //   onBlur={() => {
+                        //     let arr = this.state.payArr;
+                        //     if (arr[index]) {
+                        //       arr[index].det2 = document.getElementById("payDet2" + index).value;
+                        //     }
+                          onChange={e=>{
+                           // let newArr = []
+                          //   if(this.state.payArr.length==0){let payment = {};
+                          //      payment.det=e.target.value
+                          //      newArr.push(payment)
+                          //      this.setState({payArr:[...newArr]})
+                          //      return;
+                          //  }
+                            let newArr = this.state.payArr.map((ele,i)=>{
+                                if (index===i) {
+                                    return {...ele,det2:e.target.value}
+                                }
+                                return ele
+                            });
+                              this.setState({payArr:[...newArr]})
+                          
                           }}
                         />
                       </div>
@@ -481,14 +487,30 @@ class AddJovouch extends React.Component {
                           autoComplete="off"
                           type="text"
                           placeholder="Cheque No."
-                          defaultValue={e.det}
+                          value={e.det}
                           className="paydet"
                           id={"payDet" + index}
-                          onBlur={() => {
-                            let arr = this.state.payArr;
-                            if (arr[index]) {
-                              arr[index].det = document.getElementById("payDet" + index).value;
-                            }
+                        //   onBlur={() => {
+                        //     let arr = this.state.payArr;
+                        //     if (arr[index]) {
+                        //       arr[index].det = document.getElementById("payDet" + index).value;
+                        //     }
+                        //   }}
+                          onChange={e=>{
+                            //let newArr = [];
+                            //   if(this.state.payArr.length==0){let payment = {};
+                            //      payment.det=e.target.value
+                            //      newArr.push(payment)
+                            //      this.setState({payArr:[...newArr]})
+                            //      return;
+                            //  }
+                           let  newArr= [...this.state.payArr.map((ele,i)=>{
+                                if (index===i) {
+                                    return {...ele,det:e.target.value}
+                                }
+                                return ele
+                            })]
+                              this.setState({payArr:[...newArr]})
                           }}
                         />
                       </div>
@@ -502,10 +524,9 @@ class AddJovouch extends React.Component {
                     <span
                       id="amt_cross_btn"
                       onClick={() => {
-                        let arr = this.state.payArr;
-                        arr.splice(index, 1);
-                        this.setState({ payArr: arr });
-                        this.updateAmt();
+                        // let arr = this.state.payArr;
+                        // arr.splice(index, 1);
+                        this.setState({ payArr: [...this.state.payArr.filter((e,i)=>i!==index)] }, ()=>this.updateAmt());
                       }}
                     >
                       +
@@ -591,4 +612,4 @@ class AddJovouch extends React.Component {
   }
 }
 
-export default AddJovouch;
+export default AddJovouch1;

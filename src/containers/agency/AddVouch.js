@@ -1,5 +1,4 @@
 import React from "react";
-import InputLabel from '@material-ui/core/InputLabel';
 import compose from 'recompose/compose';
 import {connect} from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -55,7 +54,7 @@ class AddVouch extends React.Component {
   clearData = () => {
     // document.querySelector("#vouch_bill_date").value = null;
     // document.querySelector("#vouch_type").value = null;
-    this.setState({voucher_type:""})
+    this.setState({voucher_type:"", bill_date:"",l_r_date:""})
     document.querySelector("#vouch_bill_no").value = null;
     document.querySelector("#vouch_gr_no").value = null;
     document.querySelector("#vouch_transport_name").value = null;
@@ -73,7 +72,8 @@ class AddVouch extends React.Component {
 
   setData = () => {
     let d = this.props.EData.det;
-    document.querySelector("#vouch_bill_date").defaultValue = d.bill_date;
+    if(d.bill_date)this.setState({bill_date:d.bill_date, l_r_date:d.bill_date});;
+    if(d.l_r_date)this.setState({l_r_date:d.l_r_date});
     this.setState({voucher_type:d.type})
     document.querySelector("#vouch_bill_no").defaultValue = d.bill_num;
     document.querySelector("#vouch_gr_no").defaultValue = d.g_r_num;
@@ -186,7 +186,8 @@ class AddVouch extends React.Component {
 this.CreateNewSupplier()
 this.CreateNewCustomer()
 this.CreateNewTransport()
-    let bill_date = document.querySelector("#vouch_bill_date").value;
+    let bill_date = this.state.bill_date;
+    let l_r_date= this.state.l_r_date;
     let type = this.state.voucher_type;
     let bill_num = document.querySelector("#vouch_bill_no").value;
     let g_r_num = document.querySelector("#vouch_gr_no").value;
@@ -202,6 +203,7 @@ this.CreateNewTransport()
     let gst = document.querySelector("#vouch_gst").value;
     let Vdata = {
       bill_date,
+      l_r_date,
       type,
       bill_num,
       g_r_num,
@@ -475,11 +477,7 @@ this.CreateNewTransport()
       .then(res => res.json())
       .then(data => {
         if (data.accounts) {
-          this.setState(() => {
-            return {
-              accounts: data.accounts
-            };
-          });
+          this.setState({accounts: data.accounts});
         }
       })
       .catch(err => {
@@ -601,6 +599,7 @@ if (!document.getElementById("vouch_sup").value) {
 
 
 }
+roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
 
   constructor(props) {
     super(props);
@@ -627,6 +626,8 @@ if (!document.getElementById("vouch_sup").value) {
       dicountType: "less",
       mainAmnt: 0,
       freightArr: [],
+      l_r_date:"",
+      bill_date:"",
     };
     
   }
@@ -635,14 +636,15 @@ if (!document.getElementById("vouch_sup").value) {
 
     this.getProducts();
     this.getAccounts();
-    this.setState({voucher_type:this.props.which})
+    this.setState({voucher_type:this.props.which,vouch_sup_agent:this.props.currentUser.full_name})
     if (this.props.mode === "edit") {
       this.setState({ subAgent: true });
     }
     this.getName();
-    let today = new Date();
-
-    document.getElementById("vouch_bill_date").valueAsDate = today;
+    let today = new Date().toLocaleDateString('en-CA');
+    
+    this.setState({bill_date:today,l_r_date:today})
+    
     document.getElementById("pro_list").style.display = "none";
     if (this.props.mode === "edit") {
       this.setData();
@@ -652,6 +654,7 @@ if (!document.getElementById("vouch_sup").value) {
     }
   }
   render() {
+   
     return (
       <div className="add_vouch_con">
         <div className="add_pro_head">
@@ -682,7 +685,8 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className="vouch_si">
                     <span>Bill Date</span>
                     <br />
-                    <input type="date" name="vouch_bill_date" id="vouch_bill_date" />
+                    <input type="date" name="bill_date" id="vouch_bill_date" value={this.state.bill_date} onChange={e=>this.setState({bill_date:e.target.value,l_r_date:e.target.value},()=>console.log("change done here"))}/>
+                   
                   </div>
                   <div className="vouch_si">
                     <span>Type</span>
@@ -745,7 +749,7 @@ if (!document.getElementById("vouch_sup").value) {
                   <div className = "vouch_si" >
                     <span>L. R. Date</span>
                       <br />
-                    <input type = "date" id = "vouch_lr_date" />
+                    <input type = "date" id = "vouch_lr_date" value={this.state.l_r_date} onChange={e=>this.setState({l_r_date:e.target.value})} />
                   </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
@@ -812,7 +816,7 @@ if (!document.getElementById("vouch_sup").value) {
                     <ul id="sup_list">
                       {this.state.acc.map((acc, index) => {
                         if (
-                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
+                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors")||
                           document.getElementById("vouch_customer").value === acc.acc_real_name
                         ) {
                           return;
@@ -857,9 +861,9 @@ if (!document.getElementById("vouch_sup").value) {
                         this.setState({ name: e.target.value });
                       }}
                       autoWidth
-                      
+                      value={this.state.vouch_sup_agent}
                     >
-                      <MenuItem value="">None</MenuItem>
+                      <MenuItem value={this.state.vouch_sup_agent}>{this.state.vouch_sup_agent}</MenuItem>
                       {/* <MenuItem value={this.state.name}>{this.state.name}</MenuItem> */}
                     </Select>
                     </FormControl>
@@ -1287,27 +1291,35 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Gross Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.grossAmt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.grossAmt)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Discount :</td>
                 <td className="bold">
                   <strong>
-                    {"-"}₹{this.state.disAmt}
+                    {"-"}₹{this.roundOffTheNumber(this.state.disAmt)}
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <td> Taxable Amount :</td>
+                <td className="bold">
+                  <strong>
+                    ₹{this.roundOffTheNumber(this.state.grossAmt-this.state.disAmt)}
                   </strong>
                 </td>
               </tr>
               <tr>
                 <td> GST ({this.state.gst}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gstAmt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.gstAmt)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{this.state.totalAmt}</strong>
+                  <strong> ₹{this.roundOffTheNumber(this.state.totalAmt)}</strong>
                 </td>
               </tr>
               {this.state.discontArr.map((ele, i) => {
@@ -1374,10 +1386,16 @@ if (!document.getElementById("vouch_sup").value) {
                   </tr>
                 );
               })}
+               <tr>
+                <td> Round Off ({this.state.net}%) :</td>
+                <td className="bold">
+                  <strong>{(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt))>0.5? (`(+) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`):(`(-) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`)}</strong>
+                </td>
+              </tr>
               <tr>
                 <td> Total Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.mainAmnt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.mainAmnt.toFixed())}</strong>
                 </td>
               </tr>
             </table>

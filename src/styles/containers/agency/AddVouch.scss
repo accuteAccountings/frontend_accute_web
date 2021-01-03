@@ -183,7 +183,7 @@ input::-webkit-inner-spin-button {
   ul {
     position: absolute;
     display: none;
-
+    overflow: auto;
     background-color: white;
     border: 1px solid #a0a0a0;
     box-sizing: border-box;

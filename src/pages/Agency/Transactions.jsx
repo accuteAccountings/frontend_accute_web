@@ -9,7 +9,7 @@ import ProCon from "containers/agency/ProCon";
 import AddVouch from "containers/agency/AddVouch";
 import VouchCon from "containers/agency/VouchCon";
 import Dash from "./Dash";
-import AddJovouch from "containers/agency/AddJoVouch";
+import AddJovouch1 from "containers/agency/AddJoVouch1";
 import Account_pro from "containers/agency/Account_profile";
 import DailyBook from "containers/agency/DailyBook";
 import Trash from "containers/agency/Trash";
@@ -378,7 +378,7 @@ export default class Accountings extends React.Component {
             <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
           )}
           {this.state.PVoJVoDN === "jv" && (
-            <AddJovouch
+            <AddJovouch1
               mode={this.state.vouchMode}
               EData={this.state.vouchEData}
               rm={this.rmVouch}
