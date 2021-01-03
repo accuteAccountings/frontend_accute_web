@@ -203,12 +203,7 @@ class AddJovouch1 extends React.Component {
   componentDidMount() {
     this.updateVouchData();
     let date = new Date();
-    let dateValue =
-      date.getFullYear().toString() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, 0) +
-      "-" +
-      date.getDate().toString().padStart(2, 0);
+    let dateValue = new Date().toLocaleDateString('en-CA');
       this.setState({
         jovouch_type:"jv",
         jovouch_bill_date: dateValue
@@ -250,7 +245,7 @@ class AddJovouch1 extends React.Component {
               <div className="jovouch_si">
                 <span> Date</span>
                 <br />
-                <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" value={this.state.value}/>
+                <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" value={this.state.jovouch_bill_date} onChange={e=>this.setState({jovouch_bill_date:e.target.value})}/>
               </div>
               <div className="jovouch_si">
                 <span>Type</span>
@@ -465,6 +460,13 @@ class AddJovouch1 extends React.Component {
                         //       arr[index].det2 = document.getElementById("payDet2" + index).value;
                         //     }
                           onChange={e=>{
+                           // let newArr = []
+                          //   if(this.state.payArr.length==0){let payment = {};
+                          //      payment.det=e.target.value
+                          //      newArr.push(payment)
+                          //      this.setState({payArr:[...newArr]})
+                          //      return;
+                          //  }
                             let newArr = this.state.payArr.map((ele,i)=>{
                                 if (index===i) {
                                     return {...ele,det2:e.target.value}
@@ -494,13 +496,20 @@ class AddJovouch1 extends React.Component {
                         //       arr[index].det = document.getElementById("payDet" + index).value;
                         //     }
                         //   }}
-                          onChange={()=>{
-                            let newArr = this.state.payArr.map((ele,i)=>{
+                          onChange={e=>{
+                            //let newArr = [];
+                            //   if(this.state.payArr.length==0){let payment = {};
+                            //      payment.det=e.target.value
+                            //      newArr.push(payment)
+                            //      this.setState({payArr:[...newArr]})
+                            //      return;
+                            //  }
+                           let  newArr= [...this.state.payArr.map((ele,i)=>{
                                 if (index===i) {
                                     return {...ele,det:e.target.value}
                                 }
                                 return ele
-                            });
+                            })]
                               this.setState({payArr:[...newArr]})
                           }}
                         />

@@ -8,7 +8,7 @@ import { Redirect } from 'react-router-dom';
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleLogin } from "react-google-login";
 import cross from "assets/icons/cancel.svg";
-import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+import { signInStart,signUpStart, googleSignInStart,facebookSignInStart, resetErrorMessage, resetAll } from '../../redux/login_reg/login_reg.actions';
 import ForgotPassword from "./ForgotPassword";
 
 class LoginReg extends Component {
@@ -183,11 +183,22 @@ class LoginReg extends Component {
 
 
       if (this.props.successMsg !== nextProps.successMsg ) {
+        if(nextProps.successMsg=="signout successful!!"){
+          this.setState({
+            loading:false,
+            isLog:false,
+            currentUser:null,
+            
+          },()=>resetAll());
+          return;
+        }
+       
         this.setState({
           successMsg: nextProps.successMsg,
           loading:false,
-          isLog:true
+          isLog:true,
         });
+      
     }
 }
 

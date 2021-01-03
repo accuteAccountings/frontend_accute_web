@@ -54,7 +54,7 @@ class AddVouch extends React.Component {
   clearData = () => {
     // document.querySelector("#vouch_bill_date").value = null;
     // document.querySelector("#vouch_type").value = null;
-    this.setState({voucher_type:""})
+    this.setState({voucher_type:"", bill_date:"",l_r_date:""})
     document.querySelector("#vouch_bill_no").value = null;
     document.querySelector("#vouch_gr_no").value = null;
     document.querySelector("#vouch_transport_name").value = null;
@@ -72,7 +72,8 @@ class AddVouch extends React.Component {
 
   setData = () => {
     let d = this.props.EData.det;
-    document.querySelector("#vouch_bill_date").defaultValue = d.bill_date;
+    if(d.bill_date)this.setState({bill_date:d.bill_date, l_r_date:d.bill_date});;
+    if(d.l_r_date)this.setState({l_r_date:d.l_r_date});
     this.setState({voucher_type:d.type})
     document.querySelector("#vouch_bill_no").defaultValue = d.bill_num;
     document.querySelector("#vouch_gr_no").defaultValue = d.g_r_num;
@@ -185,7 +186,8 @@ class AddVouch extends React.Component {
 this.CreateNewSupplier()
 this.CreateNewCustomer()
 this.CreateNewTransport()
-    let bill_date = document.querySelector("#vouch_bill_date").value;
+    let bill_date = this.state.bill_date;
+    let l_r_date= this.state.l_r_date;
     let type = this.state.voucher_type;
     let bill_num = document.querySelector("#vouch_bill_no").value;
     let g_r_num = document.querySelector("#vouch_gr_no").value;
@@ -201,6 +203,7 @@ this.CreateNewTransport()
     let gst = document.querySelector("#vouch_gst").value;
     let Vdata = {
       bill_date,
+      l_r_date,
       type,
       bill_num,
       g_r_num,
@@ -596,6 +599,7 @@ if (!document.getElementById("vouch_sup").value) {
 
 
 }
+roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
 
   constructor(props) {
     super(props);
@@ -637,7 +641,8 @@ if (!document.getElementById("vouch_sup").value) {
       this.setState({ subAgent: true });
     }
     this.getName();
-    let today = new Date().toLocaleDateString();
+    let today = new Date().toLocaleDateString('en-CA');
+    
     this.setState({bill_date:today,l_r_date:today})
     
     document.getElementById("pro_list").style.display = "none";
@@ -649,6 +654,7 @@ if (!document.getElementById("vouch_sup").value) {
     }
   }
   render() {
+   
     return (
       <div className="add_vouch_con">
         <div className="add_pro_head">
@@ -1285,27 +1291,35 @@ if (!document.getElementById("vouch_sup").value) {
               <tr>
                 <td> Gross Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.grossAmt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.grossAmt)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Discount :</td>
                 <td className="bold">
                   <strong>
-                    {"-"}₹{this.state.disAmt}
+                    {"-"}₹{this.roundOffTheNumber(this.state.disAmt)}
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <td> Taxable Amount :</td>
+                <td className="bold">
+                  <strong>
+                    ₹{this.roundOffTheNumber(this.state.grossAmt-this.state.disAmt)}
                   </strong>
                 </td>
               </tr>
               <tr>
                 <td> GST ({this.state.gst}%) :</td>
                 <td className="bold">
-                  <strong>₹{this.state.gstAmt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.gstAmt)}</strong>
                 </td>
               </tr>
               <tr>
                 <td> Net Amount :</td>
                 <td className="bold">
-                  <strong> ₹{this.state.totalAmt}</strong>
+                  <strong> ₹{this.roundOffTheNumber(this.state.totalAmt)}</strong>
                 </td>
               </tr>
               {this.state.discontArr.map((ele, i) => {
@@ -1372,10 +1386,16 @@ if (!document.getElementById("vouch_sup").value) {
                   </tr>
                 );
               })}
+               <tr>
+                <td> Round Off ({this.state.net}%) :</td>
+                <td className="bold">
+                  <strong>{(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt))>0.5? (`(+) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`):(`(-) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`)}</strong>
+                </td>
+              </tr>
               <tr>
                 <td> Total Amount :</td>
                 <td className="bold">
-                  <strong>₹{this.state.mainAmnt}</strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.mainAmnt.toFixed())}</strong>
                 </td>
               </tr>
             </table>

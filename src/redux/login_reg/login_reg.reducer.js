@@ -24,8 +24,6 @@ const loginRegReducer = (state=INITITAL_STATE,action)=>{
         case LoginRegActionTypes.SIGN_OUT_SUCCESS:
             return {
                 ...state,
-                currentUser:null,
-                errorMsg:null,
                 successMsg:action.payload,
             }
             
@@ -40,6 +38,13 @@ const loginRegReducer = (state=INITITAL_STATE,action)=>{
             return {
                 ...state,
                 errorMsg:null
+            }
+        case LoginRegActionTypes.RESET_ALL:
+            return {
+                ...state,
+                errorMsg:null,
+                successMsg:null,
+                currentUser:null
             }
         default:
             return state;

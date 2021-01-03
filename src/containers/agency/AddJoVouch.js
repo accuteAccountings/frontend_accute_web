@@ -175,6 +175,7 @@ class AddJovouch extends React.Component {
       });
   };
 
+
   constructor(props) {
     super(props);
     this.updateVouchData();
@@ -222,7 +223,7 @@ class AddJovouch extends React.Component {
     return (
       <div className="add_jovouch_con">
         <div className="add_pro_head">
-          <h1>Add Journal jovoucher</h1>
+          <h1>Add Payment Voucher</h1>
 
           <div className="add_jovouch_right_btns">
             {this.props.mode === "edit" && (
@@ -398,7 +399,7 @@ class AddJovouch extends React.Component {
         <div className="jovouch_payment_det ">
           {this.state.payArr.map((e, index) => {
             return (
-              <div className="jovouch_customer ">
+              <div className="jovouch_customer">
                 <div className="jovouch_si ">
                   <div className="mode_head">
                     <span>Mode </span>
@@ -429,15 +430,21 @@ class AddJovouch extends React.Component {
                        id={"jovouch_mode" + index}
                        name="jovouch_mode"
                        autoWidth
-                       onChange={() => {
-                        let a = this.state.payArr;
-                        a[index].mode = document.getElementById("jovouch_mode" + index).value;
-                        this.setState({ payArr: a });
+                       onChange={e => {
+                        let a = this.state.payArr.map((ele,i)=>{
+                            if(i===index){
+                              return {...ele,mode:e.target.value}
+                            }
+                            return ele
+                        });
+                        this.setState({ payArr: [...a] });
                       }}
+                      value={this.state.payArr[index].mode}
+                    
                      >
                          <MenuItem value="cheque">Cheque</MenuItem>
                          <MenuItem value="cash">Cash</MenuItem>
-                         <MenuItem value="option1">Journal</MenuItem>
+                         <MenuItem value="journal">Journal</MenuItem>
                      </Select>
 
                  </FormControl>

@@ -504,7 +504,7 @@ class DetCont extends React.Component {
         </div>
         <div className="vouch_bill_detail">
           <div className="acc_adress">
-            <span className="acc_adress_head vouch_amount">Amount :</span> {this.props.amt}
+            <span className="acc_adress_head vouch_amount">Amount :</span> {parseInt(this.props.amt,10).toFixed()}
           </div>
           <div className="acc_adress">
             <span className="acc_adress_head">Bill No :</span> {this.props.bill_num}

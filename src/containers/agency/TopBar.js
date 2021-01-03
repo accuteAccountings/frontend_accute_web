@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux';
-import { signOutStart,resetErrorMessage } from '../../redux/login_reg/login_reg.actions';
+import { Redirect } from 'react-router-dom';
+import { signOutStart,resetErrorMessage,resetAll } from '../../redux/login_reg/login_reg.actions';
 import MenuBtn from "assets/icons/menu.svg";
 // import help from './../img/info.svg'
 // import settings from './../img/settings.svg'
@@ -8,18 +9,19 @@ import arrow from "assets/icons/multimedia.svg";
 import {Link } from "react-router-dom"
 
 class TopBar extends React.Component {
-  // logout() {
-  //   fetch("/api/login", {
-  //     method: "DELETE",
-  //     headers: { "Content-Type": "application/json" }
-  //   })
-  //     .then(() => {
-  //       window.location.href = "/home";
-  //     })
-  //     .catch(error => {
-  //       alert(error);
-  //     });
-  // }
+  logout() {
+    fetch("/api/login", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(() => {
+        this.props.resetAll()
+        window.location.href = "/home";
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }
   getName() {
     fetch("/api/profile/name", {
       method: "get",
@@ -56,6 +58,7 @@ class TopBar extends React.Component {
     //     ison = true;
     //   }
     // });
+    console.log(this.props)
  
   }
 
@@ -70,36 +73,42 @@ class TopBar extends React.Component {
 
   }
   // if (this.props.successMsg !== nextProps.successMsg ) {
-  //   this.setState({
-  //     name:"",
-  //     errorMsg:""
-  //   },()=>{
-  //     this.resetPage() 
+  //   if(nextProps.successMsg=="signout successful!!"){
+  //     this.setState({successMsg:nextProps.successMsg});
+  //   }
+    // this.setState({
+    //   name:"",
+    //   errorMsg:""
+    // },()=>{
+    //   this.resetPage() 
 
-  //   });
+    // });
+}
+
+
 // }
-
-}
-componentWillUnmount(){
-  this.props.resetErrorMessage();
-}
+// componentWillUnmount(){
+//   this.props.resetAll();
+// }
 
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       errorMsg:"",
+      successMsg:""
     };
     this.getName();
   }
   render() {
-   
+    console.log(this.props)
     let margin = {
       marginBottom: "50px"
     };
 
-    return (
-      <div className="top_bar" style={margin}>
+    return (<>
+      {this.state.successMsg?(<Redirect to="/home"/>):(
+        <div className="top_bar" style={margin}>
         <img className="menu_btn" src={MenuBtn} alt="" />
 
         <li className="top_btns profile_btn">
@@ -120,7 +129,7 @@ componentWillUnmount(){
               <li>Support</li>
               <li>Settings</li>
               <li>Privacy Policy</li>
-              <li onClick={()=>this.props.signOutStart()}>Sign Out</li>
+              <li onClick={()=>this.logout()}>Sign Out</li>
             </div>
           </div>
         </li>
@@ -128,6 +137,8 @@ componentWillUnmount(){
         {/* <li className="top_btns help_btn" onClick={this.logout}><span><img src={help} alt="?" /></span> Help</li>
                 <li className="top_btns settings_btn"> <span><img src={settings} alt="" /></span> Settings</li> */}
       </div>
+      )}
+     </>
     );
   }
 }
@@ -144,7 +155,8 @@ const mapStateToProps= state => ({
 const mapDispatchToProps = dispatch => {
   return {
       signOutStart: ()=> dispatch(signOutStart()),
-      resetErrorMessage: ()=> dispatch(resetErrorMessage())
+      resetErrorMessage: ()=> dispatch(resetErrorMessage()),
+      resetAll:()=>dispatch(resetAll()),
     };
 }
 
