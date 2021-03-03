@@ -688,9 +688,9 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <input type="date" name="bill_date" id="vouch_bill_date" value={this.state.bill_date} onChange={e=>this.setState({bill_date:e.target.value,l_r_date:e.target.value},()=>console.log("change done here"))}/>
                    
                   </div>
-                  <div className="vouch_si">
+                  {/* <div className="vouch_si">
                     <span>Type</span>
-                    <br />
+                    <br /> */}
                     {/* <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
                         Sales
@@ -702,8 +702,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                         Debit
                       </option>
                     </select> */}
-                   <FormControl >
-                     <Select
+                   {/* <FormControl > */}
+                     {/* <Select
                       className={`${this.props.classes.select} add_vouch_mui`}
                       name="vouch_type"
                       variant="outlined"
@@ -719,8 +719,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                       <MenuItem value="dn">Debit</MenuItem>
                     </Select>
 
-                  </FormControl>
-                  </div>
+                  </FormControl> */}
+                  {/* </div> */}
 
                   <div className="vouch_si">
                     <span>Bill No.</span>

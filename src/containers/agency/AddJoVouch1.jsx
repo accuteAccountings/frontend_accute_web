@@ -247,15 +247,15 @@ class AddJovouch1 extends React.Component {
                 <br />
                 <input type="date" name="jovouch_bill_date" id="jovouch_bill_date" value={this.state.jovouch_bill_date} onChange={e=>this.setState({jovouch_bill_date:e.target.value})}/>
               </div>
-              <div className="jovouch_si">
+              {/* <div className="jovouch_si">
                 <span>Type</span>
-                <br />
+                <br /> */}
                 {/* <select name="jovouch_type" id="jovouch_type">
                   <option value="option1">Journal</option>
                   <option value="option1">Journal</option>
                   <option value="option1">Journal</option>
                 </select> */}
-                <FormControl >
+                {/* <FormControl >
                      <Select
                      className="add_jo_vouch"
                        variant="outlined"
@@ -265,13 +265,13 @@ class AddJovouch1 extends React.Component {
                        autoWidth
                        value={this.state.jovouch_type}
                      >
-                         <MenuItem value="jv">Journal</MenuItem>
+                         <MenuItem value="jv">Journal</MenuItem> */}
                          {/* <MenuItem value="option1">Journal</MenuItem>
                          <MenuItem value="option1">Journal</MenuItem> */}
-                     </Select>
+                     {/* </Select>
 
                  </FormControl>
-              </div>
+              </div> */}
             </div>
 
             <div className="jovouch_customer">
