@@ -280,16 +280,9 @@ class VouchCon extends React.Component {
                 this.props.setVouchPage("dn");
               }}
             >
-              Debit Note
+              Goods Return
             </li>
-            <li
-              className={this.props.vouchPage === "cn" ? "black" : "grey"}
-              onClick={() => {
-                this.props.setVouchPage("cn");
-              }}
-            >
-              Credit Note
-            </li>
+           
           </div>
           <div className="other_det">
             <div
@@ -300,8 +293,7 @@ class VouchCon extends React.Component {
             >
               + Add {this.props.vouchPage === "jv" && "Payment Vouchers"}
               {this.props.vouchPage === "pv" && "Sales Vouchers"}
-              {this.props.vouchPage === "dn" && "Debit Note"}
-              {this.props.vouchPage === "cn" && "Credit Note"}
+              {this.props.vouchPage === "dn" && "Goods Return"}
             </div>
 
             <img
