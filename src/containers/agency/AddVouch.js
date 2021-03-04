@@ -1,10 +1,10 @@
 import React from "react";
-import compose from 'recompose/compose';
-import {connect} from 'react-redux';
-import MenuItem from '@material-ui/core/MenuItem';
+import compose from "recompose/compose";
+import { connect } from "react-redux";
+import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import pencil from "assets/icons/pencil.svg";
 import trash_can from "assets/icons/trash.svg";
 import ref from "assets/icons/refresh.svg";
@@ -20,33 +20,33 @@ async function postData(url = "", data, m) {
     headers: {
       // 'Content-Type': 'multipart/form-data'
       // 'Content-Type': 'application/x-www-form-urlencoded',
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
   return response.json(); // parses JSON response into native JavaScript objects
 }
-const styles = theme => ({
+const styles = (theme) => ({
   select: {
-      height:"30px",  
-      '&:before': {
-        borderRadius:"none",
-        borderColor: '#000000',
+    height: "30px",
+    "&:before": {
+      borderRadius: "none",
+      borderColor: "#000000",
     },
-    '&:hover:not(.Mui-disabled):before': {
-      borderRadius:"none",
-        borderColor: '#000000',
-    }
-  }
+    "&:hover:not(.Mui-disabled):before": {
+      borderRadius: "none",
+      borderColor: "#000000",
+    },
+  },
 });
 class AddVouch extends React.Component {
-  enterError = id => {
+  enterError = (id) => {
     document.getElementById(id).style.borderColor = "red";
     document.getElementById(id + "_error").style.display = "block";
   };
-  rmEnterError = id => {
+  rmEnterError = (id) => {
     document.getElementById(id).style.borderColor = "#505050";
     document.getElementById(id + "_error").style.display = "none";
   };
@@ -54,7 +54,7 @@ class AddVouch extends React.Component {
   clearData = () => {
     // document.querySelector("#vouch_bill_date").value = null;
     // document.querySelector("#vouch_type").value = null;
-    this.setState({voucher_type:"", bill_date:"",l_r_date:""})
+    this.setState({ voucher_type: "", bill_date: "", l_r_date: "" });
     document.querySelector("#vouch_bill_no").value = null;
     document.querySelector("#vouch_gr_no").value = null;
     document.querySelector("#vouch_transport_name").value = null;
@@ -68,13 +68,13 @@ class AddVouch extends React.Component {
     document.querySelector("#vouch_dicon").value = 0;
     document.querySelector("#vouch_rate").value = "";
     document.querySelector("#vouch_amount").value = "";
-  }
+  };
 
   setData = () => {
     let d = this.props.EData.det;
-    if(d.bill_date)this.setState({bill_date:d.bill_date, l_r_date:d.bill_date});;
-    if(d.l_r_date)this.setState({l_r_date:d.l_r_date});
-    this.setState({voucher_type:d.type})
+    if (d.bill_date) this.setState({ bill_date: d.bill_date, l_r_date: d.bill_date });
+    if (d.l_r_date) this.setState({ l_r_date: d.l_r_date });
+    this.setState({ voucher_type: d.type });
     document.querySelector("#vouch_bill_no").defaultValue = d.bill_num;
     document.querySelector("#vouch_gr_no").defaultValue = d.g_r_num;
     document.querySelector("#vouch_transport_name").defaultValue = d.transport_name;
@@ -100,7 +100,7 @@ class AddVouch extends React.Component {
         rate: e.rate,
         quantity: e.quantity,
         g_amount: e.g_amount,
-        amount: e.amount
+        amount: e.amount,
       };
       arr.push(a);
     });
@@ -111,13 +111,13 @@ class AddVouch extends React.Component {
     let arr1 = [];
     let arr2 = [];
     if (JSON.parse(d.discountArr[0]).type !== "") {
-      d.discountArr.map(e => {
+      d.discountArr.map((e) => {
         let a = JSON.parse(e);
         arr1.push(a);
       });
     }
     if (JSON.parse(d.freightArr[0]).remark !== "") {
-      d.freightArr.map(e => {
+      d.freightArr.map((e) => {
         let a = JSON.parse(e);
         arr2.push(a);
       });
@@ -132,14 +132,14 @@ class AddVouch extends React.Component {
     let g_amount = 0;
     let gst = parseFloat(document.getElementById("vouch_gst").value);
     let disAmt = 0;
-    this.state.items.map(e => {
+    this.state.items.map((e) => {
       g_amount = parseFloat(g_amount) + parseFloat(e.g_amount);
       disAmt = parseFloat(disAmt) + parseFloat(e.g_amount) - parseFloat(e.amount);
       total = parseFloat(total) + parseFloat(e.amount);
     });
     let FTotal = total;
 
-    this.state.discontArr.map(ele => {
+    this.state.discontArr.map((ele) => {
       if (ele.type === "Less") {
         FTotal = parseFloat(FTotal) - parseFloat(ele.value);
       }
@@ -149,7 +149,7 @@ class AddVouch extends React.Component {
         FTotal = parseFloat(FTotal) - parseFloat(a);
       }
     });
-    this.state.freightArr.map(ele => {
+    this.state.freightArr.map((ele) => {
       FTotal = parseFloat(FTotal) + parseFloat(ele.value);
     });
     let gstAmt = (parseFloat(FTotal) * parseFloat(gst)) / 100;
@@ -158,7 +158,6 @@ class AddVouch extends React.Component {
   };
 
   async addVouch() {
-
     let bool = false;
     if (document.getElementById("vouch_bill_no").value === "") {
       this.enterError("vouch_bill_no");
@@ -183,11 +182,11 @@ class AddVouch extends React.Component {
       return;
     }
 
-this.CreateNewSupplier()
-this.CreateNewCustomer()
-this.CreateNewTransport()
+    this.CreateNewSupplier();
+    this.CreateNewCustomer();
+    this.CreateNewTransport();
     let bill_date = this.state.bill_date;
-    let l_r_date= this.state.l_r_date;
+    let l_r_date = this.state.l_r_date;
     let type = this.state.voucher_type;
     let bill_num = document.querySelector("#vouch_bill_no").value;
     let g_r_num = document.querySelector("#vouch_gr_no").value;
@@ -217,7 +216,7 @@ this.CreateNewTransport()
       discountArr: this.state.discontArr,
       freightArr: this.state.freightArr,
       items: this.state.items,
-      totalAmt: this.state.mainAmnt
+      totalAmt: this.state.mainAmnt,
     };
     let m = this.props.mode === "edit" ? "PUT" : "POST";
     let url = this.props.mode === "edit" ? "/api/vouch/" + this.props.EData.det.id : "/api/vouch";
@@ -232,19 +231,19 @@ this.CreateNewTransport()
   getName() {
     fetch("/api/profile/name", {
       method: "get",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     })
-      .then(r => r.json())
-      .then(data => {
+      .then((r) => r.json())
+      .then((data) => {
         if (data.name) {
           this.setState(() => {
             return {
-              name: data.name
+              name: data.name,
             };
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         alert(error);
       });
   }
@@ -253,7 +252,7 @@ this.CreateNewTransport()
 
   async vochAddPro() {
     let pro_name = document.querySelector("#vouch_pro_item").value;
-    let isIn = this.state.products.find(element => element.product_name === pro_name);
+    let isIn = this.state.products.find((element) => element.product_name === pro_name);
     console.log(isIn);
 
     if (!!!isIn && pro_name !== "") {
@@ -261,27 +260,27 @@ this.CreateNewTransport()
       let hsn_num = document.querySelector("#vouch_hsn_num").value;
       let data = {
         product_name: pro_name,
-        hsn_num: hsn_num
+        hsn_num: hsn_num,
       };
 
       await fetch("/api/products", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
 
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
       })
-        .then(res => res.json())
-        .then(r => {
+        .then((res) => res.json())
+        .then((r) => {
           if (r.product) {
           } else {
             alert("Cannot Add Product Please Try Later");
             return;
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           alert("Cannot Add Product Please Try Later");
           return;
@@ -320,31 +319,31 @@ this.CreateNewTransport()
       rate: vouch_rate,
       amount: v_amount,
       hsn_num: hsn_num,
-      g_amount
+      g_amount,
     };
 
     let arr = this.state.items;
     arr.push(item);
     this.setState({
-      items: arr
+      items: arr,
     });
     this.updateTotal();
     return;
   }
 
-  removeItem = index => {
+  removeItem = (index) => {
     let arr = this.state.items;
     arr.splice(index, 1);
 
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        items: arr
+        items: arr,
       };
     });
     this.updateTotal();
   };
 
-  editItem = index => {
+  editItem = (index) => {
     let pro_name = document.querySelector("#vouch_pro_item");
 
     let vouch_quantity = document.querySelector("#vouch_quantity");
@@ -361,7 +360,7 @@ this.CreateNewTransport()
     amt.value = this.state.items[index].g_amount;
     this.setState(() => {
       return {
-        editItem: index
+        editItem: index,
       };
     });
   };
@@ -407,7 +406,7 @@ this.CreateNewTransport()
     this.setState(() => {
       return {
         items: arr,
-        editItem: -1
+        editItem: -1,
       };
     });
     this.updateTotal();
@@ -417,7 +416,7 @@ this.CreateNewTransport()
     document.getElementById("pro_list").style.display = "block";
     let temp = document.getElementById("vouch_pro_item").value.toLowerCase();
 
-    let arr = this.state.products.filter(e => {
+    let arr = this.state.products.filter((e) => {
       if (temp.length === 0) {
         return true;
       }
@@ -432,7 +431,7 @@ this.CreateNewTransport()
     document.getElementById(id).style.display = "block";
     let temp = document.getElementById(id2).value.toLowerCase();
 
-    let arr = this.state.accounts.filter(e => {
+    let arr = this.state.accounts.filter((e) => {
       if (temp.length === 0) {
         return true;
       }
@@ -448,21 +447,21 @@ this.CreateNewTransport()
     fetch("/api/products", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      }
+      },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.Products) {
           this.setState(() => {
             return {
-              products: data.Products
+              products: data.Products,
             };
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         // alert(err)
       });
   }
@@ -470,17 +469,17 @@ this.CreateNewTransport()
     fetch("/api/accounts", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      }
+      },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.accounts) {
-          this.setState({accounts: data.accounts});
+          this.setState({ accounts: data.accounts });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         // aldert(err)
       });
   }
@@ -490,118 +489,110 @@ this.CreateNewTransport()
 
   selectAllText = () => {
     document.getElementById("vouch_pro_item").select();
-  }
+  };
 
-CreateNewSupplier = () =>{
-if (!document.getElementById("vouch_sup").value) {
-                            return;
-                          }
-                          let data = {
-                            acc_real_name: document.getElementById("vouch_sup").value,
-                            acc_type: "debtors"
-                          };
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (
-                              e.acc_real_name === data.acc_real_name &&
-                              (e.acc_type === "creditors" || e.acc_type === "debtors")
-                            ) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
+  CreateNewSupplier = () => {
+    if (!document.getElementById("vouch_sup").value) {
+      return;
+    }
+    let data = {
+      acc_real_name: document.getElementById("vouch_sup").value,
+      acc_type: "debtors",
+    };
+    let exist = false;
+    this.state.accounts.map((e) => {
+      if (e.acc_real_name === data.acc_real_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
+        exist = true;
+      }
+    });
+    if (exist) {
+      return;
+    }
 
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_sup").value = "";
-                            });
+    fetch("/api/accounts", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+      .then((res) => res.json())
+      .catch(() => {
+        document.getElementById("vouch_sup").value = "";
+      });
+  };
+  CreateNewTransport = () => {
+    if (!document.getElementById("vouch_transport_name").value) {
+      return;
+    }
+    let data = {
+      acc_real_name: document.getElementById("vouch_transport_name").value,
+      acc_type: "transport",
+    };
 
-} 
- CreateNewTransport = () => {
-  if (!document.getElementById("vouch_transport_name").value) {
-                            return;
-                          }
-                          let data = {
-                            acc_real_name: document.getElementById("vouch_transport_name").value,
-                            acc_type: "transport"
-                          };
+    let exist = false;
+    this.state.accounts.map((e) => {
+      if (e.acc_real_name === data.acc_real_name && e.acc_type === data.acc_type) {
+        exist = true;
+      }
+    });
+    if (exist) {
+      return;
+    }
 
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (e.acc_real_name === data.acc_real_name && e.acc_type === data.acc_type) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
+    fetch("/api/accounts", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+      .then((res) => res.json())
+      .catch(() => {
+        document.getElementById("vouch_transport_name").value = "";
+      });
+  };
 
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_transport_name").value = "";
-                            })
+  CreateNewCustomer = () => {
+    if (!document.getElementById("vouch_customer").value) {
+      return;
+    }
 
-}
+    let data = {
+      acc_real_name: document.getElementById("vouch_customer").value,
+      acc_type: "debtors",
+    };
 
- CreateNewCustomer = () => {
-   if (!document.getElementById("vouch_customer").value) {
-                            return;
-                          }
+    let exist = false;
+    this.state.accounts.map((e) => {
+      if (e.acc_real_name === data.acc_real_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
+        exist = true;
+      }
+    });
+    if (exist) {
+      return;
+    }
 
-                          let data = {
-                            acc_real_name: document.getElementById("vouch_customer").value,
-                            acc_type: "debtors"
-                          };
-
-                          let exist = false;
-                          this.state.accounts.map(e => {
-                            if (
-                              e.acc_real_name === data.acc_real_name &&
-                              (e.acc_type === "creditors" || e.acc_type === "debtors")
-                            ) {
-                              exist = true;
-                            }
-                          });
-                          if (exist) {
-                            return;
-                          }
-
-                          fetch("/api/accounts", {
-                            method: "POST", // *GET, POST, PUT, DELETE, etc.
-                            headers: {
-                              "Content-Type": "application/json"
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: JSON.stringify(data) // body data type must match "Content-Type" header
-                          })
-                            .then(res => res.json())
-                            .catch(() => {
-                              document.getElementById("vouch_customer").value = "";
-                            });
-
-
-}
-roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
+    fetch("/api/accounts", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+      .then((res) => res.json())
+      .catch(() => {
+        document.getElementById("vouch_customer").value = "";
+      });
+  };
+  roundOffTheNumber = (num) => (Math.round(num * 100) / 100).toFixed(2);
 
   constructor(props) {
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(currentUser);
     super(props);
     this.vochAddPro = this.vochAddPro.bind(this);
     this.getProducts = this.getProducts.bind(this);
@@ -612,8 +603,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
       subAgent: false,
       items: [],
       name: null,
-      vouch_sup_agent:"",
-      voucher_type:"",
+      vouch_sup_agent: currentUser.full_name,
+      voucher_type: "",
       editItem: -1,
       totalAmt: 0,
       grossAmt: 0,
@@ -626,25 +617,23 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
       dicountType: "less",
       mainAmnt: 0,
       freightArr: [],
-      l_r_date:"",
-      bill_date:"",
+      l_r_date: "",
+      bill_date: "",
     };
-    
   }
 
   componentDidMount() {
-
     this.getProducts();
     this.getAccounts();
-    this.setState({voucher_type:this.props.which,vouch_sup_agent:this.props.currentUser.full_name})
+    this.setState({ voucher_type: this.props.which });
     if (this.props.mode === "edit") {
       this.setState({ subAgent: true });
     }
     this.getName();
-    let today = new Date().toLocaleDateString('en-CA');
-    
-    this.setState({bill_date:today,l_r_date:today})
-    
+    let today = new Date().toLocaleDateString("en-CA");
+
+    this.setState({ bill_date: today, l_r_date: today });
+
     document.getElementById("pro_list").style.display = "none";
     if (this.props.mode === "edit") {
       this.setData();
@@ -654,7 +643,6 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
     }
   }
   render() {
-   
     return (
       <div className="add_vouch_con">
         <div className="add_pro_head">
@@ -665,7 +653,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
           </h1>
 
           <div className="add_vouch_right_btns">
-            <img src = {ref} alt = " " onClick = {this.clearData}/>
+            <img src={ref} alt=" " onClick={this.clearData} />
             <p
               onClick={() => {
                 this.addVouch();
@@ -685,8 +673,17 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                   <div className="vouch_si">
                     <span>Bill Date</span>
                     <br />
-                    <input type="date" name="bill_date" id="vouch_bill_date" value={this.state.bill_date} onChange={e=>this.setState({bill_date:e.target.value,l_r_date:e.target.value},()=>console.log("change done here"))}/>
-                   
+                    <input
+                      type="date"
+                      name="bill_date"
+                      id="vouch_bill_date"
+                      value={this.state.bill_date}
+                      onChange={(e) =>
+                        this.setState({ bill_date: e.target.value, l_r_date: e.target.value }, () =>
+                          console.log("change done here")
+                        )
+                      }
+                    />
                   </div>
                   <div className="vouch_si">
                     <span>Type</span>
@@ -702,24 +699,23 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                         Debit
                       </option>
                     </select> */}
-                   <FormControl >
-                     <Select
-                      className={`${this.props.classes.select} add_vouch_mui`}
-                      name="vouch_type"
-                      variant="outlined"
-                      id="vouch_type"
-                      value={this.state.voucher_type}
-                      onChange={e => {
-                        this.setState({ voucher_type : e.target.value });
-                      }}
-                      autoWidth
-                    >
-                      <MenuItem value="pv">Purchase</MenuItem>
-                      <MenuItem value="cn">Credit</MenuItem>
-                      <MenuItem value="dn">Debit</MenuItem>
-                    </Select>
-
-                  </FormControl>
+                    <FormControl>
+                      <Select
+                        className={`${this.props.classes.select} add_vouch_mui`}
+                        name="vouch_type"
+                        variant="outlined"
+                        id="vouch_type"
+                        value={this.state.voucher_type}
+                        onChange={(e) => {
+                          this.setState({ voucher_type: e.target.value });
+                        }}
+                        autoWidth
+                      >
+                        <MenuItem value="pv">Purchase</MenuItem>
+                        <MenuItem value="cn">Credit</MenuItem>
+                        <MenuItem value="dn">Debit</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
 
                   <div className="vouch_si">
@@ -746,10 +742,15 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <br />
                     <input type="text" name="vouch_gr_no" id="vouch_gr_no" />
                   </div>
-                  <div className = "vouch_si" >
+                  <div className="vouch_si">
                     <span>L. R. Date</span>
-                      <br />
-                    <input type = "date" id = "vouch_lr_date" value={this.state.l_r_date} onChange={e=>this.setState({l_r_date:e.target.value})} />
+                    <br />
+                    <input
+                      type="date"
+                      id="vouch_lr_date"
+                      value={this.state.l_r_date}
+                      onChange={(e) => this.setState({ l_r_date: e.target.value })}
+                    />
                   </div>
                   <div className="vouch_si vouch_transport_name_con">
                     <span>Transport Name</span>
@@ -766,7 +767,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                       onBlur={() => {
                         setTimeout(() => {
                           document.getElementById("transport_list").style.display = "none";
-                                                }, 500);
+                        }, 500);
                       }}
                       name="vouch_sup"
                       id="vouch_transport_name"
@@ -795,10 +796,10 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <br />
 
                     <input
-                      onChange={e => {
+                      onChange={(e) => {
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
-                      onFocus={e => {
+                      onFocus={(e) => {
                         this.filterAcc("sup_list", "vouch_sup");
                       }}
                       autoComplete="off"
@@ -808,7 +809,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                         }
                         setTimeout(() => {
                           document.getElementById("sup_list").style.display = "none";
-                                                  }, 500);
+                        }, 500);
                       }}
                       name="vouch_sup"
                       id="vouch_sup"
@@ -816,7 +817,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <ul id="sup_list">
                       {this.state.acc.map((acc, index) => {
                         if (
-                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors")||
+                          (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
                           document.getElementById("vouch_customer").value === acc.acc_real_name
                         ) {
                           return;
@@ -851,21 +852,21 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                       </option>
                       <option value={null}>None</option>
                     </select> */}
-                    <FormControl >
-                     <Select
-                      className={`${this.props.classes.select} add_vouch_mui`}
-                      name="vouch_sup_agent"
-                      variant="outlined"
-                      id="vouch_sup_agent"
-                      onChange={e => {
-                        this.setState({ name: e.target.value });
-                      }}
-                      autoWidth
-                      value={this.state.vouch_sup_agent}
-                    >
-                      <MenuItem value={this.state.vouch_sup_agent}>{this.state.vouch_sup_agent}</MenuItem>
-                      {/* <MenuItem value={this.state.name}>{this.state.name}</MenuItem> */}
-                    </Select>
+                    <FormControl>
+                      <Select
+                        className={`${this.props.classes.select} add_vouch_mui`}
+                        name="vouch_sup_agent"
+                        variant="outlined"
+                        id="vouch_sup_agent"
+                        onChange={(e) => {
+                          this.setState({ name: e.target.value });
+                        }}
+                        autoWidth
+                        value={this.state.vouch_sup_agent}
+                      >
+                        <MenuItem value={this.state.vouch_sup_agent}>{this.state.vouch_sup_agent}</MenuItem>
+                        {/* <MenuItem value={this.state.name}>{this.state.name}</MenuItem> */}
+                      </Select>
                     </FormControl>
                   </div>
 
@@ -918,7 +919,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                         }
                         setTimeout(() => {
                           document.getElementById("customer_list").style.display = "none";
-                                               }, 500);
+                        }, 500);
                       }}
                       name="customer"
                       id="vouch_customer"
@@ -972,11 +973,11 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                             } else {
                               let data = {
                                 acc_real_name: document.getElementById("vouch_sup_agent2").value,
-                                acc_type: "Sub Agent"
+                                acc_type: "Sub Agent",
                               };
 
                               let exist = false;
-                              this.state.accounts.map(e => {
+                              this.state.accounts.map((e) => {
                                 if (e.acc_real_name === data.acc_name && e.acc_type === data.acc_type) {
                                   exist = true;
                                 }
@@ -988,12 +989,12 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                               fetch("/api/accounts", {
                                 method: "POST", // *GET, POST, PUT, DELETE, etc.
                                 headers: {
-                                  "Content-Type": "application/json"
+                                  "Content-Type": "application/json",
                                   // 'Content-Type': 'application/x-www-form-urlencoded',
                                 },
-                                body: JSON.stringify(data) // body data type must match "Content-Type" header
+                                body: JSON.stringify(data), // body data type must match "Content-Type" header
                               })
-                                .then(res => res.json())
+                                .then((res) => res.json())
                                 .catch(() => {
                                   document.getElementById("vouch_sup_agent2").value = "";
                                 });
@@ -1026,7 +1027,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <span
                       style={{
                         marginLeft: "20px",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                       onClick={() => {
                         this.setState({ subAgent: true });
@@ -1088,8 +1089,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                 <span>Quantity</span>
                 <br />
                 <input
-                  onFocus={e => e.target.select()}
-                  onChange={e => {
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
                     if (e.target.value >= 0 && document.getElementById("vouch_rate").value) {
                       document.getElementById("vouch_amount").value =
                         parseFloat(e.target.value) * parseFloat(document.getElementById("vouch_rate").value);
@@ -1105,8 +1106,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                 <span>Rate</span>
                 <br />
                 <input
-                  onFocus={e => e.target.select()}
-                  onChange={e => {
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
                     if (e.target.value >= 0 && document.getElementById("vouch_quantity").value) {
                       document.getElementById("vouch_amount").value =
                         parseFloat(e.target.value) * parseFloat(document.getElementById("vouch_quantity").value);
@@ -1130,7 +1131,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                   }}
                   type="number"
                   name="vouch_dicon"
-                  onFocus={e => e.target.select()}
+                  onFocus={(e) => e.target.select()}
                   id="vouch_dicon"
                   defaultValue={0}
                 />
@@ -1139,7 +1140,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                 <span>Amount</span>
                 <br />
                 <input
-                  onFocus={e => e.target.select()}
+                  onFocus={(e) => e.target.select()}
                   type="number"
                   name="vouch_amount"
                   id="vouch_amount"
@@ -1305,9 +1306,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
               <tr>
                 <td> Taxable Amount :</td>
                 <td className="bold">
-                  <strong>
-                    ₹{this.roundOffTheNumber(this.state.grossAmt-this.state.disAmt)}
-                  </strong>
+                  <strong>₹{this.roundOffTheNumber(this.state.grossAmt - this.state.disAmt)}</strong>
                 </td>
               </tr>
               <tr>
@@ -1328,7 +1327,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <td className="relative">
                       <span
                         value={i}
-                        onClick={e => {
+                        onClick={(e) => {
                           let a = this.state.discontArr;
                           console.log(i);
 
@@ -1361,7 +1360,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <td className="relative">
                       <span
                         value={i}
-                        onClick={e => {
+                        onClick={(e) => {
                           let a = this.state.freightArr;
                           console.log(i);
 
@@ -1386,10 +1385,18 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                   </tr>
                 );
               })}
-               <tr>
+              <tr>
                 <td> Round Off ({this.state.net}%) :</td>
                 <td className="bold">
-                  <strong>{(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt))>0.5? (`(+) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`):(`(-) ${(this.roundOffTheNumber(this.state.mainAmnt)-Math.floor(this.state.mainAmnt)).toFixed(2)}`)}</strong>
+                  <strong>
+                    {this.roundOffTheNumber(this.state.mainAmnt) - Math.floor(this.state.mainAmnt) > 0.5
+                      ? `(+) ${(this.roundOffTheNumber(this.state.mainAmnt) - Math.floor(this.state.mainAmnt)).toFixed(
+                          2
+                        )}`
+                      : `(-) ${(this.roundOffTheNumber(this.state.mainAmnt) - Math.floor(this.state.mainAmnt)).toFixed(
+                          2
+                        )}`}
+                  </strong>
                 </td>
               </tr>
               <tr>
@@ -1417,19 +1424,18 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     <option>Cash Discount </option>
                     <option> No G.R. Less </option>
                   </select> */}
-                 <FormControl >
-    
+                  <FormControl>
                     <Select
-                    className="add_vouch_mui"
+                      className="add_vouch_mui"
                       variant="outlined"
                       id="add_dis_discount_type"
                       disabled={this.state.totalAmt === 0 ? true : false}
                       value={this.state.discountType}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ dicountType: e.target.value });
                       }}
                       autoWidth
-                      style={{height:"35px",width:"70px"}}
+                      style={{ height: "35px", width: "70px" }}
                     >
                       <MenuItem value="">
                         <em>None</em>
@@ -1438,7 +1444,6 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                       <MenuItem value="cash_discount">Cash Discount</MenuItem>
                       <MenuItem value="no_gr_less">No G.R. Less</MenuItem>
                     </Select>
-
                   </FormControl>
                 </div>
                 <div className="vouch_si_add_dis">
@@ -1451,10 +1456,10 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                   />
                 </div>
                 <button
-                  onClick={e => {
+                  onClick={(e) => {
                     let a = {
                       type: document.getElementById("add_dis_discount_type").value,
-                      value: document.getElementById("add_discount_input").value
+                      value: document.getElementById("add_discount_input").value,
                     };
                     if (a.value === "") {
                       return;
@@ -1499,7 +1504,7 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
                     onClick={() => {
                       let a = {
                         remark: document.getElementById("add_freight_remark_input").value,
-                        value: document.getElementById("add_freight_input").value
+                        value: document.getElementById("add_freight_input").value,
                       };
                       if (a.value === "") {
                         return;
@@ -1524,8 +1529,8 @@ roundOffTheNumber=num=> (Math.round(num * 100) / 100).toFixed(2)
     );
   }
 }
-const mapStateToProps = state => ({
-  currentUser:state.loginReg.currentUser
-})
+const mapStateToProps = (state) => ({
+  currentUser: state.loginReg.currentUser,
+});
 
-export default compose(withStyles(styles),connect(mapStateToProps))(AddVouch);
+export default compose(withStyles(styles), connect(mapStateToProps))(AddVouch);
