@@ -685,9 +685,9 @@ class AddVouch extends React.Component {
                       }
                     />
                   </div>
-                  <div className="vouch_si">
+                  {/* <div className="vouch_si">
                     <span>Type</span>
-                    <br />
+                    <br /> */}
                     {/* <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
                         Sales
@@ -699,24 +699,27 @@ class AddVouch extends React.Component {
                         Debit
                       </option>
                     </select> */}
-                    <FormControl>
-                      <Select
-                        className={`${this.props.classes.select} add_vouch_mui`}
-                        name="vouch_type"
-                        variant="outlined"
-                        id="vouch_type"
-                        value={this.state.voucher_type}
-                        onChange={(e) => {
-                          this.setState({ voucher_type: e.target.value });
-                        }}
-                        autoWidth
-                      >
-                        <MenuItem value="pv">Purchase</MenuItem>
-                        <MenuItem value="cn">Credit</MenuItem>
-                        <MenuItem value="dn">Debit</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div>
+
+                   {/* <FormControl > */}
+                     {/* <Select
+                      className={`${this.props.classes.select} add_vouch_mui`}
+                      name="vouch_type"
+                      variant="outlined"
+                      id="vouch_type"
+                      value={this.state.voucher_type}
+                      onChange={e => {
+                        this.setState({ voucher_type : e.target.value });
+                      }}
+                      autoWidth
+                    >
+                      <MenuItem value="pv">Purchase</MenuItem>
+                      <MenuItem value="cn">Credit</MenuItem>
+                      <MenuItem value="dn">Debit</MenuItem>
+                    </Select>
+
+                  </FormControl> */}
+                  {/* </div> */}
+
 
                   <div className="vouch_si">
                     <span>Bill No.</span>
