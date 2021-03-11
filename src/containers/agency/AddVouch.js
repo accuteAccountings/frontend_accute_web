@@ -688,7 +688,7 @@ class AddVouch extends React.Component {
                   {/* <div className="vouch_si">
                     <span>Type</span>
                     <br /> */}
-                    {/* <select name="vouch_type" disabled id="vouch_type">
+                  {/* <select name="vouch_type" disabled id="vouch_type">
                       <option value="purchase" selected={this.props.which === "pv" ? true : false}>
                         Sales
                       </option>
@@ -700,8 +700,8 @@ class AddVouch extends React.Component {
                       </option>
                     </select> */}
 
-                   {/* <FormControl > */}
-                     {/* <Select
+                  {/* <FormControl > */}
+                  {/* <Select
                       className={`${this.props.classes.select} add_vouch_mui`}
                       name="vouch_type"
                       variant="outlined"
@@ -719,7 +719,6 @@ class AddVouch extends React.Component {
 
                   </FormControl> */}
                   {/* </div> */}
-
 
                   <div className="vouch_si">
                     <span>Bill No.</span>
