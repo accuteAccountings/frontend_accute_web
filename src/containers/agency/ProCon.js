@@ -191,7 +191,7 @@ class ProCon extends React.Component {
                 return (
                   <div className="det_acc_div">
                     <DetCont
-                      acc_name={account.acc_real_name}
+                      acc_name={account.acc_name}
                       type={account.acc_type}
                       print_name={account.print_name}
                       adress={account.address_line1}

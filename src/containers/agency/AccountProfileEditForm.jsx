@@ -14,7 +14,7 @@ class AccountProfileEditForm extends React.Component{
         super(props);
    
         this.state={
-            acc_real_name:"",
+            acc_name:"",
             print_name:"",
             address_line1:"",
             mob_num:[],
@@ -38,7 +38,7 @@ class AccountProfileEditForm extends React.Component{
      */
     componentDidMount(){    
 
-         const { acc_real_name,
+         const { acc_name,
             print_name,
             address_line1,
             mob_num,
@@ -55,7 +55,7 @@ let mobArr=[1]
 let phoneArr=[1]
 
         this.setState({
-            acc_real_name,
+            acc_name,
             print_name,
             address_line1,
             mob_num:[...mobArr],
@@ -162,7 +162,7 @@ let phoneArr=[1]
       
       e.preventDefault();
       //if(this.validate())
-      const {acc_real_name,
+      const {acc_name,
         print_name,
         address_line1,
         mob_num,
@@ -174,7 +174,7 @@ let phoneArr=[1]
  
     } = this.state;
       const updatedData={
-        acc_real_name,
+        acc_name,
         print_name,
         address_line1,
         mob_num:mob_num.map(ele=>ele["number"]).join(","),
@@ -196,7 +196,7 @@ let phoneArr=[1]
       
     }
     render(){
-        const {   acc_real_name,
+        const {   acc_name,
             print_name,
             address_line1,
             mob_num,
@@ -226,9 +226,9 @@ let phoneArr=[1]
                 fullWidth
                 id="acc_name"
                 label="Account Name"
-                name="acc_real_name"
+                name="acc_name"
                 size="small"
-                value={acc_real_name}
+                value={acc_name}
                 onChange={this.handleOnChange}
                 />
               <TextField margin="normal"  

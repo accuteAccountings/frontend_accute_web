@@ -21,7 +21,7 @@ export default class Account_pro extends React.Component {
     if (!start_date && !end_date && mode.value) {
       let sdate = "2020-03-01";
       let edate = "2021-04-01";
-      await fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
+      await fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}&mode=${mode.value}`)
         .then(res => res.json())
         .then(data => {
           if (data) {
@@ -38,7 +38,7 @@ export default class Account_pro extends React.Component {
 
     if (start_date && end_date) {
       await fetch(
-        `/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
+        `/api/vouch/specific/${this.state.account.acc_name}?sdate=${start_date}&edate=${end_date}&mode=${mode.value}`
       )
         .then(res => res.json())
         .then(data => {
@@ -71,7 +71,7 @@ export default class Account_pro extends React.Component {
 
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
-    fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}`)
+    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -136,7 +136,7 @@ export default class Account_pro extends React.Component {
     let sdate = year + "-03-01";
     let edate = parseInt(year) + 1 + "-04-01";
     
-    fetch(`/api/vouch/specific/${this.state.account.acc_real_name}?sdate=${sdate}&edate=${edate}`)
+    fetch(`/api/vouch/specific/${this.state.account.acc_name}?sdate=${sdate}&edate=${edate}`)
       .then(res => res.json())
       .then(data => {
         if (data) {
@@ -199,7 +199,7 @@ export default class Account_pro extends React.Component {
             <div className="acc_pro_img">
               <img alt=" " src={user} id="acc_pro_img_id" />
             </div>
-            <div className="acc_pro_name">{this.state.account.acc_real_name}</div> 
+            <div className="acc_pro_name">{this.state.account.acc_name}</div> 
             <div className="sbar_list" id="sbar_list">
               <div
                 className={this.props.acc_pro_val === "acc_det" ? "acc_det" : "sbar_list_value"}
@@ -230,9 +230,9 @@ export default class Account_pro extends React.Component {
 
           {this.state.val === "acc_det" && (
             <div className="acc_pro_right">
-              {this.state.account.acc_real_name?(<div className="acc_pro_right_upper">
+              {this.state.account.acc_name?(<div className="acc_pro_right_upper">
                 <div className="acc_pro_right_name">
-                  {this.state.account.acc_real_name}
+                  {this.state.account.acc_name}
                   {this.state.account.print_name?(<span className="acc_pro_right_pname">({this.state.account.print_name})</span>):null}
                 </div>
                 <div className="acc_pro_right_add">{this.state.account.address_line1}</div>

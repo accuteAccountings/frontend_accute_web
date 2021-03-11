@@ -80,7 +80,7 @@ class Commission extends React.Component{
                             return(
                                     <User_Det 
                                     id = {i + 1}
-                                    acc = {e.acc_real_name}
+                                    acc = {e.acc_name}
                                     city = {e.address_line1}
                                     include_gst = {this.state.include_gst}
                                     include_unpaid = {this.state.include_unpaid}

@@ -364,7 +364,7 @@ componentDidMount(){
                     <User_Det 
                     id = {i + 1}
                       acc_id={e.id}
-                    acc = {e.acc_real_name}
+                    acc = {e.acc_name}
                     city = {e.address_line1}
                     payment = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}
                     balance = {this.totalCredit(e.acc_name) - this.totalDebit(e.acc_name)}

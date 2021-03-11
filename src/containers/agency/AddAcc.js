@@ -1,48 +1,44 @@
 import React from "react";
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import {Button} from "@material-ui/core";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { Button } from "@material-ui/core";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 import cross from "assets/icons/cancel.svg";
 import load from "assets/icons/loading.svg";
 
-
-
-const styles = theme => ({
+const styles = (theme) => ({
   select: {
-      height:"30px",  
-      '&:before': {
-        borderRadius:"none",
-        borderColor: '#000000',
+    height: "30px",
+    "&:before": {
+      borderRadius: "none",
+      borderColor: "#000000",
     },
-    '&:hover:not(.Mui-disabled):before': {
-      borderRadius:"none",
-        borderColor: '#000000',
-    }
-  }
+    "&:hover:not(.Mui-disabled):before": {
+      borderRadius: "none",
+      borderColor: "#000000",
+    },
+  },
 });
 class AddAcc extends React.Component {
   EditOn = () => {
     this.setState(() => {
       return {
-        mode: "edit"
+        mode: "edit",
       };
     });
   };
 
   setValue = () => {
-    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_real_name;
+    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_name;
 
     document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
-
-    
 
     document.querySelector("#add_acc_status").value = this.props.data.status;
 
@@ -70,158 +66,157 @@ class AddAcc extends React.Component {
 
     document.querySelector(".add_acc_inp_note").value = this.props.data.notes;
 
-   
-    this.setState({acc_type:this.props.data.acc_type, bal: this.props.data.bal})
+    this.setState({ acc_type: this.props.data.acc_type, bal: this.props.data.bal });
   };
 
   addAccount() {
-    if(this.validate()){
-    this.setState(() => {
-      return {
-        loading: true
-      };
-    });
-
-    let acc_real_name = document.querySelector(".add_acc_inp_name").value;
-
-    let print_name = document.querySelector(".add_acc_inp_pname").value;
-
-    let acc_type = this.state.acc_type;
-
-    let status = document.querySelector("#add_acc_status").value;
-
-    let gst_num = document.querySelector(".add_acc_inp_gst").value;
-
-    let pan_num = document.querySelector(".add_acc_inp_pan").value;
-
-   // let aadhar_num = document.querySelector(".add_acc_inp_aadhar").value;
-
-    let address_line1 = document.querySelector("#add_acc_inp_add1").value;
-
-    let address_line2 = document.querySelector("#add_acc_inp_add2").value;
-
-    let state = document.querySelector("#add_acc_inp_state").value;
-
-    let city = document.querySelector("#add_acc_inp_city").value;
-
-    let pincode = document.querySelector(".add_acc_inp_pincode").value;
-
-    let mob_num = document.querySelector("#add_acc_inp_mob").value;
-
-    let phone_num = document.querySelector("#add_acc_inp_phone").value;
-
-    let emailId = document.querySelector(".add_acc_inp_email").value;
-
-    let notes = document.querySelector(".add_acc_inp_note").value;
-
-    let bal = this.state.bal;
-    // if(!acc_type){
-    //   alert("add an account type")
-    //   this.setState({loading:false},()=>{return;})
-      
-    // }
-    // if(!bal){
-    //   alert("add opening balance")
-    //   this.setState({loading:false},()=>{return;})
-    // }
-    let data = {
-      acc_real_name,
-      print_name,
-      acc_type,
-      status,
-      gst_num,
-      pan_num,
-      address_line1,
-      address_line2,
-      state,
-      city,
-      pincode,
-      mob_num,
-      phone_num,
-      emailId,
-
-      notes,
-      bal,
-      id: null
-    };
-
-    let met;
-
-    if (this.state.mode === "edit") {
-      met = "PUT";
-      data.id = this.props.data.id;
-    } else {
-      met = "POST";
-    }
-
-    fetch("/api/accounts", {
-      method: met, // *GET, POST, PUT, DELETE, etc.
-
-      headers: {
-        "Content-Type": "application/json"
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    })
-      .then(res => res.json())
-      .then(r => {
-        if (r.account) {
-          this.setState(() => {
-            return {
-              loading: false
-            };
-          });
-          this.props.getAccounts();
-          this.props.AddAccCrossBtn();
-        } else {
-          alert("Unable to save products, Please Try again later");
-          this.props.AddAccCrossBtn();
-          this.setState(() => {
-            return {
-              loading: false
-            };
-          });
-        }
-      })
-      .catch(err => {
-        alert(err);
-        this.props.AddAccCrossBtn();
-        this.setState(() => {
-          return {
-            loading: false
-          };
-        });
+    if (this.validate()) {
+      this.setState(() => {
+        return {
+          loading: true,
+        };
       });
+
+      let acc_name = document.querySelector(".add_acc_inp_name").value;
+
+      let print_name = document.querySelector(".add_acc_inp_pname").value;
+
+      let acc_type = this.state.acc_type;
+
+      let status = document.querySelector("#add_acc_status").value;
+
+      let gst_num = document.querySelector(".add_acc_inp_gst").value;
+
+      let pan_num = document.querySelector(".add_acc_inp_pan").value;
+
+      // let aadhar_num = document.querySelector(".add_acc_inp_aadhar").value;
+
+      let address_line1 = document.querySelector("#add_acc_inp_add1").value;
+
+      let address_line2 = document.querySelector("#add_acc_inp_add2").value;
+
+      let state = document.querySelector("#add_acc_inp_state").value;
+
+      let city = document.querySelector("#add_acc_inp_city").value;
+
+      let pincode = document.querySelector(".add_acc_inp_pincode").value;
+
+      let mob_num = document.querySelector("#add_acc_inp_mob").value;
+
+      let phone_num = document.querySelector("#add_acc_inp_phone").value;
+
+      let emailId = document.querySelector(".add_acc_inp_email").value;
+
+      let notes = document.querySelector(".add_acc_inp_note").value;
+
+      let bal = this.state.bal;
+      // if(!acc_type){
+      //   alert("add an account type")
+      //   this.setState({loading:false},()=>{return;})
+
+      // }
+      // if(!bal){
+      //   alert("add opening balance")
+      //   this.setState({loading:false},()=>{return;})
+      // }
+      let data = {
+        acc_name,
+        print_name,
+        acc_type,
+        status,
+        gst_num,
+        pan_num,
+        address_line1,
+        address_line2,
+        state,
+        city,
+        pincode,
+        mob_num,
+        phone_num,
+        emailId,
+
+        notes,
+        bal,
+        id: null,
+      };
+
+      let met;
+
+      if (this.state.mode === "edit") {
+        met = "PUT";
+        data.id = this.props.data.id;
+      } else {
+        met = "POST";
+      }
+
+      fetch("/api/accounts", {
+        method: met, // *GET, POST, PUT, DELETE, etc.
+
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      })
+        .then((res) => res.json())
+        .then((r) => {
+          if (r.account) {
+            this.setState(() => {
+              return {
+                loading: false,
+              };
+            });
+            this.props.getAccounts();
+            this.props.AddAccCrossBtn();
+          } else {
+            alert("Unable to save products, Please Try again later");
+            this.props.AddAccCrossBtn();
+            this.setState(() => {
+              return {
+                loading: false,
+              };
+            });
+          }
+        })
+        .catch((err) => {
+          alert(err);
+          this.props.AddAccCrossBtn();
+          this.setState(() => {
+            return {
+              loading: false,
+            };
+          });
+        });
     }
   }
 
   shipAdd() {
     this.setState(() => {
       return {
-        bil_add: false
+        bil_add: false,
       };
     });
   }
   billAdd() {
     this.setState(() => {
       return {
-        bil_add: true
+        bil_add: true,
       };
     });
   }
   handleChange = (event, newValue) => {
-    this.setState({addressSelection:newValue});
+    this.setState({ addressSelection: newValue });
   };
 
   validate = () => {
     let temp = {};
-    temp.acc_type= this.state.acc_type.length!==0?"":"This field is required"
-    temp.bal = this.state.bal?"":"This field is required"
+    temp.acc_type = this.state.acc_type.length !== 0 ? "" : "This field is required";
+    temp.bal = this.state.bal ? "" : "This field is required";
 
-    this.setState({errors:{...temp}})
+    this.setState({ errors: { ...temp } });
 
-    return Object.values(temp).every(x=>x=="")
-  } 
+    return Object.values(temp).every((x) => x == "");
+  };
   constructor(props) {
     super(props);
 
@@ -234,12 +229,12 @@ class AddAcc extends React.Component {
       bil_add: true,
       loading: false,
       mode: this.props.mode,
-      checkedSB:false,
-      addressSelection:0,
-      checkedNonGst:false,
-      acc_type:"",
-      bal:"",
-      errors:""
+      checkedSB: false,
+      addressSelection: 0,
+      checkedNonGst: false,
+      acc_type: "",
+      bal: "",
+      errors: "",
     };
   }
 
@@ -296,32 +291,34 @@ class AddAcc extends React.Component {
                       Salary
                     </option>
                   </select> */}
-                  <FormControl >
-    
-                   <Select
-                    className="add_acc_mui"
-                     variant="outlined"
-                     name="Group"
-                     id="add_acc_inp_group"
-                     disabled={this.state.mode === "view" && true}
-                     autoWidth
-                     style={{height:"33px"}}
-                     value={this.state.acc_type}
-                     onChange={e=>this.setState({acc_type:e.target.value})}
-                   >
-                    <MenuItem value="debtors">Trader</MenuItem>
-                    <MenuItem value="creditors">Manu.</MenuItem>
-                    <MenuItem value="sub-agent">Sub Agent</MenuItem>
-                    <MenuItem value="transport">Transport</MenuItem>
-                    <MenuItem value="bank">Bank</MenuItem>
-                    <MenuItem disabled value="salary">
-                      Salary
-                    </MenuItem>
-                   </Select>
-               
+                  <FormControl>
+                    <Select
+                      className="add_acc_mui"
+                      variant="outlined"
+                      name="Group"
+                      id="add_acc_inp_group"
+                      disabled={this.state.mode === "view" && true}
+                      autoWidth
+                      style={{ height: "33px" }}
+                      value={this.state.acc_type}
+                      onChange={(e) => this.setState({ acc_type: e.target.value })}
+                    >
+                      <MenuItem value="debtors">Trader</MenuItem>
+                      <MenuItem value="creditors">Manu.</MenuItem>
+                      <MenuItem value="sub-agent">Sub Agent</MenuItem>
+                      <MenuItem value="transport">Transport</MenuItem>
+                      <MenuItem value="bank">Bank</MenuItem>
+                      <MenuItem disabled value="salary">
+                        Salary
+                      </MenuItem>
+                    </Select>
                   </FormControl>
-                  <br/>
-                  {this.state.errors.acc_type?<span style={{color:"red"}}>{` *${this.state.errors.acc_type}`}</span>:""}
+                  <br />
+                  {this.state.errors.acc_type ? (
+                    <span style={{ color: "red" }}>{` *${this.state.errors.acc_type}`}</span>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
@@ -338,7 +335,8 @@ class AddAcc extends React.Component {
               </div>
 
               <div className="add_acc_obal si">
-                <span>Opening Balance</span>{this.state.errors.bal?<span style={{color:"red"}}>{` *${this.state.errors.bal}`}</span>:""}
+                <span>Opening Balance</span>
+                {this.state.errors.bal ? <span style={{ color: "red" }}>{` *${this.state.errors.bal}`}</span> : ""}
                 <br />
 
                 <input
@@ -348,7 +346,7 @@ class AddAcc extends React.Component {
                   type="text"
                   required
                   value={this.state.bal}
-                  onChange={e=>this.setState({bal:e.target.value})}
+                  onChange={(e) => this.setState({ bal: e.target.value })}
                 />
                 <span className="checkboxes">
                   {" "}
@@ -360,51 +358,53 @@ class AddAcc extends React.Component {
                 </span>
               </div>
 
-              <div style={{display:"flex",justifyContent:"space-between", alignItems:"center"}}>
-                <div><h1 id="reg_det_h"> Registration Details</h1></div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <h1 id="reg_det_h"> Registration Details</h1>
+                </div>
                 <div className="checked_sb_container">
                   <FormControlLabel
-                   control={
-                     <Switch
-                       className="checked_non_gst"
-                       checked={this.state.checkedNonGst}
-                       onChange={()=>this.setState(prevState=>{
-                         return {checkedNonGst: !prevState.checkedNonGst}
-                       })}
-                       name="checkedNonGst"
-                       color="primary"
-                     />
-                   }
-                   label="non gst account"
-                 /></div>
+                    control={
+                      <Switch
+                        className="checked_non_gst"
+                        checked={this.state.checkedNonGst}
+                        onChange={() =>
+                          this.setState((prevState) => {
+                            return { checkedNonGst: !prevState.checkedNonGst };
+                          })
+                        }
+                        name="checkedNonGst"
+                        color="primary"
+                      />
+                    }
+                    label="non gst account"
+                  />
+                </div>
               </div>
 
               <div className="two_items">
                 <div className="add_acc_status si">
                   <span>Status </span>
                   <br />
-{/* 
+                  {/* 
                   <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
                     <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
                   </select> */}
-                  <FormControl >
-    
-                   <Select
-                     className="add_acc_mui"
-                     variant="outlined"
-                     id="add_acc_status"
-                     disabled={this.state.checkedNonGst}
-                     value={this.state.discountType}
-                     onChange={e => {
-                       this.setState({ dicountType: e.target.value });
-                     }}
-                     
-                   >
-                     <MenuItem value="regular registered">Regular Registered</MenuItem>
-                     <MenuItem value="unregistered">Unregistered</MenuItem>
-                   </Select>
-               
+                  <FormControl>
+                    <Select
+                      className="add_acc_mui"
+                      variant="outlined"
+                      id="add_acc_status"
+                      disabled={this.state.checkedNonGst}
+                      value={this.state.discountType}
+                      onChange={(e) => {
+                        this.setState({ dicountType: e.target.value });
+                      }}
+                    >
+                      <MenuItem value="regular registered">Regular Registered</MenuItem>
+                      <MenuItem value="unregistered">Unregistered</MenuItem>
+                    </Select>
                   </FormControl>
                 </div>
                 <div className="add_acc_gstnum si">
@@ -450,7 +450,7 @@ class AddAcc extends React.Component {
             </div>
 
             <div className="add_acc_body_right ">
-              <h2 style={{margin:"0px",height:"48px", borderBottom:"1px solid #344f6b" }}>
+              <h2 style={{ margin: "0px", height: "48px", borderBottom: "1px solid #344f6b" }}>
                 {/* <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: "black" } : null}>
                   Billing Address
                 </span>
@@ -458,7 +458,7 @@ class AddAcc extends React.Component {
                 <span onClick={this.shipAdd} id="shipping_add" style={this.state.bil_add ? null : { color: "black" }}>
                   Shipping Address
                 </span> */}
-               
+
                 <Tabs
                   variant="fullWidth"
                   indicatorColor="primary"
@@ -466,221 +466,231 @@ class AddAcc extends React.Component {
                   onChange={this.handleChange}
                   value={this.state.addressSelection}
                 >
-                  <Tab label="Billing Address" style={{color:"#000000"}}/>
-                  <Tab label="Shipping Address" style={this.state.checkedSB?{color:"gray"}:{color:"#000000"}} disabled={this.state.checkedSB}/>
+                  <Tab label="Billing Address" style={{ color: "#000000" }} />
+                  <Tab
+                    label="Shipping Address"
+                    style={this.state.checkedSB ? { color: "gray" } : { color: "#000000" }}
+                    disabled={this.state.checkedSB}
+                  />
                 </Tabs>
-                
               </h2>
-             {this.state.addressSelection===0? (<>
-              <div className="checked_sb_container" style={{display:"flex"}}>
-              <FormControlLabel
-                   control={
-                     <Switch
-                     className="checked_sb"
-                       checked={this.state.checkedSB}
-                       onChange={()=>this.setState(prevState=>{
-                         return {checkedSB: !prevState.checkedSB}
-                       })}
-                       name="checkedSB"
-                       color="primary"
-                     />
-                   }
-                   label="check if Shipping and Billing address are same"
-                 />
-              </div>
-              <div className="add_acc_add1 si">
-                <span>Address Line 1</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add1"
-                  type="text"
-                  placeholder="Address Line 1"
-                />
-              </div>
+              {this.state.addressSelection === 0 ? (
+                <>
+                  <div className="checked_sb_container" style={{ display: "flex" }}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          className="checked_sb"
+                          checked={this.state.checkedSB}
+                          onChange={() =>
+                            this.setState((prevState) => {
+                              return { checkedSB: !prevState.checkedSB };
+                            })
+                          }
+                          name="checkedSB"
+                          color="primary"
+                        />
+                      }
+                      label="check if Shipping and Billing address are same"
+                    />
+                  </div>
+                  <div className="add_acc_add1 si">
+                    <span>Address Line 1</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      id="add_acc_inp_add1"
+                      type="text"
+                      placeholder="Address Line 1"
+                    />
+                  </div>
 
-              <div className="add_acc_add2 si">
-                <span>Address Line 2</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add2"
-                  type="text"
-                  placeholder="Address Line 2"
-                />
-              </div>
+                  <div className="add_acc_add2 si">
+                    <span>Address Line 2</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      id="add_acc_inp_add2"
+                      type="text"
+                      placeholder="Address Line 2"
+                    />
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_state si">
-                  <span>State</span>
-                  <br />
+                  <div className="two_items">
+                    <div className="add_acc_state si">
+                      <span>State</span>
+                      <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
-                </div>
+                      <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
+                    </div>
 
-                <div className="add_acc_city si">
-                  <span>City</span>
-                  <br />
+                    <div className="add_acc_city si">
+                      <span>City</span>
+                      <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
-                </div>
-              </div>
-              <div className="add_acc_pincode si">
-                <span>Pincode</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  className="add_acc_inp_pincode"
-                  type="text"
-                  placeholder="Enter Pincode"
-                />
-              </div>
+                      <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
+                    </div>
+                  </div>
+                  <div className="add_acc_pincode si">
+                    <span>Pincode</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      className="add_acc_inp_pincode"
+                      type="text"
+                      placeholder="Enter Pincode"
+                    />
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_mobnum si">
-                  <span>Mobile No.</span>
-                  <br />
+                  <div className="two_items">
+                    <div className="add_acc_mobnum si">
+                      <span>Mobile No.</span>
+                      <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_mob"
-                    placeholder="Enter Mobile No."
-                  />
-                </div>
-                <div className="add_acc_phonenum si">
-                  <span>Phone No.</span>
-                  <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        type="Number"
+                        id="add_acc_inp_mob"
+                        placeholder="Enter Mobile No."
+                      />
+                    </div>
+                    <div className="add_acc_phonenum si">
+                      <span>Phone No.</span>
+                      <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_phone"
-                    placeholder="Enter Phone No."
-                  />
-                </div>
-              </div>
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        type="Number"
+                        id="add_acc_inp_phone"
+                        placeholder="Enter Phone No."
+                      />
+                    </div>
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_email si">
-                  <span>E-mail ID</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_email"
-                    type="Email"
-                    placeholder="Enter e-mail Id"
-                  />
-                </div>
+                  <div className="two_items">
+                    <div className="add_acc_email si">
+                      <span>E-mail ID</span>
+                      <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        className="add_acc_inp_email"
+                        type="Email"
+                        placeholder="Enter e-mail Id"
+                      />
+                    </div>
 
-                <div className="add_acc_note si">
-                  <span>Note (If any)</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_note"
-                    type="text"
-                    placeholder="Note , if any"
-                  />
-                </div></div>
-                </>):(<>
-                <div className="add_acc_add1 si">
-                <span>Address Line 1</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add1"
-                  type="text"
-                  placeholder="Address Line 1"
-                />
-              </div>
+                    <div className="add_acc_note si">
+                      <span>Note (If any)</span>
+                      <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        className="add_acc_inp_note"
+                        type="text"
+                        placeholder="Note , if any"
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="add_acc_add1 si">
+                    <span>Address Line 1</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      id="add_acc_inp_add1"
+                      type="text"
+                      placeholder="Address Line 1"
+                    />
+                  </div>
 
-              <div className="add_acc_add2 si">
-                <span>Address Line 2</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  id="add_acc_inp_add2"
-                  type="text"
-                  placeholder="Address Line 2"
-                />
-              </div>
+                  <div className="add_acc_add2 si">
+                    <span>Address Line 2</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      id="add_acc_inp_add2"
+                      type="text"
+                      placeholder="Address Line 2"
+                    />
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_state si">
-                  <span>State</span>
-                  <br />
+                  <div className="two_items">
+                    <div className="add_acc_state si">
+                      <span>State</span>
+                      <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
-                </div>
+                      <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
+                    </div>
 
-                <div className="add_acc_city si">
-                  <span>City</span>
-                  <br />
+                    <div className="add_acc_city si">
+                      <span>City</span>
+                      <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
-                </div>
-              </div>
-              <div className="add_acc_pincode si">
-                <span>Pincode</span>
-                <br />
-                <input
-                  readOnly={this.state.mode === "view" && true}
-                  className="add_acc_inp_pincode"
-                  type="text"
-                  placeholder="Enter Pincode"
-                />
-              </div>
+                      <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
+                    </div>
+                  </div>
+                  <div className="add_acc_pincode si">
+                    <span>Pincode</span>
+                    <br />
+                    <input
+                      readOnly={this.state.mode === "view" && true}
+                      className="add_acc_inp_pincode"
+                      type="text"
+                      placeholder="Enter Pincode"
+                    />
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_mobnum si">
-                  <span>Mobile No.</span>
-                  <br />
+                  <div className="two_items">
+                    <div className="add_acc_mobnum si">
+                      <span>Mobile No.</span>
+                      <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_mob"
-                    placeholder="Enter Mobile No."
-                  />
-                </div>
-                <div className="add_acc_phonenum si">
-                  <span>Phone No.</span>
-                  <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        type="Number"
+                        id="add_acc_inp_mob"
+                        placeholder="Enter Mobile No."
+                      />
+                    </div>
+                    <div className="add_acc_phonenum si">
+                      <span>Phone No.</span>
+                      <br />
 
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    type="Number"
-                    id="add_acc_inp_phone"
-                    placeholder="Enter Phone No."
-                  />
-                </div>
-              </div>
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        type="Number"
+                        id="add_acc_inp_phone"
+                        placeholder="Enter Phone No."
+                      />
+                    </div>
+                  </div>
 
-              <div className="two_items">
-                <div className="add_acc_email si">
-                  <span>E-mail ID</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_email"
-                    type="Email"
-                    placeholder="Enter e-mail Id"
-                  />
-                </div>
+                  <div className="two_items">
+                    <div className="add_acc_email si">
+                      <span>E-mail ID</span>
+                      <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        className="add_acc_inp_email"
+                        type="Email"
+                        placeholder="Enter e-mail Id"
+                      />
+                    </div>
 
-                <div className="add_acc_note si">
-                  <span>Note (If any)</span>
-                  <br />
-                  <input
-                    readOnly={this.state.mode === "view" && true}
-                    className="add_acc_inp_note"
-                    type="text"
-                    placeholder="Note , if any"
-                  />
-                </div></div>
-                </>)}
-              
+                    <div className="add_acc_note si">
+                      <span>Note (If any)</span>
+                      <br />
+                      <input
+                        readOnly={this.state.mode === "view" && true}
+                        className="add_acc_inp_note"
+                        type="text"
+                        placeholder="Note , if any"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -709,7 +719,7 @@ class AddAcc extends React.Component {
 }
 
 AddAcc.defaultProps = {
-  mode: "add"
+  mode: "add",
 };
 
 export default withStyles(styles)(AddAcc);

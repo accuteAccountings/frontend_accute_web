@@ -33,10 +33,10 @@ export default class Ledger extends React.Component {
     arr.map((e, i) => {
       i <= num &&
         (e.credit_acc
-          ? e.credit_acc === this.props.account.acc_real_name
+          ? e.credit_acc === this.props.account.acc_name
             ? (t = parseInt(t) + parseInt(e.amount - e.balance))
             : (t = parseInt(t) - parseInt(e.amount - e.balance))
-          : e.customer === this.props.account.acc_real_name
+          : e.customer === this.props.account.acc_name
           ? (t = parseInt(t) + parseInt(e.totalAmt))
           : (t = parseInt(t) - parseInt(e.totalAmt)));
     });
@@ -44,7 +44,7 @@ export default class Ledger extends React.Component {
   };
 
   TotalDebit = () => {
-    fetch(`/api/ledger_balance/debited?supplier=${this.props.account.acc_real_name}`)
+    fetch(`/api/ledger_balance/debited?supplier=${this.props.account.acc_name}`)
     .then(res => res.json())
     .then((data) => {
       if(data.error){
@@ -60,7 +60,7 @@ export default class Ledger extends React.Component {
   }
 
   TotalCredit = () => {
-    fetch(`/api/ledger_balance/credited?supplier=${this.props.account.acc_real_name}`)
+    fetch(`/api/ledger_balance/credited?supplier=${this.props.account.acc_name}`)
     .then(res => res.json())
     .then((data) => {
       if(data.error){
@@ -187,14 +187,14 @@ export default class Ledger extends React.Component {
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
                       <td className="parti_td">
-                        {e.credit_acc === this.props.account.acc_real_name ? e.debit_acc : e.credit_acc}
+                        {e.credit_acc === this.props.account.acc_name ? e.debit_acc : e.credit_acc}
                       </td>
                       <td>{e.billArr.join(" , ")}</td>
                       <td className="td_dc">
-                        {e.credit_acc === this.props.account.acc_real_name ? "-" : e.amount - e.balance}
+                        {e.credit_acc === this.props.account.acc_name ? "-" : e.amount - e.balance}
                       </td>
                       <td className="td_dc">
-                        {e.credit_acc === this.props.account.acc_real_name ? e.amount - e.balance : "-"}
+                        {e.credit_acc === this.props.account.acc_name ? e.amount - e.balance : "-"}
                       </td>
                       <td>
                         {parseInt(this.Ledger_Balance(i)) < 0
@@ -206,11 +206,11 @@ export default class Ledger extends React.Component {
                     <tr className="tr_acc">
                       <td className="td_date">{e.bill_date}</td>
                       <td className="parti_td">
-                        {e.customer === this.props.account.acc_real_name ? e.supplier : e.customer}
+                        {e.customer === this.props.account.acc_name ? e.supplier : e.customer}
                       </td>
                       <td>{e.bill_num}</td>
-                      <td className="td_dc">{e.supplier === this.props.account.acc_real_name ? e.totalAmt : "-"}</td>
-                      <td className="td_dc">{e.customer === this.props.account.acc_real_name ? e.totalAmt : "-"} </td>
+                      <td className="td_dc">{e.supplier === this.props.account.acc_name ? e.totalAmt : "-"}</td>
+                      <td className="td_dc">{e.customer === this.props.account.acc_name ? e.totalAmt : "-"} </td>
                       <td>
                         {parseInt(this.Ledger_Balance(i)) < 0
                           ? this.Ledger_Balance(i) + " (Dr.)"

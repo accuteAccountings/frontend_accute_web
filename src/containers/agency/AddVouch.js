@@ -208,11 +208,13 @@ class AddVouch extends React.Component {
       g_r_num,
       transport_name,
       supplier,
+      supplier_id: this.state.supplier_id,
       supplier_agent,
       supplier_agent2,
       gst,
       set_commission,
       customer,
+      customer_id: this.state.customer_id,
       discountArr: this.state.discontArr,
       freightArr: this.state.freightArr,
       items: this.state.items,
@@ -435,7 +437,7 @@ class AddVouch extends React.Component {
       if (temp.length === 0) {
         return true;
       }
-      if (e.acc_real_name.toLowerCase().indexOf(temp) !== -1) {
+      if (e.acc_name.toLowerCase().indexOf(temp) !== -1) {
         return true;
       } else return false;
     });
@@ -496,12 +498,12 @@ class AddVouch extends React.Component {
       return;
     }
     let data = {
-      acc_real_name: document.getElementById("vouch_sup").value,
+      acc_name: document.getElementById("vouch_sup").value,
       acc_type: "debtors",
     };
     let exist = false;
     this.state.accounts.map((e) => {
-      if (e.acc_real_name === data.acc_real_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
+      if (e.acc_name === data.acc_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
         exist = true;
       }
     });
@@ -527,13 +529,13 @@ class AddVouch extends React.Component {
       return;
     }
     let data = {
-      acc_real_name: document.getElementById("vouch_transport_name").value,
+      acc_name: document.getElementById("vouch_transport_name").value,
       acc_type: "transport",
     };
 
     let exist = false;
     this.state.accounts.map((e) => {
-      if (e.acc_real_name === data.acc_real_name && e.acc_type === data.acc_type) {
+      if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
         exist = true;
       }
     });
@@ -561,13 +563,13 @@ class AddVouch extends React.Component {
     }
 
     let data = {
-      acc_real_name: document.getElementById("vouch_customer").value,
+      acc_name: document.getElementById("vouch_customer").value,
       acc_type: "debtors",
     };
 
     let exist = false;
     this.state.accounts.map((e) => {
-      if (e.acc_real_name === data.acc_real_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
+      if (e.acc_name === data.acc_name && (e.acc_type === "creditors" || e.acc_type === "debtors")) {
         exist = true;
       }
     });
@@ -619,6 +621,8 @@ class AddVouch extends React.Component {
       freightArr: [],
       l_r_date: "",
       bill_date: "",
+      supplier_id: "",
+      customer_id: "",
     };
   }
 
@@ -784,10 +788,10 @@ class AddVouch extends React.Component {
                             key={index}
                             onClick={() => {
                               document.getElementById("pro_list").style.display = "none";
-                              document.getElementById("vouch_transport_name").value = acc.acc_real_name;
+                              document.getElementById("vouch_transport_name").value = acc.acc_name;
                             }}
                           >
-                            {acc.acc_real_name}
+                            {acc.acc_name}
                           </li>
                         );
                       })}
@@ -820,7 +824,7 @@ class AddVouch extends React.Component {
                       {this.state.acc.map((acc, index) => {
                         if (
                           (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
-                          document.getElementById("vouch_customer").value === acc.acc_real_name
+                          document.getElementById("vouch_customer").value === acc.acc_name
                         ) {
                           return;
                         }
@@ -829,10 +833,11 @@ class AddVouch extends React.Component {
                             key={index}
                             onClick={() => {
                               document.getElementById("sup_list").style.display = "none";
-                              document.getElementById("vouch_sup").value = acc.acc_real_name;
+                              document.getElementById("vouch_sup").value = acc.acc_name;
+                              this.state.supplier_id = acc.id;
                             }}
                           >
-                            {acc.acc_real_name}
+                            {acc.acc_name}
                           </li>
                         );
                       })}
@@ -930,7 +935,7 @@ class AddVouch extends React.Component {
                       {this.state.acc.map((acc, index) => {
                         if (
                           (acc.acc_type !== "debtors" && acc.acc_type !== "creditors") ||
-                          acc.acc_real_name === document.getElementById("vouch_sup").value
+                          acc.acc_name === document.getElementById("vouch_sup").value
                         ) {
                           return;
                         }
@@ -939,10 +944,11 @@ class AddVouch extends React.Component {
                             key={index}
                             onClick={() => {
                               document.getElementById("customer_list").style.display = "none";
-                              document.getElementById("vouch_customer").value = acc.acc_real_name;
+                              document.getElementById("vouch_customer").value = acc.acc_name;
+                              this.state.customer_id = acc.id;
                             }}
                           >
-                            {acc.acc_real_name}
+                            {acc.acc_name}
                           </li>
                         );
                       })}
@@ -974,13 +980,13 @@ class AddVouch extends React.Component {
                               return;
                             } else {
                               let data = {
-                                acc_real_name: document.getElementById("vouch_sup_agent2").value,
+                                acc_name: document.getElementById("vouch_sup_agent2").value,
                                 acc_type: "Sub Agent",
                               };
 
                               let exist = false;
                               this.state.accounts.map((e) => {
-                                if (e.acc_real_name === data.acc_name && e.acc_type === data.acc_type) {
+                                if (e.acc_name === data.acc_name && e.acc_type === data.acc_type) {
                                   exist = true;
                                 }
                               });
@@ -1016,10 +1022,10 @@ class AddVouch extends React.Component {
                               key={index}
                               onClick={() => {
                                 document.getElementById("subAgnet_list").style.display = "none";
-                                document.getElementById("vouch_sup_agent2").value = acc.acc_real_name;
+                                document.getElementById("vouch_sup_agent2").value = acc.acc_name;
                               }}
                             >
-                              {acc.acc_real_name}
+                              {acc.acc_name}
                             </li>
                           );
                         })}
