@@ -107,25 +107,39 @@ class  User_Det extends React.Component{
         this.state.vouch.map((e) => {
             if(this.props.include_gst){
                 if(this.props.include_unpaid){
-                    if(e.supplier === this.props.acc && e.gst != null){
-                        t = parseInt(t) + (parseInt(e.totalAmt)*parseInt(e.set_commission ))/100
+                    if(e.supplier === this.props.acc && e.gst != null && e.type == 'pv'){
+                        t = t + ((e.totalAmt)*(e.set_commission ))/100
+                    }
+                    if(e.type == 'dn' && e.customer === this.props.acc && e.gst != null){
+                        t = t - ((e.totalAmt)*(e.set_commission ))/100
                     }
                 }else{
-                    if(e.supplier === this.props.acc && e.gst != null && e.status == 0){
-                        t = parseInt(t) + (parseInt(e.totalAmt)*parseInt(e.set_commission ))/100
+                    if(e.supplier === this.props.acc && e.gst != null && e.status == 0 && e.type == 'pv'){
+                        t = (t) + ((e.totalAmt)*(e.set_commission ))/100
+                    }
+                    if(e.type == 'dn' && e.customer === this.props.acc && e.gst != null){
+                        t = (t) - ((e.totalAmt)*(e.set_commission ))/100
                     }
                 }
                 
             }else{
                 if(this.props.include_unpaid){
-                    if(e.supplier === this.props.acc && e.gst){
-                        x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
-                        t = parseInt(t) + (parseInt(x)*parseInt(e.set_commission ))/100
+                    if(e.supplier === this.props.acc && e.gst && e.type == 'pv'){
+                        x = ((e.totalAmt)/(((e.gst) + 100)))*100
+                        t = (t) + ((x)*(e.set_commission ))/100
+                    }
+                    if(e.type == 'dn' && e.customer === this.props.acc && e.gst){
+                        x = ((e.totalAmt)/(((e.gst) + 100)))*100
+                        t = (t) - ((x)*(e.set_commission ))/100
                     }
                 }else{
-                    if(e.supplier === this.props.acc && e.gst && e.status == 0){
-                        x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
-                        t = parseInt(t) + (parseInt(x)*parseInt(e.set_commission ))/100
+                    if(e.type == 'pv' && e.supplier === this.props.acc && e.gst && e.status == 0){
+                        x = ((e.totalAmt)/(((e.gst) + 100)))*100
+                        t = (t) + ((x)*(e.set_commission ))/100
+                    }
+                    if(e.type == 'dn' && e.customer === this.props.acc && e.gst && e.status == 0){
+                        x = ((e.totalAmt)/(((e.gst) + 100)))*100
+                        t = (t) - ((x)*(e.set_commission ))/100
                     }
                 }
                
@@ -144,25 +158,39 @@ class  User_Det extends React.Component{
         this.state.vouch.map((e) => {
             if(this.props.include_gst){
                 if(this.props.include_unpaid){
-                    if(e.supplier === this.props.acc && e.gst != null){
+                    if(e.supplier === this.props.acc && e.gst != null && e.type === 'pv'){
                         t = parseInt(t) + (parseInt(e.totalAmt))
                     }
+                    if(e.customer === this.props.acc && e.gst != null && e.type === 'dn'){
+                        t = parseInt(t) - (parseInt(e.totalAmt))
+                    }
                 }else{
-                    if(e.supplier === this.props.acc && e.gst != null && e.status == 0){
+                    if(e.supplier === this.props.acc && e.gst != null && e.status == 0 && e.type == 'pv'){
                         t = parseInt(t) + (parseInt(e.totalAmt))
+                    }
+                    if(e.customer === this.props.acc && e.gst != null && e.status == 0 && e.type == 'dn'){
+                        t = parseInt(t) - (parseInt(e.totalAmt))
                     }
                 }
                 
             }else{
                 if(this.props.include_unpaid){
-                    if(e.supplier === this.props.acc && e.gst){
+                    if(e.supplier === this.props.acc && e.gst && e.type == 'pv'){
                         x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
                         t = parseInt(t) + parseInt(x)
                     }
+                    if(e.customer === this.props.acc && e.gst && e.type == 'dn' ){
+                        x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
+                        t = parseInt(t) - parseInt(x)
+                    }
                 }else{
-                    if(e.supplier === this.props.acc && e.gst && e.status == 0){
+                    if(e.supplier === this.props.acc && e.gst && e.status == 0 && e.type == 'pv'){
                         x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
                         t = parseInt(t) + parseInt(x)
+                    }
+                    if(e.customer === this.props.acc && e.gst && e.status == 0 && e.type == 'dn'){
+                        x = (parseInt(e.totalAmt)/((parseInt(e.gst) + 100)))*100
+                        t = parseInt(t) - parseInt(x)
                     }
                 }
                
@@ -174,6 +202,9 @@ class  User_Det extends React.Component{
         return t;
     }
     
+     round = (value, decimals) => {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+       }  
 
     getVouch = async() => {
         await fetch(`/api/vouch/commission/vouches?supplier=${this.props.acc}`)
@@ -201,9 +232,6 @@ class  User_Det extends React.Component{
            }
        }
 
-       componentDidMount(){
-        
-       }
 
        
     render(){
@@ -213,8 +241,8 @@ class  User_Det extends React.Component{
                 <div className = "id">{this.props.id}</div>
                 <div className = "name_city"> {this.props.acc} </div>
                 <div className = "balance"> {this.TaxableAmt()} </div>
-                <div className = "comm_per"></div>
-                <div className = "balance">{this.Total()}</div>
+                <div className = "comm_per">1%</div>
+                <div className = "balance">{this.round(this.Total(),2)}</div>
                 <div className = "balance"></div>
                 <div className = "actions">
                     <button type = "blue">Alter</button>
