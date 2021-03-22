@@ -99,6 +99,9 @@ class LoginReg extends Component {
         if (res.error) {
           this.setState({ loading: false });
           this.setState({ errorMsg: res.error, snackbarOpen: true });
+          if (res.error == "Users is Suspended") {
+            alert("Users is Suspended , Contact The Admin");
+          }
           if (res.error == "username not found") {
             //document.getElementById("email").value = "";
             document.getElementById("password").value = "";
