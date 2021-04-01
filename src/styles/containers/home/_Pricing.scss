@@ -1,0 +1,104 @@
+.pri_con {
+  background-color: $grey_back;
+  text-align: center;
+}
+
+.pri_head {
+  padding: 20vh 50px;
+  // width: 60%;
+  // text-align: center;
+  user-select: none;
+  hr {
+    width: 50px;
+    height: 2px;
+    background-color: black;
+  }
+
+  h1 {
+    font: $heading_font;
+  }
+
+  p {
+    color: $grey_text;
+  }
+}
+
+.dollar {
+  font-size: 20px;
+  font-weight: lighter;
+  transform: translateY(-20px);
+}
+
+.pri_card_con {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 18rem;
+  margin: 20px 60px;
+  box-shadow: 0px 0px 50px rgba(189, 189, 189, 0.479);
+  padding: 50px 0px;
+  box-sizing: border-box;
+  margin-top: 60px;
+  transition: transform 0.3s;
+}
+
+.pri_card_con:hover {
+  transform: scale(1.02);
+}
+
+.pri_card_head {
+  h4 {
+    font: $heading_font;
+    font-size: 30px;
+  }
+  h1 {
+    font: $heading_font;
+  }
+}
+
+.pri_card_body {
+  p {
+    margin: 50px;
+    color: $grey_text;
+  }
+
+  button {
+    width: 50%;
+    padding: 10px 20px;
+    background-color: $pri_color;
+    color: white;
+    font-weight: bolder;
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 2px;
+    box-shadow: 0px 0px 10px rgb(206, 206, 206);
+  }
+
+  button:hover {
+    background-color: $l_pri_color;
+  }
+  button:active {
+    background-color: $d_pri_color;
+  }
+}
+
+.pri_body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  padding-bottom: 200px;
+}
+
+@media only screen and (max-width: 720px) {
+  .pri_card_con {
+    width: 80vw;
+    margin: 20px 10px;
+  }
+  .pri_head {
+    padding: 10vh 20px;
+    h1 {
+      font: $heading_font_m;
+    }
+  }
+}

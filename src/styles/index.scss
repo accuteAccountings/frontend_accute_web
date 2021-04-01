@@ -1,0 +1,58 @@
+@import "./base/base";
+
+//home
+@import "./containers/home/NavBar";
+@import "./containers/home/Landing";
+@import "./containers/home/Features";
+.nav_con {
+  @import "./containers/home/_MenuBtn.scss";
+}
+@import "./containers/home/MenuItems";
+@import "./containers/home/About";
+@import "./containers/home/Data";
+@import "./containers/home/Services";
+@import "./containers/home/Pricing";
+@import "./containers/home/Quotes";
+@import "./containers/home/ContactDet";
+.log_reg {
+  @import "./containers/home/LogReg";
+}
+@import "./containers/home/ContactUs";
+
+//main
+@import "./containers/agency/SideBar.scss";
+@import "./containers/agency/TopBar.scss";
+@import "./containers/agency/AddProducts.scss";
+.add_acc {
+  @import "./containers/agency/AddAcc.scss";
+}
+@import "./containers/agency/Clogo.scss";
+@import "./containers/agency/NavSec.scss";
+
+.pro_compo {
+  @import "./containers/agency/ProCon.scss";
+  @import "./containers/agency/VouchCon.scss";
+
+}
+@import "./containers/agency/Account_pro";
+@import "./containers/agency//DailyBook";
+@import "./containers/agency/Dash.scss";
+@import "./containers/agency/AddVouch.scss";
+@import "./containers/agency/AddJoVouch.scss";
+@import "./containers/agency//Ledger.scss";
+@import "./containers/agency//Report_pro";
+@import "./containers/agency/TaskManager";
+@import "./containers/agency/Agency.scss";
+
+// @import "./containers/agency/AddAccountFromUsers.scss";
+@import "./components/agency/Delete.scss";
+@import "./containers/agency/Printed_Invoice.scss";
+@import "./containers/agency/Inventory.scss";
+@import "./containers/agency/Invoice.scss";
+@import "./containers/agency/AgencyPage";
+@import './components/admin/Button.scss';
+@import './containers/admin/App.scss';
+@import './containers/admin/home.scss';
+@import './containers/admin/Profile.scss';
+@import './containers/admin/user_lists.scss';
+@import './containers/agency/Commission.scss';
