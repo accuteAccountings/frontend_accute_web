@@ -94,6 +94,7 @@ class AddVouch extends React.Component {
 		document.querySelector("#vouch_gst").defaultValue = parseFloat(d.gst);
 		let arr = [];
 		let i = this.props.EData.product;
+		this.setState({customer_id:d.customer_id,supplier_id:d.supplier_id})
 
 		i.map((e, index) => {
 			let a = {
