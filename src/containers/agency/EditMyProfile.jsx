@@ -1,97 +1,97 @@
-import React from "react";
-import cross from "assets/icons/cancel.svg";
-import load from "assets/icons/loading.svg";
-import {Button} from "@material-ui/core"
+import React from 'react';
+import cross from 'assets/icons/cancel.svg';
+import load from 'assets/icons/loading.svg';
+import { Button } from '@material-ui/core';
 
 class EditMyProfile extends React.Component {
   EditOn = () => {
     this.setState(() => {
       return {
-        mode: "edit"
+        mode: 'edit',
       };
     });
   };
 
   setValue = () => {
-    document.querySelector(".add_acc_inp_name").value = this.props.data.acc_name;
+    document.querySelector('.add_acc_inp_name').value = this.props.data.acc_name;
 
-    document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
+    // document.querySelector(".add_acc_inp_pname").value = this.props.data.print_name;
 
-    document.querySelector("#add_acc_inp_group").value = this.props.data.acc_type;
+    document.querySelector('#add_acc_inp_group').value = this.props.data.acc_type;
 
-    document.querySelector("#add_acc_status").value = this.props.data.status;
+    document.querySelector('#add_acc_status').value = this.props.data.status;
 
-    document.querySelector(".add_acc_inp_gst").value = this.props.data.gst_num;
+    document.querySelector('.add_acc_inp_gst').value = this.props.data.gst_num;
 
-    document.querySelector(".add_acc_inp_pan").value = this.props.data.pan_num;
+    document.querySelector('.add_acc_inp_pan').value = this.props.data.pan_num;
 
-    document.querySelector(".add_acc_inp_aadhar").value = this.props.data.pan_num;
+    document.querySelector('.add_acc_inp_aadhar').value = this.props.data.pan_num;
 
-    document.querySelector("#add_acc_inp_add1").value = this.props.data.address_line1;
+    document.querySelector('#add_acc_inp_add1').value = this.props.data.address_line1;
 
-    document.querySelector("#add_acc_inp_add2").value = this.props.data.address_line2;
+    document.querySelector('#add_acc_inp_add2').value = this.props.data.address_line2;
 
-    document.querySelector("#add_acc_inp_state").value = this.props.data.state;
+    document.querySelector('#add_acc_inp_state').value = this.props.data.state;
 
-    document.querySelector("#add_acc_inp_city").value = this.props.data.city;
+    document.querySelector('#add_acc_inp_city').value = this.props.data.city;
 
-    document.querySelector(".add_acc_inp_pincode").value = this.props.data.pincode;
+    document.querySelector('.add_acc_inp_pincode').value = this.props.data.pincode;
 
     // let  mob_num=document.querySelector("#add_acc_inp_mobnum").value + document.querySelector("#add_acc_inp_mob").value
 
     // let  phone_num=document.querySelector("#add_acc_inp_phonenum").value + document.querySelector("#add_acc_inp_phone").value
 
-    document.querySelector(".add_acc_inp_email").value = this.props.data.emailId;
+    document.querySelector('.add_acc_inp_email').value = this.props.data.emailId;
 
-    document.querySelector(".add_acc_inp_note").value = this.props.data.notes;
+    document.querySelector('.add_acc_inp_note').value = this.props.data.notes;
 
-    document.querySelector(".add_acc_inp_bal").value = this.props.bal;
+    document.querySelector('.add_acc_inp_bal').value = this.props.bal;
   };
 
   addAccount() {
     this.setState(() => {
       return {
-        loading: true
+        loading: true,
       };
     });
 
-    let acc_name = document.querySelector(".add_acc_inp_name").value;
+    let acc_name = document.querySelector('.add_acc_inp_name').value;
 
-    let print_name = document.querySelector(".add_acc_inp_pname").value;
+    // let print_name = document.querySelector(".add_acc_inp_pname").value;
 
-    let acc_type = document.querySelector("#add_acc_inp_group").value;
+    let acc_type = document.querySelector('#add_acc_inp_group').value;
 
-    let status = document.querySelector("#add_acc_status").value;
+    let status = document.querySelector('#add_acc_status').value;
 
-    let gst_num = document.querySelector(".add_acc_inp_gst").value;
+    let gst_num = document.querySelector('.add_acc_inp_gst').value;
 
-    let pan_num = document.querySelector(".add_acc_inp_pan").value;
+    let pan_num = document.querySelector('.add_acc_inp_pan').value;
 
-    let aadhar_num = document.querySelector(".add_acc_inp_aadhar").value;
+    let aadhar_num = document.querySelector('.add_acc_inp_aadhar').value;
 
-    let address_line1 = document.querySelector("#add_acc_inp_add1").value;
+    let address_line1 = document.querySelector('#add_acc_inp_add1').value;
 
-    let address_line2 = document.querySelector("#add_acc_inp_add2").value;
+    let address_line2 = document.querySelector('#add_acc_inp_add2').value;
 
-    let state = document.querySelector("#add_acc_inp_state").value;
+    let state = document.querySelector('#add_acc_inp_state').value;
 
-    let city = document.querySelector("#add_acc_inp_city").value;
+    let city = document.querySelector('#add_acc_inp_city').value;
 
-    let pincode = document.querySelector(".add_acc_inp_pincode").value;
+    let pincode = document.querySelector('.add_acc_inp_pincode').value;
 
-    let mob_num = document.querySelector("#add_acc_inp_mob").value;
+    let mob_num = document.querySelector('#add_acc_inp_mob').value;
 
-    let phone_num = document.querySelector("#add_acc_inp_phone").value;
+    let phone_num = document.querySelector('#add_acc_inp_phone').value;
 
-    let emailId = document.querySelector(".add_acc_inp_email").value;
+    let emailId = document.querySelector('.add_acc_inp_email').value;
 
-    let notes = document.querySelector(".add_acc_inp_note").value;
+    let notes = document.querySelector('.add_acc_inp_note').value;
 
-    let bal = document.querySelector(".add_acc_inp_bal").value;
+    let bal = document.querySelector('.add_acc_inp_bal').value;
 
     let data = {
       acc_name,
-      print_name,
+      // print_name,
       acc_type,
       status,
       gst_num,
@@ -107,43 +107,43 @@ class EditMyProfile extends React.Component {
       emailId,
       notes,
       bal,
-      id: null
+      id: null,
     };
 
     let met;
 
-    if (this.state.mode === "edit") {
-      met = "PUT";
+    if (this.state.mode === 'edit') {
+      met = 'PUT';
       data.id = this.props.data.id;
     } else {
-      met = "POST";
+      met = 'POST';
     }
 
-    fetch("/api/accounts", {
+    fetch('/api/accounts', {
       method: met, // *GET, POST, PUT, DELETE, etc.
 
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
       .then(res => res.json())
       .then(r => {
         if (r.account) {
           this.setState(() => {
             return {
-              loading: false
+              loading: false,
             };
           });
           this.props.getAccounts();
           this.props.AddAccCrossBtn();
         } else {
-          alert("Unable to save products, Please Try again later");
+          alert('Unable to save products, Please Try again later');
           this.props.AddAccCrossBtn();
           this.setState(() => {
             return {
-              loading: false
+              loading: false,
             };
           });
         }
@@ -153,7 +153,7 @@ class EditMyProfile extends React.Component {
         this.props.AddAccCrossBtn();
         this.setState(() => {
           return {
-            loading: false
+            loading: false,
           };
         });
       });
@@ -162,14 +162,14 @@ class EditMyProfile extends React.Component {
   shipAdd() {
     this.setState(() => {
       return {
-        bil_add: false
+        bil_add: false,
       };
     });
   }
   billAdd() {
     this.setState(() => {
       return {
-        bil_add: true
+        bil_add: true,
       };
     });
   }
@@ -185,12 +185,12 @@ class EditMyProfile extends React.Component {
     this.state = {
       bil_add: true,
       loading: false,
-      mode: this.props.mode
+      mode: this.props.mode,
     };
   }
 
   componentDidMount() {
-    if (this.state.mode === "edit" || this.state.mode === "view") {
+    if (this.state.mode === 'edit' || this.state.mode === 'view') {
       this.setValue();
     }
   }
@@ -215,7 +215,7 @@ class EditMyProfile extends React.Component {
                   <span>Full Name</span>
                   <br />
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_name"
                     type="text"
                     placeholder="Enter Account Name"
@@ -227,7 +227,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <select
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     name="Group"
                     className="add_acc_inp"
                     id="add_acc_inp_group"
@@ -245,7 +245,7 @@ class EditMyProfile extends React.Component {
                 </div>
               </div>
 
-              <div className="add_acc_print_name si">
+              {/* <div className="add_acc_print_name si">
                 <span>Print Name</span>
                 <br />
 
@@ -255,9 +255,9 @@ class EditMyProfile extends React.Component {
                   placeholder="Enter Print Name"
                   type="text"
                 />
-              </div>
+              </div> */}
 
-              <div className="add_acc_obal si">
+              {/* <div className="add_acc_obal si">
                 <span>Opening Balacing</span>
                 <br />
 
@@ -276,7 +276,7 @@ class EditMyProfile extends React.Component {
                   {" "}
                   <input readOnly={this.state.mode === "view" && true} className="rr" name="n" type="radio" /> Cr.
                 </span>
-              </div>
+              </div> */}
 
               <h1 id="reg_det_h"> Registration Details</h1>
 
@@ -285,7 +285,7 @@ class EditMyProfile extends React.Component {
                   <span>Status </span>
                   <br />
 
-                  <select readOnly={this.state.mode === "view" && true} id="add_acc_status">
+                  <select readOnly={this.state.mode === 'view' && true} id="add_acc_status">
                     <option value="regular registered">Regular Registered</option>
                     <option value="unregistered">Unregistered</option>
                   </select>
@@ -295,7 +295,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_gst"
                     placeholder="Enter GST No."
                     type="text"
@@ -309,7 +309,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_pan"
                     placeholder="Enter Pan No."
                     type="text"
@@ -320,7 +320,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_aadhar"
                     placeholder="Enter Aadhar No."
                     type="text"
@@ -331,11 +331,11 @@ class EditMyProfile extends React.Component {
 
             <div className="add_acc_body_right ">
               <h1>
-                <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: "black" } : null}>
+                <span id="billing_add" onClick={this.billAdd} style={this.state.bil_add ? { color: 'black' } : null}>
                   Billing Address
                 </span>
 
-                <span onClick={this.shipAdd} id="shipping_add" style={this.state.bil_add ? null : { color: "black" }}>
+                <span onClick={this.shipAdd} id="shipping_add" style={this.state.bil_add ? null : { color: 'black' }}>
                   Shipping Address
                 </span>
               </h1>
@@ -344,7 +344,7 @@ class EditMyProfile extends React.Component {
                 <span>Address Line 1</span>
                 <br />
                 <input
-                  readOnly={this.state.mode === "view" && true}
+                  readOnly={this.state.mode === 'view' && true}
                   id="add_acc_inp_add1"
                   type="text"
                   placeholder="Address Line 1"
@@ -355,7 +355,7 @@ class EditMyProfile extends React.Component {
                 <span>Address Line 2</span>
                 <br />
                 <input
-                  readOnly={this.state.mode === "view" && true}
+                  readOnly={this.state.mode === 'view' && true}
                   id="add_acc_inp_add2"
                   type="text"
                   placeholder="Address Line 2"
@@ -367,21 +367,21 @@ class EditMyProfile extends React.Component {
                   <span>State</span>
                   <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_state" />
+                  <input readOnly={this.state.mode === 'view' && true} name="Group" id="add_acc_inp_state" />
                 </div>
 
                 <div className="add_acc_city si">
                   <span>City</span>
                   <br />
 
-                  <input readOnly={this.state.mode === "view" && true} name="Group" id="add_acc_inp_city" />
+                  <input readOnly={this.state.mode === 'view' && true} name="Group" id="add_acc_inp_city" />
                 </div>
               </div>
               <div className="add_acc_pincode si">
                 <span>Pincode</span>
                 <br />
                 <input
-                  readOnly={this.state.mode === "view" && true}
+                  readOnly={this.state.mode === 'view' && true}
                   className="add_acc_inp_pincode"
                   type="text"
                   placeholder="Enter Pincode"
@@ -394,7 +394,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     type="Number"
                     id="add_acc_inp_mob"
                     placeholder="Enter Mobile No."
@@ -405,7 +405,7 @@ class EditMyProfile extends React.Component {
                   <br />
 
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     type="Number"
                     id="add_acc_inp_phone"
                     placeholder="Enter Phone No."
@@ -418,7 +418,7 @@ class EditMyProfile extends React.Component {
                   <span>E-mail ID</span>
                   <br />
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_email"
                     type="Email"
                     placeholder="Enter e-mail Id"
@@ -429,7 +429,7 @@ class EditMyProfile extends React.Component {
                   <span>Note (If any)</span>
                   <br />
                   <input
-                    readOnly={this.state.mode === "view" && true}
+                    readOnly={this.state.mode === 'view' && true}
                     className="add_acc_inp_note"
                     type="text"
                     placeholder="Note , if any"
@@ -446,14 +446,14 @@ class EditMyProfile extends React.Component {
 
             <Button
               className="add_acc_btn"
-              onClick={this.state.loading ? null : this.state.mode === "view" ? this.EditOn : this.addAccount}
+              onClick={this.state.loading ? null : this.state.mode === 'view' ? this.EditOn : this.addAccount}
             >
               {this.state.loading ? (
                 <img src={load} className="loading" alt=" " />
-              ) : this.state.mode === "view" ? (
-                "Edit"
+              ) : this.state.mode === 'view' ? (
+                'Edit'
               ) : (
-                "Save"
+                'Save'
               )}
             </Button>
           </div>
@@ -464,7 +464,7 @@ class EditMyProfile extends React.Component {
 }
 
 AddAcc.defaultProps = {
-  mode: "add"
+  mode: 'add',
 };
 
 export default AddAcc;

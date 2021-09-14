@@ -15,7 +15,7 @@ class AccountProfileEditForm extends React.Component{
    
         this.state={
             acc_name:"",
-            print_name:"",
+            // print_name:"",
             address_line1:"",
             mob_num:[],
             phone_num:[],
@@ -39,7 +39,7 @@ class AccountProfileEditForm extends React.Component{
     componentDidMount(){    
 
          const { acc_name,
-            print_name,
+            // print_name,
             address_line1,
             mob_num,
             phone_num,
@@ -56,7 +56,7 @@ let phoneArr=[1]
 
         this.setState({
             acc_name,
-            print_name,
+            // print_name,
             address_line1,
             mob_num:[...mobArr],
             phone_num:[...phoneArr],
@@ -163,7 +163,7 @@ let phoneArr=[1]
       e.preventDefault();
       //if(this.validate())
       const {acc_name,
-        print_name,
+        // print_name,
         address_line1,
         mob_num,
         phone_num,
@@ -175,7 +175,7 @@ let phoneArr=[1]
     } = this.state;
       const updatedData={
         acc_name,
-        print_name,
+        // print_name,
         address_line1,
         mob_num:mob_num.map(ele=>ele["number"]).join(","),
         phone_num:phone_num.map(ele=>ele["number"]).join(","),
@@ -197,7 +197,7 @@ let phoneArr=[1]
     }
     render(){
         const {   acc_name,
-            print_name,
+            // print_name,
             address_line1,
             mob_num,
             phone_num,
@@ -231,7 +231,7 @@ let phoneArr=[1]
                 value={acc_name}
                 onChange={this.handleOnChange}
                 />
-              <TextField margin="normal"  
+              {/* <TextField margin="normal"  
                 variant="outlined"                    
                 fullWidth
                 id="print_name"
@@ -240,7 +240,7 @@ let phoneArr=[1]
                 size="small"
                 value={print_name}
                 onChange={this.handleOnChange}
-                />
+                /> */}
              </div>
              <TextField margin="normal"  
                 variant="outlined"                    

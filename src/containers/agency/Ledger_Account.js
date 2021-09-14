@@ -34,11 +34,11 @@ export default class Ledger extends React.Component {
 		let t = 0;
 		arr.map((e, i) => {
 			i <= num &&
-				(e.credit_acc
-					? e.credit_acc === this.props.account.acc_name
+				(e.credit_acc_id
+					? e.credit_acc_id == this.props.account.id
 						? (t = parseInt(t) + parseInt(e.amount - e.balance))
 						: (t = parseInt(t) - parseInt(e.amount - e.balance))
-					: e.customer === this.props.account.acc_name
+					: e.customer_id == this.props.account.id
 					? (t = parseInt(t) + parseInt(e.totalAmt))
 					: (t = parseInt(t) - parseInt(e.totalAmt)));
 		});
@@ -46,9 +46,10 @@ export default class Ledger extends React.Component {
 	};
 
 	TotalDebit = () => {
-		fetch(`/api/ledger_balance/debited?supplier=${this.props.account.acc_name}`)
+		fetch(`/api/ledger_balance/debited?supplier=${this.props.account.id}`)
 			.then((res) => res.json())
 			.then((data) => {
+				console.log('I am debit balance....', data)
 				if (data.error) {
 					alert(data.error);
 				} else {
@@ -63,10 +64,12 @@ export default class Ledger extends React.Component {
 
 	TotalCredit = () => {
 		fetch(
-			`/api/ledger_balance/credited?supplier=${this.props.account.acc_name}`
+			`/api/ledger_balance/credited?supplier=${this.props.account.id}`
 		)
 			.then((res) => res.json())
 			.then((data) => {
+				console.log('I am credit balance....', data)
+
 				if (data.error) {
 					alert(data.error);
 				} else {
@@ -197,6 +200,7 @@ export default class Ledger extends React.Component {
 								<tr>
 									<th>Date</th>
 									<th>Particulars</th>
+									<th>Type</th>
 									<th>Bill No.</th>
 									<th>Debit</th>
 
@@ -206,22 +210,24 @@ export default class Ledger extends React.Component {
 							</thead>
 							<tbody>
 								{this.props.details.map((e, i) => {
-									return e.credit_acc ? (
+									console.log("I m table data....", i, e.credit_acc_id, e.debit_acc_id, e.customer_id, e.supplier_id, this.props.account.id, e.credit_acc_id == this.props.account.id, e.supplier_id == this.props.account.id)
+									return e.credit_acc_id ? (
 										<tr className="tr_acc">
 											<td className="td_date">{e.bill_date}</td>
 											<td className="parti_td">
-												{e.credit_acc === this.props.account.acc_name
+												{e.credit_acc_id == this.props.account.id
 													? e.debit_acc
 													: e.credit_acc}
 											</td>
+											<td>{e.type == 'jv' ? 'Payment' : 'Sales'}</td>
 											<td>{e.billArr.join(" , ")}</td>
 											<td className="td_dc">
-												{e.credit_acc === this.props.account.acc_name
+												{e.credit_acc_id == this.props.account.id
 													? "-"
 													: e.amount - e.balance}
 											</td>
 											<td className="td_dc">
-												{e.credit_acc === this.props.account.acc_name
+												{e.credit_acc_id == this.props.account.id
 													? e.amount - e.balance
 													: "-"}
 											</td>
@@ -235,18 +241,19 @@ export default class Ledger extends React.Component {
 										<tr className="tr_acc">
 											<td className="td_date">{e.bill_date}</td>
 											<td className="parti_td">
-												{e.customer === this.props.account.acc_name
+												{e.customer_id == this.props.account.id
 													? e.supplier
 													: e.customer}
 											</td>
+											<td>{e.type == 'jv' ? 'Payment' : 'Sales'}</td>
 											<td>{e.bill_num}</td>
 											<td className="td_dc">
-												{e.supplier === this.props.account.acc_name
+												{e.supplier_id == this.props.account.id
 													? e.totalAmt
 													: "-"}
 											</td>
 											<td className="td_dc">
-												{e.customer === this.props.account.acc_name
+												{e.customer_id == this.props.account.id
 													? e.totalAmt
 													: "-"}{" "}
 											</td>
@@ -262,6 +269,7 @@ export default class Ledger extends React.Component {
 								<tr className="tr_acc">
 									<td className="td_date"> </td>
 									<td className="parti_td"> </td>
+									<td></td>
 									<td> </td>
 									<td className="td_dc"> </td>
 									<td className="td_dc"> </td>
@@ -271,6 +279,7 @@ export default class Ledger extends React.Component {
 								<tr className="tr_acc">
 									<td className="td_date"> </td>
 									<td className="parti_td"> </td>
+									<td></td>
 									<td> </td>
 									<td className="td_dc"> </td>
 									<td className="td_dc"> </td>
