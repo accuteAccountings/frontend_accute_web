@@ -1,35 +1,35 @@
-import React from "react";
-import SideBar from "containers/agency/SideBar";
-import TopBar from "containers/agency/TopBar";
-import AddProducts from "containers/agency/AddProduct";
-import AddAcc from "containers/agency/AddAcc";
-import Clogo from "containers/agency/Clogo";
-import NavSec from "containers/agency/NavSec";
-import ProCon from "containers/agency/ProCon";
-import AddVouch from "containers/agency/AddVouch";
-import VouchCon from "containers/agency/VouchCon";
-import Dash from "./Dash";
-import AddJovouch from "containers/agency/AddJoVouch";
-import Account_pro from "containers/agency/Account_profile";
-import DailyBook from "containers/agency/DailyBook";
-import Trash from "containers/agency/Trash";
-import Agency from "pages/Agency";
-import AddAccountFromUsers from "containers/agency/AddAccountFromUsers";
+import React from 'react';
+import SideBar from 'containers/agency/SideBar';
+import TopBar from 'containers/agency/TopBar';
+import AddProducts from 'containers/agency/AddProduct';
+import AddAcc from 'containers/agency/AddAcc';
+import Clogo from 'containers/agency/Clogo';
+import NavSec from 'containers/agency/NavSec';
+import ProCon from 'containers/agency/ProCon';
+import AddVouch from 'containers/agency/AddVouch';
+import VouchCon from 'containers/agency/VouchCon';
+import Dash from './Dash';
+import AddJovouch from 'containers/agency/AddJoVouch';
+import Account_pro from 'containers/agency/Account_profile';
+import DailyBook from 'containers/agency/DailyBook';
+import Trash from 'containers/agency/Trash';
+import Agency from 'pages/Agency';
+import AddAccountFromUsers from 'containers/agency/AddAccountFromUsers';
 
 export default class Accountings extends React.Component {
   Sorting_Pro = async () => {
-    let mode = await document.getElementById("new_old_navsec");
+    let mode = await document.getElementById('new_old_navsec');
 
-    if (this.state.ProOrAcc == "Products") {
+    if (this.state.ProOrAcc == 'Products') {
       fetch(`/api/products?mode=${mode.value}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.Products) {
             this.setState(() => {
               return {
@@ -39,7 +39,7 @@ export default class Accountings extends React.Component {
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState(() => {
             return {
               err_pro: true,
@@ -48,14 +48,14 @@ export default class Accountings extends React.Component {
         });
     } else {
       fetch(`/api/accounts?mode=${mode.value}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
           if (data.accounts) {
             this.setState(() => {
               return {
@@ -65,7 +65,7 @@ export default class Accountings extends React.Component {
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.setState(() => {
             return {
               err_acc: true,
@@ -75,16 +75,16 @@ export default class Accountings extends React.Component {
     }
   };
 
-  filter = (arr) => {
-    let temp = this.state.tempAcc.filter((e) => {
+  filter = arr => {
+    let temp = this.state.tempAcc.filter(e => {
       if (arr.length === 0) {
         return true;
       }
       for (let a of arr) {
-        if (a.value === "all") {
+        if (a.value === 'all') {
           return true;
         }
-        if (a.value === "traders" && (e.acc_type === "debtors" || e.acc_type === "creditors")) {
+        if (a.value === 'traders' && (e.acc_type === 'debtors' || e.acc_type === 'creditors')) {
           return true;
         }
         if (a.value === e.acc_type) {
@@ -97,22 +97,22 @@ export default class Accountings extends React.Component {
     this.setState({ accounts: temp });
   };
   getProducts = async () => {
-    let url = "/api/products?mode=newest";
-    let mode = await document.getElementById("new_old_navsec");
+    let url = '/api/products?mode=newest';
+    let mode = await document.getElementById('new_old_navsec');
 
-    if (mode && mode.value == "oldest") {
-      url = "/api/products?mode=oldest";
+    if (mode && mode.value == 'oldest') {
+      url = '/api/products?mode=oldest';
     }
 
     fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.Products) {
           this.setState(() => {
             return {
@@ -122,7 +122,7 @@ export default class Accountings extends React.Component {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState(() => {
           return {
             err_pro: true,
@@ -131,7 +131,7 @@ export default class Accountings extends React.Component {
       });
   };
 
-  getspecific_acc = (i) => {
+  getspecific_acc = i => {
     this.setState(() => {
       return {
         specific_acc: this.state.accounts[i],
@@ -143,21 +143,21 @@ export default class Accountings extends React.Component {
     this.setState(() => {
       return {
         specific_acc: null,
-        isacc_pro: "acc_det",
+        isacc_pro: 'acc_det',
       };
     });
   }
 
   getAccounts = () => {
-    fetch("/api/accounts?mode=newest", {
-      method: "GET",
+    fetch('/api/accounts?mode=newest', {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         if (data.accounts) {
           this.setState(() => {
             return {
@@ -167,7 +167,7 @@ export default class Accountings extends React.Component {
           });
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState(() => {
           return {
             err_acc: true,
@@ -177,11 +177,11 @@ export default class Accountings extends React.Component {
   };
 
   fi() {
-    let data = document.getElementById("searchForProOrAcc").value;
+    let data = document.getElementById('searchForProOrAcc').value;
     data = data.toLowerCase();
-    if (this.state.ProOrAcc === "Products") {
-      let fPro = this.state.tempProducts.filter((pro) => {
-        if (data === "") {
+    if (this.state.ProOrAcc === 'Products') {
+      let fPro = this.state.tempProducts.filter(pro => {
+        if (data === '') {
           return true;
         } else if (
           pro.product_name.toLowerCase().indexOf(data) === -1 &&
@@ -199,13 +199,14 @@ export default class Accountings extends React.Component {
         };
       });
     }
-    if (this.state.ProOrAcc === "Accounts") {
-      let fPro = this.state.tempAcc.filter((acc) => {
-        if (data === "") {
+    if (this.state.ProOrAcc === 'Accounts') {
+      let fPro = this.state.tempAcc.filter(acc => {
+        if (data === '') {
           return true;
         } else if (
-          acc.acc_name.toLowerCase().indexOf(data) === -1 &&
-          acc.print_name.toLowerCase().indexOf(data) === -1
+          acc.acc_name.toLowerCase().indexOf(data) === -1
+          // &&
+          // acc.print_name.toLowerCase().indexOf(data) === -1
         ) {
           return false;
         } else {
@@ -230,7 +231,7 @@ export default class Accountings extends React.Component {
   }
 
   AddProCrossBtn = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       if (this.state.AddPro)
         return {
           AddPro: false,
@@ -276,23 +277,23 @@ export default class Accountings extends React.Component {
   }
 
   setProOrAcc(ans) {
-    if (ans === "Accounts ") {
-      console.log("acc");
+    if (ans === 'Accounts ') {
+      console.log('acc');
       this.getAccounts();
     }
-    if (ans === "Products") {
-      console.log("rpo");
+    if (ans === 'Products') {
+      console.log('rpo');
 
       this.getProducts();
     }
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         ProOrAcc: ans,
       };
     });
   }
   setPVoJVoDN = (ans, mode, data) => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
         PVoJVoDN: ans,
         vouchMode: mode,
@@ -302,29 +303,29 @@ export default class Accountings extends React.Component {
   };
 
   rmVouch = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: 'no',
       };
     });
   };
   rmDebit = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: 'no',
       };
     });
   };
 
   rmCredit = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        PVoJVoDN: "no",
+        PVoJVoDN: 'no',
       };
     });
   };
 
-  setjoBill = (ans) => {
+  setjoBill = ans => {
     this.setState(() => {
       return {
         jobill_num: ans,
@@ -332,7 +333,7 @@ export default class Accountings extends React.Component {
     });
   };
 
-  setVouchPage = (p) => {
+  setVouchPage = p => {
     this.setState({ vouchPage: p });
   };
   constructor(props) {
@@ -351,20 +352,20 @@ export default class Accountings extends React.Component {
       AddPro: false,
       AddAcc: false,
       AddAccountFromUsers: false,
-      page: "dash",
-      ProOrAcc: "Accounts",
-      PVoJVoDN: "no",
+      page: 'dash',
+      ProOrAcc: 'Accounts',
+      PVoJVoDN: 'no',
       products: [],
       tempProducts: [],
       accounts: [],
       tempAcc: [],
       AddVouch: true,
-      vouchPage: "pv",
-      isacc_pro: "acc_det",
+      vouchPage: 'pv',
+      isacc_pro: 'acc_det',
       specific_acc: null,
       vouchEData: [],
       jobill_num: null,
-      vouchMode: "add",
+      vouchMode: 'add',
       vouchData: [],
       err_pro: null,
       err_acc: null,
@@ -374,10 +375,10 @@ export default class Accountings extends React.Component {
   render() {
     return (
       <>
-        {this.state.PVoJVoDN === "pv" && (
+        {this.state.PVoJVoDN === 'pv' && (
           <AddVouch which="pv" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
         )}
-        {this.state.PVoJVoDN === "jv" && (
+        {this.state.PVoJVoDN === 'jv' && (
           <AddJovouch
             mode={this.state.vouchMode}
             EData={this.state.vouchEData}
@@ -385,13 +386,13 @@ export default class Accountings extends React.Component {
             jobill_num={this.state.jobill_num}
           />
         )}
-        {this.state.PVoJVoDN === "dn" && (
+        {this.state.PVoJVoDN === 'dn' && (
           <AddVouch which="dn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
         )}
-        {this.state.PVoJVoDN === "cn" && (
+        {this.state.PVoJVoDN === 'cn' && (
           <AddVouch which="cn" rm={this.rmVouch} mode={this.state.vouchMode} EData={this.state.vouchEData} />
         )}
-        {this.state.PVoJVoDN === "no" && (
+        {this.state.PVoJVoDN === 'no' && (
           <VouchCon
             setPVoJVoDN={this.setPVoJVoDN}
             vouchPage={this.state.vouchPage}

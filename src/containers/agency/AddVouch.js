@@ -62,15 +62,16 @@ class AddVouch extends React.Component {
 		document.querySelector("#vouch_lr_date").value = null;
 		document.querySelector("#vouch_comission").value = null;
 		document.querySelector("#vouch_customer").value = null;
-		document.querySelector("#vouch_pro_item").value = null;
-		document.querySelector("#vouch_hsn_num").value = null;
-		document.querySelector("#vouch_quantity").value = "";
-		document.querySelector("#vouch_dicon").value = 0;
-		document.querySelector("#vouch_rate").value = "";
+		// document.querySelector("#vouch_pro_item").value = null;
+		// document.querySelector("#vouch_hsn_num").value = null;
+		// document.querySelector("#vouch_quantity").value = "";
+		// document.querySelector("#vouch_dicon").value = 0;
+		// document.querySelector("#vouch_rate").value = "";
 		document.querySelector("#vouch_amount").value = "";
 	};
 
 	setData = () => {
+		console.log("I am hereeeeeee setDate", this.props)
 		let d = this.props.EData.det;
 		if (d.bill_date)
 			this.setState({ bill_date: d.bill_date, l_r_date: d.bill_date });
@@ -91,7 +92,7 @@ class AddVouch extends React.Component {
 					d.supplier_agent2;
 			}, 500);
 		}
-		document.querySelector("#vouch_gst").defaultValue = parseFloat(d.gst);
+		// document.querySelector("#vouch_gst").defaultValue = parseFloat(d.gst);
 		let arr = [];
 		let i = this.props.EData.product;
 		this.setState({customer_id:d.customer_id,supplier_id:d.supplier_id})
@@ -131,44 +132,44 @@ class AddVouch extends React.Component {
 		this.setState({ items: arr });
 	};
 
-	updateTotal = () => {
-		let total = 0;
-		let g_amount = 0;
-		let gst = parseFloat(document.getElementById("vouch_gst").value);
-		let disAmt = 0;
-		this.state.items.map((e) => {
-			g_amount = parseFloat(g_amount) + parseFloat(e.g_amount);
-			disAmt =
-				parseFloat(disAmt) + parseFloat(e.g_amount) - parseFloat(e.amount);
-			total = parseFloat(total) + parseFloat(e.amount);
-		});
-		let FTotal = total;
+	// updateTotal = () => {
+	// 	let total = 0;
+	// 	let g_amount = 0;
+	// 	let gst = parseFloat(document.getElementById("vouch_gst").value);
+	// 	let disAmt = 0;
+	// 	this.state.items.map((e) => {
+	// 		g_amount = parseFloat(g_amount) + parseFloat(e.g_amount);
+	// 		disAmt =
+	// 			parseFloat(disAmt) + parseFloat(e.g_amount) - parseFloat(e.amount);
+	// 		total = parseFloat(total) + parseFloat(e.amount);
+	// 	});
+	// 	let FTotal = total;
 
-		this.state.discontArr.map((ele) => {
-			if (ele.type === "Less") {
-				FTotal = parseFloat(FTotal) - parseFloat(ele.value);
-			}
-			if (ele.type !== "Less") {
-				let a = parseFloat(FTotal) * (parseFloat(ele.value) / 100);
-				ele.amt = parseFloat(a);
-				FTotal = parseFloat(FTotal) - parseFloat(a);
-			}
-		});
-		this.state.freightArr.map((ele) => {
-			FTotal = parseFloat(FTotal) + parseFloat(ele.value);
-		});
-		let gstAmt = (parseFloat(FTotal) * parseFloat(gst)) / 100;
-		FTotal = parseFloat(FTotal) + gstAmt;
-		this.setState({
-			totalAmt: total,
-			grossAmt: g_amount,
-			disAmt: disAmt,
-			mainAmnt: FTotal,
-			gstAmt: gstAmt,
-		});
-	};
+	// 	this.state.discontArr.map((ele) => {
+	// 		if (ele.type === "Less") {
+	// 			FTotal = parseFloat(FTotal) - parseFloat(ele.value);
+	// 		}
+	// 		if (ele.type !== "Less") {
+	// 			let a = parseFloat(FTotal) * (parseFloat(ele.value) / 100);
+	// 			ele.amt = parseFloat(a);
+	// 			FTotal = parseFloat(FTotal) - parseFloat(a);
+	// 		}
+	// 	});
+	// 	this.state.freightArr.map((ele) => {
+	// 		FTotal = parseFloat(FTotal) + parseFloat(ele.value);
+	// 	});
+	// 	let gstAmt = (parseFloat(FTotal) * parseFloat(gst)) / 100;
+	// 	FTotal = parseFloat(FTotal) + gstAmt;
+	// 	this.setState({
+	// 		totalAmt: total,
+	// 		grossAmt: g_amount,
+	// 		disAmt: disAmt,
+	// 		mainAmnt: FTotal,
+	// 		gstAmt: gstAmt,
+	// 	});
+	// };
 
-	async addVouch() {
+	async addVouch(flag = true) {
 		let bool = false;
 		if (document.getElementById("vouch_bill_no").value === "") {
 			this.enterError("vouch_bill_no");
@@ -206,11 +207,14 @@ class AddVouch extends React.Component {
 		let supplier_agent = document.querySelector("#vouch_sup_agent").value;
 		let set_commission = document.querySelector("#vouch_comission").value;
 		let customer = document.querySelector("#vouch_customer").value;
+		let vouchAmt = document.querySelector("#vouch_amount").value;
 		let supplier_agent2 = null;
 		if (document.getElementById("vouch_sup_agent2")) {
 			supplier_agent2 = document.querySelector("#vouch_sup_agent2").value;
 		}
-		let gst = document.querySelector("#vouch_gst").value;
+		let gst = this.state.gst;
+		let gstAmt = (parseFloat(vouchAmt) * parseFloat(gst)) / 100;
+		let totalAmt = parseFloat(vouchAmt) + gstAmt;
 		let cus_id = this.state.customer_id;
 		let sup_id = this.state.supplier_id;
 		if (cus_id === "") {
@@ -219,6 +223,8 @@ class AddVouch extends React.Component {
 		if (sup_id === "") {
 			sup_id = newSupplier.account.id;
 		}
+		console.log("I am yoooooooo......", this.state.bill_date,"======", l_r_date, type, "*****",document.querySelector("#vouch_bill_no").value, "/////",g_r_num, vouchAmt)
+
 
 		let Vdata = {
 			bill_date,
@@ -235,19 +241,46 @@ class AddVouch extends React.Component {
 			set_commission,
 			customer,
 			customer_id: cus_id,
-			discountArr: this.state.discontArr,
-			freightArr: this.state.freightArr,
-			items: this.state.items,
-			totalAmt: this.state.mainAmnt,
+			// discountArr: this.state.discontArr,
+			// freightArr: this.state.freightArr,
+			// items: this.state.items,
+			totalAmt: totalAmt,
 		};
 		let m = this.props.mode === "edit" ? "PUT" : "POST";
 		let url =
 			this.props.mode === "edit"
 				? "/api/vouch/" + this.props.EData.det.id
 				: "/api/vouch";
+				console.log("I am checkerrrr......", Vdata, url, m)
 		const isTrue = await postData(url, Vdata, m);
 		if (isTrue) {
-			this.props.rm();
+			if(flag) this.props.rm();
+			else {
+				let item = {
+					bill_date,
+					l_r_date,
+					bill_num,
+					g_r_num,
+					transport_name,
+					// product_name: pro_name,
+					// quantity: vouch_quantity,
+					// dicon: vouch_dicon,
+					// rate: vouch_rate,
+					totalAmt
+					// hsn_num: hsn_num,
+					// g_amount,
+				};
+		
+				let arr = this.state.items;
+				arr.push(item);
+				this.setState({
+					items: arr,
+				});
+				this.clearData()
+		
+				// this.updateTotal();
+				return;
+			};
 		} else {
 			alert("Unable to save. Please Try again");
 		}
@@ -276,77 +309,90 @@ class AddVouch extends React.Component {
 	addPro = async () => {};
 
 	async vochAddPro() {
-		let pro_name = document.querySelector("#vouch_pro_item").value;
-		let isIn = this.state.products.find(
-			(element) => element.product_name === pro_name
-		);
-		console.log(isIn);
+		// let pro_name = document.querySelector("#vouch_pro_item").value;
+		// let isIn = this.state.products.find(
+		// 	(element) => element.product_name === pro_name
+		// );
+		// console.log(isIn);
 
-		if (!!!isIn && pro_name !== "") {
-			let pro_name = document.querySelector("#vouch_pro_item").value;
-			let hsn_num = document.querySelector("#vouch_hsn_num").value;
-			let data = {
-				product_name: pro_name,
-				hsn_num: hsn_num,
-			};
+		// if (!!!isIn && pro_name !== "") {
+		// 	let pro_name = document.querySelector("#vouch_pro_item").value;
+		// 	let hsn_num = document.querySelector("#vouch_hsn_num").value;
+		// 	let data = {
+		// 		product_name: pro_name,
+		// 		hsn_num: hsn_num,
+		// 	};
 
-			await fetch("/api/products", {
-				method: "POST", // *GET, POST, PUT, DELETE, etc.
+		// 	await fetch("/api/products", {
+		// 		method: "POST", // *GET, POST, PUT, DELETE, etc.
 
-				headers: {
-					"Content-Type": "application/json",
-					// 'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: JSON.stringify(data), // body data type must match "Content-Type" header
-			})
-				.then((res) => res.json())
-				.then((r) => {
-					if (r.product) {
-					} else {
-						alert("Cannot Add Product Please Try Later");
-						return;
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-					alert("Cannot Add Product Please Try Later");
-					return;
-				});
-		}
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 			// 'Content-Type': 'application/x-www-form-urlencoded',
+		// 		},
+		// 		body: JSON.stringify(data), // body data type must match "Content-Type" header
+		// 	})
+		// 		.then((res) => res.json())
+		// 		.then((r) => {
+		// 			if (r.product) {
+		// 			} else {
+		// 				alert("Cannot Add Product Please Try Later");
+		// 				return;
+		// 			}
+		// 		})
+		// 		.catch((err) => {
+		// 			console.log(err);
+		// 			alert("Cannot Add Product Please Try Later");
+		// 			return;
+		// 		});
+		// }
 
-		document.querySelector("#vouch_pro_item").value = "";
-		let vouch_quantity = document.querySelector("#vouch_quantity").value;
-		document.querySelector("#vouch_quantity").value = "";
+		// document.querySelector("#vouch_pro_item").value = "";
+		// let vouch_quantity = document.querySelector("#vouch_quantity").value;
+		// document.querySelector("#vouch_quantity").value = "";
 
-		let vouch_dicon = document.querySelector("#vouch_dicon").value;
-		document.querySelector("#vouch_dicon").value = 0;
+		// let vouch_dicon = document.querySelector("#vouch_dicon").value;
+		// document.querySelector("#vouch_dicon").value = 0;
 
-		let vouch_rate = document.querySelector("#vouch_rate").value;
-		document.querySelector("#vouch_rate").value = "";
+		// let vouch_rate = document.querySelector("#vouch_rate").value;
+		// document.querySelector("#vouch_rate").value = "";
 		let amount = document.querySelector("#vouch_amount").value;
-		document.querySelector("#vouch_amount").value = "";
-		if (amount === "") {
-			if (vouch_rate === "" && vouch_quantity === "") {
-				alert("Please Add Quantity and Rate");
-				return;
-			}
-		}
+		// document.querySelector("#vouch_amount").value = "";
+		// if (amount === "") {
+		// 	if (vouch_rate === "" && vouch_quantity === "") {
+		// 		alert("Please Add Quantity and Rate");
+		// 		return;
+		// 	}
+		// }
 
-		let hsn_num = document.getElementById("vouch_hsn_num").value;
-		document.getElementById("vouch_hsn_num").value = "";
+		// let hsn_num = document.getElementById("vouch_hsn_num").value;
+		// document.getElementById("vouch_hsn_num").value = "";
 
-		let dicon = parseFloat(vouch_dicon) / 100;
-		let v_amount = parseFloat(amount);
-		let g_amount = v_amount;
-		v_amount = v_amount - v_amount * dicon;
+		// let dicon = parseFloat(vouch_dicon) / 100;
+		// let v_amount = parseFloat(amount);
+		// let g_amount = v_amount;
+		// v_amount = v_amount - v_amount * dicon;
+const result = this.addVouch(false);
+
+if(!result) alert("Unable to save. Please Try again");
+		let bill_date = document.querySelector("#vouch_bill_date").value;
+		let bill_no = document.querySelector("#vouch_bill_no").value;
+		let gr_no = document.querySelector("#vouch_gr_no").value;
+		let transport = document.querySelector("#vouch_transport_name").value;
+		let lr_date = document.querySelector("#vouch_lr_date").value;
 		let item = {
-			product_name: pro_name,
-			quantity: vouch_quantity,
-			dicon: vouch_dicon,
-			rate: vouch_rate,
-			amount: v_amount,
-			hsn_num: hsn_num,
-			g_amount,
+			bill_date,
+			bill_no,
+			gr_no,
+			transport,
+			lr_date,
+			// product_name: pro_name,
+			// quantity: vouch_quantity,
+			// dicon: vouch_dicon,
+			// rate: vouch_rate,
+			amount
+			// hsn_num: hsn_num,
+			// g_amount,
 		};
 
 		let arr = this.state.items;
@@ -354,7 +400,9 @@ class AddVouch extends React.Component {
 		this.setState({
 			items: arr,
 		});
-		this.updateTotal();
+		this.clearData()
+
+		// this.updateTotal();
 		return;
 	}
 
@@ -392,68 +440,68 @@ class AddVouch extends React.Component {
 		});
 	};
 
-	editPro = () => {
-		let vouch_quantity = document.querySelector("#vouch_quantity").value;
-		let vouch_dicon = document.querySelector("#vouch_dicon").value;
-		let vouch_rate = document.querySelector("#vouch_rate").value;
-		let pro_name = document.getElementById("vouch_pro_item").value;
-		let hsn_num = document.getElementById("vouch_hsn_num").value;
-		let amt = document.getElementById("vouch_amount").value;
-		document.getElementById("vouch_amount").value = "";
-		document.querySelector("#vouch_pro_item").value = "";
+	// editPro = () => {
+	// 	let vouch_quantity = document.querySelector("#vouch_quantity").value;
+	// 	let vouch_dicon = document.querySelector("#vouch_dicon").value;
+	// 	let vouch_rate = document.querySelector("#vouch_rate").value;
+	// 	let pro_name = document.getElementById("vouch_pro_item").value;
+	// 	let hsn_num = document.getElementById("vouch_hsn_num").value;
+	// 	let amt = document.getElementById("vouch_amount").value;
+	// 	document.getElementById("vouch_amount").value = "";
+	// 	document.querySelector("#vouch_pro_item").value = "";
 
-		document.querySelector("#vouch_quantity").value = "";
+	// 	document.querySelector("#vouch_quantity").value = "";
 
-		document.querySelector("#vouch_dicon").value = 0;
+	// 	document.querySelector("#vouch_dicon").value = 0;
 
-		document.querySelector("#vouch_rate").value = "";
+	// 	document.querySelector("#vouch_rate").value = "";
 
-		document.getElementById("vouch_hsn_num").value = "";
-		if (amt === "") {
-			if (vouch_rate === "" && vouch_quantity === "") {
-				alert("Please Add Quantity and Rate");
-				return;
-			}
-		}
-		let dicon = parseFloat(vouch_dicon) / 100;
-		let v_amount = parseFloat(amt);
-		let g_amt = parseFloat(v_amount);
-		v_amount = v_amount - v_amount * dicon;
-		v_amount = v_amount.toFixed(2);
-		let arr = this.state.items;
+	// 	document.getElementById("vouch_hsn_num").value = "";
+	// 	if (amt === "") {
+	// 		if (vouch_rate === "" && vouch_quantity === "") {
+	// 			alert("Please Add Quantity and Rate");
+	// 			return;
+	// 		}
+	// 	}
+	// 	let dicon = parseFloat(vouch_dicon) / 100;
+	// 	let v_amount = parseFloat(amt);
+	// 	let g_amt = parseFloat(v_amount);
+	// 	v_amount = v_amount - v_amount * dicon;
+	// 	v_amount = v_amount.toFixed(2);
+	// 	let arr = this.state.items;
 
-		arr[this.state.editItem].product_name = pro_name;
-		arr[this.state.editItem].quantity = vouch_quantity;
-		arr[this.state.editItem].dicon = vouch_dicon;
-		arr[this.state.editItem].rate = vouch_rate;
-		arr[this.state.editItem].hsn_num = hsn_num;
-		arr[this.state.editItem].amount = v_amount;
-		arr[this.state.editItem].g_amount = g_amt;
+	// 	arr[this.state.editItem].product_name = pro_name;
+	// 	arr[this.state.editItem].quantity = vouch_quantity;
+	// 	arr[this.state.editItem].dicon = vouch_dicon;
+	// 	arr[this.state.editItem].rate = vouch_rate;
+	// 	arr[this.state.editItem].hsn_num = hsn_num;
+	// 	arr[this.state.editItem].amount = v_amount;
+	// 	arr[this.state.editItem].g_amount = g_amt;
 
-		this.setState(() => {
-			return {
-				items: arr,
-				editItem: -1,
-			};
-		});
-		this.updateTotal();
-	};
+	// 	this.setState(() => {
+	// 		return {
+	// 			items: arr,
+	// 			editItem: -1,
+	// 		};
+	// 	});
+	// 	this.updateTotal();
+	// };
 
-	filterPro = () => {
-		document.getElementById("pro_list").style.display = "block";
-		let temp = document.getElementById("vouch_pro_item").value.toLowerCase();
+	// filterPro = () => {
+	// 	document.getElementById("pro_list").style.display = "block";
+	// 	let temp = document.getElementById("vouch_pro_item").value.toLowerCase();
 
-		let arr = this.state.products.filter((e) => {
-			if (temp.length === 0) {
-				return true;
-			}
-			if (e.product_name.toLowerCase().indexOf(temp) !== -1) {
-				return true;
-			} else return false;
-		});
+	// 	let arr = this.state.products.filter((e) => {
+	// 		if (temp.length === 0) {
+	// 			return true;
+	// 		}
+	// 		if (e.product_name.toLowerCase().indexOf(temp) !== -1) {
+	// 			return true;
+	// 		} else return false;
+	// 	});
 
-		this.setState({ pro: arr });
-	};
+	// 	this.setState({ pro: arr });
+	// };
 	filterAcc = (id, id2) => {
 		document.getElementById(id).style.display = "block";
 		let temp = document.getElementById(id2).value.toLowerCase();
@@ -470,28 +518,29 @@ class AddVouch extends React.Component {
 		this.setState({ acc: arr });
 	};
 
-	getProducts() {
-		fetch("/api/products", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				// 'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.Products) {
-					this.setState(() => {
-						return {
-							products: data.Products,
-						};
-					});
-				}
-			})
-			.catch((err) => {
-				// alert(err)
-			});
-	}
+	// getProducts() {
+	// 	fetch("/api/products", {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 			// 'Content-Type': 'application/x-www-form-urlencoded',
+	// 		},
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			if (data.Products) {
+	// 				this.setState(() => {
+	// 					console.log("iam productstsstststtss", data.Products)
+	// 					return {
+	// 						products: data.Products,
+	// 					};
+	// 				});
+	// 			}
+	// 		})
+	// 		.catch((err) => {
+	// 			// alert(err)
+	// 		});
+	// }
 	getAccounts() {
 		fetch("/api/accounts", {
 			method: "GET",
@@ -605,7 +654,9 @@ class AddVouch extends React.Component {
 		console.log(currentUser);
 		super(props);
 		this.vochAddPro = this.vochAddPro.bind(this);
-		this.getProducts = this.getProducts.bind(this);
+		this.addVouch = this.addVouch.bind(this);
+
+		// this.getProducts = this.getProducts.bind(this);
 		this.getAccounts = this.getAccounts.bind(this);
 		this.state = {
 			products: [],
@@ -635,7 +686,7 @@ class AddVouch extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getProducts();
+		// this.getProducts();
 		this.getAccounts();
 		this.setState({ voucher_type: this.props.which });
 		if (this.props.mode === "edit") {
@@ -646,12 +697,12 @@ class AddVouch extends React.Component {
 
 		this.setState({ bill_date: today, l_r_date: today });
 
-		document.getElementById("pro_list").style.display = "none";
+		// document.getElementById("pro_list").style.display = "none";
 		if (this.props.mode === "edit") {
 			this.setData();
-			setTimeout(() => {
-				this.updateTotal();
-			}, 500);
+			// setTimeout(() => {
+			// 	this.updateTotal();
+			// }, 500);
 		}
 	}
 	render() {
@@ -811,9 +862,9 @@ class AddVouch extends React.Component {
 													<li
 														key={index}
 														onClick={() => {
-															document.getElementById(
-																"pro_list"
-															).style.display = "none";
+															// document.getElementById(
+															// 	"pro_list"
+															// ).style.display = "none";
 															document.getElementById(
 																"vouch_transport_name"
 															).value = acc.acc_name;
@@ -892,8 +943,10 @@ class AddVouch extends React.Component {
                         {this.state.name}
                       </option>
                       <option value={null}>None</option>
-                    </select> */}
-										<FormControl>
+					</select> */}
+																<input type='text' id="vouch_sup_agent" disabled value={this.state.vouch_sup_agent} />
+
+										{/* <FormControl>
 											<Select
 												className={`${this.props.classes.select} add_vouch_mui`}
 												name="vouch_sup_agent"
@@ -908,12 +961,12 @@ class AddVouch extends React.Component {
 												<MenuItem value={this.state.vouch_sup_agent}>
 													{this.state.vouch_sup_agent}
 												</MenuItem>
-												{/* <MenuItem value={this.state.name}>{this.state.name}</MenuItem> */}
+												{ <MenuItem value={this.state.name}>{this.state.name}</MenuItem> }
 											</Select>
-										</FormControl>
+										</FormControl> */}
 									</div>
 
-									<div className="vouch_si">
+									<div className="vouch_si" style={{display: 'none'}}>
 										<span>Set Commission</span>
 										<br />
 										<input
@@ -927,7 +980,7 @@ class AddVouch extends React.Component {
 											}
 										/>
 									</div>
-									<div id="gst_con" className="vouch_si">
+									{/* <div id="gst_con" className="vouch_si">
 										<span>GST</span>
 										<br />
 										<span id="percentage_gst">%</span>
@@ -951,6 +1004,7 @@ class AddVouch extends React.Component {
 											}}
 										/>
 									</div>
+								 */}
 								</div>
 
 								<div className="vouch_customer">
@@ -1124,7 +1178,7 @@ class AddVouch extends React.Component {
 						</div>
 
 						<div className="vouch_body_middle">
-							<div className="vouch_si" id="vouch_pro_con">
+							{/* <div className="vouch_si" id="vouch_pro_con">
 								<span>Product / Item</span>
 								<br />
 								<input
@@ -1231,6 +1285,7 @@ class AddVouch extends React.Component {
 									defaultValue={0}
 								/>
 							</div>
+						 */}
 							<div className="vouch_si">
 								<span>Amount</span>
 								<br />
@@ -1246,7 +1301,7 @@ class AddVouch extends React.Component {
 								<button
 									id="vouch_add_btn"
 									onClick={
-										this.state.editItem === -1 ? this.vochAddPro : this.editPro
+										this.state.editItem === -1 ? () => {this.addVouch(false)} : this.editPro
 									}
 								>
 									{this.state.editItem === -1 ? "Add" : "Edit"}
@@ -1259,11 +1314,11 @@ class AddVouch extends React.Component {
 								<thead>
 									<tr>
 										<th>S.No.</th>
-										<th>Product/Item</th>
-										<th>HSN No.</th>
-										<th>Quantity</th>
-										<th>Rate</th>
-										<th>Discount</th>
+										<th>Bill Date</th>
+										<th>Bill No.</th>
+										<th>L.R. No.</th>
+										<th>L.R. Date</th>
+										<th>Transport Name</th>
 
 										<th>Amount</th>
 										<th>Edit</th>
@@ -1278,13 +1333,12 @@ class AddVouch extends React.Component {
 										return (
 											<tr key={index}>
 												<td className="tbtn">{index + 1}</td>
-												<td>{i.product_name}</td>
-												<td>{i.hsn_num}</td>
-												<td>{i.quantity}</td>
-												<td>{i.rate}</td>
-												<td>{i.dicon}%</td>
-
-												<td>{i.amount}</td>
+												<td>{i.bill_date}</td>
+												<td>{i.bill_num}</td>
+												<td>{i.g_r_num}</td>
+												<td>{i.l_r_date}</td>
+												<td>{i.transport_name}</td>
+												<td>{i.totalAmt}</td>
 												<td
 													className="tbtn"
 													onClick={() => {
@@ -1387,7 +1441,7 @@ class AddVouch extends React.Component {
 						</div>
 					</div>
 
-					<div className="vouch_body_right">
+					{/* <div className="vouch_body_right">
 						<table className="vouch_num_items">
 							<tr>
 								<td> Gross Amount :</td>
@@ -1528,18 +1582,7 @@ class AddVouch extends React.Component {
 								<div className="vouch_si_add_dis">
 									<span>Type</span>
 									<br />
-									{/* <select
-                    id="add_dis_discount_type"
-                    disabled={this.state.totalAmt === 0 ? true : false}
-                    onChange={e => {
-                      this.setState({ dicountType: e.target.value });
-                    }}
-                  >
-                    {" "}
-                    <option>Less </option>
-                    <option>Cash Discount </option>
-                    <option> No G.R. Less </option>
-                  </select> */}
+							
 									<FormControl>
 										<Select
 											className="add_vouch_mui"
@@ -1655,6 +1698,7 @@ class AddVouch extends React.Component {
 							</div>
 						</div>
 					</div>
+			 */}
 				</div>
 			</div>
 		);

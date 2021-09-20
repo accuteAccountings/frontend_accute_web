@@ -1,27 +1,27 @@
-import React from "react";
-import MenuBtn from "./MenuBtn";
+import React from 'react';
+import MenuBtn from './MenuBtn';
 
-window.onscroll = function () {
+window.onscroll = function() {
   myFunction();
 };
 
 function myFunction() {
   if (window.scrollY > 130) {
-    document.getElementById("nav").style.animationName = "dowhite";
-    document.getElementsByClassName("bar")[0].classList.add("black");
-    document.getElementsByClassName("bar")[1].classList.add("black");
-    document.getElementsByClassName("bar")[2].classList.add("black");
-    document.getElementsByClassName("bar")[0].classList.remove("white");
-    document.getElementsByClassName("bar")[1].classList.remove("white");
-    document.getElementsByClassName("bar")[2].classList.remove("white");
+    document.getElementById('nav').style.animationName = 'dowhite';
+    document.getElementsByClassName('bar')[0].classList.add('black');
+    document.getElementsByClassName('bar')[1].classList.add('black');
+    document.getElementsByClassName('bar')[2].classList.add('black');
+    document.getElementsByClassName('bar')[0].classList.remove('white');
+    document.getElementsByClassName('bar')[1].classList.remove('white');
+    document.getElementsByClassName('bar')[2].classList.remove('white');
   } else {
-    document.getElementById("nav").style.animationName = "dotrans";
-    document.getElementsByClassName("bar")[0].classList.add("white");
-    document.getElementsByClassName("bar")[1].classList.add("white");
-    document.getElementsByClassName("bar")[2].classList.add("white");
-    document.getElementsByClassName("bar")[0].classList.remove("black");
-    document.getElementsByClassName("bar")[1].classList.remove("black");
-    document.getElementsByClassName("bar")[2].classList.remove("black");
+    // document.getElementById("nav").style.animationName = "dotrans";
+    // document.getElementsByClassName('bar')[0].classList.add('white');
+    // document.getElementsByClassName('bar')[1].classList.add('white');
+    // document.getElementsByClassName('bar')[2].classList.add('white');
+    // document.getElementsByClassName('bar')[0].classList.remove('black');
+    // document.getElementsByClassName('bar')[1].classList.remove('black');
+    // document.getElementsByClassName('bar')[2].classList.remove('black');
   }
 }
 
@@ -30,13 +30,7 @@ class NavBar extends React.Component {
     return (
       <nav className="nav_bar">
         <div className="nav_con" id="nav">
-          <div
-            className={
-              this.props.btn === "cross" ? "logo_con nn cross" : "logo_con nn"
-            }
-          >
-            Acute Accountings
-          </div>
+          <div className={this.props.btn === 'cross' ? 'logo_con nn cross' : 'logo_con nn'}>Acute Accountings</div>
           <div className="nn">
             <MenuBtn toggleMenu={this.props.toggleMenu} btn={this.props.btn} />
             <li>Home</li>

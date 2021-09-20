@@ -258,14 +258,18 @@ export default class Account_pro extends React.Component {
 									<div className="acc_pro_right_upper">
 										<div className="acc_pro_right_name">
 											{this.state.account.acc_name}
-											{this.state.account.print_name ? (
+											{/* {this.state.account.print_name ? (
 												<span className="acc_pro_right_pname">
 													({this.state.account.print_name})
 												</span>
-											) : null}
+											) : null} */}
 										</div>
 										<div className="acc_pro_right_add">
-											{this.state.account.address_line1}
+											{this.state.account.address_line1},
+											{this.state.account.address_line2},<br />
+											{this.state.account.city}, &nbsp;
+											{this.state.account.state}, &nbsp;
+											{this.state.account.pincode}
 										</div>
 									</div>
 								) : null}

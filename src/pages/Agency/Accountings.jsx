@@ -1,32 +1,32 @@
-import React from "react";
-import SideBar from "containers/agency/SideBar";
-import TopBar from "containers/agency/TopBar";
-import AddProducts from "containers/agency/AddProduct";
-import AddAcc from "containers/agency/AddAcc";
-import Clogo from "containers/agency/Clogo";
-import NavSec from "containers/agency/NavSec";
-import ProCon from "containers/agency/ProCon";
-import AddVouch from "containers/agency/AddVouch";
-import VouchCon from "containers/agency/VouchCon";
-import Dash from "./Dash";
-import AddJovouch from "containers/agency/AddJoVouch";
-import Account_pro from "containers/agency/Account_profile";
-import DailyBook from "containers/agency/DailyBook";
-import Trash from "containers/agency/Trash";
-import Agency from "pages/Agency";
-import AddAccountFromUsers from "containers/agency/AddAccountFromUsers";
+import React from 'react';
+import SideBar from 'containers/agency/SideBar';
+import TopBar from 'containers/agency/TopBar';
+import AddProducts from 'containers/agency/AddProduct';
+import AddAcc from 'containers/agency/AddAcc';
+import Clogo from 'containers/agency/Clogo';
+import NavSec from 'containers/agency/NavSec';
+import ProCon from 'containers/agency/ProCon';
+import AddVouch from 'containers/agency/AddVouch';
+import VouchCon from 'containers/agency/VouchCon';
+import Dash from './Dash';
+import AddJovouch from 'containers/agency/AddJoVouch';
+import Account_pro from 'containers/agency/Account_profile';
+import DailyBook from 'containers/agency/DailyBook';
+import Trash from 'containers/agency/Trash';
+import Agency from 'pages/Agency';
+import AddAccountFromUsers from 'containers/agency/AddAccountFromUsers';
 
 export default class Accountings extends React.Component {
   Sorting_Pro = async () => {
-    let mode = await document.getElementById("new_old_navsec");
+    let mode = await document.getElementById('new_old_navsec');
 
-    if (this.state.ProOrAcc == "Products") {
+    if (this.state.ProOrAcc == 'Products') {
       fetch(`/api/products?mode=${mode.value}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        },
       })
         .then(res => res.json())
         .then(data => {
@@ -34,7 +34,7 @@ export default class Accountings extends React.Component {
             this.setState(() => {
               return {
                 products: data.Products,
-                tempProducts: data.Products
+                tempProducts: data.Products,
               };
             });
           }
@@ -42,17 +42,17 @@ export default class Accountings extends React.Component {
         .catch(err => {
           this.setState(() => {
             return {
-              err_pro: true
+              err_pro: true,
             };
           });
         });
     } else {
       fetch(`/api/accounts?mode=${mode.value}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        },
       })
         .then(res => res.json())
         .then(data => {
@@ -60,7 +60,7 @@ export default class Accountings extends React.Component {
             this.setState(() => {
               return {
                 accounts: data.accounts,
-                tempAcc: data.accounts
+                tempAcc: data.accounts,
               };
             });
           }
@@ -68,7 +68,7 @@ export default class Accountings extends React.Component {
         .catch(err => {
           this.setState(() => {
             return {
-              err_acc: true
+              err_acc: true,
             };
           });
         });
@@ -81,10 +81,10 @@ export default class Accountings extends React.Component {
         return true;
       }
       for (let a of arr) {
-        if (a.value === "all") {
+        if (a.value === 'all') {
           return true;
         }
-        if (a.value === "traders" && (e.acc_type === "debtors" || e.acc_type === "creditors")) {
+        if (a.value === 'traders' && (e.acc_type === 'debtors' || e.acc_type === 'creditors')) {
           return true;
         }
         if (a.value === e.acc_type) {
@@ -97,19 +97,19 @@ export default class Accountings extends React.Component {
     this.setState({ accounts: temp });
   };
   getProducts = async () => {
-    let url = "/api/products?mode=newest";
-    let mode = await document.getElementById("new_old_navsec");
+    let url = '/api/products?mode=newest';
+    let mode = await document.getElementById('new_old_navsec');
 
-    if (mode && mode.value == "oldest") {
-      url = "/api/products?mode=oldest";
+    if (mode && mode.value == 'oldest') {
+      url = '/api/products?mode=oldest';
     }
 
     fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      }
+      },
     })
       .then(res => res.json())
       .then(data => {
@@ -117,7 +117,7 @@ export default class Accountings extends React.Component {
           this.setState(() => {
             return {
               products: data.Products,
-              tempProducts: data.Products
+              tempProducts: data.Products,
             };
           });
         }
@@ -125,7 +125,7 @@ export default class Accountings extends React.Component {
       .catch(err => {
         this.setState(() => {
           return {
-            err_pro: true
+            err_pro: true,
           };
         });
       });
@@ -134,7 +134,7 @@ export default class Accountings extends React.Component {
   getspecific_acc = i => {
     this.setState(() => {
       return {
-        specific_acc: this.state.accounts[i]
+        specific_acc: this.state.accounts[i],
       };
     });
   };
@@ -143,18 +143,18 @@ export default class Accountings extends React.Component {
     this.setState(() => {
       return {
         specific_acc: null,
-        isacc_pro: "acc_det"
+        isacc_pro: 'acc_det',
       };
     });
   }
 
   getAccounts = () => {
-    fetch("/api/accounts?mode=newest", {
-      method: "GET",
+    fetch('/api/accounts?mode=newest', {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
-      }
+      },
     })
       .then(res => res.json())
       .then(data => {
@@ -162,7 +162,7 @@ export default class Accountings extends React.Component {
           this.setState(() => {
             return {
               accounts: data.accounts,
-              tempAcc: data.accounts
+              tempAcc: data.accounts,
             };
           });
         }
@@ -170,18 +170,18 @@ export default class Accountings extends React.Component {
       .catch(err => {
         this.setState(() => {
           return {
-            err_acc: true
+            err_acc: true,
           };
         });
       });
   };
 
   fi() {
-    let data = document.getElementById("searchForProOrAcc").value;
+    let data = document.getElementById('searchForProOrAcc').value;
     data = data.toLowerCase();
-    if (this.state.ProOrAcc === "Products") {
+    if (this.state.ProOrAcc === 'Products') {
       let fPro = this.state.tempProducts.filter(pro => {
-        if (data === "") {
+        if (data === '') {
           return true;
         } else if (
           pro.product_name.toLowerCase().indexOf(data) === -1 &&
@@ -195,17 +195,18 @@ export default class Accountings extends React.Component {
 
       this.setState(() => {
         return {
-          products: fPro
+          products: fPro,
         };
       });
     }
-    if (this.state.ProOrAcc === "Accounts") {
+    if (this.state.ProOrAcc === 'Accounts') {
       let fPro = this.state.tempAcc.filter(acc => {
-        if (data === "") {
+        if (data === '') {
           return true;
         } else if (
-          acc.acc_name.toLowerCase().indexOf(data) === -1 &&
-          acc.print_name.toLowerCase().indexOf(data) === -1
+          acc.acc_name.toLowerCase().indexOf(data) === -1
+          // &&
+          // acc.print_name.toLowerCase().indexOf(data) === -1
         ) {
           return false;
         } else {
@@ -215,7 +216,7 @@ export default class Accountings extends React.Component {
 
       this.setState(() => {
         return {
-          accounts: fPro
+          accounts: fPro,
         };
       });
     }
@@ -224,7 +225,7 @@ export default class Accountings extends React.Component {
   navTo(page) {
     this.setState(() => {
       return {
-        page: page
+        page: page,
       };
     });
   }
@@ -233,11 +234,11 @@ export default class Accountings extends React.Component {
     this.setState(prevState => {
       if (this.state.AddPro)
         return {
-          AddPro: false
+          AddPro: false,
         };
       else
         return {
-          AddPro: true
+          AddPro: true,
         };
     });
   };
@@ -246,11 +247,11 @@ export default class Accountings extends React.Component {
     this.setState(() => {
       if (this.state.AddAcc)
         return {
-          AddAcc: false
+          AddAcc: false,
         };
       else
         return {
-          AddAcc: true
+          AddAcc: true,
         };
     });
   }
@@ -258,11 +259,11 @@ export default class Accountings extends React.Component {
     this.setState(() => {
       if (this.state.AddAccountFromUsers)
         return {
-          AddAccountFromUsers: false
+          AddAccountFromUsers: false,
         };
       else
         return {
-          AddAccountFromUsers: true
+          AddAccountFromUsers: true,
         };
     });
   };
@@ -270,24 +271,24 @@ export default class Accountings extends React.Component {
   setAccProfile(ans) {
     this.setState(() => {
       return {
-        isacc_pro: ans
+        isacc_pro: ans,
       };
     });
   }
 
   setProOrAcc(ans) {
-    if (ans === "Accounts ") {
-      console.log("acc");
+    if (ans === 'Accounts ') {
+      console.log('acc');
       this.getAccounts();
     }
-    if (ans === "Products") {
-      console.log("rpo");
+    if (ans === 'Products') {
+      console.log('rpo');
 
       this.getProducts();
     }
     this.setState(prevState => {
       return {
-        ProOrAcc: ans
+        ProOrAcc: ans,
       };
     });
   }
@@ -296,7 +297,7 @@ export default class Accountings extends React.Component {
       return {
         PVoJVoDN: ans,
         vouchMode: mode,
-        vouchEData: data
+        vouchEData: data,
       };
     });
   };
@@ -304,14 +305,14 @@ export default class Accountings extends React.Component {
   rmVouch = () => {
     this.setState(prevState => {
       return {
-        PVoJVoDN: "no"
+        PVoJVoDN: 'no',
       };
     });
   };
   rmDebit = () => {
     this.setState(prevState => {
       return {
-        PVoJVoDN: "no"
+        PVoJVoDN: 'no',
       };
     });
   };
@@ -319,7 +320,7 @@ export default class Accountings extends React.Component {
   rmCredit = () => {
     this.setState(prevState => {
       return {
-        PVoJVoDN: "no"
+        PVoJVoDN: 'no',
       };
     });
   };
@@ -327,7 +328,7 @@ export default class Accountings extends React.Component {
   setjoBill = ans => {
     this.setState(() => {
       return {
-        jobill_num: ans
+        jobill_num: ans,
       };
     });
   };
@@ -351,74 +352,72 @@ export default class Accountings extends React.Component {
       AddPro: false,
       AddAcc: false,
       AddAccountFromUsers: false,
-      page: "dash",
-      ProOrAcc: "Accounts",
-      PVoJVoDN: "no",
+      page: 'dash',
+      ProOrAcc: 'Accounts',
+      PVoJVoDN: 'no',
       products: [],
       tempProducts: [],
       accounts: [],
       tempAcc: [],
       AddVouch: true,
-      vouchPage: "pv",
-      isacc_pro: "acc_det",
+      vouchPage: 'pv',
+      isacc_pro: 'acc_det',
       specific_acc: null,
       vouchEData: [],
       jobill_num: null,
-      vouchMode: "add",
+      vouchMode: 'add',
       vouchData: [],
       err_pro: null,
-      err_acc: null
+      err_acc: null,
     };
   }
 
   render() {
-    if (this.state.page === "rep") {
+    if (this.state.page === 'rep') {
       return (
-          <DailyBook
-            account={this.state.specific_acc}
-            navTo={this.navTo}
-            getspecific_acc={this.getspecific_acc}
-            getAccounts={this.getAccounts}
-            setAccProfile={this.setAccProfile}
-          />
+        <DailyBook
+          account={this.state.specific_acc}
+          navTo={this.navTo}
+          getspecific_acc={this.getspecific_acc}
+          getAccounts={this.getAccounts}
+          setAccProfile={this.setAccProfile}
+        />
       );
     }
     return (
-<>
-          <NavSec
-            AddProCrossBtn={this.AddProCrossBtn}
-            navItems={["Accounts", "Products"]}
-            getProducts={this.getProducts}
-            getAccounts={this.getAccounts}
-            setProOrAcc={this.setProOrAcc}
-            ProOrAcc={this.state.ProOrAcc}
-            AddAccCrossBtn={this.AddAccCrossBtn}
-            fi={this.fi}
-            Sorting_Pro={this.Sorting_Pro}
-          />
+      <>
+        <NavSec
+          AddProCrossBtn={this.AddProCrossBtn}
+          navItems={['Accounts', 'Products']}
+          getProducts={this.getProducts}
+          getAccounts={this.getAccounts}
+          setProOrAcc={this.setProOrAcc}
+          ProOrAcc={this.state.ProOrAcc}
+          AddAccCrossBtn={this.AddAccCrossBtn}
+          fi={this.fi}
+          Sorting_Pro={this.Sorting_Pro}
+        />
 
-          <ProCon
-            products={this.state.products}
-            filter={this.filter}
-            accounts={this.state.accounts}
-            getProducts={this.getProducts}
-            getAccounts={this.getAccounts}
-            ProOrAcc={this.state.ProOrAcc}
-            setAccProfile={this.setAccProfile}
-            navTo={this.navTo}
-            getspecific_acc={this.getspecific_acc}
-            isacc_pro={this.state.isacc_pro}
-            err_pro={this.state.err_pro}
-            err_acc={this.state.err_acc}
-          />
+        <ProCon
+          products={this.state.products}
+          filter={this.filter}
+          accounts={this.state.accounts}
+          getProducts={this.getProducts}
+          getAccounts={this.getAccounts}
+          ProOrAcc={this.state.ProOrAcc}
+          setAccProfile={this.setAccProfile}
+          navTo={this.navTo}
+          getspecific_acc={this.getspecific_acc}
+          isacc_pro={this.state.isacc_pro}
+          err_pro={this.state.err_pro}
+          err_acc={this.state.err_acc}
+        />
         {this.state.AddPro ? <AddProducts AddProCrossBtn={this.AddProCrossBtn} getProducts={this.getProducts} /> : null}
         {this.state.AddAcc ? <AddAcc AddAccCrossBtn={this.AddAccCrossBtn} getAccounts={this.getAccounts} /> : null}
         {this.state.AddAccountFromUsers ? (
-          <AddAccountFromUsers  AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
+          <AddAccountFromUsers AddAccFromUsersCrossBtn={this.AddAccFromUsersCrossBtn} />
         ) : null}
-</>
-
+      </>
     );
   }
 }
-

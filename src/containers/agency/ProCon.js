@@ -1,9 +1,9 @@
-import React from "react";
-import AddAcc from "containers/agency/AddAcc";
-import AddProducts from "containers/agency/AddProduct";
-import Delete from "components/Delete";
-import pencil from "assets/icons/pencil.svg";
-import trash from "assets/icons/trash.svg";
+import React from 'react';
+import AddAcc from 'containers/agency/AddAcc';
+import AddProducts from 'containers/agency/AddProduct';
+import Delete from 'components/Delete';
+import pencil from 'assets/icons/pencil.svg';
+import trash from 'assets/icons/trash.svg';
 
 class ProCon extends React.Component {
   deleteHide = () => {
@@ -11,7 +11,7 @@ class ProCon extends React.Component {
       return { delete: false };
     });
 
-    if (this.props.ProOrAcc === "Products") {
+    if (this.props.ProOrAcc === 'Products') {
       this.props.getProducts();
     } else {
       this.props.getAccounts();
@@ -38,7 +38,7 @@ class ProCon extends React.Component {
     this.setState(() => {
       return {
         proData: this.props.products.find(p => p.id === id),
-        addProduct: true
+        addProduct: true,
       };
     });
   };
@@ -46,7 +46,7 @@ class ProCon extends React.Component {
     this.setState(() => {
       return {
         accData: this.props.accounts.find(p => p.id === id),
-        addAcc: true
+        addAcc: true,
       };
     });
   };
@@ -70,14 +70,14 @@ class ProCon extends React.Component {
       addProduct: false,
       proData: {},
       addAcc: false,
-      accData: {}
+      accData: {},
     };
   }
 
   render() {
     return (
       <div className="pro_compo acc_pro_con">
-        {this.props.ProOrAcc === "Accounts" && !this.props.err_pro && (
+        {this.props.ProOrAcc === 'Accounts' && !this.props.err_pro && (
           <div className="filter_acc">
             <h2 className="filter_acc_h">Show Only</h2>
             <hr />
@@ -94,23 +94,23 @@ class ProCon extends React.Component {
                 <input id="check_trans" type="checkbox" name="filter" value="transport" onClick={this.showFilter} />
                 Transport
               </li>
-              <li>
+              {/* <li>
                 <input id="check_bank" type="checkbox" name="filter" value="bank" onClick={this.showFilter} />
                 Bank
-              </li>
+              </li> */}
               <li>
                 <input
                   onClick={e => {
                     if (e.target.checked) {
-                      document.getElementById("check_cred").checked = true;
-                      document.getElementById("check_sub_ag").checked = true;
-                      document.getElementById("check_trans").checked = true;
-                      document.getElementById("check_bank").checked = true;
+                      document.getElementById('check_cred').checked = true;
+                      document.getElementById('check_sub_ag').checked = true;
+                      document.getElementById('check_trans').checked = true;
+                      // document.getElementById('check_bank').checked = true;
                     } else {
-                      document.getElementById("check_cred").checked = false;
-                      document.getElementById("check_sub_ag").checked = false;
-                      document.getElementById("check_trans").checked = false;
-                      document.getElementById("check_bank").checked = false;
+                      document.getElementById('check_cred').checked = false;
+                      document.getElementById('check_sub_ag').checked = false;
+                      document.getElementById('check_trans').checked = false;
+                      // document.getElementById('check_bank').checked = false;
                     }
                     this.showFilter();
                   }}
@@ -128,7 +128,7 @@ class ProCon extends React.Component {
           <AddProducts
             AddProCrossBtn={this.hideAddProduct}
             getProducts={this.props.getProducts}
-            mode={"view"}
+            mode={'view'}
             data={this.state.proData}
           />
         )}
@@ -136,7 +136,7 @@ class ProCon extends React.Component {
           <AddAcc
             AddAccCrossBtn={this.hideAddAcc}
             getAccounts={this.props.getAccounts}
-            mode={"view"}
+            mode={'view'}
             data={this.state.accData}
           />
         )}
@@ -144,7 +144,7 @@ class ProCon extends React.Component {
         {this.state.delete && <Delete deleteHide={this.deleteHide} deleteUrl={this.state.deleteUrl} />}
 
         <div className="pro_con">
-          {this.props.ProOrAcc === "Products" ? (
+          {this.props.ProOrAcc === 'Products' ? (
             this.props.err_pro ? (
               <div className="wrong_alert">Something Went Wrong....</div>
             ) : (
@@ -193,7 +193,7 @@ class ProCon extends React.Component {
                     <DetCont
                       acc_name={account.acc_name}
                       type={account.acc_type}
-                      print_name={account.print_name}
+                      // print_name={account.print_name}
                       adress={account.address_line1}
                       gst={account.gst_num}
                       ph_number={account.phone_num}
@@ -221,7 +221,7 @@ class DetCont extends React.Component {
         <div
           className="det_cont_left"
           onClick={() => {
-            window.location.href = `/agency/acc-profile/${this.props.id}`
+            window.location.href = `/agency/acc-profile/${this.props.id}`;
           }}
         >
           <div className="acc_name">
@@ -229,9 +229,9 @@ class DetCont extends React.Component {
             {this.props.acc_name}
             <span className="acc_type">({this.props.type})</span>
           </div>
-          <div className="acc_print">{this.props.print_name}</div>
+          {/* <div className="acc_print">{this.props.print_name}</div> */}
           <div className="acc_adress">
-            <span className="acc_adress_head">{this.props.adress && "Address : "}</span> {this.props.adress}
+            <span className="acc_adress_head">{this.props.adress && 'Address : '}</span> {this.props.adress}
           </div>
         </div>
         <div
@@ -241,10 +241,10 @@ class DetCont extends React.Component {
           }}
         >
           <div className=" acc_gst">
-            <span className="acc_right">{this.props.gst && "GST :"}</span> {this.props.gst}
+            <span className="acc_right">{this.props.gst && 'GST :'}</span> {this.props.gst}
           </div>
           <div className="acc_ph">
-            <span className="acc_right"> {this.props.ph_number && "Ph No : "}</span> {this.props.ph_number}
+            <span className="acc_right"> {this.props.ph_number && 'Ph No : '}</span> {this.props.ph_number}
           </div>
         </div>
 
